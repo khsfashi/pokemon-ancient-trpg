@@ -48,17 +48,26 @@ For resource candidates, P1 records what exists, provenance/license/IP risk, mai
 
 ## P1 progress
 
-The initial durable source-registry slice is implemented in `docs/SOURCE_REGISTRY.md`.
+The durable source registry lives in `docs/SOURCE_REGISTRY.md`.
 
-The first source records establish:
+Completed/started source records now establish:
 
 - **PokéAPI `api-data` → `ADAPT`** as the preferred broad structured-data baseline, consumed only through an explicitly pinned/imported/validated project-owned data path rather than runtime API calls,
 - **Pokémon Showdown → `ADAPT`** as a complementary generation-specific battle-mechanics / learnset source, with exact version pinning and explicit filtering of nonstandard data,
-- **PokéAPI `sprites` → `REVISIT IN P6`** as a high-coverage sprite/icon candidate whose repository-level notices do not establish unrestricted redistribution rights for underlying Pokémon imagery.
+- **PokéAPI `sprites` → `REVISIT IN P6`** as a high-coverage sprite/icon candidate whose repository-level notices do not establish unrestricted redistribution rights for underlying Pokémon imagery,
+- **PokéAPI `cries` → `REVISIT IN P6`** as a technically convenient Gen 1-9 `.ogg` cry corpus whose own notice identifies the audio as The Pokémon Company's copyrighted content and therefore does not justify vendoring it during P1,
+- **PokéRogue → `ADAPT` as reference only** for explicit data domains, test/tooling discipline, separation of client/assets/locales, and file/class-level provenance; its stack, gameplay model, AGPL code, and creative assets are not adopted wholesale.
 
-The registry also fixes the cross-source rule: no community dataset is universally authoritative, conflicts must be resolved intentionally by the owning phase, and repository/data licenses must stay separate from Pokémon asset/IP rights.
+The registry also fixes these cross-source rules:
 
-P1 remains incomplete. The remaining source lanes must be researched before #2 can close.
+- no community dataset is universally authoritative,
+- conflicts must be resolved intentionally by the owning phase,
+- repository/data licenses must stay separate from Pokémon asset/IP rights,
+- resource availability is not equivalent to redistribution permission,
+- unclassified third-party assets should default to unavailable until provenance is established,
+- a comparable fan project's framework or content structure is evidence, not an architecture mandate.
+
+P1 remains incomplete. The remaining core research lanes must be bounded before #2 can close.
 
 ## Resource roadmap decision
 
@@ -91,9 +100,10 @@ Continue **P1 / #2** by extending `docs/SOURCE_REGISTRY.md` through the remainin
 
 The next coherent P1 slice is:
 
-1. Pokémon cries/audio source and provenance reconnaissance,
-2. PokéRogue architecture/content/resource organization as a reference only,
-3. then comparable text/event RPGs, official ancient-era setting references, fan-project/IP boundaries, and remaining font/UI/audio/background ecosystems.
+1. comparable text/event-driven RPGs and their event/run/content organization,
+2. official Pokémon ancient-era/world-setting references from rights-holder primary material,
+3. current fan-project/IP/disclaimer boundaries,
+4. then the remaining font/UI/audio/background ecosystems and only the additional sprite-source comparison that materially improves P6's candidate list.
 
 Do not begin P2 until P1's durable registry is sufficiently complete to satisfy #2. Resource candidates whose final usefulness depends on P2-P5 should remain `REVISIT IN P6` rather than being prematurely selected.
 
