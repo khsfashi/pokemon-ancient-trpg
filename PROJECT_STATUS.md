@@ -56,7 +56,12 @@ Completed/started source records now establish:
 - **Pokémon Showdown → `ADAPT`** as a complementary generation-specific battle-mechanics / learnset source, with exact version pinning and explicit filtering of nonstandard data,
 - **PokéAPI `sprites` → `REVISIT IN P6`** as a high-coverage sprite/icon candidate whose repository-level notices do not establish unrestricted redistribution rights for underlying Pokémon imagery,
 - **PokéAPI `cries` → `REVISIT IN P6`** as a technically convenient Gen 1-9 `.ogg` cry corpus whose own notice identifies the audio as The Pokémon Company's copyrighted content and therefore does not justify vendoring it during P1,
-- **PokéRogue → `ADAPT` as reference only** for explicit data domains, test/tooling discipline, separation of client/assets/locales, and file/class-level provenance; its stack, gameplay model, AGPL code, and creative assets are not adopted wholesale.
+- **PokéRogue → `ADAPT` as reference only** for explicit data domains, test/tooling discipline, separation of client/assets/locales, and file/class-level provenance; its stack, gameplay model, AGPL code, and creative assets are not adopted wholesale,
+- **Life in Adventure → `ADAPT` as product/UX reference only** for state-conditioned events/options, run goals, branching epilogues and collection/scoring surfaces; its closed-source implementation and conventional fantasy assumptions are not inferred or copied,
+- **A Dark Room → `ADAPT` as event-system reference only** for explicit eligibility predicates, scene graphs, choices, costs/rewards and contextual event pools; direct callback/UI mutation and ambient randomness are specifically not inherited,
+- **ink → `ADAPT` concepts only** for authoring/runtime separation, compiled narrative artifacts, host-driven choices and versioned story/save formats; no narrative runtime dependency is selected before P5/P7,
+- **official Pokémon Legends: Arceus Hisui material → `ADAPT` as setting precedent** showing that an official long-ago setting can make close human–Pokémon coexistence and trainer-like battling uncommon while supporting survey work, special social roles and dangerous wild Pokémon,
+- **current Pokémon/Nintendo IP notices → conservative boundary**: unofficial/non-commercial/disclaimer language is not permission, current Pokémon Support asks that Pokémon IP not be used or associated with a project, and Nintendo's game-content sharing guidelines do not provide a fan-game license.
 
 The registry also fixes these cross-source rules:
 
@@ -65,9 +70,12 @@ The registry also fixes these cross-source rules:
 - repository/data licenses must stay separate from Pokémon asset/IP rights,
 - resource availability is not equivalent to redistribution permission,
 - unclassified third-party assets should default to unavailable until provenance is established,
-- a comparable fan project's framework or content structure is evidence, not an architecture mandate.
+- a comparable fan project's framework or content structure is evidence, not an architecture mandate,
+- comparable games contribute bounded interaction/content lessons, not copyable content or automatic stack choices,
+- official historical-setting precedent constrains what is plausible but does not pre-write this project's P2 world bible,
+- non-commercial intent and non-affiliation notices must never be represented as an affirmative Pokémon IP license.
 
-P1 remains incomplete. The remaining core research lanes must be bounded before #2 can close.
+P1 remains incomplete, but its non-resource research lanes are now bounded enough for later phases. The remaining material P1 work is the final general resource-ecosystem reconnaissance and P6 revisit-list completeness check.
 
 ## Resource roadmap decision
 
@@ -96,16 +104,15 @@ Existing later issues retain their GitHub issue numbers but their phase labels m
 
 ## Exact next lane
 
-Continue **P1 / #2** by extending `docs/SOURCE_REGISTRY.md` through the remaining research lanes.
+Continue **P1 / #2** with its final resource-reconnaissance slice:
 
-The next coherent P1 slice is:
+1. research current font ecosystems suitable for a Korean/English mobile text UI, including redistribution/subsetting/weight coverage and provenance,
+2. research generic UI/icon sources that can remain project-owned/non-Pokémon-facing,
+3. research general ambience/SFX/music/background/illustration source ecosystems at provenance and format/maintenance depth only,
+4. compare another Pokémon sprite/icon source only if it adds materially different coverage or provenance evidence,
+5. audit the resulting registry against #2's exit criteria and make the P6 revisit list explicit.
 
-1. comparable text/event-driven RPGs and their event/run/content organization,
-2. official Pokémon ancient-era/world-setting references from rights-holder primary material,
-3. current fan-project/IP/disclaimer boundaries,
-4. then the remaining font/UI/audio/background ecosystems and only the additional sprite-source comparison that materially improves P6's candidate list.
-
-Do not begin P2 until P1's durable registry is sufficiently complete to satisfy #2. Resource candidates whose final usefulness depends on P2-P5 should remain `REVISIT IN P6` rather than being prematurely selected.
+Do not freeze art direction, illustration density, final resource inventory, packaging method, or mobile memory budgets in P1. If the registry satisfies #2 after this slice, close P1 and move to P2; otherwise record only the concrete missing evidence instead of broadening research indefinitely.
 
 ## Open Human Design Gates
 
