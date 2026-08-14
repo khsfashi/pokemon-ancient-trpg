@@ -265,3 +265,24 @@ Material claims must preserve a visible evidence boundary using the classificati
 P4's 151 species dossiers must separately record official evidence, ancient-setting derivation, technology/craft impact or `none`, ancient-strength treatment, companionship treatment, and a canon-boundary note wherever project lore could be mistaken for official canon.
 
 Project-authored imagination is not discouraged; it is a required part of the setting. The rule is that the project must always be able to say **which part came from Pokémon canon and which part is our ancient-world extrapolation**.
+
+## D-019 — Hybrid species identification and naming
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**Human Design Gate:** P2-HDG-004  
+**Owner choice:** B
+
+The game uses a **hybrid identification model** that separates stable system identity from what the player character and people of the era actually know.
+
+Official Pokémon species identities and names remain the stable player-facing/data reference once a species is identified, but they are not automatically universal ancient-world vocabulary and are not necessarily revealed on first encounter.
+
+Before sufficient identification, encounters may use observable descriptions, local aliases, titles, myths, mistaken labels, or an explicitly unknown presentation. After sufficient identification, the UI/bestiary may reveal the official species name while continuing to preserve local terminology in dialogue and lore.
+
+The umbrella word `Pokémon` may be used by the system/UI for clarity, but the setting does not require every ancient community to share that generic term.
+
+Identification is separate from complete knowledge. Revealing a species name does not automatically reveal its ecology, abilities, danger signs, weaknesses, companionship conditions, technology relevance, or other bestiary knowledge.
+
+P4 must define recognition/identification hooks per species without inventing aliases merely to fill a template. P5 must support knowledge-dependent rendering. P7/P8 must keep stable species identity separate from current encounter labels and discovered aliases.
+
+The binding implementation/content contract is `docs/P2_TERMINOLOGY_AND_IDENTIFICATION_CONTRACT.md`.
