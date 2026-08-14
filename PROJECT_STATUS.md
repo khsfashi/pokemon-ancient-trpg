@@ -58,7 +58,9 @@ P1 closed via PR #18. Important outputs include:
 
 Final production asset selection remains deferred to P6.
 
-### P2 — World bible and setting contract (#3) — READY TO CLOSE ON CURRENT PR MERGE
+### P2 — World bible and setting contract (#3) — COMPLETE
+
+P2 closed through PR #26 after `docs/P2_EXIT_AUDIT.md` reported **PASS**.
 
 Primary contract: `docs/WORLD_BIBLE.md`.
 
@@ -86,7 +88,7 @@ Binding/supporting contracts:
 - `docs/P2_FIRST_REGION_CONTRACT.md`
 - `docs/P2_EXIT_AUDIT.md`
 
-`docs/P2_EXIT_AUDIT.md` maps every #3 requirement to a binding contract and reports **PASS**. Currency details, exact psychic numbers, local village names/maps and species-specific ecology are explicitly assigned downstream rather than treated as missing P2 work.
+Currency details, exact psychic numbers, local village names/maps and species-specific ecology are explicitly assigned downstream rather than treated as missing P2 work.
 
 ### Provisional ancient-danger premise carried into P4
 
@@ -94,9 +96,9 @@ Binding/supporting contracts:
 
 The project intends ancient Pokémon to be frightening and often overwhelming even against iron-armed humans. What remains unproven is a universal canon claim that civilization genetically weakened every species. P4 therefore decides strength/history species by species and labels project extrapolation honestly.
 
-## Current / next phase
+## Current phase
 
-**P3 — Core TRPG rules and character model (#4)** becomes active once the current P2 completion PR is merged and #3 is closed.
+**P3 — Core TRPG rules and character model (#4) is active.**
 
 P3 owns:
 
