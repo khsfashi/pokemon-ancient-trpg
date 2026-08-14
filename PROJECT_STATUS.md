@@ -48,7 +48,7 @@ For resource candidates, P1 records what exists, provenance/license/IP risk, mai
 
 ## P1 progress
 
-The initial durable source-registry slice is now implemented on branch `agent/p1-source-registry-core` in `docs/SOURCE_REGISTRY.md`.
+The initial durable source-registry slice is implemented in `docs/SOURCE_REGISTRY.md`.
 
 The first source records establish:
 
