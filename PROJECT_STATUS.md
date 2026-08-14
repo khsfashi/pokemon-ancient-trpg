@@ -13,7 +13,8 @@ Core direction currently approved by the owner:
 - pre-modern / ancient setting,
 - the intended society is **earlier than the Hisui-era precedent** shown in Pokémon Legends: Arceus; Hisui is an upper-bound comparison rather than the target template,
 - humans and Pokémon are not already integrated as ordinary modern partners,
-- Pokémon can be dangerous, rare, and difficult to form relationships with,
+- the mandatory Pokémon roster is the complete original Generation I National Pokédex **#001-#151**, with detailed species-by-species ancient-setting dossiers required in P4 and meaningful gameplay presence for all 151 required by P9,
+- Pokémon can be dangerous, rare, and difficult to form relationships with; 151-species coverage does not imply equal availability, universal catchability, or a collect-them-all goal,
 - character creation and TRPG-like statistics/checks,
 - dice-based outcomes,
 - condition-driven events and random discoveries/insights,
@@ -80,6 +81,20 @@ The registry also fixes these cross-source rules:
 
 P1 remains incomplete, but its non-resource research lanes are now bounded enough for later phases. The remaining material P1 work is the final general resource-ecosystem reconnaissance and P6 revisit-list completeness check.
 
+## Generation I roster roadmap decision
+
+Owner decision **D-011** fixes the mandatory species breadth at all original National Pokédex species **#001-#151**.
+
+The detailed operating contract is `docs/GEN1_SPECIES_COVERAGE_PLAN.md`.
+
+- **P4 / #5** first freezes shared Pokémon ecology/encounter/threat/bond rules, then authors and reviews a detailed ancient-setting dossier for every species. P4 cannot close until a coverage manifest proves `151/151` substantive dossiers.
+- **P8 / #8** may use a curated representative subset; it proves the pipeline rather than full content breadth.
+- **P9 / #9** must prove `151/151` meaningful authored gameplay presence. A database row alone does not count.
+- All 151 do not have to be equally common, catchable, or companion-eligible. Legendary/Mythical species and ecologically rare species may appear through exceptional encounters, myths, traces, environmental effects, quests, or other setting-consistent forms.
+- Post-Generation-I forms/evolutions/mechanics are not automatically in scope.
+
+Per-species dossiers are expected to cover source provenance, ecology, human perception/culture, threat and encounter behavior, bond conditions, mechanical adaptations, narrative/event hooks, bestiary knowledge progression, and unresolved dependencies without presenting project-authored interpretation as canon.
+
 ## Resource roadmap decision
 
 The owner explicitly added a dedicated design-informed resource phase after P2-P5.
@@ -124,6 +139,8 @@ None are required merely to perform P1 source research.
 Known upcoming P2/P3 questions exist, but they must be asked only when their owning phase reaches them. Do not front-load unrelated design questionnaires.
 
 D-010 already fixes the direction that the setting is earlier than Hisui. Future P2 gates therefore concern **how much earlier and what that implies**, including technology baseline, human terminology for Pokémon, social organization, lethality, region identity and the degree/type of exceptional human–Pokémon bonds. P3 later owns the core attribute model and occupation/rules details.
+
+D-011 fixes the Gen-I roster breadth, so future agents must not ask whether to cover all 151. P4 may still require narrowly scoped Human Design Gates for shared species-treatment rules or for specific genuinely ambiguous species interpretations after source research; those gates should be resolved before scaling contradictory dossiers.
 
 P6 may also require a presentation Human Design Gate for choices such as overall art direction or illustration density, but only after P2-P5 provide enough context and objective source/performance research has been completed.
 
