@@ -17,6 +17,8 @@ The following constraints are authoritative:
 - humans and Pokémon are not already integrated through ordinary trainer culture, routine ownership, widespread capture infrastructure, or normalized modern coexistence;
 - the human social baseline is an **early settled village / clan network**;
 - ordinary human material technology has an **iron-age / medieval-fantasy-like baseline**;
+- particular communities may possess narrow **Pokémon-dependent technology islands** derived from source-backed species capabilities or ecology, but these are local exceptions rather than a general modern technology tree;
+- ancient-setting lore follows a **canon-first derivation protocol**: official evidence first, then bounded inference, then clearly marked project-authored extrapolation;
 - there is **no portable Pokémon containment technology**: no Poké Ball-like storage, instant recall, remote transfer, or PC-style creature storage;
 - Pokémon can be dangerous wildlife, feared monsters, sacred beings, ecological forces, competitors, omens, tolerated neighbors, or exceptional companions depending on species and local culture;
 - Pokémon companionship is a first-class gameplay system but is socially uncommon and never a mandatory run objective;
@@ -90,15 +92,19 @@ The following remain deliberately unfrozen:
 
 Iron improves human survival but does not erase the power gap with Pokémon. The setting assumption is that a prepared group with iron weapons can contest, repel, wound, trap, or sometimes kill a Pokémon under favorable conditions, while many species remain catastrophically dangerous in a direct fight.
 
-### 4.2 Pokémon-dependent technology islands — researched, pending owner freeze
+### 4.2 Pokémon-dependent technology islands — binding rule
 
-`docs/P2_TECHNOLOGY_CANON_RESEARCH.md` finds strong official precedent that Pokémon abilities can participate in human labor, medicine, transport, infrastructure and power-related activity. It recommends a constrained model:
+`docs/P2_TECHNOLOGY_CANON_RESEARCH.md` establishes official precedent that Pokémon abilities can participate in human labor, medicine, transport, infrastructure and power-related activity. D-017 now freezes the setting treatment:
 
-> the general technology floor remains iron-age, while particular settlements or specialists may possess one unusually advanced craft because generations of local knowledge developed around a specific Pokémon capability.
+> the general technology floor remains iron-age, while particular settlements or specialists may possess one unusually advanced craft because generations of local knowledge developed around a specific Pokémon capability, ecology, material, behavior, or recurring phenomenon.
 
-This is **not yet a binding global rule** until the owner confirms the recommended P2 gate.
+Every technology island must remain traceable to source-backed Pokémon evidence plus an explicit human craft bridge. It must stay narrow and difficult to scale because companionship is rare, Pokémon are dangerous, routes are unreliable, specialist knowledge is fragile, and access to the enabling species or habitat may disappear.
 
-If adopted, every such technology island must be traceable to source-backed Pokémon capability and must stay difficult to scale because companionship is rare, Pokémon are dangerous, local ecology can change, and specialist knowledge can disappear.
+The enabling Pokémon does **not** need to be a tame companion. A settlement may instead depend on observation, migration timing, shed or abandoned materials, negotiated coexistence, dangerous harvesting, a rare individual bond, or equipment built to resist/redirect a Pokémon phenomenon.
+
+Technology islands do not imply obedient Pokémon factories, modern scientific theory, industrial grids, universal access, or automatic technology diffusion.
+
+The detailed binding authoring rules are in `docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md`.
 
 ## 5. Travel and the meaning of wilderness
 
@@ -133,6 +139,8 @@ Pokémon knowledge is therefore:
 - suitable for progressive bestiary discovery rather than an omniscient Pokédex dump.
 
 Exact writing system, terminology for Pokémon, species naming conventions, measurement system, and map sophistication remain unresolved.
+
+Project authors must separately preserve what the franchise explicitly establishes and what this world derives from it. D-018 and `docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md` define the evidence classes that P4 must carry into all 151 species dossiers.
 
 ### 6.1 Rare human psychics / miracle-workers
 
@@ -270,13 +278,14 @@ No occupation may be designed on the assumption that the player starts with, mus
 
 Rare psychic occupations must not become a reskinned universal wizard class. Their mechanics should express a bounded anomalous gift plus ordinary human skills.
 
+Technology-island specialists may have unusual local techniques, but those techniques remain tied to their source ecology, inherited knowledge, equipment, or access rather than becoming generic character powers.
+
 ## 11. What this baseline deliberately does not decide
 
 The following are still open because choosing them now would exceed the owner's current decisions:
 
 - exact real-world historical analogue or calendar date;
 - exact steel quality, alloy sophistication, armor prevalence and metallurgical production scale beyond the iron-age floor;
-- whether Pokémon-dependent local technology islands are a binding setting rule or only occasional species-specific exceptions;
 - exact human term(s) for Pokémon;
 - exact region identity and geography of the first playable scope;
 - exact currency/economic abstraction;
@@ -298,6 +307,10 @@ Iron-age ordinary material technology is **not** unresolved: D-014 fixes that fl
 
 Rare human psychics are **not** unresolved as a concept: D-015 permits them, while specific powers/mechanics remain later design work.
 
+Pokémon-dependent technology islands are **not** unresolved: D-017 makes them a binding narrow/local exception model.
+
+Canon-first derivation is **not** unresolved: D-018 requires official evidence to remain visibly separate from project-authored extrapolation.
+
 These remaining questions must be resolved only when they become the next blocking P2 decision or are explicitly assigned to P3/P4.
 
 ## 12. Consistency rules for later phases
@@ -312,14 +325,17 @@ P3-P9 content must preserve these invariants unless an explicit later owner deci
 6. One companion may be notable; several powerful companions may make the player extraordinary; this social scale must not be flattened into routine trainer culture.
 7. Core game progression must remain solvable without a companion unless a branch is explicitly optional and companion-gated.
 8. Ordinary material technology is iron-age, but iron weapons do not make humans peers of Pokémon.
-9. Rare human psychics may exist, but there is no generic universal magic system or open-ended spell list.
-10. People can possess sophisticated local ecological knowledge without possessing a modern universal Pokédex worldview.
-11. Occupations arise from village survival, exchange, travel, knowledge, Pokémon ecology and rare canon-compatible gifts rather than generic fantasy magic.
-12. A species dossier may make a particular Pokémon locally familiar without making Pokémon as a whole domesticated or normalized.
-13. The world can contain craftsmanship, culture, ritual, trade, specialist knowledge and isolated anomalous crafts without becoming a Hisui-like institutional frontier society.
-14. Later systems must prefer explicit local exceptions over silently weakening the global pre-Hisui baseline.
-15. P4 must determine companionship plausibility and burdens per species instead of assuming that every one of the 151 can occupy a companion slot.
-16. P4 must source and audit any Pokémon-derived technology/craft hook per species rather than inferring a modern tech tree from elemental powers.
-17. P4 must distinguish source-backed ancient-strength evidence from project-authored amplification for every species where the distinction matters.
-18. P5 must support event and ending paths for every companion occupancy state from `0/3` through `3/3` where relevant.
-19. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
+9. Pokémon-dependent technology islands are permitted only as narrow, local, source-driven exceptions and must not collapse into a general modern technology tree.
+10. Rare human psychics may exist, but there is no generic universal magic system or open-ended spell list.
+11. People can possess sophisticated local ecological knowledge without possessing a modern universal Pokédex worldview.
+12. Occupations arise from village survival, exchange, travel, knowledge, Pokémon ecology, local technology islands and rare canon-compatible gifts rather than generic fantasy magic.
+13. A species dossier may make a particular Pokémon locally familiar without making Pokémon as a whole domesticated or normalized.
+14. The world can contain craftsmanship, culture, ritual, trade, specialist knowledge and isolated anomalous crafts without becoming a Hisui-like institutional frontier society.
+15. Later systems must prefer explicit local exceptions over silently weakening the global pre-Hisui baseline.
+16. P4 must determine companionship plausibility and burdens per species instead of assuming that every one of the 151 can occupy a companion slot.
+17. P4 must source and audit any Pokémon-derived technology/craft hook per species rather than inferring a modern tech tree from elemental powers; `none` is always a valid result.
+18. P4 must distinguish direct official evidence, derived inference, and project-authored extrapolation for every material species claim.
+19. P4 must distinguish source-backed ancient-strength evidence from project-authored amplification for every species where the distinction matters.
+20. P5 must support event and ending paths for every companion occupancy state from `0/3` through `3/3` where relevant.
+21. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
+22. Later data/content pipelines must preserve evidence/provenance classes so project lore cannot be mistaken for imported canon data.
