@@ -357,3 +357,32 @@ The first playable scope is one bounded settlement-centered locality plus the su
 P4 must treat modern Kanto associations as evidence to audit rather than timeless ecology. P5 must support strong locality, cultural disagreement, route accessibility, and gradual discovery without requiring an open-world simulation. P7/P8 must preserve the bounded settlement-centered scope.
 
 The binding contract is `docs/P2_FIRST_REGION_CONTRACT.md`.
+
+## D-023 — Seven core human attributes
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-001  
+**Owner choice:** seven-attribute model proposed after reviewing the earlier 5/6-stat options
+
+Human player characters use exactly seven core attributes:
+
+- **Strength / 근력** — raw force, lifting, breaking, grappling and force-heavy physical action;
+- **Endurance / 체력** — stamina, bodily resilience, exposure, poison/disease tolerance and sustained hardship;
+- **Agility / 기민** — reflex, coordination, precision, stealth and controlled movement;
+- **Sense / 감각** — perception, tracking, situational awareness and immediate environmental danger reading;
+- **Intellect / 지성** — learned knowledge, medicine, craft, planning, reasoning and deliberate analysis;
+- **Will / 의지** — self-control, fear/pain tolerance, conviction, mental resistance and bounded psychic discipline where an actual gift exists;
+- **Presence / 존재감** — projected authority, trust, intimidation, leadership, persuasion and social gravitas.
+
+The split is intentional. Strength and Endurance must remain materially different; Agility and Sense distinguish reacting from noticing; Sense and Intellect distinguish observation from learned understanding; Will and Presence distinguish internal resolve from outward influence.
+
+Presence is not physical beauty, morality, popularity, or a universal dialogue-win stat. Social outcomes remain contextual and may depend on relationship, reputation, leverage, local custom, background, evidence, approach and other attributes.
+
+Luck is **not** an eighth core attribute. Any future fate/reroll/insight resource is separate from innate capability. Bond is also **not** a core attribute; Pokémon trust/relationship belongs to specific companion or individual relationship state under D-013.
+
+The seven attributes are a human player-character contract. P4 may use a different or derived Pokémon mechanical model rather than forcing species into a human-shaped stat block.
+
+Numeric ranges, creation allocation, modifiers, dice/check formula, difficulty scale, health/fatigue/fear formulas and other derived stats remain unresolved until the next P3 rules decisions.
+
+The binding contract is `docs/P3_ATTRIBUTE_CONTRACT.md`.

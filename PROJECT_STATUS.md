@@ -1,6 +1,6 @@
 # Project Status
 
-Last explanatory handoff update: **2026-08-14**
+Last explanatory handoff update: **2026-08-15**
 
 This file is the human-readable operational handoff. Live GitHub PR/issue/CI state wins when this file becomes stale.
 
@@ -38,6 +38,8 @@ Current owner-approved direction:
 - ancient Pokémon should feel materially dangerous; broad lineage-strength change remains species-specific/provisional until P4 rather than being falsely presented as universal canon;
 - mandatory roster is National Pokédex **#001-#151**, with substantive P4 dossiers and meaningful P9 gameplay presence required for all 151;
 - the opening playable scope is one bounded settlement-centered locality plus surrounding routes/ecologies, not all of future Kanto and not all 151 species at once;
+- human player characters use seven core attributes: **Strength / Endurance / Agility / Sense / Intellect / Will / Presence** (`근력 / 체력 / 기민 / 감각 / 지성 / 의지 / 존재감`);
+- Luck and Pokémon Bond are not core attributes; fate-like resources and individual relationship state remain separate systems;
 - character creation, compact TRPG checks, dice outcomes, conditional events, discoveries/insights and persistent run state are core;
 - public repository and non-commercial intent do not create Pokémon IP permission;
 - resource provenance and mobile resource discipline remain first-class constraints.
@@ -113,50 +115,62 @@ P3 owns:
 - failure/partial-success philosophy;
 - bounded mechanics for rare human psychic gifts where playable.
 
+### Resolved P3 decisions
+
+- **P3-HDG-001 / D-023:** seven human core attributes — `Strength / Endurance / Agility / Sense / Intellect / Will / Presence`.
+- Strength and Endurance stay separate; Agility and Sense stay separate; Sense and Intellect stay separate; Will and Presence stay separate.
+- Presence is social projection/authority rather than beauty or a universal dialogue-win stat.
+- Luck is not an eighth attribute; Bond is individual Pokémon relationship state rather than a human core stat.
+- P4 may use a different or derived Pokémon stat model instead of forcing species into the human seven-attribute model.
+
+Binding contract: `docs/P3_ATTRIBUTE_CONTRACT.md`.
+
+Numeric attribute ranges, character-creation allocation, modifiers and derived-stat formulas deliberately remain open until the dice/check and health contracts are chosen.
+
 ### Exact next Human Design Gate
 
-Resolve **P3-HDG-001 — core attribute model**.
+Resolve **P3-HDG-002 — core dice/check model**.
 
-The world contract does not objectively determine how many base attributes the player should manage. This is a core player-facing rule and therefore requires owner approval.
+The check engine must be easy to understand on mobile, deterministic under a saved RNG seed, compatible with backgrounds/knowledge/equipment/context, and capable of more than binary success/failure when an event benefits from partial success.
 
-#### A — Four broad attributes
+#### A — d20 + modifiers vs difficulty
 
-`Body / Agility / Mind / Spirit`
+- roll one d20, add attribute/competence/context modifiers, compare with a target difficulty;
+- very familiar traditional-TRPG feel;
+- large numeric room for difficulty, equipment and progression;
+- margin can be mapped to critical/partial/full outcomes where authored.
 
-- very compact and mobile-friendly;
-- perception/tracking folds into Mind or relevant background;
-- fear/social/psychic resistance folds into Spirit;
-- smallest character sheet and easiest balance surface.
+**Impact:** clearest conventional RPG language, but the flat d20 curve makes luck relatively dominant and specialists can fail easy tasks more often unless modifiers/advantage rules compensate.
 
-**Impact:** fastest play and lowest complexity, but wilderness perception/knowledge distinctions can become overly broad.
+#### B — 2d6 + modifiers with margin/outcome bands **(recommended)**
 
-#### B — Five focused attributes **(recommended)**
+- roll 2d6 and add the relevant attribute/competence modifiers against a difficulty or opposed value;
+- the bell-shaped distribution makes ordinary competence more reliable while keeping rare high/low results;
+- margin/result bands can naturally produce failure, costly/partial success, full success and exceptional success;
+- compact numbers suit a mobile text event system and make consequence authoring legible.
 
-`Body / Agility / Sense / Mind / Will`
+**Impact:** strongest fit for event-driven narrative checks and partial-success design. It is less instantly `D&D-like` than d20, but produces more stable probabilities and makes expertise feel more dependable.
 
-- Body: strength, endurance, physical force/resistance;
-- Agility: speed, dexterity, stealth, precise movement;
-- Sense: perception, tracking, environmental awareness, immediate danger reading;
-- Mind: knowledge, craft, medicine, planning, reasoning;
-- Will: fear resistance, self-control, conviction and bounded psychic resilience/discipline.
+#### C — d6 dice pool / count successes
 
-There is **no dedicated Charisma stat**. Social checks use the approach plus background/relationship/context, normally Mind or Will when an attribute is actually needed.
+- attribute, competence and situational factors build a pool of d6s;
+- count dice meeting the success face threshold;
+- advantage/disadvantage is represented naturally by adding/removing dice;
+- degree of success is visible through success count.
 
-**Impact:** still compact while making survival/exploration and knowledge meaningfully distinct; avoids a generic fantasy/social dump stat and maps cleanly onto the P2 world.
+**Impact:** expressive and tactile, but requires more dice/results to display, increases balancing surface, and can make a text-first mobile check feel busier than necessary.
 
-#### C — Six traditional granular attributes
+#### D — d100 percentile roll-under
 
-`Strength / Endurance / Agility / Sense / Mind / Presence`
+- skills/check chances resolve as explicit percentages;
+- probability is transparent to players;
+- degrees of success can use margin or special bands.
 
-- separates physical power from durability;
-- gives social influence its own base stat;
-- allows finer build niches.
+**Impact:** easiest raw probability communication, but pushes the rules toward larger numeric ranges and a more simulation-oriented sheet than the project currently needs.
 
-**Impact:** more conventional TRPG differentiation but more balance surface, more derived-stat coupling and more chances for low-value stat checks in a mobile text game.
+Recommendation: **B — 2d6 + modifiers with margin/outcome bands**.
 
-Recommendation: **B**.
-
-After the attribute model, P3 should freeze the dice/check model and health/fear/injury representation before designing detailed backgrounds or progression.
+Do **not** freeze exact target numbers, modifier scale, critical thresholds or attribute ranges until the owner chooses the core dice model. After this gate, P3 should immediately bind difficulty/opposed checks and then resolve the health/fatigue/fear/injury model.
 
 ## Later mandatory contracts
 
