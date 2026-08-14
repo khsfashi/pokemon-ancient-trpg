@@ -1,6 +1,6 @@
-# External Reference, API, Data, and Provenance Protocol
+# External Reference, API, Data, Resource, and Provenance Protocol
 
-Use this protocol whenever work depends on Pokémon data, external APIs/repositories, libraries/frameworks, legal/IP statements, comparable games, or technical behavior that may have changed.
+Use this protocol whenever work depends on Pokémon data/resources, external APIs/repositories, libraries/frameworks, legal/IP statements, comparable games, or technical behavior that may have changed.
 
 ## Principle
 
@@ -15,9 +15,9 @@ current primary sources
     ↓
 source/provenance/license assessment
     ↓
-ADOPT / ADAPT / REJECT / DEFER
+ADOPT / ADAPT / REJECT / DEFER / REVISIT IN P6
     ↓
-project-owned contract/schema/test
+project-owned contract/schema/test/manifest
 ```
 
 ## Source priority
@@ -35,18 +35,18 @@ For technical questions, use current official documentation or upstream source r
 
 ## Required record for substantive references
 
-For each source that materially shapes a contract, record:
+For each source that materially shapes a contract or remains a viable later resource candidate, record:
 
 - source/project name,
 - canonical URL or repository,
 - purpose in this project,
-- exact fields/behavior/techniques being considered,
+- exact fields/behavior/techniques/resource classes being considered,
 - current license/provenance relevant to that use,
 - Pokémon-IP caveat where applicable,
-- update/version strategy,
+- update/version/pinning strategy,
 - risks or known incompleteness,
-- decision: `ADOPT`, `ADAPT`, `REJECT`, or `DEFER`,
-- project contract/test that owns the absorbed result.
+- decision: `ADOPT`, `ADAPT`, `REJECT`, `DEFER`, or `REVISIT IN P6`,
+- project contract/test/manifest or later phase that owns the absorbed result.
 
 P1 should create the initial durable source registry.
 
@@ -54,6 +54,8 @@ P1 should create the initial durable source registry.
 
 ### ADOPT
 Use the source/technique substantially as-is because it fits the project and provenance/maintenance constraints.
+
+For assets/resources, `ADOPT` still does not mean underlying Pokémon IP has been relicensed by the repository that indexes or hosts it. Redistribution is classified separately.
 
 ### ADAPT
 Use the factual source or proven technique but normalize it into project-owned data/rules/contracts.
@@ -65,6 +67,9 @@ Do not use it. Record why so later agents do not repeatedly rediscover the same 
 
 ### DEFER
 Potentially useful, but the owning phase or design decision does not exist yet.
+
+### REVISIT IN P6
+The resource source is credible/relevant enough to keep, but final selection depends on P2-P5 world/rules/Pokémon/event design. P1 records enough evidence that P6 can resume from a bounded candidate list rather than researching from zero.
 
 ## API/data ingestion rule
 
@@ -82,7 +87,7 @@ external source
 
 This keeps gameplay deterministic/offline-friendly and prevents source schema/network availability from becoming runtime game logic.
 
-The exact importer/build architecture is deferred to P6.
+The final importer/build integration architecture is deferred to P7. P1 owns source understanding; P4/P5 own game-domain semantics; P6 owns resource-specific production constraints where applicable.
 
 ## Pokémon Showdown / PokéAPI / fan-project rule
 
@@ -93,8 +98,55 @@ Examples of questions P1 must answer with evidence:
 - which source is best for species/forms/base stats/types,
 - which source is best for moves/abilities/learnsets and generation-specific battle semantics,
 - whether source records are canonical facts, community interpretation, or simulator implementation,
-- which sprite/icon repositories provide only indexing/convenience versus rights to redistribute assets,
-- which parts of a fan-game repository are useful architectural references and which are project-specific assumptions.
+- which sprite/icon repositories provide only indexing/convenience versus evidence relevant to redistribution,
+- which audio/resource repositories exist and what provenance they actually state,
+- which parts of a fan-game repository are useful architectural/content/resource references and which are project-specific assumptions.
+
+## Resource reconnaissance in P1
+
+P1 should research resource sources broadly enough that later design is informed by what is realistically available, but it must not make design-dependent production choices too early.
+
+At reconnaissance depth, investigate as relevant:
+
+- Pokémon sprites by generation/form/shiny/front/back/animated variants,
+- party/box/icon resources,
+- type/move/status/item icons,
+- Pokémon cries/audio sources,
+- fonts and their redistribution rights,
+- UI/icon libraries,
+- background/illustration/audio source ecosystems,
+- resource organization in relevant fan projects as reference rather than authority.
+
+For each viable candidate, record availability, coverage, provenance/notices, pinning/update characteristics, likely processing needs, and whether it should be revisited in P6.
+
+P1 must **not** freeze:
+
+- final art direction,
+- exact illustration/background density,
+- exact runtime resource inventory,
+- public-repository bundling policy,
+- generated-art production policy,
+- mobile payload/decode/audio/cache budgets,
+
+when those choices depend on P2-P5.
+
+## P6 production resource selection
+
+P6 (#12) is the authoritative second pass for assets/resources. It revisits P1 candidates after P2-P5 and records for each selected asset class:
+
+- whether it is required, optional, or deferred,
+- selected source or production method,
+- exact provenance/rights-holder/notice information,
+- repository inclusion vs build-time fetch/generation classification,
+- attribution requirements,
+- pinned version/commit/hash where practical,
+- preprocessing/format/dimension rules,
+- stable resource ID / manifest ownership,
+- validation/fallback behavior,
+- runtime loading/cache/eviction expectation,
+- mobile payload and decoded-memory/audio budget contribution.
+
+If P6 discovers that P1 evidence is stale, recheck current primary sources rather than inheriting stale assumptions.
 
 ## Asset/IP boundary
 
@@ -106,7 +158,8 @@ For each asset source, distinguish:
 - metadata/data license if any,
 - asset-file provenance,
 - underlying Pokémon IP ownership,
-- whether redistribution in this public repository is actually supported by the source's notices.
+- whether redistribution in this public repository is actually supported by the source's notices,
+- whether the practical project policy should instead use a documented fetch/build step, placeholder, generated/project-owned resource, or omission.
 
 When this is unclear, prefer referencing/import tooling or placeholder assets over copying a large asset corpus into the repository.
 
@@ -125,12 +178,13 @@ Comparable projects are used to learn:
 - content organization,
 - mobile text ergonomics,
 - failure/branching patterns,
+- resource organization and loading patterns,
 - testing/validation techniques.
 
-Do not blindly copy narrative content, data, naming, architecture, or balancing. Extract specific lessons and convert them into project-owned contracts.
+Do not blindly copy narrative content, data, naming, architecture, resources, or balancing. Extract specific lessons and convert them into project-owned contracts.
 
 ## Freshness
 
-Any fact likely to change — API fields, package versions, repository licenses, deployment limits, framework behavior, official policy wording — must be rechecked when its owning implementation/design phase activates.
+Any fact likely to change — API fields, package versions, repository licenses, resource notices, deployment limits, framework behavior, official policy wording — must be rechecked when its owning implementation/design phase activates.
 
-P1 is a baseline, not permission for P6/P9 to rely on stale technical information months later.
+P1 is a baseline, not permission for P6/P7/P10 to rely on stale technical or provenance information months later.
