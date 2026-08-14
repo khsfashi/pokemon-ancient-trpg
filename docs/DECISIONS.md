@@ -46,6 +46,8 @@ Occupations/backgrounds should emerge from the Pokémon setting and pre-modern s
 
 A role based on animal/Pokémon communication or similar setting-native expertise is directionally more appropriate, subject to P2/P3 design.
 
+D-015 later clarifies that rare canon-compatible **human psychics / miracle-workers** are allowed and may fill part of the gameplay niche normally occupied by fantasy magic-users without creating a generic spell system.
+
 ## D-005 — Autonomous repository workflow
 
 **Status:** ACTIVE  
@@ -146,7 +148,7 @@ The setting therefore assumes:
 - wilderness that remains materially outside routine human control and makes travel, guides, ecological knowledge, preparation and avoidance important;
 - human–Pokémon relationships based primarily on caution, avoidance, negotiation, local custom, fear, observation and exceptional bonds rather than ordinary trainer ownership.
 
-This decision intentionally does **not** establish an exact historical analogue, metallurgy level, Poké Ball/capture technology, region identity, currency, lethality, human term for Pokémon, or exact prevalence/mechanism of exceptional Pokémon bonds. Those remain separate P2 gates.
+This decision intentionally does **not** establish an exact historical analogue, region identity, currency, lethality, human term for Pokémon, or exact prevalence/mechanism of exceptional Pokémon bonds. Metallurgy is later constrained by D-014.
 
 `docs/WORLD_BIBLE.md` is the working contract that expands these implications while keeping unresolved choices explicit.
 
@@ -172,3 +174,55 @@ The intended social analogy is closer to a fantasy world in which monsters are c
 The three-slot capacity is a **game-system maximum**, not evidence that three companions are ordinary in the fiction. P4 must decide species-by-species whether companionship is plausible at all and what conditions, burdens, risks, and social consequences apply.
 
 P3 must support both human-only and companion-assisted character builds without making either an invalid progression path. P5 must allow events and endings for `0/3` companion runs. P7/P8 must preserve the visible three-slot companion contract in the mobile UI.
+
+## D-014 — Iron-age ordinary material baseline
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**P2 owner direction**
+
+Ordinary human material culture should have an **iron-age / medieval-fantasy-like floor** rather than a stone- or bronze-age floor.
+
+The baseline therefore permits iron tools, iron weapons, smithing, agricultural implements, chains/fasteners and iron-supported fortification/craft where locally available. The exact quality and prevalence of steel, armor construction, specialized alloys, mining scale, furnace design, and mass production remain later-detail questions rather than automatic consequences.
+
+This technology level does **not** imply parity with Pokémon. Iron lets humans contest, deter, trap, wound, and sometimes kill dangerous creatures through preparation and group tactics; it does not make ordinary humans apex predators. Pokémon capabilities such as Pidgeot's canon Mach-2 hunting speed, Machamp-scale strength, elemental attacks, and Psychic/Ghost hazards justify keeping even well-armed wilderness travel dangerous.
+
+`docs/P2_TECHNOLOGY_CANON_RESEARCH.md` records the supporting source evidence and the recommended treatment of Pokémon-dependent technology islands.
+
+## D-015 — Rare human psychics / miracle-workers are setting-native
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**P2 owner direction**
+
+The setting may contain **humans with genuine psychic or otherwise anomalous faculties**. Sabrina is an explicit franchise precedent for a human described in official Pokémon material as using psychic powers.
+
+These people occupy part of the gameplay/cultural niche that a conventional medieval-fantasy setting might assign to wizards, but they are **not** a generic spellcasting class and do not imply a universal magic system.
+
+The baseline treatment is:
+
+- rare enough to be socially notable;
+- usually limited to one narrow personal faculty or family of related phenomena;
+- capable of `miracle-like` acts rather than routine large-scale magic;
+- potentially understood through local terms such as seer, medium, mind-speaker, omen-reader, shrine specialist, gifted healer, or feared/cursed person;
+- mechanically bounded by P3 rather than implemented as an open-ended spell list.
+
+Possible manifestations such as telepathic impressions, brief precognition, limited telekinesis, emotional/aura sensitivity, dream sensitivity, or resistance/attunement to Psychic/Ghost phenomena remain examples rather than a finalized ability catalog.
+
+## D-016 — Ancient Pokémon danger / lineage-strength premise
+
+**Status:** PROVISIONAL  
+**Date:** 2026-08-14
+**P2 owner direction requiring canon-aware wording**
+
+The owner wants ancient-era Pokémon to feel **materially more dangerous than modern Pokémon familiarity suggests**, including the idea that later populations may have become weaker over long periods of civilization.
+
+There is real canon precedent for historical weakening: multiple version-tagged Magikarp Pokédex entries state that distant-past Magikarp were stronger and that the species became gradually weaker over time. This establishes that long-term lineage strength change is compatible with Pokémon canon.
+
+However, canon does **not** establish a universal franchise rule that every species was stronger, that civilization caused all weakening, or that all modern Pokémon are genetically degraded.
+
+Until P4 audits species individually, the safe project-authored working premise is:
+
+> Many ancient wild populations may retain harsher traits, greater ecological pressure, more dangerous behavior, or stronger lineages than distant modern descendants. Long-term habitat change, human expansion, selective coexistence/breeding and other pressures can later reshape or weaken some populations.
+
+P4 must mark each species' ancient-strength treatment as source-backed, inferred, project-authored, unchanged, or intentionally exceptional. The stronger universal wording `civilization genetically weakened all Pokémon` must not be presented as official canon without a later explicit owner decision to adopt it purely as project lore.
