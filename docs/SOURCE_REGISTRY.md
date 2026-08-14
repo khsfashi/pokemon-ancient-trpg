@@ -385,20 +385,210 @@ None of those categories relicenses underlying Pokémon characters, designs, gam
 
 ---
 
+## SRC-REF-002 — Life in Adventure
+
+**Decision:** `ADAPT` as product/UX and event-loop reference only  
+**Role:** closest current mobile text-adventure comparator to the owner's desired play feel; useful for event-condition, run-goal, epilogue and collection surface research, not implementation architecture  
+**Canonical listing:** https://play.google.com/store/apps/details?id=com.StudioWheel.Bard  
+**Developer:** StudioWheel  
+**Verified store update:** 2026-02-11, version `1.2.42` shown at verification  
+**Verified:** 2026-08-14
+
+### Evidence anchors
+
+- Google Play describes the game as a text-based D&D-style adventure built around encountering events and choosing what to do.
+- The store description explicitly says event/options can depend on abilities, items, assets and previous choices and can produce additional results.
+- The product exposes combat, multiple epilogues driven by choices, scoring/ranking, and collections for epilogues/monsters/items.
+- The current listing identifies it as offline-capable, single-player, interactive-story/adventure software on Android.
+
+### Reference lessons worth adapting
+
+- Conditions should be able to gate or modify choices/results using multiple state domains rather than only current location.
+- A run can have an initial goal while still supporting side events, emergent outcomes and multiple epilogues.
+- Meta progression/collection can summarize discovered outcomes without requiring a creature-collection loop to dominate play.
+- A text-first mobile game can use selective visual reinforcement instead of making every state transition graphical.
+
+### Boundaries / risks
+
+- The public store listing is product evidence, not source-code or internal-schema evidence; do not infer its implementation architecture.
+- Do not copy event text, scenario content, balance, art, UI assets, names or progression values.
+- Its conventional D&D/fantasy assumptions are specifically **not** authority for this Pokémon world's occupations, magic or social structure.
+- Store metadata is mutable; re-check the product if a later phase relies on a concrete UX feature.
+
+### Downstream ownership
+
+- **P5:** use the verified high-level pattern of state-conditioned choices, run goals and branching epilogues when defining the project's own event contract.
+- **P6:** only use the product as presentation-density evidence after the project's own visual direction exists.
+- **P7:** no architecture decision follows from this closed-source product reference.
+
+---
+
+## SRC-REF-003 — A Dark Room
+
+**Decision:** `ADAPT` as event-system reference only  
+**Role:** inspectable minimalist text-adventure implementation showing state-gated random events, scene graphs, choices and outcomes  
+**Canonical repository:** https://github.com/doublespeakgames/adarkroom  
+**Verified revision:** `1fada4620b6c66bd07bf15a3f1eb8223df8bc1d7` (2025-05-23)  
+**License:** MPL-2.0  
+**Verified:** 2026-08-14
+
+### Evidence anchors
+
+- `script/events.js` constructs categorized event pools, schedules events, keeps an event stack and reacts to state updates.
+- Event files are separated into categories such as `global`, `room`, `outside`, `encounters` and `setpieces`.
+- Concrete events use `isAvailable` predicates plus named `scenes`, text, `onLoad`, notifications, choices/buttons, costs, rewards and deterministic or weighted next-scene transitions.
+- The repository is MPL-2.0; implementation copying is unnecessary for the project-owned data contract we need.
+
+### Reference lessons worth adapting
+
+- Treat event eligibility, scenes, choices and outcomes as explicit concepts instead of embedding narrative progression in UI code.
+- Event families can be grouped by context while sharing one selection/execution contract.
+- Choice costs/rewards and branch transitions are valuable first-class data.
+- Reacting to authoritative state changes is useful, but this project should replace direct callback/UI mutation and ambient `Math.random()` with validated data plus seeded deterministic resolution.
+
+### Boundaries / risks
+
+- A Dark Room mixes content definitions with JavaScript callbacks and direct game-state/UI side effects; that shape is too permissive for deterministic content validation at our intended scale.
+- Its timing/economy/combat/content should not be copied.
+- MPL-licensed source is a reference, not a reason to import code.
+
+### Downstream ownership
+
+- **P5:** define a stricter project-owned event schema with explicit eligibility, branch, cost/reward/effect and seeded-random semantics.
+- **P7:** implement the approved P5 contract independently rather than embedding A Dark Room code.
+
+---
+
+## SRC-REF-004 — ink
+
+**Decision:** `ADAPT` concepts only; runtime adoption remains unselected  
+**Role:** mature interactive-narrative authoring/runtime reference for branching content, compiled artifacts, host/UI separation and save-format evolution  
+**Canonical repository:** https://github.com/inkle/ink  
+**Verified revision:** `35c63e52f1d36060930dc7ed3cfba38ea224b528` (`1.2.1`, 2026-05-05)  
+**License:** MIT  
+**Verified:** 2026-08-14
+
+### Evidence anchors
+
+- ink describes itself as a scripting language for text-centric and highly branching interactive narrative.
+- Authored content is compiled to a JSON story artifact that a host runtime can load.
+- The host pulls narrative with `Continue()`, presents `currentChoices`, and supplies the selected choice back to the story runtime.
+- The project explicitly has internal story-format and save-format versions.
+
+### Reference lessons worth adapting
+
+- Separate narrative authoring representation from the application UI/runtime host.
+- Compile/validate authored content into a runtime artifact rather than parsing unrestricted author logic during play.
+- Choices and continuation are a clean boundary between narrative state and presentation.
+- Version content/save formats explicitly so later schema evolution can be migrated or rejected deterministically.
+
+### Boundaries / risks
+
+- P1 does **not** select ink, inkjs, Unity integration or any other runtime dependency; P7 owns framework/runtime selection after P5/P6 contracts exist.
+- General-purpose narrative scripting may be more flexible than this project's deterministic condition/effect rules require.
+- Do not let a third-party narrative language become the source of truth for Pokémon, TRPG or run-state semantics unless a later phase proves that integration is beneficial.
+
+### Downstream ownership
+
+- **P5:** adapt authoring/runtime separation and versioned content-state concepts into the event contract.
+- **P7:** evaluate actual narrative tooling only if the P5 schema demonstrates a need; no dependency is preselected here.
+
+---
+
+## SRC-CANON-001 — Pokémon Legends: Arceus official Hisui setting material
+
+**Decision:** `ADAPT` as official setting precedent, not as a setting template  
+**Role:** rights-holder primary evidence for how an official Pokémon title depicts a long-ago region where ordinary human–Pokémon coexistence is not yet normalized  
+**Canonical story source:** https://legends.arceus.pokemon.com/en-ca/story/  
+**Canonical gameplay source:** https://legends.arceus.pokemon.com/en-gb/gameplay/  
+**Verified:** 2026-08-14
+
+### Evidence anchors
+
+- The official story page places Hisui in an age long ago and states that it was rare for people and Pokémon to live in close harmony.
+- Jubilife Village is the Galaxy Expedition Team's base; its Survey Corps researches how Pokémon live, with separate Medical and Security Corps also named.
+- The region contains distinct Pokémon ecosystems, clans and wardens who protect/revere special Pokémon and provide offerings.
+- The gameplay page states that people living alongside Pokémon are rare and people leading Pokémon in battle are rarer still.
+- Wild alpha Pokémon may chase and directly attack the player, demonstrating official precedent for Pokémon presenting personal danger outside formal trainer battles.
+
+### What this evidence supports
+
+This source **supports**, but does not fully define, D-003:
+
+- a historical Pokémon setting can canonically make close human–Pokémon partnership uncommon,
+- research/survey occupations and settlement-based expeditions fit official precedent better than importing generic fantasy classes by default,
+- local cultures may revere, fear, serve or form exceptional bonds with particular Pokémon,
+- wilderness expeditions can plausibly treat Pokémon as dangerous ecological actors rather than only collectible battle units.
+
+### Boundaries / risks
+
+- Hisui is one specific official era/region, not proof that every ancient Pokémon society must work the same way.
+- Do not copy Galaxy Team, clan, warden, noble, Pokédex-mission, dialogue or plot structures into the project merely because they are canonical precedent.
+- P2 still owns the exact era, technology, terminology, settlement structure, religion/folklore intensity and severity of human–Pokémon conflict.
+- Official web content is mutable; re-check the source when P2 uses a specific claim.
+
+### Downstream ownership
+
+- **P2:** use this as a constraint/precedent source while creating a distinct world bible.
+- **P3:** may use survey/medicine/security-style social functions as evidence when deriving setting-native occupations, without cloning named Hisui institutions.
+- **P4:** use the precedent that human–Pokémon relationship states can vary socially and individually rather than assuming modern trainer norms.
+
+---
+
+## SRC-POLICY-001 — Current Pokémon / Nintendo fan-use and IP notices
+
+**Decision:** `ADAPT` into a conservative public-repository/IP boundary  
+**Role:** current official policy evidence; not legal advice and not a fan-game license  
+**Pokémon Support source:** https://support.pokemon.com/hc/en-us/articles/360000634094-Can-I-use-Pok%C3%A9mon-images-or-materials  
+**Nintendo content-guideline source:** https://www.nintendo.co.jp/networkservice_guideline/en/index.html  
+**Pokémon Support page updated:** 2026-01-30  
+**Nintendo guideline current page:** verified 2026-08-14  
+**Verified:** 2026-08-14
+
+### Evidence anchors
+
+- Pokémon Support says it is not in a position to review requests to use Pokémon IP—including characters, names and designs—and asks users not to use or associate that IP with their project.
+- The Nintendo Game Content Guidelines are expressly scoped to sharing gameplay footage/screenshots on video/image-sharing platforms; their FAQ states other uses of Nintendo IP are outside that guideline's scope.
+- Nintendo's examples of content it may consider infringing include game software produced using Nintendo copyrighted material without authorization.
+- Neither source establishes a blanket exception saying that a non-commercial fan game is permitted.
+
+### Project policy derived from the evidence
+
+- Keep the repository explicitly **unofficial, non-commercial and non-affiliated**, but never present those labels as permission or a license.
+- A disclaimer can reduce confusion about affiliation; it does **not** authorize use of Pokémon IP.
+- Do not cite Nintendo's streaming/image-sharing guidelines as permission to create or distribute this game; the guidelines explicitly cover a different use case.
+- Do not turn convenient public Pokémon asset repositories into a claim of redistribution rights.
+- Keep project-authored code/rules/text separable from third-party/Pokémon assets so removal/substitution remains technically possible.
+- For public-repository and release decisions, prefer the minimum necessary third-party material and preserve provenance/default-deny handling established elsewhere in this registry.
+
+### Risks / freshness
+
+- This is policy research, not a jurisdiction-specific legal determination or guarantee of enforcement outcome.
+- Rights-holder pages can change; re-check this record before P6 asset inclusion decisions and again before P10 public distribution/release work.
+- The existing project's personal/non-commercial purpose does not remove the conflict between fan-project intent and the current Pokémon Support request.
+
+### Downstream ownership
+
+- **P2-P5:** project-authored world/rules/content should avoid copying official prose or fan-project content when only concepts are needed.
+- **P6:** classify every selected Pokémon-facing resource separately and preserve removability/fetch/omission options.
+- **P10:** re-check current official notices and make the final public distribution/package decision with the then-current project contents.
+
+---
+
 ## Current P1 coverage tracker
 
 | Lane | Status | Next evidence target |
 |---|---|---|
 | PokéAPI structured data | Initial record complete | P4 field mapping later |
 | Pokémon Showdown data/mechanics | Initial record complete | P4 source-selection details later |
-| Pokémon sprite/icon sources | Started | compare additional source/provenance candidates only if needed before P6 |
+| Pokémon sprite/icon sources | Started | compare an additional source only if it materially improves P6's candidate list |
 | Pokémon cries/audio | Initial record complete | P6 usefulness, exact files, redistribution/fetch policy and audio budget |
 | Font/UI/audio/background ecosystems | Pending | reconnaissance only; no art-direction freeze |
 | PokéRogue | Initial record complete | P5/P6/P7 reuse only as bounded comparative evidence |
-| Comparable text/event RPGs | Pending | event/run/content patterns |
-| Official ancient-era setting references | Pending | rights-holder primary material |
-| Fan-project/IP/disclaimer boundaries | Pending | current official policy/notices where available |
+| Comparable text/event RPGs | Initial record complete | P5 converts lessons into a project-owned event contract |
+| Official ancient-era setting references | Initial record complete | P2 re-checks exact claims while building the world bible |
+| Fan-project/IP/disclaimer boundaries | Initial record complete | P6/P10 freshness re-check before resource inclusion/release |
 
 ## Exact next P1 slice
 
-Continue the registry with **comparable text/event-driven games, official Pokémon ancient-era setting references, and current fan-project/IP/disclaimer boundaries**. After those core lanes are bounded, finish the remaining font/UI/audio/background ecosystem reconnaissance and any additional sprite-source comparison that materially improves the P6 candidate list.
+Finish **font/UI/general-audio/background resource ecosystem reconnaissance** and compare another Pokémon sprite/icon source only if it adds materially different coverage or provenance evidence. Then assess the whole registry against #2's exit criteria; do not begin P2 until the remaining P1 resource lane is bounded and the P6 revisit list is explicit.
