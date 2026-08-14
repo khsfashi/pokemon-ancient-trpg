@@ -334,3 +334,26 @@ A companion Pokémon is an accepted relational partner rather than property. Del
 P4 must define species/local killing, hunting, food/material, protection/taboo, intelligence/rarity and non-lethal-resource treatment where relevant. P5 must support context-sensitive consequences rather than a single global morality flag.
 
 The binding contract is `docs/P2_KILLING_ETHICS_CONTRACT.md`.
+
+## D-022 — Pre-regional-civilization proto-Kanto locality
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**Human Design Gate:** P2-HDG-007  
+**Owner choice:** B, clarified as “not yet civilized” at regional scale
+
+The first playable land is a **proto-Kanto locality**: territory that the project understands will much later become part of Kanto, while the people of this era do not yet possess a mature `Kanto` regional identity.
+
+The owner's clarification is binding. This is **before regional civilization**, not a miniature medieval version of modern Kanto and not a Hisui-like organized frontier society. There is no baseline Kanto-wide state, city network, standardized law/currency, maintained road system, Pokémon institution network, safe-travel regime, or shared regional Pokédex culture.
+
+This wording does **not** erase D-012 or D-014. Humans can have stable villages, clan cultures, agriculture, specialists, ironworking, ritual, trade, inherited knowledge, and narrow Pokémon-dependent technology islands. The intended contrast is that **local culture/craft can be sophisticated while regional integration is primitive**.
+
+Human settlements are small islands of relative control inside land still governed primarily by wilderness and Pokémon ecology. Routes are remembered survivable corridors rather than fully secured roads, and isolation between nearby communities can be culturally and economically meaningful.
+
+`Kanto` is primarily a project/system-level future geographic anchor. Ancient inhabitants use local names and identities unless official historical terminology is actually supported. Modern Kanto cities, routes, political boundaries, institutions, and habitat distribution must not be projected backward automatically.
+
+The first playable scope is one bounded settlement-centered locality plus the surrounding routes/ecologies required for a complete run, not all of ancient/future Kanto. The mandatory #001-#151 roster does not imply that all 151 species inhabit or directly appear in this opening locality.
+
+P4 must treat modern Kanto associations as evidence to audit rather than timeless ecology. P5 must support strong locality, cultural disagreement, route accessibility, and gradual discovery without requiring an open-world simulation. P7/P8 must preserve the bounded settlement-centered scope.
+
+The binding contract is `docs/P2_FIRST_REGION_CONTRACT.md`.
