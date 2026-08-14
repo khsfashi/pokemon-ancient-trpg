@@ -39,6 +39,8 @@ Current owner-approved direction:
 - mandatory roster is National Pokédex **#001-#151**, with substantive P4 dossiers and meaningful P9 gameplay presence required for all 151;
 - the opening playable scope is one bounded settlement-centered locality plus surrounding routes/ecologies, not all of future Kanto and not all 151 species at once;
 - human player characters use seven core attributes: **Strength / Endurance / Agility / Sense / Intellect / Will / Presence** (`근력 / 체력 / 기민 / 감각 / 지성 / 의지 / 존재감`);
+- core uncertain-action resolution is **2d6 + Attribute + Competence + Context**, with staged margin outcomes and rare natural-doubles spikes;
+- natural `6+6` is a Fortune Spike and natural `1+1` is a Trouble Spike; neither bypasses fiction or the serious-selective-lethality contract;
 - Luck and Pokémon Bond are not core attributes; fate-like resources and individual relationship state remain separate systems;
 - character creation, compact TRPG checks, dice outcomes, conditional events, discoveries/insights and persistent run state are core;
 - public repository and non-commercial intent do not create Pokémon IP permission;
@@ -108,7 +110,7 @@ P3 owns:
 - attributes and derived stats;
 - backgrounds/occupations;
 - dice/check model;
-- difficulty/opposed checks;
+- difficulty and opposed checks;
 - health, fatigue, fear, injury and recovery mechanics;
 - inventory/resources and economy abstraction;
 - progression;
@@ -122,55 +124,61 @@ P3 owns:
 - Presence is social projection/authority rather than beauty or a universal dialogue-win stat.
 - Luck is not an eighth attribute; Bond is individual Pokémon relationship state rather than a human core stat.
 - P4 may use a different or derived Pokémon stat model instead of forcing species into the human seven-attribute model.
+- **P3-HDG-002 / D-024:** core checks use `2d6 + Attribute + Competence + Context` with margin-based setback / costly-partial / full / exceptional outcomes.
+- natural `6+6` is a **Fortune Spike** and natural `1+1` is a **Trouble Spike**, each a rare 1/36 overlay on the normal result rather than an automatic success/death switch.
+- the default check scale is Attribute `0–4`, Competence `+0/+1/+2`, ordinary Context `-2..+2`, and difficulty `7 / 9 / 11 / 13 / 15`; routine and impossible actions do not roll.
+- Fortune Spikes preferentially create discovery, bestiary insight, route, relationship, resource-preservation, or optional-event opportunities because frequent Pokémon acquisition is not the game's reward loop.
 
-Binding contract: `docs/P3_ATTRIBUTE_CONTRACT.md`.
+Binding contracts:
 
-Numeric attribute ranges, character-creation allocation, modifiers and derived-stat formulas deliberately remain open until the dice/check and health contracts are chosen.
+- `docs/P3_ATTRIBUTE_CONTRACT.md`
+- `docs/P3_DICE_AND_CHECK_CONTRACT.md`
+
+Starting attribute allocation, progression access to high ratings, and exact fate/insight resource rules remain open. The core modifier/difficulty envelope can be tuned in data without reopening the 2d6/doubles philosophy.
 
 ### Exact next Human Design Gate
 
-Resolve **P3-HDG-002 — core dice/check model**.
+Resolve **P3-HDG-003 — health / fatigue / fear / injury representation**.
 
-The check engine must be easy to understand on mobile, deterministic under a saved RNG seed, compatible with backgrounds/knowledge/equipment/context, and capable of more than binary success/failure when an event benefits from partial success.
+D-020 already fixes the tone: ordinary defeat is not automatic death, but persistent injury, critical condition and death are real. The unresolved question is how much short-term state the player should manage between those serious injuries.
 
-#### A — d20 + modifiers vs difficulty
+#### A — Single Health pool + status conditions
 
-- roll one d20, add attribute/competence/context modifiers, compare with a target difficulty;
-- very familiar traditional-TRPG feel;
-- large numeric room for difficulty, equipment and progression;
-- margin can be mapped to critical/partial/full outcomes where authored.
+- one numeric Health/HP pool handles ordinary harm;
+- fatigue, fear, poison and injuries appear mainly as status effects/modifiers;
+- easiest to read and closest to a conventional RPG.
 
-**Impact:** clearest conventional RPG language, but the flat d20 curve makes luck relatively dominant and specialists can fail easy tasks more often unless modifiers/advantage rules compensate.
+**Impact:** smallest rules surface, but physical exhaustion, terror and actual wounds can blur together or feel like temporary debuffs on an HP bar.
 
-#### B — 2d6 + modifiers with margin/outcome bands **(recommended)**
+#### B — Vitality + Fatigue + Fear + separate Injury tiers **(recommended)**
 
-- roll 2d6 and add the relevant attribute/competence modifiers against a difficulty or opposed value;
-- the bell-shaped distribution makes ordinary competence more reliable while keeping rare high/low results;
-- margin/result bands can naturally produce failure, costly/partial success, full success and exceptional success;
-- compact numbers suit a mobile text event system and make consequence authoring legible.
+- **Vitality** absorbs short-term physical harm/shock and can recover relatively quickly with safety/rest;
+- **Fatigue** tracks sustained exertion, hunger/exposure/sleep pressure and penalizes prolonged adventure;
+- **Fear** tracks acute psychological pressure and can force hesitation/panic-like consequences without being generic sanity damage;
+- **Injuries** are discrete persistent wounds/conditions produced by sufficiently severe events rather than every lost point;
+- critical injury and death remain explicit high-severity states.
 
-**Impact:** strongest fit for event-driven narrative checks and partial-success design. It is less instantly `D&D-like` than d20, but produces more stable probabilities and makes expertise feel more dependable.
+**Impact:** best fit for the existing seven stats and dangerous wilderness. It distinguishes being tired, terrified, battered, and genuinely wounded while keeping serious injuries narratively meaningful. More state than A, but each track has a clear job.
 
-#### C — d6 dice pool / count successes
+#### C — Unified Strain track + separate Injuries
 
-- attribute, competence and situational factors build a pool of d6s;
-- count dice meeting the success face threshold;
-- advantage/disadvantage is represented naturally by adding/removing dice;
-- degree of success is visible through success count.
+- physical fatigue, fear and short-term harm all fill one `Strain` resource;
+- when Strain overflows or a severe event bypasses it, discrete Injuries occur;
+- very compact for mobile play.
 
-**Impact:** expressive and tactile, but requires more dice/results to display, increases balancing surface, and can make a text-first mobile check feel busier than necessary.
+**Impact:** elegant and low-bookkeeping, but a sleepless march, a psychic scare and being clubbed by a Pokémon all consume the same meter, reducing character/build distinction.
 
-#### D — d100 percentile roll-under
+#### D — Injury slots only; almost no buffer pools
 
-- skills/check chances resolve as explicit percentages;
-- probability is transparent to players;
-- degrees of success can use margin or special bands.
+- no conventional HP/Vitality resource;
+- meaningful hits directly create light/serious/critical wounds;
+- fatigue/fear are mainly conditions or check penalties.
 
-**Impact:** easiest raw probability communication, but pushes the rules toward larger numeric ranges and a more simulation-oriented sheet than the project currently needs.
+**Impact:** grittiest and most simulation-forward. Every dangerous exchange matters, but combat/travel can become swingy and punitive, especially when wild Pokémon are intentionally far stronger than humans.
 
-Recommendation: **B — 2d6 + modifiers with margin/outcome bands**.
+Recommendation: **B — Vitality + Fatigue + Fear + separate Injury tiers**.
 
-Do **not** freeze exact target numbers, modifier scale, critical thresholds or attribute ranges until the owner chooses the core dice model. After this gate, P3 should immediately bind difficulty/opposed checks and then resolve the health/fatigue/fear/injury model.
+After this gate, P3 should bind recovery/critical-state rules, then character creation/backgrounds and progression/resource philosophy without reopening the resolved 2d6 engine.
 
 ## Later mandatory contracts
 
