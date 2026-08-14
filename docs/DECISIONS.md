@@ -409,3 +409,30 @@ The default P3 check scale uses compact human attribute ratings `0–4`, compete
 The reward cadence must not depend primarily on frequent Pokémon acquisition. Exceptional outcomes and Fortune Spikes can instead drive knowledge, discovery, route, relationship, resource, reputation, and event-flag rewards.
 
 The binding contract is `docs/P3_DICE_AND_CHECK_CONTRACT.md`.
+
+## D-025 — Compact Vitality, pressure stages, and discrete Injuries
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-003  
+**Owner choice:** refined B — one numeric buffer plus staged pressure and concrete wounds
+
+Human player characters use a compact hybrid survival model:
+
+- **Vitality / 활력** is the only ordinary numeric health-like pool and represents short-term physical capacity rather than literal wounds;
+- **Fatigue / 피로** uses three stages: `Ready → Tired → Exhausted` (`정상 → 피곤 → 탈진`);
+- **Fear / 공포** uses three stages: `Steady → Shaken → Panicked` (`안정 → 동요 → 공황`);
+- **Injuries / 부상** are named persistent wound records with `Light / Serious / Critical` severity rather than another bar;
+- death is a separate explicit high-severity state and is never inferred automatically from Vitality reaching zero.
+
+The initial human balance envelope is `Vitality Max = 4 + Endurance`, ordinary Vitality harm `1–3`, and up to three simultaneous active mechanical Injury records. Fatigue/Fear penalties apply only when their specific pressure is relevant rather than as universal modifiers.
+
+At `0 Vitality`, a human is **Incapacitated**, not dead. Injury-capable harm, direct severe hazards, repeated harm while incapacitated, untreated/worsening Serious injuries, or explicit lethal circumstances can create or escalate Injuries. Critical Injury must expose stabilization/rescue logic before death unless the fiction is already explicitly lethal under D-020.
+
+Vitality recovers comparatively quickly with safety/rest; Fatigue requires food, shelter, sleep, and reduced exertion; Fear requires psychological safety/distance/support; Injuries require cause-appropriate treatment and time. There is no generic instant-heal potion economy.
+
+Fear is not a sanity or morality meter, and Panicked does not automatically remove all player agency. The game should present protective responses or allow a Will-based attempt to maintain controlled action when appropriate.
+
+This contract applies to human player characters. P4 may use a species-appropriate companion/Pokémon survivability model rather than forcing Pokémon into human Vitality/Fatigue/Fear formulas.
+
+The binding contract is `docs/P3_HEALTH_PRESSURE_AND_INJURY_CONTRACT.md`.
