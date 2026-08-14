@@ -11,13 +11,17 @@ Unofficial, non-commercial Pokémon fan-made mobile text RPG/TRPG for primarily 
 Current owner-approved direction:
 
 - setting is intentionally **earlier than the Hisui-era precedent**;
+- first playable land is **future-Kanto territory before a mature Kanto regional civilization exists**;
+- `Kanto` is primarily a project/system-level future geographic anchor; ancient people use local identities/names rather than a mature regional identity;
 - human society is an **early settled village / clan network**;
-- settlements are small islands of relative safety connected by dangerous, locally known routes;
+- local settlements can have culture, agriculture, ironworking and specialists while regional state capacity, roads, markets, institutions and information networks remain weak or absent;
+- settlements are small islands of relative safety connected by dangerous, locally known survivable corridors;
 - ordinary material culture has an **iron-age / medieval-fantasy-like baseline**;
 - iron tools and weapons help humans survive but do not make ordinary humans peers of Pokémon;
 - narrow **Pokémon-dependent technology islands** can make one locality unusually advanced in one craft when the practice is causally traceable to official Pokémon capabilities/ecology and generations of human practice;
 - technology islands are local, fragile and non-industrial; they do not imply a general modern technology tree or obedient Pokémon workforce;
 - ancient-world lore follows **official evidence → bounded interpretation → explicit project extrapolation**;
+- modern Kanto cities, routes, institutions, political boundaries and habitat distribution are not projected backward automatically;
 - species presentation uses a **hybrid identification model**: stable official species identities coexist with unknown/descriptive encounter labels and local aliases until the player has sufficient knowledge;
 - official species names become the stable player-facing label after identification, but local names can remain in dialogue/lore and the umbrella word `Pokémon` is not forced as universal diegetic vocabulary;
 - humans and Pokémon are not integrated through normalized trainer culture or routine ownership;
@@ -33,6 +37,7 @@ Current owner-approved direction:
 - rare **human psychics / miracle-workers** are allowed as canon-compatible exceptional people, not as a generic wizard spell system;
 - ancient Pokémon should feel materially dangerous; broad lineage-strength change remains species-specific/provisional until P4 rather than being falsely presented as universal canon;
 - mandatory roster is National Pokédex **#001-#151**, with substantive P4 dossiers and meaningful P9 gameplay presence required for all 151;
+- the opening playable scope is one bounded settlement-centered locality plus surrounding routes/ecologies, not all of future Kanto and not all 151 species at once;
 - character creation, compact TRPG checks, dice outcomes, conditional events, discoveries/insights and persistent run state are core;
 - public repository and non-commercial intent do not create Pokémon IP permission;
 - resource provenance and mobile resource discipline remain first-class constraints.
@@ -53,13 +58,11 @@ P1 closed via PR #18. Important outputs include:
 
 Final production asset selection remains deferred to P6.
 
-## Current phase
+### P2 — World bible and setting contract (#3) — READY TO CLOSE ON CURRENT PR MERGE
 
-**P2 — World bible and setting contract (#3) is active.**
+Primary contract: `docs/WORLD_BIBLE.md`.
 
-Primary working contract: `docs/WORLD_BIBLE.md`.
-
-### Resolved P2 decisions
+Resolved decisions:
 
 - **P2-HDG-001 / D-012:** early settled village / clan-network society.
 - **P2-HDG-002 / D-013:** no portable containment; optional three-slot companion system; `0/3` is a first-class complete run.
@@ -70,92 +73,91 @@ Primary working contract: `docs/WORLD_BIBLE.md`.
 - **P2-HDG-004 / D-019:** hybrid species identification/naming; unknown/local terminology before identification, stable official species name after identification.
 - **P2-HDG-005 / D-020:** serious selective lethality; persistent/critical injury and death are real, but ordinary defeat is not automatic death.
 - **P2-HDG-006 / D-021:** Pokémon killing ethics are contextual and culture/species-sensitive rather than universally taboo or universally routine.
+- **P2-HDG-007 / D-022:** pre-regional-civilization proto-Kanto locality; future-Kanto anchor without mature ancient Kanto civilization.
 
-### Supporting research and contracts
+Binding/supporting contracts:
 
-`docs/P2_TECHNOLOGY_CANON_RESEARCH.md` records the source research behind iron-era danger, Pokémon-driven crafts, human psychics and historical strength-change precedent.
+- `docs/P2_TECHNOLOGY_CANON_RESEARCH.md`
+- `docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md`
+- `docs/P2_TERMINOLOGY_AND_IDENTIFICATION_CONTRACT.md`
+- `docs/P2_LETHALITY_CANON_RESEARCH.md`
+- `docs/P2_INJURY_AND_LETHALITY_CONTRACT.md`
+- `docs/P2_KILLING_ETHICS_CONTRACT.md`
+- `docs/P2_FIRST_REGION_CONTRACT.md`
+- `docs/P2_EXIT_AUDIT.md`
 
-`docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md` binds narrow/local Pokémon-dependent technology and canon-versus-project-lore evidence classes.
+`docs/P2_EXIT_AUDIT.md` maps every #3 requirement to a binding contract and reports **PASS**. Currency details, exact psychic numbers, local village names/maps and species-specific ecology are explicitly assigned downstream rather than treated as missing P2 work.
 
-`docs/P2_TERMINOLOGY_AND_IDENTIFICATION_CONTRACT.md` binds stable species identity, run knowledge, unidentified/identified presentation, and optional local aliases.
+### Provisional ancient-danger premise carried into P4
 
-`docs/P2_LETHALITY_CANON_RESEARCH.md` records the official-setting boundary for injury, death, hunting and non-universal battle lethality.
-
-`docs/P2_INJURY_AND_LETHALITY_CONTRACT.md` binds:
-
-- escape/non-lethal defeat/injury/critical/death as distinct semantic outcomes;
-- persistent and potentially permanent injury;
-- explicit high-severity lethal paths rather than `failed roll = death`;
-- danger communication/telegraphing where reasonably possible;
-- rare/high-impact companion death rather than ordinary attrition;
-- human-only survival tools under lethal stakes;
-- no generic assumption that death means fainting or that resurrection is routine;
-- downstream P3/P4/P5 requirements for health, durability, treatment and consequence ladders.
-
-`docs/P2_KILLING_ETHICS_CONTRACT.md` binds:
-
-- survival/defense/hunting/mercy/ecological necessity as potentially legitimate lethal contexts;
-- species- and settlement-specific hunting, protection, sacredness, rarity and intelligence treatment;
-- no universal `defeat = kill = loot` rule;
-- hunters/defenders as valid roles without a generic monster-harvest progression loop;
-- species-specific food/material and non-lethal resource treatment for P4;
-- context-sensitive reputation/ecological/narrative consequences for P5;
-- severe relational treatment of deliberate companion killing except where exceptional context changes the judgment.
-
-### Provisional ancient-danger premise
-
-`docs/DECISIONS.md` D-016 remains **PROVISIONAL** in wording, not in the desired danger tone.
+`docs/DECISIONS.md` D-016 remains **PROVISIONAL** in wording, not in desired danger tone.
 
 The project intends ancient Pokémon to be frightening and often overwhelming even against iron-armed humans. What remains unproven is a universal canon claim that civilization genetically weakened every species. P4 therefore decides strength/history species by species and labels project extrapolation honestly.
 
-## Exact next lane
+## Current / next phase
 
-Resolve **P2-HDG-007 — first-playable region identity**.
+**P3 — Core TRPG rules and character model (#4)** becomes active once the current P2 completion PR is merged and #3 is closed.
 
-The first playable scope should remain **local and bounded** regardless of this choice: a small settlement cluster plus surrounding routes/ecologies, not an entire modern region. That scope rule follows the project's event-driven mobile vertical-slice direction and does not need a separate world-lore choice.
+P3 owns:
 
-The remaining creative decision is how that local scope relates to modern Pokémon geography.
+- character creation;
+- attributes and derived stats;
+- backgrounds/occupations;
+- dice/check model;
+- difficulty/opposed checks;
+- health, fatigue, fear, injury and recovery mechanics;
+- inventory/resources and economy abstraction;
+- progression;
+- failure/partial-success philosophy;
+- bounded mechanics for rare human psychic gifts where playable.
 
-### A — Explicit ancient Kanto
+### Exact next Human Design Gate
 
-- the game openly states that the local area is ancient Kanto;
-- modern Kanto names/institutions need not exist yet, but the player knows the broad regional identity;
-- later P4/P9 content can strongly lean into the original 151's Kanto association.
+Resolve **P3-HDG-001 — core attribute model**.
 
-**Impact:** strongest Generation-I identity and easiest player comprehension, but every major geography/history choice risks being read as a claim about canonical ancient Kanto.
+The world contract does not objectively determine how many base attributes the player should manage. This is a core player-facing rule and therefore requires owner approval.
 
-### B — Proto-Kanto locality **(recommended)**
+#### A — Four broad attributes
 
-- the playable land is explicitly understood by the project as territory that will much later belong to Kanto, but ancient people use local settlement/landscape names rather than a mature `Kanto` regional identity;
-- the game can use recognizable long-term geographic/ecological anchors only where source evidence supports them;
-- project-authored villages, routes, disasters, cultures and ecological boundaries remain free to differ radically from modern Kanto.
+`Body / Agility / Mind / Spirit`
 
-**Impact:** preserves the Gen-I/Kanto connection while giving the ancient setting enough distance to avoid pretending unsupported modern geography existed unchanged. Best fit with the canon-first derivation rule.
+- very compact and mobile-friendly;
+- perception/tracking folds into Mind or relevant background;
+- fear/social/psychic resistance folds into Spirit;
+- smallest character sheet and easiest balance surface.
 
-### C — Unnamed/original ancient region
+**Impact:** fastest play and lowest complexity, but wilderness perception/knowledge distinctions can become overly broad.
 
-- the first playable area is not committed to becoming any modern named region;
-- Gen-I species are curated there because the project roster is #001-#151, not because the land is Kanto;
-- geography, cultures and history are almost entirely project-authored.
+#### B — Five focused attributes **(recommended)**
 
-**Impact:** maximum worldbuilding freedom and lowest risk of accidental ancient-Kanto pseudo-canon, but weaker Generation-I regional identity and less payoff from recognizable Kanto history/geography.
+`Body / Agility / Sense / Mind / Will`
+
+- Body: strength, endurance, physical force/resistance;
+- Agility: speed, dexterity, stealth, precise movement;
+- Sense: perception, tracking, environmental awareness, immediate danger reading;
+- Mind: knowledge, craft, medicine, planning, reasoning;
+- Will: fear resistance, self-control, conviction and bounded psychic resilience/discipline.
+
+There is **no dedicated Charisma stat**. Social checks use the approach plus background/relationship/context, normally Mind or Will when an attribute is actually needed.
+
+**Impact:** still compact while making survival/exploration and knowledge meaningfully distinct; avoids a generic fantasy/social dump stat and maps cleanly onto the P2 world.
+
+#### C — Six traditional granular attributes
+
+`Strength / Endurance / Agility / Sense / Mind / Presence`
+
+- separates physical power from durability;
+- gives social influence its own base stat;
+- allows finer build niches.
+
+**Impact:** more conventional TRPG differentiation but more balance surface, more derived-stat coupling and more chances for low-value stat checks in a mobile text game.
 
 Recommendation: **B**.
 
-It lets P2/P4 use `future Kanto` as a useful anchor without forcing ancient inhabitants to share modern regional labels or making every invented village an unsupported claim about canon history.
-
-After region identity, remaining P2 closure work is expected to be mostly bounded contract depth rather than large new lore gates:
-
-1. define the local first-scope boundary at contract level without naming every village/event;
-2. freeze economy/medicine only to the precision P3-P5 require;
-3. explicitly defer exact psychic ability numbers/ceiling to P3 unless world consistency requires one more gate;
-4. run a P2 contradiction/exit audit before moving to P3.
-
-Do not reopen containment, companion slots, iron-age floor, technology islands, canon-first derivation, hybrid identification, selective lethality, contextual killing ethics, or existence of rare human psychics unless the owner explicitly supersedes D-013/D-014/D-015/D-017/D-018/D-019/D-020/D-021.
+After the attribute model, P3 should freeze the dice/check model and health/fear/injury representation before designing detailed backgrounds or progression.
 
 ## Later mandatory contracts
 
-- **P3 / #4:** compact deterministic TRPG rules and character model; human-only, companion-assisted and rare bounded psychic paths; health model must represent non-lethal defeat through lethal outcomes.
 - **P4 / #5:** shared Pokémon adaptation rules + `151/151` substantive ancient-setting dossiers with provenance/evidence classes, species-specific companionship, ancient-strength treatment, technology/craft hooks, identification/alias hooks, killing/hunting/material treatment and exceptional lethality/durability factors.
 - **P5 / #6:** deterministic seeded narrative event-engine contract, including valid `0/3` companion runs, local-knowledge conditions, knowledge-dependent species rendering, context-sensitive lethal-act consequences and authored consequence ladders.
 - **P6 / #12:** exact production resource/asset/provenance/mobile-budget contract.
