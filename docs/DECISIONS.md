@@ -109,3 +109,18 @@ The intended setting should be **earlier than the historical society shown in Po
 Hisui is an official precedent and an **upper-bound comparison**, not the project's target template. P2 should therefore begin from a society where normalized human–Pokémon coexistence, trainer conventions, formal survey institutions, Poké Ball-style capture infrastructure, and comparable settlement organization are even less established unless the owner later approves a specific exception.
 
 This decision does not yet assign an exact calendar date, real-world historical analogue, technology level, region identity, or terminology. Those remain P2 design questions, but any selected answer must preserve the direction that this world represents an earlier stage of human–Pokémon relations than Hisui.
+
+## D-011 — Complete Generation I roster and per-species setting dossiers
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+
+The mandatory Pokémon roster is the complete original Generation I National Pokédex: **#001-#151, all 151 species inclusive of Mew**.
+
+P4 must design each species individually rather than relying only on generic Pokémon-system rules. Every species receives a detailed ancient-setting dossier covering its ecology, human perception/cultural role, threat and encounter behavior, bond/companionship conditions, mechanical adaptation hooks, narrative/event hooks, bestiary knowledge progression, provenance, and unresolved dependencies as applicable.
+
+This breadth requirement does not mean every species is common, catchable, companion-eligible, or directly encountered in the same way. Rarity, danger, legendary/mythical status, ecology, and the pre-Hisui setting may require indirect or exceptional forms of presence.
+
+P4 cannot close with partial roster coverage: its closure audit must prove `151/151` substantive dossiers. P9 must then prove `151/151` meaningful in-game content presence, which may include encounters, events, traces, myths, quests, cultural relationships, bestiary discoveries, or environmental consequences appropriate to each dossier.
+
+Regional forms, later-generation evolutions, Mega Evolution, Gigantamax, and other post-Generation-I additions are outside the mandatory baseline unless a later owner decision explicitly expands scope.
