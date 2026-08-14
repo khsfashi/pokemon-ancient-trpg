@@ -26,6 +26,7 @@ The following constraints are authoritative:
 - the player has exactly **three companion Pokémon slots**, and `0/3` through `3/3` are all valid run states;
 - a run must remain fully playable and completable with zero Pokémon companions;
 - forming a stable bond with a Pokémon is not assumed to be routine, and every companion physically exists and travels in the world;
+- the world uses **serious selective lethality**: lasting injury and death are real possible outcomes, but ordinary defeat is not automatically death;
 - rare **human psychics / miracle-workers** may exist as canon-compatible exceptional people, but there is no generic universal magic system;
 - the mandatory species scope is National Pokédex #001-#151, but full species coverage does not imply that all species are common, companion-eligible, or directly encountered.
 
@@ -245,7 +246,7 @@ That precedent does **not** establish that every species was stronger or that ci
 
 The causal language `civilization genetically weakened all Pokémon` remains a project-authored hypothesis rather than claimed canon and is recorded as provisional in D-016.
 
-## 8. Conflict and protection
+## 8. Conflict, injury, lethality, and protection
 
 Human settlements require methods for surviving dangerous Pokémon, but P2 does not assume trainer-style combat as the default defense system.
 
@@ -263,7 +264,32 @@ A companion or gifted human may open powerful options, but later rules and conte
 
 Iron-era weapons do not imply routine monster hunting. Many Pokémon capabilities exceed armor and weapon solutions entirely through speed, mass, elemental force, poison, electricity, sleep, memory, psychic effects, terrain control, or other species-specific hazards.
 
-The exact lethality, treatment of killing Pokémon, and battle abstraction remain separate gates because they materially affect tone and mechanics.
+### 8.1 Serious selective lethality
+
+D-020 establishes **serious selective lethality**.
+
+The world recognizes a meaningful distinction among:
+
+- escape/disengagement;
+- non-lethal incapacitation or forced defeat;
+- recoverable injury;
+- serious or lasting injury;
+- critical/life-threatening condition;
+- death.
+
+Ordinary defeat does **not** automatically become death. Death is reserved for sufficiently lethal circumstances, critical escalation, failed rescue/treatment, deliberate lethal action, accumulated danger, or another explicit authored lethal path.
+
+This does not make the world safe. A person who knowingly fights an overwhelming Pokémon, remains exposed to poison/fire/extreme terrain, refuses retreat, or continues while critically injured can die. The distinction exists so the game can support danger, rescue, retreat, treatment, and consequence escalation rather than treating every failed encounter as a binary alive/dead check.
+
+Where reasonably possible, lethal stakes should be legible through observed behavior, local warnings, bestiary knowledge, visible injury escalation, explicit choice wording, or other world-supported signals. Unknown hazards may exist, but arbitrary surprise permadeath from low-severity failure is not the intended tone.
+
+Companion Pokémon can be seriously injured and can die, but companion death is rare/high-impact rather than routine attrition. A normal random encounter defeat does not automatically erase a companion. Species-specific lethality and durability belong to P4.
+
+A `death` outcome is real and is not a synonym for fainting. The baseline does not assume a generic resurrection system; any future return-from-death exception requires an explicit separate decision.
+
+The binding downstream contract is `docs/P2_INJURY_AND_LETHALITY_CONTRACT.md`; source boundaries are recorded in `docs/P2_LETHALITY_CANON_RESEARCH.md`.
+
+The **social/ethical treatment of humans killing Pokémon remains unresolved** and is intentionally a separate P2 gate.
 
 ## 9. Health and medicine baseline
 
@@ -275,7 +301,7 @@ Official Pokémon material supports species whose biological products or abiliti
 
 Pokémon injuries are less standardized because companion-keeping is uncommon. A person who travels with a Pokémon must account for that creature's species-specific food, rest, wound care, shelter, environmental needs, and risks rather than relying on universal trainer infrastructure.
 
-P3 may model health, fatigue, fear, injury, and recovery only after P2 resolves the intended severity/lethality tone.
+Under D-020, medicine has real run consequences because recoverable, lasting, and critical injuries may persist beyond the encounter. P3 owns exact health/recovery mechanics; P5 owns treatment/rescue event consequences.
 
 ## 10. Occupation space created by this world
 
@@ -315,7 +341,6 @@ The following are still open because choosing them now would exceed the owner's 
 - exact region identity and geography of the first playable scope;
 - exact currency/economic abstraction;
 - normal human lifespan/medical sophistication relative to real history;
-- lethality and permanent-injury tone;
 - whether killing Pokémon is common, taboo, situational, or exceptional;
 - how often ordinary people encounter individuals who have a companion;
 - the exact species-specific process by which a Pokémon chooses or accepts continued companionship;
@@ -323,6 +348,7 @@ The following are still open because choosing them now would exceed the owner's 
 - whether riding or using a companion for transport is possible for particular species;
 - the finalized list and strength ceiling of playable human psychic faculties;
 - whether the provisional ancient-lineage weakening premise applies broadly, narrowly, or through multiple different causes;
+- exact mechanical health values, wound tiers, permanent-injury tables, or player-death run handling;
 - exact mechanical thresholds/tier count for species identification and bestiary knowledge;
 - exact production wording for unknown encounter labels;
 - central religion/cosmology, if any;
@@ -339,6 +365,8 @@ Pokémon-dependent technology islands are **not** unresolved: D-017 makes them a
 Canon-first derivation is **not** unresolved: D-018 requires official evidence to remain visibly separate from project-authored extrapolation.
 
 Species naming/identification presentation is **not** unresolved: D-019 fixes the hybrid model, while local vocabulary and mechanical thresholds remain later content/rules work.
+
+Injury/death severity is **not** unresolved: D-020 fixes serious selective lethality, while exact P3 mechanics and the ethics of killing Pokémon remain separate work.
 
 These remaining questions must be resolved only when they become the next blocking P2 decision or are explicitly assigned to P3/P4.
 
@@ -360,17 +388,23 @@ P3-P9 content must preserve these invariants unless an explicit later owner deci
 12. Stable official species identity, current player knowledge, and local diegetic naming are separate layers.
 13. Unidentified encounters must not automatically leak official species names or unearned hidden knowledge.
 14. Identification may reveal the official species name without completing the species' bestiary knowledge.
-15. Occupations arise from village survival, exchange, travel, knowledge, Pokémon ecology, local technology islands and rare canon-compatible gifts rather than generic fantasy magic.
-16. A species dossier may make a particular Pokémon locally familiar without making Pokémon as a whole domesticated or normalized.
-17. The world can contain craftsmanship, culture, ritual, trade, specialist knowledge and isolated anomalous crafts without becoming a Hisui-like institutional frontier society.
-18. Later systems must prefer explicit local exceptions over silently weakening the global pre-Hisui baseline.
-19. P4 must determine companionship plausibility and burdens per species instead of assuming that every one of the 151 can occupy a companion slot.
-20. P4 must source and audit any Pokémon-derived technology/craft hook per species rather than inferring a modern tech tree from elemental powers; `none` is always a valid result.
-21. P4 must distinguish direct official evidence, derived inference, and project-authored extrapolation for every material species claim.
-22. P4 must distinguish source-backed ancient-strength evidence from project-authored amplification for every species where the distinction matters.
-23. P4 must define species recognition/identification hooks and use local aliases only where they add actual content value; `none` is valid.
-24. P5 must support event and ending paths for every companion occupancy state from `0/3` through `3/3` where relevant.
-25. P5 must support knowledge-dependent species rendering and conflicting/local testimony without creating duplicate species entities.
-26. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
-27. P7/P8 must keep stable species key, official display name, current encounter label, identification state and discovered aliases as separable data/presentation concerns.
-28. Later data/content pipelines must preserve evidence/provenance classes so project lore cannot be mistaken for imported canon data.
+15. Ordinary defeat, injury, critical condition, and death are distinct outcomes; `defeat = death` is forbidden as a universal shortcut.
+16. Death may occur in genuinely lethal circumstances, but routine low-severity failure must not become arbitrary surprise permadeath.
+17. Companion death is possible but rare/high-impact rather than ordinary attrition.
+18. Human-only survival must remain mechanically viable even under lethal stakes; a Pokémon companion cannot become a mandatory survival tax.
+19. Occupations arise from village survival, exchange, travel, knowledge, Pokémon ecology, local technology islands and rare canon-compatible gifts rather than generic fantasy magic.
+20. A species dossier may make a particular Pokémon locally familiar without making Pokémon as a whole domesticated or normalized.
+21. The world can contain craftsmanship, culture, ritual, trade, specialist knowledge and isolated anomalous crafts without becoming a Hisui-like institutional frontier society.
+22. Later systems must prefer explicit local exceptions over silently weakening the global pre-Hisui baseline.
+23. P4 must determine companionship plausibility and burdens per species instead of assuming that every one of the 151 can occupy a companion slot.
+24. P4 must source and audit any Pokémon-derived technology/craft hook per species rather than inferring a modern tech tree from elemental powers; `none` is always a valid result.
+25. P4 must distinguish direct official evidence, derived inference, and project-authored extrapolation for every material species claim.
+26. P4 must distinguish source-backed ancient-strength evidence from project-authored amplification for every species where the distinction matters.
+27. P4 must define species recognition/identification hooks and use local aliases only where they add actual content value; `none` is valid.
+28. P4 must record exceptional species-specific lethality/durability factors where they materially alter human danger, companion care, or encounter consequences.
+29. P5 must support event and ending paths for every companion occupancy state from `0/3` through `3/3` where relevant.
+30. P5 must support knowledge-dependent species rendering and conflicting/local testimony without creating duplicate species entities.
+31. P5 must support consequence ladders that can resolve through escape, non-lethal defeat, injury, critical condition, rescue/treatment, or explicit lethal outcomes rather than reducing all failures to death.
+32. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
+33. P7/P8 must keep stable species key, official display name, current encounter label, identification state and discovered aliases as separable data/presentation concerns.
+34. Later data/content pipelines must preserve evidence/provenance classes so project lore cannot be mistaken for imported canon data.
