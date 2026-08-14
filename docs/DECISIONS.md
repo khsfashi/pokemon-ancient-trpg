@@ -98,3 +98,14 @@ Resource planning is a first-class project phase and intentionally happens in tw
 **P6 (#12)** occurs after P2-P5. It owns the final production resource contract: required/optional/deferred asset inventory; source versus project-created/generated strategy; provenance/attribution/redistribution classification; public-repository inclusion versus build-time fetch/generation; stable resource IDs/manifests; preprocessing/validation; and mobile payload/decode/audio/cache budgets.
 
 P6 precedes P7 Technical Architecture. Later phases must preserve the resource contract rather than bypassing it with one-off asset handling.
+
+## D-010 — Earlier than the Hisui-era precedent
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+
+The intended setting should be **earlier than the historical society shown in Pokémon Legends: Arceus / Hisui**, not merely another Hisui-like frontier period.
+
+Hisui is an official precedent and an **upper-bound comparison**, not the project's target template. P2 should therefore begin from a society where normalized human–Pokémon coexistence, trainer conventions, formal survey institutions, Poké Ball-style capture infrastructure, and comparable settlement organization are even less established unless the owner later approves a specific exception.
+
+This decision does not yet assign an exact calendar date, real-world historical analogue, technology level, region identity, or terminology. Those remain P2 design questions, but any selected answer must preserve the direction that this world represents an earlier stage of human–Pokémon relations than Hisui.
