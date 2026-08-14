@@ -38,8 +38,9 @@ Before substantive work:
 4. `docs/ROADMAP.md`
 5. `docs/DECISIONS.md`
 6. the relevant design/specification contract
-7. `docs/REFERENCE_PROTOCOL.md` when external facts, APIs, libraries, Pokémon data, licensing, provenance, or comparable projects matter
-8. live GitHub PR / issue / CI state
+7. `docs/REFERENCE_PROTOCOL.md` when external facts, APIs, libraries, Pokémon data/resources, licensing, provenance, or comparable projects matter
+8. `docs/RESOURCE_STRATEGY.md` once P6 creates it and the current work touches resources or their runtime integration
+9. live GitHub PR / issue / CI state
 
 If documentation and live repository state disagree, reconcile the stale documentation as part of the current work.
 
@@ -51,7 +52,7 @@ When sources disagree, use this order:
 2. compiling code and automated tests for implemented behavior,
 3. live PR / merge / issue / CI state,
 4. exact active issue acceptance criteria,
-5. current approved design/specification contracts,
+5. current approved design/specification/resource contracts,
 6. `PROJECT_STATUS.md`,
 7. `docs/ROADMAP.md`,
 8. older discussion or model memory.
@@ -71,7 +72,7 @@ For a routine `next` / `continue` request:
 7. Resolve factual or technical uncertainty through current primary sources under `docs/REFERENCE_PROTOCOL.md` rather than asking the owner to research it.
 8. Detect whether a Human Design Gate is required before freezing the design.
 9. If no Human Design Gate is required, implement or specify one coherent vertical slice of the active issue.
-10. Add/update tests, validation, schemas, fixtures, reference records, and documentation appropriate to the work.
+10. Add/update tests, validation, schemas, fixtures, reference/provenance records, and documentation appropriate to the work.
 11. Update `PROJECT_STATUS.md` whenever current/next state materially changes.
 12. Publish/update one scoped `agent/<description>` PR unless an existing PR owns the work.
 13. Do not begin a later core phase while the current phase still has an unresolved implementation/review/validation blocker.
@@ -87,10 +88,11 @@ Examples:
 
 - what fields PokéAPI exposes,
 - how Pokémon Showdown structures move/learnset data,
+- what sprite/icon/audio sources exist and how their provenance/notices are stated,
 - current framework/library capabilities,
 - browser/PWA storage behavior,
 - current license text or source provenance,
-- performance characteristics that can be measured or derived,
+- performance/memory characteristics that can be measured or derived,
 - whether a technical implementation can be tested deterministically.
 
 For these, consult current primary sources, record evidence, and make an engineering recommendation.
@@ -108,13 +110,14 @@ A Human Design Gate is required when multiple answers are valid and the choice m
 - capture/taming/bond philosophy,
 - progression philosophy,
 - first-region identity,
-- any other persistent player-facing rule that would be expensive or incoherent to reverse later.
+- overall presentation/art direction or illustration density once P6 has enough design context,
+- any other persistent player-facing rule or presentation direction that would be expensive or incoherent to reverse later.
 
-Do **not** silently invent lore to fill such gaps.
+Do **not** silently invent lore or freeze a major art direction to fill such gaps.
 
 ### Gate format
 
-When a gate is needed, prefer 2–4 concrete options:
+When a gate is needed, prefer 2-4 concrete options:
 
 ```text
 Decision needed: <question>
@@ -128,7 +131,7 @@ Why: ...
 Impact: ...
 ```
 
-Ask only the minimum decision needed to unblock the active work. Do not bundle unrelated worldbuilding questions.
+Ask only the minimum decision needed to unblock the active work. Do not bundle unrelated worldbuilding or presentation questions.
 
 Once the owner decides, immediately record the decision in `docs/DECISIONS.md` with status and rationale. Do not ask the same question again unless new evidence creates a genuine conflict.
 
@@ -150,9 +153,41 @@ Hard rules:
 - prefer primary sources and official repositories/documentation,
 - treat public repositories as references unless their exact license/provenance supports the intended use,
 - do not claim that non-commercial fan use is automatically licensed or legally authorized,
-- preserve source/provenance records for imported or generated data,
-- keep project-owned rules/content separate from externally sourced canonical data,
+- preserve source/provenance records for imported, transformed, or generated data/resources,
+- keep project-owned rules/content/resources separate from externally sourced canonical data/assets,
 - do not add a repository software license that purports to relicense Pokémon IP or third-party assets.
+
+## Resource planning rule
+
+Resource work has two intentionally separate passes.
+
+### P1: source reconnaissance
+
+P1 discovers candidate sources and records:
+
+- resource classes available,
+- provenance and exact notices/license boundaries,
+- Pokémon-IP caveats,
+- maintenance/version/pinning characteristics,
+- practical suitability,
+- `ADOPT / ADAPT / REJECT / DEFER` or `REVISIT IN P6` status.
+
+P1 should **not** freeze the final asset set, art direction, exact packaging policy, or mobile memory budget while P2-P5 design is unfinished.
+
+### P6: production resource contract
+
+After P2-P5, P6 owns:
+
+- required/optional/deferred asset inventory,
+- source vs project-created vs generated production choices,
+- repository inclusion vs build-time fetch/generation boundaries,
+- stable resource IDs/manifests,
+- preprocessing and validation,
+- attribution/provenance records,
+- mobile payload/decode/audio/cache budgets,
+- runtime loading/cache/eviction requirements handed to P7.
+
+Do not commit a large third-party/Pokémon asset corpus before P6 explicitly classifies provenance and redistribution. Prefer placeholders or reproducible fetch/build steps while the boundary is unresolved.
 
 ## Architecture and performance principles
 
@@ -162,8 +197,10 @@ Even though this is primarily a text game:
 - seeded randomness should be reproducible for tests/debugging where practical,
 - event eligibility should be evaluated on discrete state transitions rather than per-render/per-frame polling,
 - parsed/generated lookup structures should be cached and reused,
-- avoid unnecessary allocations and repeated parsing in hot/repeated paths,
-- imported external data should be normalized into project-owned build/runtime contracts,
+- avoid unnecessary allocations and repeated parsing/conversion in hot or repeated paths,
+- imported external data/resources should be normalized into project-owned build/runtime contracts,
+- avoid runtime resize/reconversion when build-time preprocessing can own the result,
+- avoid duplicate downloads/instances and define cache ownership explicitly,
 - UI must not become the source of gameplay truth,
 - save formats require explicit versioning/migration once implementation begins.
 
@@ -171,10 +208,10 @@ Even though this is primarily a text game:
 
 The core phase order is fixed unless the owner explicitly changes it:
 
-`P0 Governance → P1 References/Data/IP → P2 World Bible → P3 TRPG Rules → P4 Pokémon Adaptation → P5 Event Engine → P6 Technical Architecture → P7 Vertical Slice → P8 Content Expansion → P9 Mobile/Release`
+`P0 Governance → P1 References/Data/Resource Sources/IP → P2 World Bible → P3 TRPG Rules → P4 Pokémon Adaptation → P5 Event Engine → P6 Resource/Asset Strategy → P7 Technical Architecture → P8 Vertical Slice → P9 Content Expansion → P10 Mobile/Release`
 
-Research/specification intentionally precedes implementation. Do not start framework scaffolding simply because implementation is easy while upstream game contracts remain materially unresolved.
+Research/specification and the design-informed resource contract intentionally precede production architecture. Do not start framework scaffolding simply because implementation is easy while upstream game or asset contracts remain materially unresolved.
 
 ## Completion standard
 
-A phase is not complete because prose was generated. Completion requires the issue's acceptance criteria plus the strongest practical evidence available for that phase: source-backed research, explicit owner decisions, schema validation, automated tests, reproducible fixtures, build/CI checks, or playable evidence as appropriate.
+A phase is not complete because prose was generated. Completion requires the issue's acceptance criteria plus the strongest practical evidence available for that phase: source-backed research, explicit owner decisions, provenance records, schema validation, automated tests, reproducible fixtures, build/CI checks, mobile resource measurements, or playable evidence as appropriate.
