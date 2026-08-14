@@ -46,6 +46,20 @@ P1 must build a source-backed registry for:
 
 For resource candidates, P1 records what exists, provenance/license/IP risk, maintenance/pinning characteristics, and whether the source should be adopted, adapted, rejected, deferred, or explicitly revisited in P6. It does **not** prematurely freeze art direction, exact asset density, public-repository bundling, or mobile memory budgets.
 
+## P1 progress
+
+The initial durable source-registry slice is now implemented on branch `agent/p1-source-registry-core` in `docs/SOURCE_REGISTRY.md`.
+
+The first source records establish:
+
+- **PokéAPI `api-data` → `ADAPT`** as the preferred broad structured-data baseline, consumed only through an explicitly pinned/imported/validated project-owned data path rather than runtime API calls,
+- **Pokémon Showdown → `ADAPT`** as a complementary generation-specific battle-mechanics / learnset source, with exact version pinning and explicit filtering of nonstandard data,
+- **PokéAPI `sprites` → `REVISIT IN P6`** as a high-coverage sprite/icon candidate whose repository-level notices do not establish unrestricted redistribution rights for underlying Pokémon imagery.
+
+The registry also fixes the cross-source rule: no community dataset is universally authoritative, conflicts must be resolved intentionally by the owning phase, and repository/data licenses must stay separate from Pokémon asset/IP rights.
+
+P1 remains incomplete. The remaining source lanes must be researched before #2 can close.
+
 ## Resource roadmap decision
 
 The owner explicitly added a dedicated design-informed resource phase after P2-P5.
@@ -73,9 +87,15 @@ Existing later issues retain their GitHub issue numbers but their phase labels m
 
 ## Exact next lane
 
-Continue **P1 / #2**. The first coherent P1 work should create the durable external-source/reference registry and begin current primary-source research. Resource sources should be included now at reconnaissance depth so P6 does not start from zero later.
+Continue **P1 / #2** by extending `docs/SOURCE_REGISTRY.md` through the remaining research lanes.
 
-P1 must produce source-backed `ADOPT / ADAPT / REJECT / DEFER` decisions, with `REVISIT IN P6` where final asset selection depends on P2-P5.
+The next coherent P1 slice is:
+
+1. Pokémon cries/audio source and provenance reconnaissance,
+2. PokéRogue architecture/content/resource organization as a reference only,
+3. then comparable text/event RPGs, official ancient-era setting references, fan-project/IP boundaries, and remaining font/UI/audio/background ecosystems.
+
+Do not begin P2 until P1's durable registry is sufficiently complete to satisfy #2. Resource candidates whose final usefulness depends on P2-P5 should remain `REVISIT IN P6` rather than being prematurely selected.
 
 ## Open Human Design Gates
 
