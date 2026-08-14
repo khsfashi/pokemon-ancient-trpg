@@ -124,3 +124,28 @@ This breadth requirement does not mean every species is common, catchable, compa
 P4 cannot close with partial roster coverage: its closure audit must prove `151/151` substantive dossiers. P9 must then prove `151/151` meaningful in-game content presence, which may include encounters, events, traces, myths, quests, cultural relationships, bestiary discoveries, or environmental consequences appropriate to each dossier.
 
 Regional forms, later-generation evolutions, Mega Evolution, Gigantamax, and other post-Generation-I additions are outside the mandatory baseline unless a later owner decision explicitly expands scope.
+
+## D-012 — Early settled village / clan-network society
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**Human Design Gate:** P2-HDG-001  
+**Owner choice:** A
+
+The P2 human-society baseline is an **early settled village / clan network**.
+
+The setting therefore assumes:
+
+- small persistent villages and hamlets rather than mature cities or mostly nomadic society;
+- settlements connected by dangerous, locally known routes rather than a comprehensive safe-road network;
+- small-scale cultivation, gathering, fishing, hunting where appropriate, preservation, storage, and specialist handcraft sufficient to support stable settlement life;
+- kinship, household, clan, village obligation, local chiefs/elders/councils and respected specialists as more important than centralized institutions;
+- intermittent, route-dependent inter-settlement trade rather than a frictionless regional market;
+- oral/local knowledge as dominant, with literacy and durable record keeping concentrated among specialists rather than assumed for ordinary people;
+- enough occupational specialization to support a varied TRPG cast without importing generic fantasy classes;
+- wilderness that remains materially outside routine human control and makes travel, guides, ecological knowledge, preparation and avoidance important;
+- human–Pokémon relationships based primarily on caution, avoidance, negotiation, local custom, fear, observation and exceptional bonds rather than ordinary trainer ownership.
+
+This decision intentionally does **not** establish an exact historical analogue, metallurgy level, Poké Ball/capture technology, region identity, currency, lethality, human term for Pokémon, or exact prevalence/mechanism of exceptional Pokémon bonds. Those remain separate P2 gates.
+
+`docs/WORLD_BIBLE.md` is the working contract that expands these implications while keeping unresolved choices explicit.
