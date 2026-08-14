@@ -73,6 +73,8 @@ Approved decisions must be written back to this log.
 
 Reference/API/data/IP research and game-design contracts should be established before the production implementation architecture is frozen.
 
+The production resource/asset contract must also be established after core game design and before technical architecture, so framework/runtime choices do not silently dictate asset policy and late asset decisions do not force avoidable architecture rewrites.
+
 Early executable experiments are allowed only as bounded evidence for a specific uncertainty.
 
 ## D-008 — Mobile delivery direction
@@ -82,4 +84,17 @@ Early executable experiments are allowed only as bounded evidence for a specific
 
 A conveniently accessible mobile experience is required. A web/PWA build hosted through a service such as Vercel is acceptable if it provides a good phone experience. APK installation is desirable only if it does not impose disproportionate complexity.
 
-The exact technical stack and packaging route are deferred to P6 after current primary-source research.
+The exact technical stack and packaging route are deferred to P7 after current primary-source research, game-design contracts, and the P6 resource/asset strategy.
+
+## D-009 — Two-pass resource and asset planning
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+
+Resource planning is a first-class project phase and intentionally happens in two passes.
+
+**P1** performs broad resource-source reconnaissance. It should discover and assess Pokémon sprite/icon/audio sources and relevant font/UI/audio/background ecosystems, recording provenance, license/IP boundaries, maintenance/pinning characteristics, and `ADOPT / ADAPT / REJECT / DEFER` decisions. When final usefulness depends on unfinished design, the source should be marked for `REVISIT IN P6` rather than prematurely selected.
+
+**P6 (#12)** occurs after P2-P5. It owns the final production resource contract: required/optional/deferred asset inventory; source versus project-created/generated strategy; provenance/attribution/redistribution classification; public-repository inclusion versus build-time fetch/generation; stable resource IDs/manifests; preprocessing/validation; and mobile payload/decode/audio/cache budgets.
+
+P6 precedes P7 Technical Architecture. Later phases must preserve the resource contract rather than bypassing it with one-off asset handling.
