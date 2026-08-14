@@ -16,12 +16,14 @@ The following constraints are authoritative:
 - the society is intentionally **earlier than the Hisui-era precedent** shown in Pokémon Legends: Arceus;
 - humans and Pokémon are not already integrated through ordinary trainer culture, routine ownership, widespread capture infrastructure, or normalized modern coexistence;
 - the human social baseline is an **early settled village / clan network**;
+- ordinary human material technology has an **iron-age / medieval-fantasy-like baseline**;
 - there is **no portable Pokémon containment technology**: no Poké Ball-like storage, instant recall, remote transfer, or PC-style creature storage;
 - Pokémon can be dangerous wildlife, feared monsters, sacred beings, ecological forces, competitors, omens, tolerated neighbors, or exceptional companions depending on species and local culture;
 - Pokémon companionship is a first-class gameplay system but is socially uncommon and never a mandatory run objective;
 - the player has exactly **three companion Pokémon slots**, and `0/3` through `3/3` are all valid run states;
 - a run must remain fully playable and completable with zero Pokémon companions;
 - forming a stable bond with a Pokémon is not assumed to be routine, and every companion physically exists and travels in the world;
+- rare **human psychics / miracle-workers** may exist as canon-compatible exceptional people, but there is no generic universal magic system;
 - the mandatory species scope is National Pokédex #001-#151, but full species coverage does not imply that all species are common, companion-eligible, or directly encountered.
 
 This world should feel inhabited and culturally developed without feeling administratively modern.
@@ -37,7 +39,7 @@ Typical settlements are:
 - connected to a limited network of neighboring settlements through trails, river/coastal routes, mountain passes, messenger paths, and remembered safe corridors;
 - locally distinct in customs because travel is costly and dangerous enough to prevent rapid cultural homogenization.
 
-A settlement may have fences, walls, watch points, cleared sight lines, warning markers, fire, noise, scent practices, ritual boundaries, or terrain modifications intended to reduce Pokémon risk. The exact technology of those measures is constrained by later technology decisions.
+A settlement may have fences, walls, watch points, cleared sight lines, warning markers, fire, noise, scent practices, ritual boundaries, iron-reinforced barriers, or terrain modifications intended to reduce Pokémon risk.
 
 Large Hisui-like organized frontier towns, regional bureaucracies, formal survey headquarters, Pokémon-centric commercial centers, and trainer-service infrastructure are **not baseline assumptions**.
 
@@ -66,12 +68,37 @@ The baseline economy can include:
 - fishing and waterside harvesting;
 - hunting where culturally and ecologically appropriate;
 - preservation, cooking, fermentation, drying, smoking, storage, and seasonal stockpiling;
-- woodworking, fiber work, pottery, stonework, leather/hide-like material work where setting-appropriate, tool repair, construction, and other specialist handcraft;
+- woodworking, fiber work, pottery, stonework, hide/leather-like material work where setting-appropriate, ironworking, tool repair, construction, and other specialist handcraft;
 - exchange of food, tools, medicine ingredients, rare materials, information, labor, safe passage, and favors.
 
 Inter-settlement trade exists but is **intermittent and route-dependent**, not a frictionless market network. A broken bridge, territorial Pokémon, flood, migration, feud, illness, fire, or missing guide can materially disrupt supply.
 
 Exact currency, standardized prices, taxation, coinage, and merchant institutions remain unresolved. P3 can still model inventory/value without assuming modern money.
+
+### 4.1 Iron-age material floor
+
+Ordinary human craft is not stone- or bronze-age baseline. Communities can plausibly possess iron tools and weapons, smiths, repair traditions, agricultural iron, nails/fasteners, chains, blades, spearheads, axes and iron-supported construction depending on local resources and trade.
+
+The following remain deliberately unfrozen:
+
+- how common high-quality steel is;
+- exact furnace and smelting sophistication;
+- plate armor or other advanced armor prevalence;
+- standardized alloy recipes;
+- mining and production scale;
+- whether any region can mass-produce weapons or tools.
+
+Iron improves human survival but does not erase the power gap with Pokémon. The setting assumption is that a prepared group with iron weapons can contest, repel, wound, trap, or sometimes kill a Pokémon under favorable conditions, while many species remain catastrophically dangerous in a direct fight.
+
+### 4.2 Pokémon-dependent technology islands — researched, pending owner freeze
+
+`docs/P2_TECHNOLOGY_CANON_RESEARCH.md` finds strong official precedent that Pokémon abilities can participate in human labor, medicine, transport, infrastructure and power-related activity. It recommends a constrained model:
+
+> the general technology floor remains iron-age, while particular settlements or specialists may possess one unusually advanced craft because generations of local knowledge developed around a specific Pokémon capability.
+
+This is **not yet a binding global rule** until the owner confirms the recommended P2 gate.
+
+If adopted, every such technology island must be traceable to source-backed Pokémon capability and must stay difficult to scale because companionship is rare, Pokémon are dangerous, local ecology can change, and specialist knowledge can disappear.
 
 ## 5. Travel and the meaning of wilderness
 
@@ -91,7 +118,7 @@ Baseline rules:
 
 This supports P5 event-driven travel without requiring continuous map simulation.
 
-## 6. Knowledge, records, and communication
+## 6. Knowledge, records, communication, and exceptional human faculties
 
 Ordinary life is primarily supported by memory, demonstration, oral tradition, local markings, specialist record keeping, and repeated practice rather than universal literacy and standardized encyclopedic knowledge.
 
@@ -106,6 +133,25 @@ Pokémon knowledge is therefore:
 - suitable for progressive bestiary discovery rather than an omniscient Pokédex dump.
 
 Exact writing system, terminology for Pokémon, species naming conventions, measurement system, and map sophistication remain unresolved.
+
+### 6.1 Rare human psychics / miracle-workers
+
+Pokémon canon permits humans with genuine psychic power; Sabrina is an explicit official precedent. This project therefore allows rare people with narrow anomalous faculties.
+
+These people are **not generic fantasy wizards**. The world does not assume spellbooks, schools of magic, mana, or a universal spell list.
+
+A gifted person's ability should normally be limited to a narrow personal phenomenon such as:
+
+- telepathic impressions;
+- brief or unreliable precognitive flashes;
+- limited telekinesis;
+- unusual empathy/aura sensitivity;
+- dream sensitivity;
+- sensitivity or resistance to Psychic/Ghost phenomena.
+
+These are examples rather than a finalized mechanical list. Powerful effects require exceptional individuals, favorable conditions, risk, cost, training, or Pokémon interaction.
+
+Different settlements may understand such people as seers, mediums, omen-readers, mind-speakers, shrine specialists, gifted healers, blessed people, cursed people, or another local role. P3 may turn this into a playable occupation/background family without turning it into unrestricted magic.
 
 ## 7. Human–Pokémon relationship baseline
 
@@ -156,6 +202,18 @@ The three-slot limit is a gameplay capacity, not a statement that three companio
 
 A complete run with `0/3` companions must be a supported first-class path. Core progression, survival, exploration, checks, event resolution, and endings may not require a Pokémon unless a clearly optional branch declares that requirement.
 
+### 7.2 Ancient danger and strength — provisional project premise
+
+The intended ancient era should make Pokémon feel more dangerous than modern-game familiarity suggests.
+
+There is source precedent that at least some Pokémon lineages have changed strength over long time periods: multiple Magikarp Pokédex entries describe distant-past Magikarp as stronger and later descendants as weaker.
+
+That precedent does **not** establish that every species was stronger or that civilization universally damaged Pokémon genetics. Until P4 performs species-by-species research, the working premise is limited to:
+
+> many ancient populations may retain harsher traits, stronger lineages, more dangerous behavior, or greater ecological pressure than distant modern descendants, while exact changes vary by species.
+
+The causal language `civilization genetically weakened all Pokémon` remains a project-authored hypothesis rather than claimed canon and is recorded as provisional in D-016.
+
 ## 8. Conflict and protection
 
 Human settlements require methods for surviving dangerous Pokémon, but P2 does not assume trainer-style combat as the default defense system.
@@ -165,19 +223,24 @@ Possible setting-consistent protection includes:
 - early warning and watch systems;
 - avoidance knowledge;
 - barriers and controlled access;
-- fire, smoke, sound, scent, light, terrain, decoys, traps, nets, tools, shields, projectiles, group tactics, evacuation, and shelters where later technology decisions permit them;
+- fire, smoke, sound, scent, light, terrain, decoys, traps, nets, iron tools/weapons, shields, projectiles, group tactics, evacuation, and shelters;
 - specialists who understand particular Pokémon behaviors;
-- rare companion Pokémon assisting humans where a genuine bond exists.
+- rare companion Pokémon assisting humans where a genuine bond exists;
+- rare psychics or miracle-workers helping only where their narrow ability is relevant.
 
-A companion may open powerful options, but later rules and content must not make companion-assisted conflict resolution the only viable path.
+A companion or gifted human may open powerful options, but later rules and content must not make them the only viable path.
 
-The exact lethality, weapon technology, treatment of killing Pokémon, and battle abstraction remain separate gates because they materially affect tone and mechanics.
+Iron-era weapons do not imply routine monster hunting. Many Pokémon capabilities exceed armor and weapon solutions entirely through speed, mass, elemental force, poison, electricity, sleep, memory, psychic effects, terrain control, or other species-specific hazards.
+
+The exact lethality, treatment of killing Pokémon, and battle abstraction remain separate gates because they materially affect tone and mechanics.
 
 ## 9. Health and medicine baseline
 
 There is no modern Pokémon Center equivalent in the baseline society.
 
-Human care can plausibly include household first aid, local healers, herbal/material knowledge, splinting, wound care, rest, food, heat, sanitation practices, and specialist remedies, but exact medical sophistication is not frozen yet.
+Human care can plausibly include household first aid, local healers, herbal/material knowledge, splinting, wound care, rest, food, heat, sanitation practices, and specialist remedies.
+
+Official Pokémon material supports species whose biological products or abilities can directly aid injured people, so P4 may establish **local Pokémon-derived medical traditions** where source evidence supports them. Such traditions must remain locally constrained rather than silently giving every settlement advanced medicine.
 
 Pokémon injuries are less standardized because companion-keeping is uncommon. A person who travels with a Pokémon must account for that creature's species-specific food, rest, wound care, shelter, environmental needs, and risks rather than relying on universal trainer infrastructure.
 
@@ -191,25 +254,29 @@ P2 does not yet freeze playable classes, but the approved social structure suppo
 - gatherer / herbal specialist;
 - fisher / river or coast guide;
 - cultivator / food producer;
-- craft specialist / builder / repairer;
+- smith / craft specialist / builder / repairer;
 - pathfinder / scout / messenger;
 - watch / settlement defender;
 - healer;
 - trader / caravan or exchange intermediary;
 - lorekeeper / scribe / ritual specialist;
 - negotiator / inter-settlement envoy;
-- Pokémon-sign observer, handler, appeaser, or unusually gifted communicator where later bond rules permit it.
+- Pokémon-sign observer, handler, appeaser, or unusually gifted communicator where later bond rules permit it;
+- rare psychic / seer / medium / miracle-worker variants where the individual's narrow faculty supports the role.
 
-These are social roles, not yet P3 mechanical classes. P3 must derive mechanics from the final P2 world rather than importing fantasy RPG archetypes.
+These are social roles, not yet P3 mechanical classes. P3 must derive mechanics from the final P2 world rather than importing generic fantasy RPG archetypes.
 
 No occupation may be designed on the assumption that the player starts with, must acquire, or eventually fills all three companion slots unless it is explicitly an optional specialist path.
+
+Rare psychic occupations must not become a reskinned universal wizard class. Their mechanics should express a bounded anomalous gift plus ordinary human skills.
 
 ## 11. What this baseline deliberately does not decide
 
 The following are still open because choosing them now would exceed the owner's current decisions:
 
 - exact real-world historical analogue or calendar date;
-- exact metallurgy/tool/weapon level;
+- exact steel quality, alloy sophistication, armor prevalence and metallurgical production scale beyond the iron-age floor;
+- whether Pokémon-dependent local technology islands are a binding setting rule or only occasional species-specific exceptions;
 - exact human term(s) for Pokémon;
 - exact region identity and geography of the first playable scope;
 - exact currency/economic abstraction;
@@ -220,10 +287,16 @@ The following are still open because choosing them now would exceed the owner's 
 - the exact species-specific process by which a Pokémon chooses or accepts continued companionship;
 - how companion loss, voluntary departure, separation, replacement, or death interact with the three slots;
 - whether riding or using a companion for transport is possible for particular species;
+- the finalized list and strength ceiling of playable human psychic faculties;
+- whether the provisional ancient-lineage weakening premise applies broadly, narrowly, or through multiple different causes;
 - central religion/cosmology, if any;
 - whether later-generation Pokémon/forms exist outside the mandatory Gen-I gameplay scope.
 
 Portable containment technology is **not** unresolved: the baseline decision is that it does not exist.
+
+Iron-age ordinary material technology is **not** unresolved: D-014 fixes that floor, while exact high-end metallurgy remains open.
+
+Rare human psychics are **not** unresolved as a concept: D-015 permits them, while specific powers/mechanics remain later design work.
 
 These remaining questions must be resolved only when they become the next blocking P2 decision or are explicitly assigned to P3/P4.
 
@@ -238,11 +311,15 @@ P3-P9 content must preserve these invariants unless an explicit later owner deci
 5. Pokémon companionship is socially uncommon enough to carry narrative weight even though the game always supports the system.
 6. One companion may be notable; several powerful companions may make the player extraordinary; this social scale must not be flattened into routine trainer culture.
 7. Core game progression must remain solvable without a companion unless a branch is explicitly optional and companion-gated.
-8. People can possess sophisticated local ecological knowledge without possessing a modern universal Pokédex worldview.
-9. Occupations arise from village survival, exchange, travel, knowledge, and Pokémon ecology rather than generic fantasy magic.
-10. A species dossier may make a particular Pokémon locally familiar without making Pokémon as a whole domesticated or normalized.
-11. The world can contain craftsmanship, culture, ritual, trade, and specialist knowledge without becoming a Hisui-like institutional frontier society.
-12. Later systems must prefer explicit local exceptions over silently weakening the global pre-Hisui baseline.
-13. P4 must determine companionship plausibility and burdens per species instead of assuming that every one of the 151 can occupy a companion slot.
-14. P5 must support event and ending paths for every companion occupancy state from `0/3` through `3/3` where relevant.
-15. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
+8. Ordinary material technology is iron-age, but iron weapons do not make humans peers of Pokémon.
+9. Rare human psychics may exist, but there is no generic universal magic system or open-ended spell list.
+10. People can possess sophisticated local ecological knowledge without possessing a modern universal Pokédex worldview.
+11. Occupations arise from village survival, exchange, travel, knowledge, Pokémon ecology and rare canon-compatible gifts rather than generic fantasy magic.
+12. A species dossier may make a particular Pokémon locally familiar without making Pokémon as a whole domesticated or normalized.
+13. The world can contain craftsmanship, culture, ritual, trade, specialist knowledge and isolated anomalous crafts without becoming a Hisui-like institutional frontier society.
+14. Later systems must prefer explicit local exceptions over silently weakening the global pre-Hisui baseline.
+15. P4 must determine companionship plausibility and burdens per species instead of assuming that every one of the 151 can occupy a companion slot.
+16. P4 must source and audit any Pokémon-derived technology/craft hook per species rather than inferring a modern tech tree from elemental powers.
+17. P4 must distinguish source-backed ancient-strength evidence from project-authored amplification for every species where the distinction matters.
+18. P5 must support event and ending paths for every companion occupancy state from `0/3` through `3/3` where relevant.
+19. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
