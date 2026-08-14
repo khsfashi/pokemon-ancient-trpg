@@ -11,6 +11,7 @@ Unofficial, non-commercial Pokémon fan-made mobile text RPG/TRPG for primarily 
 Core direction currently approved by the owner:
 
 - pre-modern / ancient setting,
+- the intended society is **earlier than the Hisui-era precedent** shown in Pokémon Legends: Arceus; Hisui is an upper-bound comparison rather than the target template,
 - humans and Pokémon are not already integrated as ordinary modern partners,
 - Pokémon can be dangerous, rare, and difficult to form relationships with,
 - character creation and TRPG-like statistics/checks,
@@ -48,7 +49,7 @@ For resource candidates, P1 records what exists, provenance/license/IP risk, mai
 
 ## P1 progress
 
-The durable source registry lives in `docs/SOURCE_REGISTRY.md`.
+The durable source registry lives in `docs/SOURCE_REGISTRY.md`. Historical enforcement examples are kept in `docs/FAN_PROJECT_ENFORCEMENT_CASES.md` so later distribution decisions do not rely on folklore about why individual fangames survived or were taken down.
 
 Completed/started source records now establish:
 
@@ -60,8 +61,9 @@ Completed/started source records now establish:
 - **Life in Adventure → `ADAPT` as product/UX reference only** for state-conditioned events/options, run goals, branching epilogues and collection/scoring surfaces; its closed-source implementation and conventional fantasy assumptions are not inferred or copied,
 - **A Dark Room → `ADAPT` as event-system reference only** for explicit eligibility predicates, scene graphs, choices, costs/rewards and contextual event pools; direct callback/UI mutation and ambient randomness are specifically not inherited,
 - **ink → `ADAPT` concepts only** for authoring/runtime separation, compiled narrative artifacts, host-driven choices and versioned story/save formats; no narrative runtime dependency is selected before P5/P7,
-- **official Pokémon Legends: Arceus Hisui material → `ADAPT` as setting precedent** showing that an official long-ago setting can make close human–Pokémon coexistence and trainer-like battling uncommon while supporting survey work, special social roles and dangerous wild Pokémon,
-- **current Pokémon/Nintendo IP notices → conservative boundary**: unofficial/non-commercial/disclaimer language is not permission, current Pokémon Support asks that Pokémon IP not be used or associated with a project, and Nintendo's game-content sharing guidelines do not provide a fan-game license.
+- **official Pokémon Legends: Arceus Hisui material → `ADAPT` as setting precedent** showing that an official long-ago setting can make close human–Pokémon coexistence and trainer-like battling uncommon while supporting survey work, special social roles and dangerous wild Pokémon; owner decision D-010 now places this project at an intentionally earlier social stage,
+- **current Pokémon/Nintendo IP notices → conservative boundary**: unofficial/non-commercial/disclaimer language is not permission, current Pokémon Support asks that Pokémon IP not be used or associated with a project, and Nintendo's game-content sharing guidelines do not provide a fan-game license,
+- **historical fan-project enforcement cases → caution against folklore**: Pokémon Uranium did accept Patreon support, but the evidence does not establish Patreon as the sole cause of enforcement; free Pokémon Prism still received direct pre-release intervention; Pokémon Essentials and Roblox-hosted Pokémon projects show that tools/assets/platform hosting can also become enforcement points; currently active donation-supported projects such as PokéRogue do not establish permission or a safe threshold.
 
 The registry also fixes these cross-source rules:
 
@@ -73,7 +75,8 @@ The registry also fixes these cross-source rules:
 - a comparable fan project's framework or content structure is evidence, not an architecture mandate,
 - comparable games contribute bounded interaction/content lessons, not copyable content or automatic stack choices,
 - official historical-setting precedent constrains what is plausible but does not pre-write this project's P2 world bible,
-- non-commercial intent and non-affiliation notices must never be represented as an affirmative Pokémon IP license.
+- non-commercial intent and non-affiliation notices must never be represented as an affirmative Pokémon IP license,
+- surviving fan projects must not be reverse-engineered into a supposed enforcement-safe formula; provenance, separability, removability and conservative distribution are the engineering controls this repository can actually own.
 
 P1 remains incomplete, but its non-resource research lanes are now bounded enough for later phases. The remaining material P1 work is the final general resource-ecosystem reconnaissance and P6 revisit-list completeness check.
 
@@ -120,7 +123,7 @@ None are required merely to perform P1 source research.
 
 Known upcoming P2/P3 questions exist, but they must be asked only when their owning phase reaches them. Do not front-load unrelated design questionnaires.
 
-Examples of future gates include exact era/technology tone, human terminology for Pokémon, lethality, core attribute model, and companion-acquisition philosophy.
+D-010 already fixes the direction that the setting is earlier than Hisui. Future P2 gates therefore concern **how much earlier and what that implies**, including technology baseline, human terminology for Pokémon, social organization, lethality, region identity and the degree/type of exceptional human–Pokémon bonds. P3 later owns the core attribute model and occupation/rules details.
 
 P6 may also require a presentation Human Design Gate for choices such as overall art direction or illustration density, but only after P2-P5 provide enough context and objective source/performance research has been completed.
 
