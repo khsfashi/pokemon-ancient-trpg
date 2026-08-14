@@ -25,9 +25,10 @@ Core direction currently approved by the owner:
 
 **P0 — Project governance and autonomous continuation protocol (#1) is active.**
 
-Active candidate branch:
+Active candidate:
 
-- `agent/p0-governance`
+- branch `agent/p0-governance`,
+- draft PR #11 — `P0: establish autonomous project governance`.
 
 P0 establishes:
 
@@ -40,7 +41,7 @@ P0 establishes:
 
 ## Exact next lane
 
-After P0 is reviewed and merged, the exact next core phase is:
+After PR #11 is reviewed and merged, the exact next core phase is:
 
 **P1 — Reference, API, data-source, and IP boundary research (#2).**
 
