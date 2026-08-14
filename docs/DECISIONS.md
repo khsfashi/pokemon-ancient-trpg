@@ -226,3 +226,42 @@ Until P4 audits species individually, the safe project-authored working premise 
 > Many ancient wild populations may retain harsher traits, greater ecological pressure, more dangerous behavior, or stronger lineages than distant modern descendants. Long-term habitat change, human expansion, selective coexistence/breeding and other pressures can later reshape or weaken some populations.
 
 P4 must mark each species' ancient-strength treatment as source-backed, inferred, project-authored, unchanged, or intentionally exceptional. The stronger universal wording `civilization genetically weakened all Pokémon` must not be presented as official canon without a later explicit owner decision to adopt it purely as project lore.
+
+## D-017 — Iron-age baseline plus Pokémon-dependent local technology islands
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**Human Design Gate:** P2-HDG-003  
+**Owner choice:** approved recommended hybrid
+
+The ordinary material floor remains the iron-age / medieval-fantasy-like baseline established in D-014, but **Pokémon-dependent technology islands are a binding setting rule**.
+
+A settlement, clan, lineage, workshop, shrine, healer, or specialist may possess one unusually advanced or unusually effective craft when that craft can be causally traced to a source-backed Pokémon capability, ecology, material, behavior, or recurring phenomenon plus generations of human observation and practice.
+
+These technology islands must remain narrow, local, fragile, and difficult to scale. Their existence does not imply a modern scientific worldview, industrial production, a general electrical grid, mass Pokémon labor, routine ownership, or a universal technology tree.
+
+The enabling Pokémon does not need to be domesticated or a companion. A technology island may instead depend on habitat access, migration timing, shed/abandoned materials, negotiated coexistence, dangerous harvesting, a rare bond, or equipment built to survive or redirect a Pokémon phenomenon.
+
+P4 must audit technology/craft consequences species by species. A valid result for many species is explicitly `none`; no species should receive a technology hook merely to fill a template.
+
+The binding implementation contract is `docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md`.
+
+## D-018 — Canon-first worldbuilding derivation protocol
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**P2 owner direction**
+
+Ancient-world Pokémon lore must be developed from **actual Pokédex descriptions and other official Pokémon setting evidence first**, followed by clearly bounded project inference and creative extrapolation.
+
+The required authoring order is:
+
+> **official evidence → bounded interpretation → explicit project extrapolation**
+
+Authors must not invent a desired fantasy result first and then search for a sentence that can be stretched into justification.
+
+Material claims must preserve a visible evidence boundary using the classification contract defined in `docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md`: direct official fact, cross-source official synthesis, conservative derived inference, project-authored extrapolation, or unsupported/unresolved.
+
+P4's 151 species dossiers must separately record official evidence, ancient-setting derivation, technology/craft impact or `none`, ancient-strength treatment, companionship treatment, and a canon-boundary note wherever project lore could be mistaken for official canon.
+
+Project-authored imagination is not discouraged; it is a required part of the setting. The rule is that the project must always be able to say **which part came from Pokémon canon and which part is our ancient-world extrapolation**.
