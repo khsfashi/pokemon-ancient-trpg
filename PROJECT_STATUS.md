@@ -41,6 +41,8 @@ Current owner-approved direction:
 - human player characters use seven core attributes: **Strength / Endurance / Agility / Sense / Intellect / Will / Presence** (`근력 / 체력 / 기민 / 감각 / 지성 / 의지 / 존재감`);
 - core uncertain-action resolution is **2d6 + Attribute + Competence + Context**, with staged margin outcomes and rare natural-doubles spikes;
 - natural `6+6` is a Fortune Spike and natural `1+1` is a Trouble Spike; neither bypasses fiction or the serious-selective-lethality contract;
+- human survival uses one numeric **Vitality** pool, three-stage **Fatigue**, three-stage **Fear**, and named discrete **Injuries** rather than four full meters;
+- `0 Vitality` means Incapacitated rather than dead; Light/Serious/Critical Injuries and death are explicit separate consequences;
 - Luck and Pokémon Bond are not core attributes; fate-like resources and individual relationship state remain separate systems;
 - character creation, compact TRPG checks, dice outcomes, conditional events, discoveries/insights and persistent run state are core;
 - public repository and non-commercial intent do not create Pokémon IP permission;
@@ -128,57 +130,62 @@ P3 owns:
 - natural `6+6` is a **Fortune Spike** and natural `1+1` is a **Trouble Spike**, each a rare 1/36 overlay on the normal result rather than an automatic success/death switch.
 - the default check scale is Attribute `0–4`, Competence `+0/+1/+2`, ordinary Context `-2..+2`, and difficulty `7 / 9 / 11 / 13 / 15`; routine and impossible actions do not roll.
 - Fortune Spikes preferentially create discovery, bestiary insight, route, relationship, resource-preservation, or optional-event opportunities because frequent Pokémon acquisition is not the game's reward loop.
+- **P3-HDG-003 / D-025:** human survival uses `Vitality + staged Fatigue + staged Fear + discrete Injuries`.
+- `Vitality Max = 4 + Endurance` is the initial balance formula; ordinary harm is compact (`1–3`) and Vitality zero means Incapacitated, not dead.
+- Fatigue is `Ready → Tired → Exhausted`; Fear is `Steady → Shaken → Panicked`; penalties apply only when the pressure is relevant rather than globally.
+- Injuries are named persistent records with `Light / Serious / Critical` severity, with at most three active mechanical Injury records for mobile readability.
+- Critical Injury and death remain explicit high-severity states with stabilization/rescue logic consistent with D-020.
 
 Binding contracts:
 
 - `docs/P3_ATTRIBUTE_CONTRACT.md`
 - `docs/P3_DICE_AND_CHECK_CONTRACT.md`
+- `docs/P3_HEALTH_PRESSURE_AND_INJURY_CONTRACT.md`
 
-Starting attribute allocation, progression access to high ratings, and exact fate/insight resource rules remain open. The core modifier/difficulty envelope can be tuned in data without reopening the 2d6/doubles philosophy.
+Starting attribute allocation, exact character-creation shell, progression philosophy, inventory/economy abstraction, rare psychic-gift mechanics, and exact fate/insight resource rules remain open. The numeric envelopes above can be tuned in data without reopening their underlying rule architecture.
 
 ### Exact next Human Design Gate
 
-Resolve **P3-HDG-003 — health / fatigue / fear / injury representation**.
+Resolve **P3-HDG-004 — character creation structure**.
 
-D-020 already fixes the tone: ordinary defeat is not automatic death, but persistent injury, critical condition and death are real. The unresolved question is how much short-term state the player should manage between those serious injuries.
+The seven attributes and compact competence scale are fixed, but the project has not yet decided how much of a new character comes from free allocation versus an ancient-world background/occupation. This materially changes build freedom, replayability, onboarding, and how strongly the setting is expressed before the first event.
 
-#### A — Single Health pool + status conditions
+#### A — Mostly free point allocation
 
-- one numeric Health/HP pool handles ordinary harm;
-- fatigue, fear, poison and injuries appear mainly as status effects/modifiers;
-- easiest to read and closest to a conventional RPG.
+- player allocates starting attribute points and chooses competences directly;
+- background is mostly narrative identity/contact/equipment rather than mechanical package;
+- maximum build freedom and easiest optimization.
 
-**Impact:** smallest rules surface, but physical exhaustion, terror and actual wounds can blur together or feel like temporary debuffs on an HP bar.
+**Impact:** clean and familiar, but occupations can feel cosmetic and new players must understand all seven attributes before making good choices.
 
-#### B — Vitality + Fatigue + Fear + separate Injury tiers **(recommended)**
+#### B — Background/occupation packages
 
-- **Vitality** absorbs short-term physical harm/shock and can recover relatively quickly with safety/rest;
-- **Fatigue** tracks sustained exertion, hunger/exposure/sleep pressure and penalizes prolonged adventure;
-- **Fear** tracks acute psychological pressure and can force hesitation/panic-like consequences without being generic sanity damage;
-- **Injuries** are discrete persistent wounds/conditions produced by sufficiently severe events rather than every lost point;
-- critical injury and death remain explicit high-severity states.
+- choose a setting-native background such as hunter, gatherer, smith-lineage worker, healer apprentice, route guide, fisher, ritual specialist, etc.;
+- the package supplies most starting attributes/competences/equipment/contacts;
+- player makes only a few finishing choices.
 
-**Impact:** best fit for the existing seven stats and dangerous wilderness. It distinguishes being tired, terrified, battered, and genuinely wounded while keeping serious injuries narratively meaningful. More state than A, but each track has a clear job.
+**Impact:** strongest immediate world flavor and easiest onboarding, but mechanically constrains unusual builds and can drift toward class-like archetypes.
 
-#### C — Unified Strain track + separate Injuries
+#### C — Hybrid foundation + free specialization **(recommended)**
 
-- physical fatigue, fear and short-term harm all fill one `Strain` resource;
-- when Strain overflows or a severe event bypasses it, discrete Injuries occur;
-- very compact for mobile play.
+- every human starts from the same ordinary baseline;
+- choose one setting-native **Background** for narrative permissions, one trained competence, starting relationship/equipment hooks, and possibly one bounded stat influence;
+- separately spend a small free attribute budget and choose personal specialization so two hunters or two healers need not share the same sheet;
+- Background is not a locked class and does not decide future progression.
 
-**Impact:** elegant and low-bookkeeping, but a sleepless march, a psychic scare and being clubbed by a Pokémon all consume the same meter, reducing character/build distinction.
+**Impact:** preserves ancient-world identity while keeping character-building freedom and human-only build diversity. It also maps cleanly to the `+0/+1/+2` competence contract without adding a large skill list.
 
-#### D — Injury slots only; almost no buffer pools
+#### D — Short lifepath sequence
 
-- no conventional HP/Vitality resource;
-- meaningful hits directly create light/serious/critical wounds;
-- fatigue/fear are mainly conditions or check penalties.
+- character creation resolves two or three formative-life choices/events such as upbringing, apprenticeship, hardship, taboo/contact, or expedition experience;
+- each step contributes attributes, competence, relationships, equipment, or knowledge;
+- final sheet emerges from the sequence rather than one package.
 
-**Impact:** grittiest and most simulation-forward. Every dangerous exchange matters, but combat/travel can become swingy and punitive, especially when wild Pokémon are intentionally far stronger than humans.
+**Impact:** strongest narrative/replay flavor and can make creation itself fun, but onboarding is longer and balancing combinations is substantially harder.
 
-Recommendation: **B — Vitality + Fatigue + Fear + separate Injury tiers**.
+Recommendation: **C — Hybrid foundation + free specialization**.
 
-After this gate, P3 should bind recovery/critical-state rules, then character creation/backgrounds and progression/resource philosophy without reopening the resolved 2d6 engine.
+After this gate, P3 should bind exact starting allocation and the first background/occupation taxonomy, then resolve progression philosophy (which is separately owner-gated) before inventory/economy and rare psychic-gift mechanics.
 
 ## Later mandatory contracts
 
