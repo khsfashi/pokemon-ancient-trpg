@@ -14,9 +14,12 @@ The setting is an unofficial, project-authored ancient interpretation of the Pok
 The following constraints are authoritative:
 
 - the society is intentionally **earlier than the Hisui-era precedent** shown in Pokémon Legends: Arceus;
+- the first playable land is a **proto-Kanto locality** that will much later belong to Kanto, but there is no mature Kanto regional identity or regional civilization in this era;
+- `Kanto` is a project/system-level future geographic anchor rather than assumed ordinary ancient vocabulary;
 - humans and Pokémon are not already integrated through ordinary trainer culture, routine ownership, widespread capture infrastructure, or normalized modern coexistence;
 - the human social baseline is an **early settled village / clan network**;
 - ordinary human material technology has an **iron-age / medieval-fantasy-like baseline**;
+- local craft can be sophisticated while regional political/economic/institutional integration remains primitive;
 - particular communities may possess narrow **Pokémon-dependent technology islands** derived from source-backed species capabilities or ecology, but these are local exceptions rather than a general modern technology tree;
 - ancient-setting lore follows a **canon-first derivation protocol**: official evidence first, then bounded inference, then clearly marked project-authored extrapolation;
 - species naming follows a **hybrid identification model**: stable official species identities exist for the player-facing system, while characters may initially know only descriptions, aliases, myths, or uncertain local classifications;
@@ -31,7 +34,7 @@ The following constraints are authoritative:
 - rare **human psychics / miracle-workers** may exist as canon-compatible exceptional people, but there is no generic universal magic system;
 - the mandatory species scope is National Pokédex #001-#151, but full species coverage does not imply that all species are common, companion-eligible, or directly encountered.
 
-This world should feel inhabited and culturally developed without feeling administratively modern.
+This world should feel inhabited and culturally developed without feeling administratively modern. More specifically, it is **pre-regional-civilization**: humans possess local cultures and crafts, but do not control or institutionally integrate the wider future-Kanto land.
 
 ## 2. Human settlement pattern
 
@@ -47,6 +50,8 @@ Typical settlements are:
 A settlement may have fences, walls, watch points, cleared sight lines, warning markers, fire, noise, scent practices, ritual boundaries, iron-reinforced barriers, or terrain modifications intended to reduce Pokémon risk.
 
 Large Hisui-like organized frontier towns, regional bureaucracies, formal survey headquarters, Pokémon-centric commercial centers, and trainer-service infrastructure are **not baseline assumptions**.
+
+D-022 further fixes the scale: there is no baseline Kanto-wide state, mature city network, standardized law/currency, comprehensive maintained road system, common public Pokémon infrastructure, or shared regional knowledge institution. A capable village is an island of human control, not proof that the land around it is civilized.
 
 ## 3. Social organization
 
@@ -78,7 +83,7 @@ The baseline economy can include:
 
 Inter-settlement trade exists but is **intermittent and route-dependent**, not a frictionless market network. A broken bridge, territorial Pokémon, flood, migration, feud, illness, fire, or missing guide can materially disrupt supply.
 
-Exact currency, standardized prices, taxation, coinage, and merchant institutions remain unresolved. P3 can still model inventory/value without assuming modern money.
+Exact currency, standardized prices, taxation, coinage, and merchant institutions are not required world-level commitments for P2. P3 may model value, supplies, debt, barter, favors, or other resource abstractions without implying a standardized Kanto-wide monetary system.
 
 ### 4.1 Iron-age material floor
 
@@ -91,7 +96,7 @@ The following remain deliberately unfrozen:
 - plate armor or other advanced armor prevalence;
 - standardized alloy recipes;
 - mining and production scale;
-- whether any region can mass-produce weapons or tools.
+- whether any locality can sustain unusually high production through a source-backed technology island.
 
 Iron improves human survival but does not erase the power gap with Pokémon. The setting assumption is that a prepared group with iron weapons can contest, repel, wound, trap, or sometimes kill a Pokémon under favorable conditions, while many species remain catastrophically dangerous in a direct fight.
 
@@ -105,7 +110,7 @@ Every technology island must remain traceable to source-backed Pokémon evidence
 
 The enabling Pokémon does **not** need to be a tame companion. A settlement may instead depend on observation, migration timing, shed or abandoned materials, negotiated coexistence, dangerous harvesting, a rare individual bond, or equipment built to resist/redirect a Pokémon phenomenon.
 
-Technology islands do not imply obedient Pokémon factories, modern scientific theory, industrial grids, universal access, or automatic technology diffusion.
+Technology islands do not imply obedient Pokémon factories, modern scientific theory, industrial grids, universal access, or automatic technology diffusion. Under D-022 they should strengthen the contrast between locally sophisticated craft and weak regional integration.
 
 The detailed binding authoring rules are in `docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md`.
 
@@ -119,6 +124,7 @@ Baseline rules:
 
 - paths are known because people repeatedly survive them, not because the region has a comprehensive safe-road system;
 - routes can change seasonally or become temporarily unusable;
+- a known route is a remembered survivable corridor and can effectively disappear when a crossing, guide, warning practice, ecological pattern, or local agreement fails;
 - local ecological knowledge is valuable and geographically specific;
 - guides, scouts, messengers, hunters, fishers, gatherers, escorts, and people who can read Pokémon signs have social value;
 - leaving settlement protection without preparation is a consequential choice;
@@ -126,6 +132,8 @@ Baseline rules:
 - human-only travel must remain a valid baseline; encounter design cannot assume that a companion Pokémon is available to solve movement, combat, scouting, or survival problems.
 
 This supports P5 event-driven travel without requiring continuous map simulation.
+
+The first playable scope is deliberately settlement-centered and local. It should prove one complete run through a dense local network of safety, resources, dangerous routes, and distinct ecologies rather than pretend the player can freely traverse all of future Kanto.
 
 ## 6. Knowledge, records, communication, identification, and exceptional human faculties
 
@@ -141,7 +149,7 @@ Pokémon knowledge is therefore:
 - acquired through tracks, calls, remains, feeding signs, migration, weather effects, damaged crops, injuries, sightings, testimony, repeated encounters, and rare close contact;
 - suitable for progressive bestiary discovery rather than an omniscient Pokédex dump.
 
-Exact writing system, region-specific generic words for Pokémon, measurement system, and map sophistication remain unresolved.
+Exact writing system, settlement-specific generic words for Pokémon, measurement system, and map sophistication remain content/rules details rather than required P2 global standards.
 
 Project authors must separately preserve what the franchise explicitly establishes and what this world derives from it. D-018 and `docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md` define the evidence classes that P4 must carry into all 151 species dossiers.
 
@@ -185,6 +193,8 @@ A gifted person's ability should normally be limited to a narrow personal phenom
 These are examples rather than a finalized mechanical list. Powerful effects require exceptional individuals, favorable conditions, risk, cost, training, or Pokémon interaction.
 
 Different settlements may understand such people as seers, mediums, omen-readers, mind-speakers, shrine specialists, gifted healers, blessed people, cursed people, or another local role. P3 may turn this into a playable occupation/background family without turning it into unrestricted magic.
+
+Exact playable psychic effects, costs, frequencies, and strength ceilings are P3 rule decisions unless a later proposal would contradict this rarity/boundedness invariant.
 
 ## 7. Human–Pokémon relationship baseline
 
@@ -318,6 +328,8 @@ Pokémon injuries are less standardized because companion-keeping is uncommon. A
 
 Under D-020, medicine has real run consequences because recoverable, lasting, and critical injuries may persist beyond the encounter. P3 owns exact health/recovery mechanics; P5 owns treatment/rescue event consequences.
 
+P2 does not require a universal medical tech tier beyond these constraints. Individual remedies, recovery durations, treatment checks, permanent-injury mechanics, and exceptional psychic/Pokémon-assisted healing belong to P3/P4/P5 under the existing evidence rules.
+
 ## 10. Occupation space created by this world
 
 P2 does not yet freeze playable classes, but the approved social structure supports setting-native backgrounds and occupations such as:
@@ -350,19 +362,19 @@ Hunter/defender occupations must preserve D-021: competence with lethal force do
 
 ## 11. What this baseline deliberately does not decide
 
-The following are still open because choosing them now would exceed the owner's current decisions:
+The following are still open because choosing them now would exceed the minimum world contract or belongs to a later phase:
 
 - exact real-world historical analogue or calendar date;
 - exact steel quality, alloy sophistication, armor prevalence and metallurgical production scale beyond the iron-age floor;
 - exact generic diegetic word(s) used for Pokémon by each culture or settlement;
-- exact region identity and geography of the first playable scope;
-- exact currency/economic abstraction;
-- normal human lifespan/medical sophistication relative to real history;
+- exact map coordinates, village names, route count, landmarks, and microgeography of the first playable locality;
+- exact currency/economic mechanics or standardized prices;
+- normal human lifespan/medical sophistication relative to real history beyond the recovery constraints already bound;
 - how often ordinary people encounter individuals who have a companion;
 - the exact species-specific process by which a Pokémon chooses or accepts continued companionship;
 - how companion loss, voluntary departure, separation, replacement, or death interact with the three slots;
 - whether riding or using a companion for transport is possible for particular species;
-- the finalized list and strength ceiling of playable human psychic faculties;
+- the finalized list, numerical strength, cost, and frequency of playable human psychic faculties;
 - whether the provisional ancient-lineage weakening premise applies broadly, narrowly, or through multiple different causes;
 - exact mechanical health values, wound tiers, permanent-injury tables, or player-death run handling;
 - exact mechanical thresholds/tier count for species identification and bestiary knowledge;
@@ -372,9 +384,9 @@ The following are still open because choosing them now would exceed the owner's 
 
 Portable containment technology is **not** unresolved: the baseline decision is that it does not exist.
 
-Iron-age ordinary material technology is **not** unresolved: D-014 fixes that floor, while exact high-end metallurgy remains open.
+Iron-age ordinary material technology is **not** unresolved: D-014 fixes that floor, while exact high-end metallurgy remains later-detail work.
 
-Rare human psychics are **not** unresolved as a concept: D-015 permits them, while specific powers/mechanics remain later design work.
+Rare human psychics are **not** unresolved as a concept: D-015 permits them, while specific powers/mechanics belong to P3.
 
 Pokémon-dependent technology islands are **not** unresolved: D-017 makes them a binding narrow/local exception model.
 
@@ -386,7 +398,9 @@ Injury/death severity is **not** unresolved: D-020 fixes serious selective letha
 
 Pokémon-killing ethics are **not** unresolved: D-021 fixes the contextual culture/species-sensitive model, while P4/P5 own concrete species/local treatment and consequences.
 
-These remaining questions must be resolved only when they become the next blocking P2 decision or are explicitly assigned to P3/P4.
+First-region identity is **not** unresolved: D-022 fixes a pre-regional-civilization proto-Kanto locality. `Kanto` is a future project anchor, not a mature ancient regional society or required diegetic name.
+
+These remaining details should be resolved only when their owning phase needs them; they are not reasons to keep P2 open unless a contradiction is discovered.
 
 ## 12. Consistency rules for later phases
 
@@ -432,3 +446,10 @@ P3-P9 content must preserve these invariants unless an explicit later owner deci
 38. P4 must define species/local hunting, protection, food/material, taboo/intelligence/rarity and non-lethal-resource treatment where relevant; `none` and `varies by locality` are valid.
 39. P5 must support context-sensitive consequences for lethal acts instead of a single global morality flag.
 40. Companion killing is a severe relational act by default unless exceptional context clearly changes the interpretation.
+41. The first playable land is future-Kanto territory, but a mature `Kanto` regional identity or civilization must not be projected backward into this era.
+42. Local culture and iron-age craft may be sophisticated while regional state capacity, infrastructure, markets, and information networks remain weak or absent.
+43. Modern Kanto cities, routes, institutions, political boundaries, and habitat distribution must not be assumed to exist unchanged without source evidence.
+44. The opening game scope is one bounded settlement-centered locality and surrounding routes/ecologies, not all of future Kanto.
+45. The #001-#151 mandate is a full-project authoring requirement, not a requirement to place all 151 species in the opening locality.
+
+The detailed first-region handoff is `docs/P2_FIRST_REGION_CONTRACT.md`.
