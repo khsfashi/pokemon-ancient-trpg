@@ -149,3 +149,26 @@ The setting therefore assumes:
 This decision intentionally does **not** establish an exact historical analogue, metallurgy level, Poké Ball/capture technology, region identity, currency, lethality, human term for Pokémon, or exact prevalence/mechanism of exceptional Pokémon bonds. Those remain separate P2 gates.
 
 `docs/WORLD_BIBLE.md` is the working contract that expands these implications while keeping unresolved choices explicit.
+
+## D-013 — No containment technology; optional three-slot companion system
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**Human Design Gate:** P2-HDG-002  
+**Owner choice:** A, clarified
+
+There is **no portable Pokémon containment technology** in the baseline era. There are no Poké Ball-like devices, instant recall, remote transfer, PC storage, or abstract creature inventory. Temporary restraints, traps, nets, cages, or pens may exist where the setting and technology permit them, but they are not a companion-storage system.
+
+Pokémon companionship is nevertheless a **first-class player system**, not a secret bonus or a non-systemic narrative exception.
+
+The player-state and eventual UI must expose exactly **three companion Pokémon slots**. Valid run states are `0/3`, `1/3`, `2/3`, and `3/3` occupied slots. Empty slots are normal and persistent; the interface must not imply that filling them is required.
+
+A run must be fully playable and completable with **zero Pokémon companions**. Main progression, survival, exploration, checks, event resolution, and endings may not assume that the player has obtained a Pokémon unless a particular optional branch explicitly requires one.
+
+When a Pokémon does become a companion, it remains physically present in the world. It travels, rests, eats, occupies space, can be endangered or separated, and imposes species-specific logistical and social consequences. Acquiring a companion means establishing a relationship in which that Pokémon chooses or accepts continued association; it is not equivalent to defeating, restraining, or declaring ownership over it.
+
+The intended social analogy is closer to a fantasy world in which monsters are common dangers but **monster tamers are rare**. A person accompanied by one dangerous creature may be remarkable; someone who has earned the trust of several powerful Pokémon can be exceptional, and a person able to travel with a dragon-like or legendary-scale creature may be treated as a figure of legend. This analogy defines social rarity, not a generic fantasy taxonomy that replaces Pokémon-specific ecology.
+
+The three-slot capacity is a **game-system maximum**, not evidence that three companions are ordinary in the fiction. P4 must decide species-by-species whether companionship is plausible at all and what conditions, burdens, risks, and social consequences apply.
+
+P3 must support both human-only and companion-assisted character builds without making either an invalid progression path. P5 must allow events and endings for `0/3` companion runs. P7/P8 must preserve the visible three-slot companion contract in the mobile UI.
