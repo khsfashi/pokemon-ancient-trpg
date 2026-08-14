@@ -18,6 +18,8 @@ Current owner-approved direction:
 - narrow **Pokémon-dependent technology islands** can make one locality unusually advanced in one craft when the practice is causally traceable to official Pokémon capabilities/ecology and generations of human practice;
 - technology islands are local, fragile and non-industrial; they do not imply a general modern technology tree or obedient Pokémon workforce;
 - ancient-world lore follows **official evidence → bounded interpretation → explicit project extrapolation**;
+- species presentation uses a **hybrid identification model**: stable official species identities coexist with unknown/descriptive encounter labels and local aliases until the player has sufficient knowledge;
+- official species names become the stable player-facing label after identification, but local names can remain in dialogue/lore and the umbrella word `Pokémon` is not forced as universal diegetic vocabulary;
 - humans and Pokémon are not integrated through normalized trainer culture or routine ownership;
 - there is **no portable Pokémon containment technology**;
 - Pokémon companionship is a core system with exactly **three visible slots**, while `0/3` through `3/3` are all valid run states;
@@ -61,12 +63,13 @@ Primary working contract: `docs/WORLD_BIBLE.md`.
 - **D-015:** rare Sabrina-like human psychics / miracle-workers may exist; no universal magic system.
 - **P2-HDG-003 / D-017:** iron-age baseline plus Pokémon-dependent local technology islands.
 - **D-018:** canon-first worldbuilding derivation protocol.
+- **P2-HDG-004 / D-019:** hybrid species identification/naming; unknown/local terminology before identification, stable official species name after identification.
 
 ### Supporting research and contracts
 
 `docs/P2_TECHNOLOGY_CANON_RESEARCH.md` records the source research behind iron-era danger, Pokémon-driven crafts, human psychics and historical strength-change precedent.
 
-`docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md` is now the binding authoring contract for:
+`docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md` is the binding authoring contract for:
 
 - narrow/local Pokémon-dependent technology;
 - official-fact versus inference versus project-lore separation;
@@ -74,6 +77,17 @@ Primary working contract: `docs/WORLD_BIBLE.md`.
 - species-specific technology/craft hooks or explicit `none`;
 - species-specific ancient-strength treatment;
 - preservation of canon boundaries in later data/content pipelines.
+
+`docs/P2_TERMINOLOGY_AND_IDENTIFICATION_CONTRACT.md` is the binding naming/knowledge contract for:
+
+- stable system identity versus current run knowledge versus diegetic terminology;
+- unidentified/identified species presentation;
+- official-name reveal without full bestiary completion;
+- optional local aliases rather than 151 forced replacement names;
+- P4 identification hooks and P5 knowledge-dependent event rendering;
+- P7/P8 separation of species key, display name, encounter label, identification state and aliases.
+
+`docs/P2_LETHALITY_CANON_RESEARCH.md` records the official-setting boundary for the next severity decision. Its primary-source findings establish that wild Pokémon can attack people, Pokémon death/graves exist, and humans have hunted Pokémon severely enough to threaten a population, while **not** establishing that ordinary battle defeat is routinely lethal.
 
 ### Provisional ancient-danger premise
 
@@ -83,37 +97,52 @@ The project absolutely intends ancient Pokémon to be frightening and often over
 
 ## Exact next lane
 
-Resolve **P2-HDG-004 — human terminology / identification presentation**.
+Resolve **P2-HDG-005 — injury/death/severity baseline**.
 
-This decision is now blocking because the world already assumes local, incomplete and non-standardized Pokémon knowledge, while the player still needs a readable mobile interface and the P4/P5 content pipeline needs to know whether it writes official species names, local names, descriptive unknown labels, or a hybrid.
+Canon research supports real danger and real death but does not require `every defeat = death`. The recommended gate is:
 
-The next gate should decide only the presentation contract, not invent 151 local names during P2.
+### A — Adventure-safe
 
-Recommended direction to present to the owner:
+- routine injury is recoverable;
+- permanent injury is exceptional/scripted;
+- death is mostly special narrative content or explicit endings;
+- combat defeat generally means incapacitation/retreat.
 
-- keep official Pokémon species names as stable **system/data identifiers**;
-- allow diegetic local names, titles and mistaken names in dialogue/lore;
-- before the player has sufficient knowledge, encounters may show a descriptive/unknown label rather than immediately revealing the official species name;
-- once identified, the UI/bestiary uses the official species name for usability while retaining discovered local aliases in lore;
-- decide separately whether people of the era use the umbrella word `Pokémon` at all.
+### B — Serious selective lethality **(recommended)**
 
-After terminology, the next likely P2 blockers are:
+- injury is consequential and can affect the remainder of a run;
+- serious/permanent injury is possible from major failures or dangerous encounters;
+- death is possible but is an explicit high-severity outcome rather than the default result of losing a fight;
+- humans cannot casually trade hits with Pokémon merely because RPG combat exists;
+- retreat, preparation and avoidance remain core survival tools;
+- companion death, if later implemented, is rare/high-impact rather than routine attrition.
 
-1. injury/lethality/severity tone and treatment of killing Pokémon;
-2. first-playable region/world boundary;
-3. economy/medicine details only to the depth needed by P3-P5;
-4. exact psychic ability ceiling only when P3 requires it.
+### C — Harsh lethal survival
 
-Do not reopen containment, companion slots, iron-age floor, technology islands, canon-first derivation, or existence of rare human psychics unless the owner explicitly supersedes D-013/D-014/D-015/D-017/D-018.
+- severe injury and death are common consequences of combat failure;
+- permanent character/companion loss are ordinary run risks;
+- many direct battles become effectively life-or-death decisions.
+
+Recommendation: **B**. It preserves the monster-scale threat and meaningful survival decisions without making every encounter or companion investment a grimdark attrition gamble.
+
+After severity, resolve the social/ethical treatment of **killing Pokémon** separately so hunting, defensive killing, sacred species and material use can remain species- and culture-sensitive rather than becoming one global rule.
+
+After that, the strongest remaining P2 blockers are:
+
+1. first-playable region/world boundary;
+2. economy/medicine details only to the depth needed by P3-P5;
+3. exact psychic ability ceiling only when P3 requires it.
+
+Do not reopen containment, companion slots, iron-age floor, technology islands, canon-first derivation, hybrid identification, or existence of rare human psychics unless the owner explicitly supersedes D-013/D-014/D-015/D-017/D-018/D-019.
 
 ## Later mandatory contracts
 
 - **P3 / #4:** compact deterministic TRPG rules and character model; human-only, companion-assisted and rare bounded psychic paths.
-- **P4 / #5:** shared Pokémon adaptation rules + `151/151` substantive ancient-setting dossiers with provenance/evidence classes, species-specific companionship, ancient-strength treatment and technology/craft hooks.
-- **P5 / #6:** deterministic seeded narrative event-engine contract, including valid `0/3` companion runs and local-knowledge conditions.
+- **P4 / #5:** shared Pokémon adaptation rules + `151/151` substantive ancient-setting dossiers with provenance/evidence classes, species-specific companionship, ancient-strength treatment, technology/craft hooks, and identification/alias hooks.
+- **P5 / #6:** deterministic seeded narrative event-engine contract, including valid `0/3` companion runs, local-knowledge conditions, and knowledge-dependent species rendering.
 - **P6 / #12:** exact production resource/asset/provenance/mobile-budget contract.
 - **P7 / #7:** technical architecture after P1-P6 contracts are stable.
-- **P8 / #8:** first playable mobile vertical slice with visible three-slot companion UI.
+- **P8 / #8:** first playable mobile vertical slice with visible three-slot companion UI and hybrid encounter-identification presentation.
 - **P9 / #9:** replayable expansion + `151/151` meaningful authored gameplay presence.
 - **P10 / #10:** release/mobile delivery hygiene and optional Android packaging.
 
