@@ -19,6 +19,7 @@ The following constraints are authoritative:
 - ordinary human material technology has an **iron-age / medieval-fantasy-like baseline**;
 - particular communities may possess narrow **Pokémon-dependent technology islands** derived from source-backed species capabilities or ecology, but these are local exceptions rather than a general modern technology tree;
 - ancient-setting lore follows a **canon-first derivation protocol**: official evidence first, then bounded inference, then clearly marked project-authored extrapolation;
+- species naming follows a **hybrid identification model**: stable official species identities exist for the player-facing system, while characters may initially know only descriptions, aliases, myths, or uncertain local classifications;
 - there is **no portable Pokémon containment technology**: no Poké Ball-like storage, instant recall, remote transfer, or PC-style creature storage;
 - Pokémon can be dangerous wildlife, feared monsters, sacred beings, ecological forces, competitors, omens, tolerated neighbors, or exceptional companions depending on species and local culture;
 - Pokémon companionship is a first-class gameplay system but is socially uncommon and never a mandatory run objective;
@@ -124,7 +125,7 @@ Baseline rules:
 
 This supports P5 event-driven travel without requiring continuous map simulation.
 
-## 6. Knowledge, records, communication, and exceptional human faculties
+## 6. Knowledge, records, communication, identification, and exceptional human faculties
 
 Ordinary life is primarily supported by memory, demonstration, oral tradition, local markings, specialist record keeping, and repeated practice rather than universal literacy and standardized encyclopedic knowledge.
 
@@ -135,14 +136,36 @@ Pokémon knowledge is therefore:
 - uneven by settlement and specialist;
 - often practical before it is taxonomic;
 - vulnerable to rumor, taboo, myth, local naming, misidentification, and incomplete observation;
-- acquired through tracks, calls, remains, feeding signs, migration, weather effects, damaged crops, injuries, sightings, and rare close encounters;
+- acquired through tracks, calls, remains, feeding signs, migration, weather effects, damaged crops, injuries, sightings, testimony, repeated encounters, and rare close contact;
 - suitable for progressive bestiary discovery rather than an omniscient Pokédex dump.
 
-Exact writing system, terminology for Pokémon, species naming conventions, measurement system, and map sophistication remain unresolved.
+Exact writing system, region-specific generic words for Pokémon, measurement system, and map sophistication remain unresolved.
 
 Project authors must separately preserve what the franchise explicitly establishes and what this world derives from it. D-018 and `docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md` define the evidence classes that P4 must carry into all 151 species dossiers.
 
-### 6.1 Rare human psychics / miracle-workers
+### 6.1 Hybrid species identification and naming
+
+D-019 establishes a hybrid presentation model.
+
+The game distinguishes:
+
+- **system identity** — stable official species identity / National Pokédex mapping used by data and, once identified, by the player-facing UI;
+- **player-knowledge presentation** — what the current run is actually allowed to reveal;
+- **diegetic terminology** — descriptions, aliases, titles, taboo names, myths, or mistaken classifications used by particular people and communities.
+
+A first encounter need not expose the official species name. The UI may initially present an observable label such as a physical description, behavior-based phrase, habitat description, or already-learned local name. Once sufficient knowledge is obtained, the official species name becomes the stable player-facing identifier while local terms may continue to appear in dialogue and lore.
+
+The conceptual minimum is an **unidentified → identified** transition. Content may preserve a partially recognized/uncertain state where useful, but P3/P5 may simplify the exact mechanical tier count.
+
+Identification is not complete bestiary knowledge. Knowing that a creature is `독침붕`, for example, does not automatically reveal every ability, nesting habit, danger sign, technology relevance, companionship condition, or local belief.
+
+The umbrella word `Pokémon` may be used by the system/UI for clarity without implying that every ancient community shares the same diegetic generic term.
+
+P4 is not required to invent ancient aliases for all 151 species. Aliases exist only where they add identification, ecological, cultural, technological, mythic, or event value; `none` is valid.
+
+The binding presentation/content contract is `docs/P2_TERMINOLOGY_AND_IDENTIFICATION_CONTRACT.md`.
+
+### 6.2 Rare human psychics / miracle-workers
 
 Pokémon canon permits humans with genuine psychic power; Sabrina is an explicit official precedent. This project therefore allows rare people with narrow anomalous faculties.
 
@@ -280,13 +303,15 @@ Rare psychic occupations must not become a reskinned universal wizard class. The
 
 Technology-island specialists may have unusual local techniques, but those techniques remain tied to their source ecology, inherited knowledge, equipment, or access rather than becoming generic character powers.
 
+Knowledge-oriented occupations may improve identification, interpretation, rumor evaluation, or bestiary progression without becoming omniscient taxonomy classes.
+
 ## 11. What this baseline deliberately does not decide
 
 The following are still open because choosing them now would exceed the owner's current decisions:
 
 - exact real-world historical analogue or calendar date;
 - exact steel quality, alloy sophistication, armor prevalence and metallurgical production scale beyond the iron-age floor;
-- exact human term(s) for Pokémon;
+- exact generic diegetic word(s) used for Pokémon by each culture or settlement;
 - exact region identity and geography of the first playable scope;
 - exact currency/economic abstraction;
 - normal human lifespan/medical sophistication relative to real history;
@@ -298,6 +323,8 @@ The following are still open because choosing them now would exceed the owner's 
 - whether riding or using a companion for transport is possible for particular species;
 - the finalized list and strength ceiling of playable human psychic faculties;
 - whether the provisional ancient-lineage weakening premise applies broadly, narrowly, or through multiple different causes;
+- exact mechanical thresholds/tier count for species identification and bestiary knowledge;
+- exact production wording for unknown encounter labels;
 - central religion/cosmology, if any;
 - whether later-generation Pokémon/forms exist outside the mandatory Gen-I gameplay scope.
 
@@ -310,6 +337,8 @@ Rare human psychics are **not** unresolved as a concept: D-015 permits them, whi
 Pokémon-dependent technology islands are **not** unresolved: D-017 makes them a binding narrow/local exception model.
 
 Canon-first derivation is **not** unresolved: D-018 requires official evidence to remain visibly separate from project-authored extrapolation.
+
+Species naming/identification presentation is **not** unresolved: D-019 fixes the hybrid model, while local vocabulary and mechanical thresholds remain later content/rules work.
 
 These remaining questions must be resolved only when they become the next blocking P2 decision or are explicitly assigned to P3/P4.
 
@@ -328,14 +357,20 @@ P3-P9 content must preserve these invariants unless an explicit later owner deci
 9. Pokémon-dependent technology islands are permitted only as narrow, local, source-driven exceptions and must not collapse into a general modern technology tree.
 10. Rare human psychics may exist, but there is no generic universal magic system or open-ended spell list.
 11. People can possess sophisticated local ecological knowledge without possessing a modern universal Pokédex worldview.
-12. Occupations arise from village survival, exchange, travel, knowledge, Pokémon ecology, local technology islands and rare canon-compatible gifts rather than generic fantasy magic.
-13. A species dossier may make a particular Pokémon locally familiar without making Pokémon as a whole domesticated or normalized.
-14. The world can contain craftsmanship, culture, ritual, trade, specialist knowledge and isolated anomalous crafts without becoming a Hisui-like institutional frontier society.
-15. Later systems must prefer explicit local exceptions over silently weakening the global pre-Hisui baseline.
-16. P4 must determine companionship plausibility and burdens per species instead of assuming that every one of the 151 can occupy a companion slot.
-17. P4 must source and audit any Pokémon-derived technology/craft hook per species rather than inferring a modern tech tree from elemental powers; `none` is always a valid result.
-18. P4 must distinguish direct official evidence, derived inference, and project-authored extrapolation for every material species claim.
-19. P4 must distinguish source-backed ancient-strength evidence from project-authored amplification for every species where the distinction matters.
-20. P5 must support event and ending paths for every companion occupancy state from `0/3` through `3/3` where relevant.
-21. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
-22. Later data/content pipelines must preserve evidence/provenance classes so project lore cannot be mistaken for imported canon data.
+12. Stable official species identity, current player knowledge, and local diegetic naming are separate layers.
+13. Unidentified encounters must not automatically leak official species names or unearned hidden knowledge.
+14. Identification may reveal the official species name without completing the species' bestiary knowledge.
+15. Occupations arise from village survival, exchange, travel, knowledge, Pokémon ecology, local technology islands and rare canon-compatible gifts rather than generic fantasy magic.
+16. A species dossier may make a particular Pokémon locally familiar without making Pokémon as a whole domesticated or normalized.
+17. The world can contain craftsmanship, culture, ritual, trade, specialist knowledge and isolated anomalous crafts without becoming a Hisui-like institutional frontier society.
+18. Later systems must prefer explicit local exceptions over silently weakening the global pre-Hisui baseline.
+19. P4 must determine companionship plausibility and burdens per species instead of assuming that every one of the 151 can occupy a companion slot.
+20. P4 must source and audit any Pokémon-derived technology/craft hook per species rather than inferring a modern tech tree from elemental powers; `none` is always a valid result.
+21. P4 must distinguish direct official evidence, derived inference, and project-authored extrapolation for every material species claim.
+22. P4 must distinguish source-backed ancient-strength evidence from project-authored amplification for every species where the distinction matters.
+23. P4 must define species recognition/identification hooks and use local aliases only where they add actual content value; `none` is valid.
+24. P5 must support event and ending paths for every companion occupancy state from `0/3` through `3/3` where relevant.
+25. P5 must support knowledge-dependent species rendering and conflicting/local testimony without creating duplicate species entities.
+26. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
+27. P7/P8 must keep stable species key, official display name, current encounter label, identification state and discovered aliases as separable data/presentation concerns.
+28. Later data/content pipelines must preserve evidence/provenance classes so project lore cannot be mistaken for imported canon data.
