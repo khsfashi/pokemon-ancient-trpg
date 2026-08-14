@@ -12,7 +12,9 @@ Early design and research phase.
 
 The fixed project lane is currently:
 
-`P0 Governance → P1 References/Data/IP → P2 World Bible → P3 TRPG Rules → P4 Pokémon Adaptation → P5 Event Engine → P6 Technical Architecture → P7 Vertical Slice → P8 Content Expansion → P9 Mobile/Release`
+`P0 Governance → P1 References/Data/Resource Sources/IP → P2 World Bible → P3 TRPG Rules → P4 Pokémon Adaptation → P5 Event Engine → P6 Resource/Asset Strategy → P7 Technical Architecture → P8 Vertical Slice → P9 Content Expansion → P10 Mobile/Release`
+
+P1 performs broad resource-source reconnaissance. The dedicated P6 phase runs after the core P2-P5 game design and freezes the actual asset inventory, sourcing/provenance/redistribution policy, preprocessing pipeline, and mobile resource budget before technical architecture begins.
 
 See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) for the current active phase and [`docs/ROADMAP.md`](docs/ROADMAP.md) for the roadmap contract.
 
@@ -38,7 +40,7 @@ The source code, project-authored rules, and project-authored text in this repos
 
 No commercial use is intended.
 
-The project will track external data, code, asset provenance, and license boundaries explicitly before importing or redistributing them. See [`docs/REFERENCE_PROTOCOL.md`](docs/REFERENCE_PROTOCOL.md).
+The project will track external data, code, asset provenance, redistribution boundaries, and license notices explicitly before importing or bundling them. Large Pokémon/third-party asset corpora must not be committed merely because a convenient public source exists; P6 owns the final inclusion/fetch/generation policy. See [`docs/REFERENCE_PROTOCOL.md`](docs/REFERENCE_PROTOCOL.md).
 
 ## License
 
