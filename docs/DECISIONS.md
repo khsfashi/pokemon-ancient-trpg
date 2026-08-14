@@ -386,3 +386,26 @@ The seven attributes are a human player-character contract. P4 may use a differe
 Numeric ranges, creation allocation, modifiers, dice/check formula, difficulty scale, health/fatigue/fear formulas and other derived stats remain unresolved until the next P3 rules decisions.
 
 The binding contract is `docs/P3_ATTRIBUTE_CONTRACT.md`.
+
+## D-024 — 2d6 staged-outcome checks with rare doubles spikes
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-002  
+**Owner choice:** B, expanded with rare critical/dopamine events
+
+The core human check engine uses **2d6 + Attribute + Competence + Context** against a target difficulty or opposed value.
+
+Checks use margin-based outcome bands rather than only binary pass/fail: setback, costly/partial success, full success, and exceptional success. The center-weighted 2d6 distribution is intended to make competence reliable while preserving uncertainty.
+
+Natural **6+6** is a rare `Fortune Spike` and natural **1+1** is a rare `Trouble Spike`. Each occurs 1/36 of rolls. Doubles are an overlay on the normal result rather than a replacement for total/margin.
+
+A Fortune Spike creates an additional meaningful opportunity such as hidden information, bestiary insight, a safer route, rare trace, optional event flag, favorable relationship opening, or preserved resource when the fiction supports it. It does not make structurally impossible actions possible and does not automatically award companions or campaign-scale treasure.
+
+A Trouble Spike adds a context-appropriate complication but is not automatic death, permanent injury, companion loss, or arbitrary campaign destruction. D-020 serious selective lethality remains authoritative.
+
+The default P3 check scale uses compact human attribute ratings `0–4`, competence `+0/+1/+2`, ordinary combined context `-2..+2`, and static difficulties `7 / 9 / 11 / 13 / 15`, with routine actions requiring no roll and structurally impossible actions receiving no roll until fiction changes.
+
+The reward cadence must not depend primarily on frequent Pokémon acquisition. Exceptional outcomes and Fortune Spikes can instead drive knowledge, discovery, route, relationship, resource, reputation, and event-flag rewards.
+
+The binding contract is `docs/P3_DICE_AND_CHECK_CONTRACT.md`.
