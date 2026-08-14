@@ -286,3 +286,28 @@ Identification is separate from complete knowledge. Revealing a species name doe
 P4 must define recognition/identification hooks per species without inventing aliases merely to fill a template. P5 must support knowledge-dependent rendering. P7/P8 must keep stable species identity separate from current encounter labels and discovered aliases.
 
 The binding implementation/content contract is `docs/P2_TERMINOLOGY_AND_IDENTIFICATION_CONTRACT.md`.
+
+## D-020 — Serious selective lethality
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**Human Design Gate:** P2-HDG-005  
+**Owner choice:** B
+
+The setting uses **serious selective lethality**.
+
+Injury, lasting impairment, critical condition, and death are real possible outcomes for humans and Pokémon, but ordinary defeat is **not** automatically death. Later systems must distinguish escape/disengagement, non-lethal incapacitation, recoverable injury, serious or lasting injury, critical/life-threatening condition, and death.
+
+Death is an explicit high-severity outcome reached through sufficiently lethal circumstances, critical injury, failed rescue/treatment, deliberate lethal action, accumulated danger, or another authored lethal path. A routine low-severity failed roll must not silently become arbitrary permadeath.
+
+Companion Pokémon can be seriously injured or die, but companion death is rare/high-impact rather than routine attrition. A normal random encounter defeat must not automatically erase a hard-earned companion. Species-specific durability and danger remain P4 responsibilities.
+
+The player must have meaningful human-only survival options such as preparation, equipment, route knowledge, observation, retreat, first aid, and other setting-native tools; the existence of lethal stakes must not turn a companion into a required survival tax.
+
+A `death` result is genuinely different from fainting or incapacitation. The baseline does not assume generic resurrection or automatic return from death; any future exception requires an explicit separate lore/design decision.
+
+P3 owns exact health numbers/tier mechanics and player-death run handling. P5 owns authored consequence ladders, warning/telegraphing, rescue/treatment branches, and explicit lethal contexts.
+
+This decision intentionally does **not** determine when killing Pokémon is socially, morally, ritually, or economically acceptable. Hunting, defensive killing, food/material use, sacred-species taboos, and similar questions remain the next separate P2 gate.
+
+The binding contract is `docs/P2_INJURY_AND_LETHALITY_CONTRACT.md`; supporting canon research remains in `docs/P2_LETHALITY_CANON_RESEARCH.md`.
