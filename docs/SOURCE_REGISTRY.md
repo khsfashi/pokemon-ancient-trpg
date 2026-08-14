@@ -241,20 +241,164 @@ P6 must decide, after P2-P5:
 
 ---
 
+## SRC-ASSET-002 — PokéAPI `cries`
+
+**Decision:** `REVISIT IN P6`  
+**Role:** broad Pokémon cry/audio source candidate; technically convenient but underlying audio rights remain separate  
+**Canonical repository:** https://github.com/PokeAPI/cries  
+**Verified revision:** `ef687b18f0ce17169b4b4c09175819f7ade92f0f` (2026-08-11)  
+**Verified:** 2026-08-14
+
+### Evidence anchors
+
+- README: repository contains Pokémon cries from Generations 1-9 in `.ogg` format.
+- README: files were sourced from Pokémon Showdown and Veekun rather than directly published by a Pokémon rights holder through this repository.
+- README: files are mapped by PokéAPI Pokémon ID under `cries/pokemon/latest` and `cries/pokemon/legacy`.
+- `LICENSE`: explicitly states that all audio-file contents are copyright The Pokémon Company, then associates the repository with CC0 1.0 Universal.
+- The CC0 text limits its waiver/license to rights owned by the affirmer and explicitly disclaims responsibility for clearing rights held by other persons.
+- The latest upstream commits still replace/add individual cry files, so the corpus is moving and file-level changes are plausible even when IDs stay stable.
+
+### Resource coverage
+
+At reconnaissance depth the source offers:
+
+- `latest` cry files for modern/current variants covered by the repository,
+- `legacy` cry files for older generations where provided,
+- `.ogg` delivery suitable for browser playback,
+- a simple numeric mapping aligned to PokéAPI Pokémon IDs.
+
+The repository is useful as an **index/coverage candidate**, not as proof that every file or variant is safe for redistribution.
+
+### License / provenance boundary
+
+The repository itself makes the rights boundary explicit: the Pokémon audio is identified as The Pokémon Company's copyrighted content.
+
+Therefore this project's interpretation is:
+
+- `CC0` is **not** evidence that PokéAPI can relicense The Pokémon Company's underlying cries,
+- Showdown/Veekun being upstream acquisition points are provenance clues, not rights-holder grants,
+- the public availability of `.ogg` files does not by itself justify committing the corpus into this public repository or release artifacts.
+
+P1 must not vendor these cries.
+
+### Update and pinning strategy
+
+- Pin an exact `PokeAPI/cries` commit for any later research/import operation.
+- For selected binary files, P6/P7 should retain file hashes as well as the source revision because upstream commits can replace a cry without changing its logical ID.
+- Do not fetch cries dynamically during normal runtime by default; a P6-approved build/fetch/bundle policy must precede runtime integration.
+- Keep canonical Pokémon data IDs separate from final runtime asset IDs so a later omission or source change does not rewrite gameplay data.
+
+### Risks / incompleteness
+
+- Underlying Pokémon audio rights are not granted merely by the repository's CC0 notice.
+- Source-chain provenance spans multiple community projects.
+- `latest` / `legacy` is a source-organization concept, not automatically the exact presentation model this game should expose.
+- Form/variant coverage can evolve and should be validated against the P4-approved playable roster if P6 chooses to use cries.
+- Audio payload, decoded/streaming behavior, preload policy and cache budget are deliberately deferred to P6.
+
+### P6 revisit questions
+
+- Does a text-first mobile game gain enough from cries to justify them?
+- If yes, should cries be bundled, fetched during a documented build step, user-supplied, or omitted from public artifacts?
+- Which roster/forms actually need a cry and which `latest`/`legacy` source is coherent with presentation?
+- What exact file hashes, attribution/provenance records, preprocessing and mobile audio budget apply?
+
+### Downstream ownership
+
+- **P4:** playable roster/form identity must be stable enough to define required cry keys.
+- **P6:** decide whether cries are required/optional/deferred and establish the exact provenance/redistribution/resource budget contract.
+- **P7:** implement only the P6-approved audio manifest/fetch/build/loading path.
+
+---
+
+## SRC-REF-001 — PokéRogue client, content, and resource organization
+
+**Decision:** `ADAPT` as architectural/content/resource-organization reference only  
+**Role:** reference for a mature browser Pokémon roguelite's separation of data, runtime systems, tests, locales and creative assets; not a source of project canon or a stack decision  
+**Canonical client repository:** https://github.com/pagefaultgames/pokerogue  
+**Canonical asset repository:** https://github.com/pagefaultgames/pokerogue-assets  
+**Verified client revision:** `f0351391b1b75c7676dc234da82ad67ff5a3cfcd` (2026-08-13)  
+**Verified asset revision:** `909b43612324622608023b3beb2f24f4ef159c1d` (2026-07-16 latest indexed commit at verification)  
+**Verified:** 2026-08-14
+
+### Evidence anchors
+
+- Client README describes PokéRogue as a browser-based Pokémon fangame inspired by roguelites.
+- Current `package.json` uses TypeScript, Vite, Phaser and Vitest, with explicit build/test/typecheck/data-generation scripts. This is evidence of one proven browser-game organization, not a requirement for this project.
+- `.gitmodules` separates `assets` and `locales` into dedicated repositories/submodules instead of embedding every resource in the gameplay repository.
+- `src/data/` contains many explicit game-data domains such as abilities, balance, dialogue, daily-seed data and biome-related data, while runtime concerns such as `src/audio/` have their own managers.
+- The client and asset READMEs use REUSE/SPDX-style per-file licensing metadata rather than assuming one repository-wide license covers everything.
+- The client README explicitly says assets without matching `REUSE.toml` licensing information should be considered to have **no licensing/copyright information**.
+- The asset repository separates `audio/`, `images/`, `fonts/`, battle-animation data and other resource families, and its `REUSE.toml` marks selected logos as `LicenseRef-NO-REUSE`.
+
+### Reference lessons worth adapting
+
+The useful lessons are structural rather than code-level:
+
+1. **Separate game logic/content from heavy creative assets.** A dedicated resource boundary makes provenance, updating and packaging easier to reason about.
+2. **Treat provenance as file/class metadata, not as a blanket repository assumption.** A default-deny rule for unclassified assets is safer than inheriting a convenient top-level license label.
+3. **Keep large game-content domains explicit.** PokéRogue's dedicated data directories show the value of named registries/contracts instead of burying content in scene/UI code.
+4. **Separate runtime managers from declarative data.** For this project, P5/P7 should preserve a similar conceptual split even if the actual engine/framework is different.
+5. **Make validation/tooling first-class.** Explicit test/typecheck/generation scripts are evidence that content-heavy games benefit from automated validation rather than manual inspection alone.
+6. **Pin resource dependencies.** Submodule/revision-based resource boundaries are a useful reference for reproducibility, though this project may later choose manifests/build fetches instead of Git submodules.
+
+### What this project must not copy by default
+
+- PokéRogue's Phaser/Vite/TypeScript stack does **not** pre-decide P7 architecture.
+- Its battle-loop, item economy, wave structure, balancing, Pokémon acquisition frequency and graphical presentation are project-specific assumptions, not authority for this text TRPG.
+- Its source code is AGPL-v3.0-only unless otherwise noted; copying implementation creates license obligations and is unnecessary when the desired result is a project-owned contract.
+- Its creative-asset repository is **not** a general asset library for this project. Pokémon-IP rights remain separate, some files carry specific exceptions, and unannotated asset files may have no licensing information.
+- PokéRogue logos explicitly carry a no-reuse classification and must not be reused.
+
+### License / provenance boundary
+
+Current repository notices distinguish multiple categories:
+
+- project source code: generally AGPL-v3.0-only unless otherwise noted,
+- documentation: CC-BY-NC-SA-4.0,
+- auto-generated / insignificant-originality files: CC0-1.0 where classified,
+- licensable/applicable assets: generally CC-BY-NC-SA-4.0 unless otherwise noted,
+- exceptions and no-reuse files: recorded through `REUSE.toml`,
+- unclassified assets: explicitly not assumed to have usable licensing/copyright information.
+
+None of those categories relicenses underlying Pokémon characters, designs, game-derived media or other franchise IP.
+
+### Update and pinning strategy
+
+- Treat the moving `beta` branch only as a discovery surface; record exact commit SHAs for every architectural/reference claim.
+- If a later phase reuses a concrete organizational pattern, re-check the exact current file(s) rather than citing `beta` abstractly.
+- Do not add PokéRogue as a runtime dependency merely to borrow organization ideas.
+- If P6 studies its resource manifest/provenance approach in more detail, inspect the then-current `pokerogue-assets` revision and generated REUSE/SPDX bill of materials again.
+
+### Risks / limits of comparison
+
+- PokéRogue is a large graphical combat roguelite with very different interaction density from a mobile text adventure.
+- Its mature architecture reflects years of project-specific evolution; copying its subsystem breadth would be over-engineering.
+- A separate server repository exists in the PokéRogue ecosystem, but this project's current direction has no backend requirement; that architecture must not be inherited by analogy.
+- Resource separation is a useful pattern, but Git submodules themselves are not yet selected for this project.
+
+### Downstream ownership
+
+- **P5:** may reuse the general lesson that authored content should live in explicit validated data contracts, not UI/scene code.
+- **P6:** may adapt default-deny provenance classification and resource separation while creating this project's own manifest strategy.
+- **P7:** independently choose the framework/build architecture from current primary documentation; PokéRogue remains comparative evidence only.
+
+---
+
 ## Current P1 coverage tracker
 
 | Lane | Status | Next evidence target |
 |---|---|---|
 | PokéAPI structured data | Initial record complete | P4 field mapping later |
 | Pokémon Showdown data/mechanics | Initial record complete | P4 source-selection details later |
-| Pokémon sprite/icon sources | Started | compare additional source/provenance candidates |
-| Pokémon cries/audio | Pending | upstream source + exact notices/provenance |
+| Pokémon sprite/icon sources | Started | compare additional source/provenance candidates only if needed before P6 |
+| Pokémon cries/audio | Initial record complete | P6 usefulness, exact files, redistribution/fetch policy and audio budget |
 | Font/UI/audio/background ecosystems | Pending | reconnaissance only; no art-direction freeze |
-| PokéRogue | Pending | architecture/content/resource organization as reference only |
+| PokéRogue | Initial record complete | P5/P6/P7 reuse only as bounded comparative evidence |
 | Comparable text/event RPGs | Pending | event/run/content patterns |
 | Official ancient-era setting references | Pending | rights-holder primary material |
 | Fan-project/IP/disclaimer boundaries | Pending | current official policy/notices where available |
 
 ## Exact next P1 slice
 
-Continue the registry with **resource/audio provenance and fan-project reference reconnaissance**, starting with Pokémon cries/audio and PokéRogue. Keep source availability and rights evidence separate from design-dependent P6 asset selection.
+Continue the registry with **comparable text/event-driven games, official Pokémon ancient-era setting references, and current fan-project/IP/disclaimer boundaries**. After those core lanes are bounded, finish the remaining font/UI/audio/background ecosystem reconnaissance and any additional sprite-source comparison that materially improves the P6 candidate list.
