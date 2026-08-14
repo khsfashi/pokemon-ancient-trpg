@@ -308,6 +308,29 @@ A `death` result is genuinely different from fainting or incapacitation. The bas
 
 P3 owns exact health numbers/tier mechanics and player-death run handling. P5 owns authored consequence ladders, warning/telegraphing, rescue/treatment branches, and explicit lethal contexts.
 
-This decision intentionally does **not** determine when killing Pokémon is socially, morally, ritually, or economically acceptable. Hunting, defensive killing, food/material use, sacred-species taboos, and similar questions remain the next separate P2 gate.
+P2-HDG-006 later resolves the separate social/ethical treatment of humans killing Pokémon through D-021.
 
 The binding contract is `docs/P2_INJURY_AND_LETHALITY_CONTRACT.md`; supporting canon research remains in `docs/P2_LETHALITY_CANON_RESEARCH.md`.
+
+## D-021 — Contextual, culture/species-sensitive Pokémon killing ethics
+
+**Status:** ACTIVE  
+**Date:** 2026-08-14
+**Human Design Gate:** P2-HDG-006  
+**Owner choice:** B
+
+Humans intentionally killing Pokémon is **neither universally taboo nor casually normal**. The meaning of a lethal act depends on context, local culture, the particular species/individual, and the relationship between that Pokémon and the community.
+
+Legitimate reasons can include immediate defense, settlement or route defense, necessary hunting for food/materials, mercy killing, population/ecological control, and other survival necessities. Those reasons do not make all killing morally blank or socially interchangeable.
+
+Communities may judge the same species differently. One settlement may hunt a species, another may tolerate it, another may protect it, and another may understand it as sacred, intelligent, treaty-bound, ecologically necessary, or otherwise inappropriate to kill. Rarity, perceived intelligence/personhood, sacredness, local truce/history, ecological importance, available non-lethal alternatives, necessity, waste, cruelty, and prestige-only motives may all affect judgment.
+
+Defeating a Pokémon does not imply killing it, and killing one does not imply automatic harvesting or loot. Hunters and defenders are valid occupations, but the game must not reduce Pokémon encounters to a universal `kill for XP/resources` loop.
+
+Pokémon-derived food/material use is allowed only where P4 species/local treatment supports it. Non-lethal collection such as shed materials, abandoned resources, natural remains, negotiated access, or species-specific alternatives may be equally or more appropriate.
+
+A companion Pokémon is an accepted relational partner rather than property. Deliberately killing a companion — one's own or another person's — is presumptively a severe social/narrative act except where an exceptional context such as unavoidable mercy killing clearly changes the interpretation.
+
+P4 must define species/local killing, hunting, food/material, protection/taboo, intelligence/rarity and non-lethal-resource treatment where relevant. P5 must support context-sensitive consequences rather than a single global morality flag.
+
+The binding contract is `docs/P2_KILLING_ETHICS_CONTRACT.md`.
