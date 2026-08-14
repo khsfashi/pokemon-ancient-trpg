@@ -104,3 +104,14 @@ If content needs a new reusable concept, decide whether the owning schema/rule s
 Agents may write local flavor within approved boundaries, but durable lore must be explicit.
 
 If a generated fact would constrain future writers or change how the world works, it belongs in P2/P3/P4 contracts and potentially `docs/DECISIONS.md`.
+
+## 13. Resources are part of product design, not late decoration
+
+Sprites, backgrounds, icons, typography, sound, ambience, and illustrations affect readability, tone, performance, distribution, and IP/provenance risk. They should not be left as an unbounded cleanup task after implementation.
+
+Use a two-pass process:
+
+- P1 discovers credible sources and records provenance/risks without prematurely committing the game to them.
+- P6, after P2-P5, freezes the actual production resource inventory, source/creation strategy, redistribution boundary, preprocessing pipeline, and mobile resource budget.
+
+Prefer a smaller coherent resource set that reinforces the world and remains cheap to load/cache over visual breadth that adds little to the text-first experience. Do not repeatedly decode, resize, convert, fetch, or duplicate resources at runtime when build-time normalization and cached ownership can solve the problem.
