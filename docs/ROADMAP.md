@@ -7,34 +7,70 @@ This roadmap defines the default core progression lane. The owner may explicitly
 | Phase | Issue | Purpose | Exit condition |
 |---|---:|---|---|
 | P0 | #1 | Project governance and autonomous continuation | A fresh agent can recover state, select next work, respect Human Design Gates, and leave a deterministic handoff. |
-| P1 | #2 | Reference, API, data-source, and IP research | Current primary-source registry with provenance, risks, and ADOPT/ADAPT/REJECT/DEFER decisions. |
+| P1 | #2 | Reference, API, data-source, resource-source, and IP research | Current primary-source registry with provenance, risks, ADOPT/ADAPT/REJECT/DEFER decisions, and a resource-candidate revisit list for P6. |
 | P2 | #3 | World bible | Minimum durable setting contract is owner-approved; unresolved canon questions are explicit. |
 | P3 | #4 | Core TRPG rules | Character/check/injury/progression contracts are deterministic and sufficiently frozen for downstream systems. |
 | P4 | #5 | Pokémon adaptation | Source-data boundary, ecology, encounter, threat, bond, and companionship rules are stable. |
 | P5 | #6 | Narrative event engine | Data-driven event/condition/choice/outcome/seeded-run contract is implementation-ready. |
-| P6 | #7 | Technical architecture | Current, proven implementation stack and save/data/test/deployment architecture are frozen. |
-| P7 | #8 | First playable vertical slice | One coherent mobile-sized run works end-to-end using production-intended paths. |
-| P8 | #9 | Content expansion | Replayable regional/content breadth exists without one-off rule forks. |
-| P9 | #10 | Mobile/release | PWA/distribution path is reproducible; optional APK exists only if justified. |
+| P6 | #12 | Resource and asset strategy | Exact asset inventory, sourcing/provenance/redistribution rules, production pipeline, and mobile resource budget are frozen from the P2-P5 design. |
+| P7 | #7 | Technical architecture | Current, proven implementation stack plus save/data/resource/test/deployment architecture are frozen and satisfy P6 constraints. |
+| P8 | #8 | First playable vertical slice | One coherent mobile-sized run works end-to-end using production-intended gameplay and resource paths. |
+| P9 | #9 | Content expansion | Replayable regional/content/resource breadth exists without one-off rule or asset-pipeline forks. |
+| P10 | #10 | Mobile/release | PWA/distribution path is reproducible; resource notices/bundling rules are preserved; optional APK exists only if justified. |
 
-## Why specification comes first
+## Why specification and resource planning come first
 
-This project is content- and rules-heavy. A premature application skeleton can encode assumptions about stats, events, Pokémon ownership, data formats, saves, or UI flow before those choices have been made.
+This project is content-, rules-, and presentation-heavy. A premature application skeleton can encode assumptions about stats, events, Pokémon ownership, data formats, saves, UI flow, art density, asset layout, or loading behavior before those choices have been made.
 
-Therefore P1–P5 are allowed to produce mostly research, decisions, schemas, examples, and testable contracts. P6 is the point at which the implementation architecture is intentionally frozen.
+Therefore P1-P5 are allowed to produce mostly research, decisions, schemas, examples, and testable contracts. P1 performs broad resource-source reconnaissance but deliberately does not freeze the final asset set while game design is unfinished.
+
+P6 runs **after the core design contracts P2-P5**. It converts the finished design into an exact resource plan: what the game needs, which sources or production methods are acceptable, what may be redistributed in the public repository/build, how assets are normalized, and what mobile payload/memory/loading constraints the implementation must obey.
+
+P7 is the point at which production implementation architecture is intentionally frozen. This prevents the framework/runtime from silently dictating asset policy and prevents a late resource investigation from forcing avoidable architecture rewrites.
 
 Small executable prototypes are permitted earlier only when they answer a bounded technical uncertainty and are clearly disposable evidence rather than production architecture.
+
+## P1 vs P6 resource boundary
+
+### P1 — reconnaissance
+
+P1 answers questions such as:
+
+- what Pokémon sprite/icon/audio sources exist,
+- what metadata and provenance each source exposes,
+- what licenses/notices apply to repository code/data versus the underlying Pokémon assets,
+- whether a source is maintained, pinnable, fetchable, and worth revisiting,
+- what font/UI/audio/background ecosystems may be relevant,
+- what candidates should be `ADOPT`, `ADAPT`, `REJECT`, `DEFER`, or explicitly `REVISIT IN P6`.
+
+P1 must not prematurely freeze art direction, illustration density, exact runtime asset classes, repository bundling, or mobile memory budgets when those depend on later design.
+
+### P6 — production resource contract
+
+P6 revisits viable P1 candidates with P2-P5 in hand and freezes:
+
+- required / optional / deferred asset inventory,
+- Pokémon-facing sprite/icon/audio choices,
+- project-owned background/UI/illustration/audio production needs,
+- source/provenance/attribution/redistribution classification,
+- public-repository inclusion versus build-time fetch/generation policy,
+- stable resource IDs and manifest design,
+- preprocessing and validation rules,
+- runtime preload/cache/eviction expectations,
+- initial payload, decoded-image/audio memory, and other mobile resource budgets,
+- explicit constraints handed to P7 architecture.
 
 ## Phase dependency rules
 
 - P0 gates all later autonomous work.
-- P1 informs P2–P6 wherever external data, Pokémon canon, assets, APIs, or licenses matter.
-- P2 must define the setting constraints that P3 occupations and P4 Pokémon relationships depend on.
+- P1 informs P2-P7 wherever external data, Pokémon canon, resource candidates, APIs, provenance, or licenses matter.
+- P2 must define the setting constraints that P3 occupations, P4 Pokémon relationships, and P6 art/presentation needs depend on.
 - P3 and P4 provide state/rule inputs to P5.
-- P5 defines the authoritative gameplay/content execution shape that P6 must support.
-- P6 owns framework/runtime/storage/deployment choices.
-- P7 proves the complete loop before P8 scales content.
-- P9 packages a proven game rather than becoming a second implementation track.
+- P5 defines the authoritative gameplay/content execution shape and presentation needs that P6 must account for.
+- P6 owns the production resource/asset contract and mobile resource budget; it does **not** choose the application framework.
+- P7 owns framework/runtime/storage/resource-integration/deployment choices while preserving P6 constraints.
+- P8 proves the complete loop before P9 scales content and resources.
+- P10 packages a proven game rather than becoming a second implementation track.
 
 ## Human Design Gate policy
 
@@ -43,10 +79,12 @@ A later phase may be blocked by a design decision. That is not permission to ski
 When blocked:
 
 1. present the smallest decision needed,
-2. provide 2–4 options and one recommendation,
+2. provide 2-4 options and one recommendation,
 3. explain downstream impact briefly,
 4. record the owner's decision in `docs/DECISIONS.md`,
 5. resume the same active phase.
+
+P6 must use the same rule. Researchable questions such as format support, provenance, licensing notices, memory cost, and source availability are agent research. Material presentation choices such as overall art direction or illustration density become Human Design Gates only when multiple valid directions remain after P2-P5.
 
 ## Roadmap mutation
 
