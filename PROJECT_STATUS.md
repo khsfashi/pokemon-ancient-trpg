@@ -26,6 +26,8 @@ Current owner-approved direction:
 - a complete human-only `0/3` run must remain fully playable and completable;
 - companions physically travel with the player and impose species-specific logistical/social consequences;
 - one Pokémon companion can be socially notable; several powerful companions can be exceptional; dragon/legendary-scale bonds can become legendary;
+- the world uses **serious selective lethality**: ordinary defeat is not automatic death, but persistent injury, permanent impairment, critical condition and death are real possible consequences of sufficiently dangerous circumstances;
+- companion death is possible but rare/high-impact rather than routine attrition;
 - rare **human psychics / miracle-workers** are allowed as canon-compatible exceptional people, not as a generic wizard spell system;
 - ancient Pokémon should feel materially dangerous; broad lineage-strength change remains species-specific/provisional until P4 rather than being falsely presented as universal canon;
 - mandatory roster is National Pokédex **#001-#151**, with substantive P4 dossiers and meaningful P9 gameplay presence required for all 151;
@@ -64,82 +66,91 @@ Primary working contract: `docs/WORLD_BIBLE.md`.
 - **P2-HDG-003 / D-017:** iron-age baseline plus Pokémon-dependent local technology islands.
 - **D-018:** canon-first worldbuilding derivation protocol.
 - **P2-HDG-004 / D-019:** hybrid species identification/naming; unknown/local terminology before identification, stable official species name after identification.
+- **P2-HDG-005 / D-020:** serious selective lethality; persistent/critical injury and death are real, but ordinary defeat is not automatic death.
 
 ### Supporting research and contracts
 
 `docs/P2_TECHNOLOGY_CANON_RESEARCH.md` records the source research behind iron-era danger, Pokémon-driven crafts, human psychics and historical strength-change precedent.
 
-`docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md` is the binding authoring contract for:
+`docs/P2_CANON_DERIVATION_AND_TECH_ISLAND_CONTRACT.md` binds narrow/local Pokémon-dependent technology and canon-versus-project-lore evidence classes.
 
-- narrow/local Pokémon-dependent technology;
-- official-fact versus inference versus project-lore separation;
-- P4 species dossier evidence classes;
-- species-specific technology/craft hooks or explicit `none`;
-- species-specific ancient-strength treatment;
-- preservation of canon boundaries in later data/content pipelines.
+`docs/P2_TERMINOLOGY_AND_IDENTIFICATION_CONTRACT.md` binds stable species identity, run knowledge, unidentified/identified presentation, and optional local aliases.
 
-`docs/P2_TERMINOLOGY_AND_IDENTIFICATION_CONTRACT.md` is the binding naming/knowledge contract for:
+`docs/P2_LETHALITY_CANON_RESEARCH.md` records the official-setting boundary for injury, death, hunting and non-universal battle lethality.
 
-- stable system identity versus current run knowledge versus diegetic terminology;
-- unidentified/identified species presentation;
-- official-name reveal without full bestiary completion;
-- optional local aliases rather than 151 forced replacement names;
-- P4 identification hooks and P5 knowledge-dependent event rendering;
-- P7/P8 separation of species key, display name, encounter label, identification state and aliases.
+`docs/P2_INJURY_AND_LETHALITY_CONTRACT.md` now binds:
 
-`docs/P2_LETHALITY_CANON_RESEARCH.md` records the official-setting boundary for the next severity decision. Its primary-source findings establish that wild Pokémon can attack people, Pokémon death/graves exist, and humans have hunted Pokémon severely enough to threaten a population, while **not** establishing that ordinary battle defeat is routinely lethal.
+- escape/non-lethal defeat/injury/critical/death as distinct semantic outcomes;
+- persistent and potentially permanent injury;
+- explicit high-severity lethal paths rather than `failed roll = death`;
+- danger communication/telegraphing where reasonably possible;
+- rare/high-impact companion death rather than ordinary attrition;
+- human-only survival tools under lethal stakes;
+- no generic assumption that death means fainting or that resurrection is routine;
+- downstream P3/P4/P5 requirements for health, durability, treatment and consequence ladders.
 
 ### Provisional ancient-danger premise
 
 `docs/DECISIONS.md` D-016 remains **PROVISIONAL** in wording, not in the desired danger tone.
 
-The project absolutely intends ancient Pokémon to be frightening and often overwhelming even against iron-armed humans. What remains unproven is a universal canon claim that civilization genetically weakened every species. P4 therefore decides strength/history species by species and labels project extrapolation honestly.
+The project intends ancient Pokémon to be frightening and often overwhelming even against iron-armed humans. What remains unproven is a universal canon claim that civilization genetically weakened every species. P4 therefore decides strength/history species by species and labels project extrapolation honestly.
 
 ## Exact next lane
 
-Resolve **P2-HDG-005 — injury/death/severity baseline**.
+Resolve **P2-HDG-006 — social/ethical treatment of killing Pokémon**.
 
-Canon research supports real danger and real death but does not require `every defeat = death`. The recommended gate is:
+D-020 establishes that Pokémon can genuinely die. The remaining question is how ordinary communities interpret a human intentionally causing that death.
 
-### A — Adventure-safe
+### A — Pragmatic survival norm
 
-- routine injury is recoverable;
-- permanent injury is exceptional/scripted;
-- death is mostly special narrative content or explicit endings;
-- combat defeat generally means incapacitation/retreat.
+- hunting and killing Pokémon for food, materials, route safety and settlement defense are ordinary accepted practices;
+- specific sacred, useful, rare, intelligent or locally protected species may be exceptions;
+- killing is treated broadly like dangerous-animal hunting in a harsh pre-modern world.
 
-### B — Serious selective lethality **(recommended)**
+**Impact:** strong survival realism and easy material economy, but can make Pokémon feel too much like generic harvestable monsters if used globally.
 
-- injury is consequential and can affect the remainder of a run;
-- serious/permanent injury is possible from major failures or dangerous encounters;
-- death is possible but is an explicit high-severity outcome rather than the default result of losing a fight;
-- humans cannot casually trade hits with Pokémon merely because RPG combat exists;
-- retreat, preparation and avoidance remain core survival tools;
-- companion death, if later implemented, is rare/high-impact rather than routine attrition.
+### B — Contextual and culture/species-sensitive **(recommended)**
 
-### C — Harsh lethal survival
+- killing Pokémon is neither universally taboo nor casually normal;
+- immediate defense, necessary hunting, mercy killing, population control, food/material need, local ecology, species behavior, rarity, perceived intelligence/sacredness and existing truces all matter;
+- one village may hunt a species another village protects or worships;
+- killing for necessity can be accepted while wasteful, reckless or prestige-only killing may attract condemnation in many communities;
+- P4/P5 decide concrete species/local cases rather than inheriting one moral answer for all 151.
 
-- severe injury and death are common consequences of combat failure;
-- permanent character/companion loss are ordinary run risks;
-- many direct battles become effectively life-or-death decisions.
+**Impact:** best fit for the project's local-culture model and canon-first species dossiers. It supports hunters and material use without turning every encounter into a loot source.
 
-Recommendation: **B**. It preserves the monster-scale threat and meaningful survival decisions without making every encounter or companion investment a grimdark attrition gamble.
+### C — Broad killing taboo
 
-After severity, resolve the social/ethical treatment of **killing Pokémon** separately so hunting, defensive killing, sacred species and material use can remain species- and culture-sensitive rather than becoming one global rule.
+- most communities avoid intentionally killing Pokémon except immediate self-defense, mercy, catastrophe or rare ritual necessity;
+- food/material use relies mostly on non-lethal gathering, ordinary agriculture, fishing/hunting targets outside the Pokémon roster where setting permits, or exceptional local practices.
 
-After that, the strongest remaining P2 blockers are:
+**Impact:** makes Pokémon feel especially numinous/otherworldly and companionship morally weighty, but narrows survival/hunting/economy design and needs more setting work around food/materials.
+
+### D — Hunter-prestige culture
+
+- defeating and killing dangerous Pokémon can be a major status practice, rite, profession or proof of protection capability;
+- trophies/materials and famous hunts are important social institutions;
+- local taboos can still exist.
+
+**Impact:** creates a strong Monster Hunter-like identity, but risks making direct killing too central and flattening the more varied human–Pokémon relationships already established.
+
+Recommendation: **B**.
+
+It preserves the fact that this is a dangerous pre-modern ecosystem while allowing P4 to make, for example, one species a food source, another a protected neighbor, another a lethal pest, and another a sacred being without contradiction.
+
+After killing ethics, the strongest remaining P2 blockers are:
 
 1. first-playable region/world boundary;
 2. economy/medicine details only to the depth needed by P3-P5;
 3. exact psychic ability ceiling only when P3 requires it.
 
-Do not reopen containment, companion slots, iron-age floor, technology islands, canon-first derivation, hybrid identification, or existence of rare human psychics unless the owner explicitly supersedes D-013/D-014/D-015/D-017/D-018/D-019.
+Do not reopen containment, companion slots, iron-age floor, technology islands, canon-first derivation, hybrid identification, selective lethality, or existence of rare human psychics unless the owner explicitly supersedes D-013/D-014/D-015/D-017/D-018/D-019/D-020.
 
 ## Later mandatory contracts
 
-- **P3 / #4:** compact deterministic TRPG rules and character model; human-only, companion-assisted and rare bounded psychic paths.
-- **P4 / #5:** shared Pokémon adaptation rules + `151/151` substantive ancient-setting dossiers with provenance/evidence classes, species-specific companionship, ancient-strength treatment, technology/craft hooks, and identification/alias hooks.
-- **P5 / #6:** deterministic seeded narrative event-engine contract, including valid `0/3` companion runs, local-knowledge conditions, and knowledge-dependent species rendering.
+- **P3 / #4:** compact deterministic TRPG rules and character model; human-only, companion-assisted and rare bounded psychic paths; health model must represent non-lethal defeat through lethal outcomes.
+- **P4 / #5:** shared Pokémon adaptation rules + `151/151` substantive ancient-setting dossiers with provenance/evidence classes, species-specific companionship, ancient-strength treatment, technology/craft hooks, identification/alias hooks and exceptional lethality/durability factors.
+- **P5 / #6:** deterministic seeded narrative event-engine contract, including valid `0/3` companion runs, local-knowledge conditions, knowledge-dependent species rendering and authored consequence ladders.
 - **P6 / #12:** exact production resource/asset/provenance/mobile-budget contract.
 - **P7 / #7:** technical architecture after P1-P6 contracts are stable.
 - **P8 / #8:** first playable mobile vertical slice with visible three-slot companion UI and hybrid encounter-identification presentation.
