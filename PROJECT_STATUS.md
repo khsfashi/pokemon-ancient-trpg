@@ -28,6 +28,8 @@ Current owner-approved direction:
 - one Pokémon companion can be socially notable; several powerful companions can be exceptional; dragon/legendary-scale bonds can become legendary;
 - the world uses **serious selective lethality**: ordinary defeat is not automatic death, but persistent injury, permanent impairment, critical condition and death are real possible consequences of sufficiently dangerous circumstances;
 - companion death is possible but rare/high-impact rather than routine attrition;
+- humans intentionally killing Pokémon is **contextual and culture/species-sensitive**: survival/defense can justify lethal action, while local taboos, rarity, intelligence, sacredness, ecology and necessity can change judgment;
+- defeating a Pokémon does not imply killing it, and killing one does not imply automatic harvesting or loot;
 - rare **human psychics / miracle-workers** are allowed as canon-compatible exceptional people, not as a generic wizard spell system;
 - ancient Pokémon should feel materially dangerous; broad lineage-strength change remains species-specific/provisional until P4 rather than being falsely presented as universal canon;
 - mandatory roster is National Pokédex **#001-#151**, with substantive P4 dossiers and meaningful P9 gameplay presence required for all 151;
@@ -67,6 +69,7 @@ Primary working contract: `docs/WORLD_BIBLE.md`.
 - **D-018:** canon-first worldbuilding derivation protocol.
 - **P2-HDG-004 / D-019:** hybrid species identification/naming; unknown/local terminology before identification, stable official species name after identification.
 - **P2-HDG-005 / D-020:** serious selective lethality; persistent/critical injury and death are real, but ordinary defeat is not automatic death.
+- **P2-HDG-006 / D-021:** Pokémon killing ethics are contextual and culture/species-sensitive rather than universally taboo or universally routine.
 
 ### Supporting research and contracts
 
@@ -78,7 +81,7 @@ Primary working contract: `docs/WORLD_BIBLE.md`.
 
 `docs/P2_LETHALITY_CANON_RESEARCH.md` records the official-setting boundary for injury, death, hunting and non-universal battle lethality.
 
-`docs/P2_INJURY_AND_LETHALITY_CONTRACT.md` now binds:
+`docs/P2_INJURY_AND_LETHALITY_CONTRACT.md` binds:
 
 - escape/non-lethal defeat/injury/critical/death as distinct semantic outcomes;
 - persistent and potentially permanent injury;
@@ -89,6 +92,16 @@ Primary working contract: `docs/WORLD_BIBLE.md`.
 - no generic assumption that death means fainting or that resurrection is routine;
 - downstream P3/P4/P5 requirements for health, durability, treatment and consequence ladders.
 
+`docs/P2_KILLING_ETHICS_CONTRACT.md` binds:
+
+- survival/defense/hunting/mercy/ecological necessity as potentially legitimate lethal contexts;
+- species- and settlement-specific hunting, protection, sacredness, rarity and intelligence treatment;
+- no universal `defeat = kill = loot` rule;
+- hunters/defenders as valid roles without a generic monster-harvest progression loop;
+- species-specific food/material and non-lethal resource treatment for P4;
+- context-sensitive reputation/ecological/narrative consequences for P5;
+- severe relational treatment of deliberate companion killing except where exceptional context changes the judgment.
+
 ### Provisional ancient-danger premise
 
 `docs/DECISIONS.md` D-016 remains **PROVISIONAL** in wording, not in the desired danger tone.
@@ -97,60 +110,54 @@ The project intends ancient Pokémon to be frightening and often overwhelming ev
 
 ## Exact next lane
 
-Resolve **P2-HDG-006 — social/ethical treatment of killing Pokémon**.
+Resolve **P2-HDG-007 — first-playable region identity**.
 
-D-020 establishes that Pokémon can genuinely die. The remaining question is how ordinary communities interpret a human intentionally causing that death.
+The first playable scope should remain **local and bounded** regardless of this choice: a small settlement cluster plus surrounding routes/ecologies, not an entire modern region. That scope rule follows the project's event-driven mobile vertical-slice direction and does not need a separate world-lore choice.
 
-### A — Pragmatic survival norm
+The remaining creative decision is how that local scope relates to modern Pokémon geography.
 
-- hunting and killing Pokémon for food, materials, route safety and settlement defense are ordinary accepted practices;
-- specific sacred, useful, rare, intelligent or locally protected species may be exceptions;
-- killing is treated broadly like dangerous-animal hunting in a harsh pre-modern world.
+### A — Explicit ancient Kanto
 
-**Impact:** strong survival realism and easy material economy, but can make Pokémon feel too much like generic harvestable monsters if used globally.
+- the game openly states that the local area is ancient Kanto;
+- modern Kanto names/institutions need not exist yet, but the player knows the broad regional identity;
+- later P4/P9 content can strongly lean into the original 151's Kanto association.
 
-### B — Contextual and culture/species-sensitive **(recommended)**
+**Impact:** strongest Generation-I identity and easiest player comprehension, but every major geography/history choice risks being read as a claim about canonical ancient Kanto.
 
-- killing Pokémon is neither universally taboo nor casually normal;
-- immediate defense, necessary hunting, mercy killing, population control, food/material need, local ecology, species behavior, rarity, perceived intelligence/sacredness and existing truces all matter;
-- one village may hunt a species another village protects or worships;
-- killing for necessity can be accepted while wasteful, reckless or prestige-only killing may attract condemnation in many communities;
-- P4/P5 decide concrete species/local cases rather than inheriting one moral answer for all 151.
+### B — Proto-Kanto locality **(recommended)**
 
-**Impact:** best fit for the project's local-culture model and canon-first species dossiers. It supports hunters and material use without turning every encounter into a loot source.
+- the playable land is explicitly understood by the project as territory that will much later belong to Kanto, but ancient people use local settlement/landscape names rather than a mature `Kanto` regional identity;
+- the game can use recognizable long-term geographic/ecological anchors only where source evidence supports them;
+- project-authored villages, routes, disasters, cultures and ecological boundaries remain free to differ radically from modern Kanto.
 
-### C — Broad killing taboo
+**Impact:** preserves the Gen-I/Kanto connection while giving the ancient setting enough distance to avoid pretending unsupported modern geography existed unchanged. Best fit with the canon-first derivation rule.
 
-- most communities avoid intentionally killing Pokémon except immediate self-defense, mercy, catastrophe or rare ritual necessity;
-- food/material use relies mostly on non-lethal gathering, ordinary agriculture, fishing/hunting targets outside the Pokémon roster where setting permits, or exceptional local practices.
+### C — Unnamed/original ancient region
 
-**Impact:** makes Pokémon feel especially numinous/otherworldly and companionship morally weighty, but narrows survival/hunting/economy design and needs more setting work around food/materials.
+- the first playable area is not committed to becoming any modern named region;
+- Gen-I species are curated there because the project roster is #001-#151, not because the land is Kanto;
+- geography, cultures and history are almost entirely project-authored.
 
-### D — Hunter-prestige culture
-
-- defeating and killing dangerous Pokémon can be a major status practice, rite, profession or proof of protection capability;
-- trophies/materials and famous hunts are important social institutions;
-- local taboos can still exist.
-
-**Impact:** creates a strong Monster Hunter-like identity, but risks making direct killing too central and flattening the more varied human–Pokémon relationships already established.
+**Impact:** maximum worldbuilding freedom and lowest risk of accidental ancient-Kanto pseudo-canon, but weaker Generation-I regional identity and less payoff from recognizable Kanto history/geography.
 
 Recommendation: **B**.
 
-It preserves the fact that this is a dangerous pre-modern ecosystem while allowing P4 to make, for example, one species a food source, another a protected neighbor, another a lethal pest, and another a sacred being without contradiction.
+It lets P2/P4 use `future Kanto` as a useful anchor without forcing ancient inhabitants to share modern regional labels or making every invented village an unsupported claim about canon history.
 
-After killing ethics, the strongest remaining P2 blockers are:
+After region identity, remaining P2 closure work is expected to be mostly bounded contract depth rather than large new lore gates:
 
-1. first-playable region/world boundary;
-2. economy/medicine details only to the depth needed by P3-P5;
-3. exact psychic ability ceiling only when P3 requires it.
+1. define the local first-scope boundary at contract level without naming every village/event;
+2. freeze economy/medicine only to the precision P3-P5 require;
+3. explicitly defer exact psychic ability numbers/ceiling to P3 unless world consistency requires one more gate;
+4. run a P2 contradiction/exit audit before moving to P3.
 
-Do not reopen containment, companion slots, iron-age floor, technology islands, canon-first derivation, hybrid identification, selective lethality, or existence of rare human psychics unless the owner explicitly supersedes D-013/D-014/D-015/D-017/D-018/D-019/D-020.
+Do not reopen containment, companion slots, iron-age floor, technology islands, canon-first derivation, hybrid identification, selective lethality, contextual killing ethics, or existence of rare human psychics unless the owner explicitly supersedes D-013/D-014/D-015/D-017/D-018/D-019/D-020/D-021.
 
 ## Later mandatory contracts
 
 - **P3 / #4:** compact deterministic TRPG rules and character model; human-only, companion-assisted and rare bounded psychic paths; health model must represent non-lethal defeat through lethal outcomes.
-- **P4 / #5:** shared Pokémon adaptation rules + `151/151` substantive ancient-setting dossiers with provenance/evidence classes, species-specific companionship, ancient-strength treatment, technology/craft hooks, identification/alias hooks and exceptional lethality/durability factors.
-- **P5 / #6:** deterministic seeded narrative event-engine contract, including valid `0/3` companion runs, local-knowledge conditions, knowledge-dependent species rendering and authored consequence ladders.
+- **P4 / #5:** shared Pokémon adaptation rules + `151/151` substantive ancient-setting dossiers with provenance/evidence classes, species-specific companionship, ancient-strength treatment, technology/craft hooks, identification/alias hooks, killing/hunting/material treatment and exceptional lethality/durability factors.
+- **P5 / #6:** deterministic seeded narrative event-engine contract, including valid `0/3` companion runs, local-knowledge conditions, knowledge-dependent species rendering, context-sensitive lethal-act consequences and authored consequence ladders.
 - **P6 / #12:** exact production resource/asset/provenance/mobile-budget contract.
 - **P7 / #7:** technical architecture after P1-P6 contracts are stable.
 - **P8 / #8:** first playable mobile vertical slice with visible three-slot companion UI and hybrid encounter-identification presentation.

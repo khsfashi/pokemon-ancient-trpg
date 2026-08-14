@@ -27,6 +27,7 @@ The following constraints are authoritative:
 - a run must remain fully playable and completable with zero Pokémon companions;
 - forming a stable bond with a Pokémon is not assumed to be routine, and every companion physically exists and travels in the world;
 - the world uses **serious selective lethality**: lasting injury and death are real possible outcomes, but ordinary defeat is not automatically death;
+- humans killing Pokémon is **contextual and culture/species-sensitive** rather than universally taboo or universally routine;
 - rare **human psychics / miracle-workers** may exist as canon-compatible exceptional people, but there is no generic universal magic system;
 - the mandatory species scope is National Pokédex #001-#151, but full species coverage does not imply that all species are common, companion-eligible, or directly encountered.
 
@@ -289,7 +290,21 @@ A `death` outcome is real and is not a synonym for fainting. The baseline does n
 
 The binding downstream contract is `docs/P2_INJURY_AND_LETHALITY_CONTRACT.md`; source boundaries are recorded in `docs/P2_LETHALITY_CANON_RESEARCH.md`.
 
-The **social/ethical treatment of humans killing Pokémon remains unresolved** and is intentionally a separate P2 gate.
+### 8.2 Contextual killing ethics
+
+D-021 establishes that intentionally killing Pokémon is **contextual and culture/species-sensitive**.
+
+The setting does not impose one universal moral rule across all Pokémon or all communities. Immediate defense, settlement protection, necessary hunting, food/material need, mercy killing, population control and ecological necessity can justify lethal action, while wasteful, reckless, cruel or prestige-only killing may be condemned.
+
+Local relationships matter. The same species may be hunted in one community, tolerated in another, protected in a third, or treated as sacred, intelligent, treaty-bound, ecologically essential, or otherwise inappropriate to kill elsewhere.
+
+Defeat does not imply death, and death does not imply automatic harvesting. A hunter or defender can be a valid and respected social role without turning the world into a universal monster-loot economy.
+
+Pokémon-derived food/material use is species- and locality-specific. P4 must distinguish source-backed use, conservative inference, explicit project-authored practice, non-lethal collection alternatives, and `none` rather than inventing harvest value for every species.
+
+A companion Pokémon is an accepted relationship partner rather than property. Deliberately killing a companion is presumptively a severe relational act unless an exceptional context such as unavoidable mercy killing materially changes the judgment.
+
+The binding authoring and downstream requirements are in `docs/P2_KILLING_ETHICS_CONTRACT.md`.
 
 ## 9. Health and medicine baseline
 
@@ -331,6 +346,8 @@ Technology-island specialists may have unusual local techniques, but those techn
 
 Knowledge-oriented occupations may improve identification, interpretation, rumor evaluation, or bestiary progression without becoming omniscient taxonomy classes.
 
+Hunter/defender occupations must preserve D-021: competence with lethal force does not create a universal right or incentive to kill every Pokémon, and local ecological/cultural knowledge can be as important as combat ability.
+
 ## 11. What this baseline deliberately does not decide
 
 The following are still open because choosing them now would exceed the owner's current decisions:
@@ -341,7 +358,6 @@ The following are still open because choosing them now would exceed the owner's 
 - exact region identity and geography of the first playable scope;
 - exact currency/economic abstraction;
 - normal human lifespan/medical sophistication relative to real history;
-- whether killing Pokémon is common, taboo, situational, or exceptional;
 - how often ordinary people encounter individuals who have a companion;
 - the exact species-specific process by which a Pokémon chooses or accepts continued companionship;
 - how companion loss, voluntary departure, separation, replacement, or death interact with the three slots;
@@ -366,7 +382,9 @@ Canon-first derivation is **not** unresolved: D-018 requires official evidence t
 
 Species naming/identification presentation is **not** unresolved: D-019 fixes the hybrid model, while local vocabulary and mechanical thresholds remain later content/rules work.
 
-Injury/death severity is **not** unresolved: D-020 fixes serious selective lethality, while exact P3 mechanics and the ethics of killing Pokémon remain separate work.
+Injury/death severity is **not** unresolved: D-020 fixes serious selective lethality, while exact P3 mechanics remain later rules work.
+
+Pokémon-killing ethics are **not** unresolved: D-021 fixes the contextual culture/species-sensitive model, while P4/P5 own concrete species/local treatment and consequences.
 
 These remaining questions must be resolved only when they become the next blocking P2 decision or are explicitly assigned to P3/P4.
 
@@ -408,3 +426,9 @@ P3-P9 content must preserve these invariants unless an explicit later owner deci
 32. P7/P8 must preserve the visible three-slot companion UI contract without presenting empty slots as an unmet collection goal.
 33. P7/P8 must keep stable species key, official display name, current encounter label, identification state and discovered aliases as separable data/presentation concerns.
 34. Later data/content pipelines must preserve evidence/provenance classes so project lore cannot be mistaken for imported canon data.
+35. Pokémon killing is neither universally forbidden nor universally routine; context, species and local culture are authoritative inputs.
+36. Defeat must not imply death, and death must not imply automatic loot or harvesting.
+37. Necessary defense or subsistence killing can be accepted while wasteful, reckless, cruel or prestige-only killing can carry social consequences.
+38. P4 must define species/local hunting, protection, food/material, taboo/intelligence/rarity and non-lethal-resource treatment where relevant; `none` and `varies by locality` are valid.
+39. P5 must support context-sensitive consequences for lethal acts instead of a single global morality flag.
+40. Companion killing is a severe relational act by default unless exceptional context clearly changes the interpretation.
