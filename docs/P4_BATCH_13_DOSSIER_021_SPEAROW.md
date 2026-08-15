@@ -76,7 +76,7 @@ capabilities_and_hazards:
   immunities_or_approach_invalidators: [some_ground_only_pursuit_or_barriers_may_fail_during_local_flight]
   hazard_records:
     - hazard_key: spearow-territorial-alarm-pressure
-      kind: physical_and_alarm
+      kind: other
       delivery_or_exposure: [rapid_short_flight, repeated_pecking, warning_cry]
       prerequisite_or_trigger: [approach_defended_space_if_authored, direct_attack, ignored_warning]
       warning_signs: [repeated_cry, rapid_circling, visible_agitation, answering_calls_if_others_are_present]
@@ -195,7 +195,7 @@ mechanical_hooks:
   trouble_spike_complications: [open_ground_and_actual_group_presence_compound_pressure]
 hunting_materials_and_resources:
   killing_treatment: no_generic_loot
-  hunting_for_food: none_fixed
+  hunting_for_food: none
   shed_or_abandoned_materials: [ordinary_feathers_only_if_context_requires_and_not_specialized_loot]
   natural_remains: [ordinary_remains_only_if_context_requires]
   dangerous_harvesting: [none_supported]
