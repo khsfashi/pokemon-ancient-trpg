@@ -30,6 +30,7 @@ Current owner-approved direction:
 - companion death is possible but rare/high-impact rather than routine attrition;
 - humans intentionally killing Pokémon is **contextual and culture/species-sensitive**; defeating a Pokémon does not imply killing or automatic harvesting;
 - rare **human psychics / miracle-workers** are allowed as canon-compatible exceptional people, not as a generic wizard spell system;
+- standard player characters do not begin with usable psychic power: rare lifepath foreshadowing may exist, but an actual Gift requires a rare authored in-run awakening and ordinarily remains one narrow manifestation family;
 - ancient Pokémon should feel materially dangerous; broad lineage-strength change remains species-specific/provisional until P4;
 - mandatory roster is National Pokédex **#001-#151**, with substantive P4 dossiers and meaningful P9 gameplay presence required for all 151;
 - the opening playable scope is one bounded settlement-centered locality plus surrounding routes/ecologies, not all of future Kanto and not all 151 species at once.
@@ -185,23 +186,45 @@ Inventory/economy therefore uses:
 
 Binding contract: `docs/P3_INVENTORY_RESOURCES_AND_ECONOMY_CONTRACT.md`.
 
+#### P3-HDG-007 / D-029 — Rare foreshadowing + in-run psychic awakening
+
+The owner selected a **B + C hybrid** and explicitly required psychic humans to remain rare.
+
+The binding model is:
+
+- standard character creation never grants usable psychic ability directly;
+- a small minority of thematically appropriate formative histories may produce **Unusual Sign / foreshadowing** state, but this is not a power and does not guarantee awakening;
+- actual psychic ability always requires an explicit rare authored **in-run awakening event**;
+- characters without creation-time foreshadowing can still awaken through an exceptional transformative event, but that route is intentionally rarer and more demanding;
+- initial tuning targets keep strong foreshadowing at roughly `<=10%` of ordinary creation histories/seeds and actual awakening at roughly `<=5%` of ordinary runs; these are player-run tuning targets, not lore census claims;
+- an awakened ordinary player character has one narrow Gift family by default: Omen/Premonition, Mind Echo, Kinetic Touch, Dream Resonance, or Veil Sense;
+- a family grants explicit facets/manifestations rather than an entire spell list;
+- there is no `psychic` Competence, psychic Attribute, mana bar, or standard psychic class;
+- psychic checks reuse the existing 2d6 engine and normally rely on Sense, Will, or Presence with psychic Competence contribution `+0`;
+- powerful **Miracle exertion** is bounded by existing Fatigue/Fear/Vitality/Injury state rather than a new magic resource, with Fatigue normally increasing at least one stage for a forceful miracle attempt;
+- Gifts primarily unlock authored choices, information, resistance, positioning, or rare miracle branches rather than universal combat attacks;
+- Omen/Premonition does not grant universal rerolls or Fortune-Spike control;
+- ordinary advancement points cannot create a Gift from `none`; after awakening, narrow facet growth requires Gift-specific eligibility and normally remains inside the existing family;
+- ordinary multi-family psychic builds are not supported.
+
+Binding contract: `docs/P3_RARE_PSYCHIC_GIFT_CONTRACT.md`.
+
 ### Exact next work
 
-Define **bounded rare human psychic / miracle-worker mechanics** consistent with D-015.
+Decide whether P3 needs a separate **fate / roll-intervention resource** at all.
 
-The next contract must decide the playable rules shape without turning psychics into a generic fantasy magic class. It should determine:
+The decision must account for the systems already carrying uncertainty and dopamine:
 
-- how a rare psychic gift is established at character creation or later;
-- whether gifted player characters are baseline-available, unlockable, exceptional-start-only, or another bounded model;
-- a small set of manifestation families such as impressions/telepathy, foresight, telekinesis, dream sensitivity or Psychic/Ghost attunement without assuming all gifted people can use all of them;
-- activation/check rules using the existing seven attributes and 2d6 engine where possible;
-- cost, risk, fatigue/fear/injury or other limits so repeated power use is consequential but not a mana-bar clone;
-- progression interaction with D-027 without allowing generic advancement points to create a gift from nothing;
-- what remains narrative permission or authored event access rather than a reusable combat power.
+- center-weighted 2d6 checks;
+- setback / costly-partial / full / exceptional outcome bands;
+- rare natural `6+6` Fortune Spikes and `1+1` Trouble Spikes;
+- preparation, equipment and bounded Context;
+- milestone/insight progression;
+- rare Gift/Omen branches that explicitly do **not** provide universal rerolls.
 
-If multiple materially different player fantasies remain after a compact design pass, raise the minimum Human Design Gate rather than silently choosing one.
+The next slice should determine whether player-controlled roll intervention adds meaningful agency or merely dilutes danger, makes doubles farmable, and adds another state resource. If a resource is justified, its earning, storage cap, spend timing, deterministic replay semantics, doubles interaction and relationship to advancement/psychic Gifts must be frozen. If it is not justified, record the deliberate absence of universal rerolls and move directly to the P3 exit audit.
 
-After psychic-gift mechanics, P3 should decide whether a separate fate/roll-intervention resource is actually necessary, then run a **P3 exit audit** before entering P4.
+After that decision, run a **P3 exit audit** before entering P4.
 
 ## Later mandatory contracts
 
