@@ -31,12 +31,12 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 15:
+Current authoritative manifest state after Batch 16:
 
 ```text
-dossier_complete_count == 117
+dossier_complete_count == 123
 pilot_reviewed_count == 2
-not_started_count == 32
+not_started_count == 26
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -71,31 +71,10 @@ Batch 12   PASS
 Batch 13   PASS
 Batch 14   PASS
 Batch 15   PASS
+Batch 16   PASS
 ```
 
-### P4 Batch 15 — COMPLETE
-
-Roster:
-
-- #043 Oddish / #044 Gloom / #045 Vileplume
-- #069 Bellsprout / #070 Weepinbell / #071 Victreebel
-
-Primary outputs:
-
-- `docs/P4_BATCH_15_BOTANICAL_CHEMICAL_PREDATION_PLAN.md`
-- `docs/P4_BATCH_15_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_15_FULL_SCHEMA_DOSSIERS.md` plus six indexed dossier files
-- `docs/P4_BATCH_15_COMPLETION_AUDIT.md`
-- updated `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
-- updated `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
-
-Batch 15 preserves plantlike bodies as living Pokémon rather than scenery/resources; keeps Oddish burial and Bellsprout rooting species-local; preserves Gloom/Victreebel sensory attraction without compulsion; separates Vileplume allergy, toxin and versioned paralysis/immobilization without a permanent aura; keeps Weepinbell toxic powder separate from corrosive/digestive fluid; treats extreme corrosion wording as severe authored fiction rather than matter deletion or chemistry simulation; and keeps Victreebel feeding-history sweetness qualitative rather than kill-XP, hidden levels, permanent stat growth or a farming loop.
-
-Evolution-stage inheritance remains evidence-gated. Modern level 21, Leaf Stone, abilities and move metadata remain source context under D-032, while Bellossom/Sun Stone remains post-Generation-I provenance context only.
-
-`docs/P4_BATCH_15_COMPLETION_AUDIT.md` = **PASS**.
-
-### P4 Batch 16 — SOURCE REVIEW COMPLETE
+### P4 Batch 16 — COMPLETE
 
 Roster:
 
@@ -104,36 +83,37 @@ Roster:
 - #122 Mr. Mime
 - #124 Jynx
 
-Primary outputs so far:
+Primary outputs:
 
 - `docs/P4_BATCH_16_FOLKLORE_SUPERNATURAL_HUMANOID_PLAN.md`
 - `docs/P4_BATCH_16_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_16_FULL_SCHEMA_DOSSIERS.md` plus six indexed dossier files
+- `docs/P4_BATCH_16_COMPLETION_AUDIT.md`
+- updated `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
+- updated `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Batch 16 now explicitly preserves epistemic status at claim level: direct observation/measurement, scientist interpretation, legend/hearsay, analogy, version-scoped extraordinary wording, cross-source synthesis and project extrapolation are not interchangeable.
+Batch 16 preserves claim-level epistemic status instead of flattening observation, measurement, scientist interpretation, folklore, analogy and version-scoped extraordinary wording into one narrator truth.
 
-The review preserves Clefairy full-moon gathering/floating and magnetic anomalies as species-local discrete phenomena without a generic moon/magnetism system; keeps Clefable extreme hearing separate from its moon-kin legend; treats Vulpix's one-tail-to-six change as ordinary maturation despite historically inconsistent extra-tail wording; preserves Ninetales curse, millennium-life, mystical-tail, human-speech-understanding and historical mind-control wording with explicit source/version scope rather than automatic spells or player-input removal; confirms Mr. Mime's real invisible barrier capability while leaving conflicting belief/air/molecular explanations unresolved; and treats Jynx vocal/rhythmic behavior as meaningful expressive evidence without assuming fluent human language or normalized ancient performance culture.
+Clefairy keeps full-moon gathering/floating and magnetic anomalies as species-local discrete phenomena without a lunar-stat, spawn-calendar or continuous magnetism system. Clefable keeps extreme hearing separate from moon-kin folklore and does not gain omniscience. Vulpix's one-tail-to-six change is ordinary maturation, separate from evolution, levels and kill-XP. Ninetales preserves curse, millennium-life, mystical-tail, human-speech-understanding and historical mind-control evidence with source scope; any mental influence or extraordinary tail consequence requires explicit warning, eligibility, counterplay and bounded resolution rather than passive agency removal.
 
-Modern Fairy typing, abilities, current scientists/musicians, baby Pokémon, regional forms and standardized Moon Stone/Fire Stone relationships remain chronology-safe provenance context rather than automatic ancient institutions.
+Mr. Mime's cross-source stable minimum is a real temporary invisible resisting barrier; conflicting belief/air/molecular explanations remain unresolved, and barriers cannot become permanent map geometry, indestructible walls or untelegraphed collisions. Jynx retains meaningful-looking vocal/rhythmic communication and version-scoped dance influence without assuming fluent human language, human personhood, ancient performance institutions or forced player input.
 
-The manifest is intentionally unchanged during source review:
+Modern Fairy typing, abilities, current scientist/musician examples, Moon Stone/Fire Stone metadata, baby Pokémon and regional forms remain chronology-safe provenance context rather than automatic ancient institutions or generic magic/technology permissions.
 
-```text
-117 complete / 2 pilot_reviewed / 32 not_started
-```
-
-No blocking Human Design Gate is required. The six reviewed rating profiles reproduce under `p4-six-axis-v1` with zero manual exceptions.
+`docs/P4_BATCH_16_COMPLETION_AUDIT.md` = **PASS**.
 
 ## Exact next work
 
-Author the **six P4 Batch 16 frozen full-schema dossiers** for Clefairy, Clefable, Vulpix, Ninetales, Mr. Mime and Jynx.
+Begin **P4 Batch 17 planning and source review** for the next coherent subset of the 26 remaining `not_started` Generation-I species.
 
-Create the Batch 16 dossier index/regression summary and completion audit. Preserve claim-level epistemic labels, evolution-stage inheritance boundaries, agency-safe handling for Ninetales/Jynx influence wording, species-local Mr. Mime barriers and Vulpix maturation-versus-evolution behavior.
+The next batch must:
 
-Do not mutate the coverage manifest until all six dossiers and the Batch 16 completion audit pass atomically. If they pass, promote exactly #035-#038, #122 and #124 to reach:
-
-```text
-123 complete / 2 pilot_reviewed / 26 not_started
-```
+1. select a bounded thematic roster from the remaining manifest rows;
+2. review current official Pokédex text plus the pinned `SRC-DATA-001` historical/versioned evidence;
+3. reproduce `p4-six-axis-v1` profiles without interpreting raw stats as literal world formulas;
+4. identify any Human Design Gate before full-schema authoring;
+5. keep D-034 direct encounterability separate from baseline-era natural abundance;
+6. leave the coverage manifest unchanged until the entire batch's full-schema dossiers and completion audit pass atomically.
 
 Do not begin P5 until the mandatory `151/151` P4 exit audit passes.
 
