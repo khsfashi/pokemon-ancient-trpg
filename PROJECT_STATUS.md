@@ -150,17 +150,43 @@ Batch 12 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 12 state: `96 complete / 2 pilot_reviewed / 53 not_started`.
 
+### P4 Batch 13 — SELECTED
+
+Aerial ecology / territoriality / traversal / multi-head control stress roster:
+
+- #016 Pidgey / #017 Pidgeotto / #018 Pidgeot
+- #021 Spearow / #022 Fearow
+- #084 Doduo / #085 Dodrio
+
+Primary selection output:
+
+- `docs/P4_BATCH_13_AERIAL_ECOLOGY_TERRITORIALITY_MULTIHEAD_PLAN.md`
+
+Batch 13 is deliberately selected to test these still-underrepresented boundaries before any manifest promotion:
+
+1. **Flying type is not a universal traversal permission.** Species-local evidence must determine flight distance, endurance, aerial route access and whether terrestrial running is the dominant locomotion mode.
+2. **Navigation and patrol are not omniscience.** Pidgey homing and Pidgeotto/Fearow aerial search behavior must not become perfect routefinding, map revelation, automatic detection or unavoidable interception.
+3. **Extreme speed is not a real-time physics subsystem.** Any historical/versioned Pidgeot speed claim must remain source-scoped and cannot directly define per-round distance, kinetic damage or map travel time.
+4. **Territorial behavior is not generic aggro.** Pidgeotto/Spearow/Fearow encounter pressure remains context- and ecology-driven rather than unconditional combat on zone entry.
+5. **Food theft is not arbitrary inventory deletion.** Fearow behavior can create encounter consequences without granting deterministic loss of player-held items.
+6. **Multiple heads do not multiply entity/action count.** Doduo and Dodrio remain one Pokémon/entity; synchronization, lookout rotation, internal leadership and organ multiplicity do not create extra turns, initiative slots, companion slots or HP pools.
+7. **No new Human Design Gate is required for selection.** Existing contracts can represent all identified pressures conservatively pending source review.
+
+The coverage manifest is intentionally unchanged at `96 complete / 2 pilot_reviewed / 53 not_started` until source review + full-schema authoring + Batch 13 completion audit pass atomically.
+
 ## Exact next work
 
 Continue **P4 Batch 13** without entering P5:
 
-1. select the next coherent roster from the remaining 53 `not_started` species by still-underrepresented ecology/capability/design pressure rather than Dex order alone;
-2. check current primary official evidence plus pinned structured provenance before binding any new interpretation;
-3. create the Batch 13 selection plan and claim-level source review without promoting the manifest early;
-4. stop for owner input only if the review exposes a genuinely product-defining universal rule that existing contracts cannot represent conservatively;
-5. after source review, author frozen-schema dossiers, run batch regression/completion audit, and promote only the reviewed Batch 13 rows atomically;
-6. keep D-034 direct encounterability separate from baseline-era natural presence;
-7. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
+1. create the claim-level Batch 13 source review for #016-#018, #021-#022 and #084-#085 using current primary official Pokédex material plus pinned `SRC-DATA-001` structured provenance;
+2. inventory version-scoped claims for homing/navigation, territorial patrol, flight endurance/limitations, aerial prey search, historical extreme-speed wording, synchronized multi-head behavior, alternating sleep/watch, organ multiplicity and Dodrio head leadership;
+3. audit `Keen Eye`, `Tangled Feet`, `Run Away`, and `Early Bird` as modern mechanics/context rather than automatic ancient physiology;
+4. bind no travel-time, real-world kinetic-damage, perfect-detection, generic aggro, inventory-deletion, extra-turn or multi-HP-pool rule from those claims;
+5. keep the coverage manifest unchanged during source review;
+6. stop for owner input only if review exposes a genuinely product-defining universal rule that existing contracts cannot represent conservatively;
+7. after source review, author seven frozen-schema dossiers, run regression/completion audit, and only then promote the seven Batch 13 rows atomically;
+8. keep D-034 direct encounterability separate from baseline-era natural presence;
+9. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
 
 Current state remains:
 
