@@ -153,7 +153,7 @@ Pokémon defeat never automatically yields generic loot/money/materials/XP.
 
 #### D-029 — Rare psychic foreshadowing + in-run awakening
 
-Standard creation never grants usable psychic power directly.
+Standard character creation never grants usable psychic power directly.
 
 - strong creation-time foreshadowing initial tuning target: roughly `<=10%` of ordinary histories/seeds;
 - actual Gift awakening initial tuning target: roughly `<=5%` of ordinary runs;
@@ -233,10 +233,12 @@ Binding P4 foundation documents:
 - `docs/P4_PILOT_ROSTER_AND_CALIBRATION_PLAN.md`
 - `docs/P4_PILOT_EVIDENCE_AND_HAZARD_PACKETS.md`
 - `docs/P4_RATING_SCALE_CALIBRATION.md`
+- `docs/P4_PILOT_FULL_SCHEMA_DOSSIERS.md`
+- `docs/P4_PILOT_COMPLETION_AUDIT.md`
 
-### P4 hazard-first pilot evidence pass
+### P4 hazard-first pilot evidence and numeric calibration complete
 
-The first pilot uses eight species selected for overlapping validation coverage:
+The eight-species pilot is:
 
 - **#019 Rattata** — common weak baseline, late-run triviality, named/apex weak-species fixture;
 - **#013 Weedle** — low-stat/high-hazard venom calibration;
@@ -247,27 +249,11 @@ The first pilot uses eight species selected for overlapping validation coverage:
 - **#140 Kabuto** — fossil/history ambiguity;
 - **#151 Mew** — Mythical indirect/exceptional treatment.
 
-`docs/P4_PILOT_EVIDENCE_AND_HAZARD_PACKETS.md` provides the first source-reviewed packet pass for all eight species and freezes ten semantic encounter fixtures.
+`docs/P4_PILOT_EVIDENCE_AND_HAZARD_PACKETS.md` is the pre-calibration evidence baseline; operational numeric authority is `docs/P4_RATING_SCALE_CALIBRATION.md`, and full-schema authority for the eight pilot dossiers is `docs/P4_PILOT_FULL_SCHEMA_DOSSIERS.md`.
 
-The pass establishes:
-
-- raw six-stat source values remain provenance-bearing source inputs rather than human-roll modifiers;
-- current official Pokédex evidence is separated from conservative derivation and project-authored extrapolation;
-- exact unsupported medical claims, especially Weedle venom severity, remain explicit `U` instead of being invented from type/BST/Potency;
-- Beedrill colony danger is repeated exposure/route pressure rather than a swarm stat bonus;
-- Lapras proves high capability does not imply hostility;
-- Gyarados proves large-body/destructive escalation can operate through environment and displacement rather than only HP damage;
-- Gastly proves anomalous physical approach invalidation must exist outside Defense arithmetic;
-- Kabuto can remain historically/locality unresolved without a fake direct spawn rule;
-- Mew can use indirect/singular observation without routine spawn/capture semantics.
-
-### P4 numeric rating calibration complete
-
-`docs/P4_RATING_SCALE_CALIBRATION.md` pins:
+The pinned scale is:
 
 `rating_scale_version: p4-six-axis-v1`
-
-The deterministic mapping shared by all six axes is:
 
 - raw `<40` → rating `1`;
 - raw `40..59` → rating `2`;
@@ -275,13 +261,6 @@ The deterministic mapping shared by all six axes is:
 - raw `80..99` → rating `4`;
 - raw `100..119` → rating `5`;
 - raw `>=120` → rating `6`.
-
-Why 6 tiers:
-
-- the 5-tier candidate saturated at raw `100`, collapsing Mew's all-100 profile and Gyarados `Attack 125` into the same maximum band;
-- the 6-tier candidate preserves `100..119` as exceptional while reserving `120+` for source-extreme axes;
-- the 7-tier candidate mostly adds low-end granularity while increasing translation pressure against D-024's five static TN bands;
-- 6 tiers are therefore the **smallest useful** candidate.
 
 Pinned pilot profiles (`Vigor/Force/Guard/Potency/Resistance/Speed`):
 
@@ -294,39 +273,64 @@ Pinned pilot profiles (`Vigor/Force/Guard/Potency/Resistance/Speed`):
 - Kabuto `1/4/4/2/2/2`;
 - Mew `5/5/5/5/5/5`.
 
-The concrete exceptional fixture `pilot-rattata-apex-01` now has pinned deltas:
+`pilot-rattata-apex-01` remains the concrete exceptional fixture with deltas `+1/+2/+0/+0/+0/+2`, resolved profile `2/4/1/1/1/5`, explicit learned behavior, stable warning signs, and no player-level scaling.
 
-`Vigor +1 / Force +2 / Guard +0 / Potency +0 / Resistance +0 / Speed +2`
+### P4 full-schema pilot gate complete
 
-Resolved profile:
+`docs/P4_PILOT_FULL_SCHEMA_DOSSIERS.md` fills the complete P4 dossier shape for all eight species:
 
-`2/4/1/1/1/5`
+- provenance review;
+- ancient-strength treatment;
+- ecology and observable signs;
+- human perception/culture;
+- identification and progressive knowledge;
+- threat state, consequences and D-024 check hooks;
+- ordinary and exceptional individual variation;
+- companionship eligibility and logistics;
+- P3-compatible mechanical hooks;
+- hunting/material treatment;
+- technology/craft and emergency-consumable results;
+- narrative/P5 hooks;
+- P6 presentation follow-ups;
+- evolution/cross-species references;
+- explicit unresolved source/locality questions.
 
-Its danger remains primarily the combination of explicit physical exceptionalism plus `trap_wary`, route memory, supply-targeting, false commitment, persistent identity, warning signs and authored terrain/history. It is not an HP sponge and never scales with the player.
+All eight are now `pilot_reviewed`.
 
-D-024 integration remains bounded:
+`docs/P4_PILOT_COMPLETION_AUDIT.md` reports **PASS**:
 
-- Pokémon rating is an encounter-authoring input, not a second modifier stack;
-- rating 6 does not create TN 17;
-- direct extreme approaches use TN 15, changed permissions, alternate approaches, or `Impossible until fiction changes` as appropriate;
-- hazard severity and aggression remain independent from stat magnitude.
+```text
+pilot_species_count == 8
+pilot_reviewed_count == 8
+blocking_pilot_gate_count == 0
+rating_scale_version == p4-six-axis-v1
+```
 
-Calibration audit result: **PASS** for P2/P3 contradiction, provenance, D-031 invariants and schema sufficiency. No new Human Design Gate was exposed.
+The audit also passes all 20 shared-schema completion checks and every pilot-specific failure case. No structural schema change and no new Human Design Gate were required.
+
+Important preserved boundaries:
+
+- Weedle/Beedrill exact human venom medicine remains source-unknown rather than fabricated;
+- Lapras stays high-capability without aggression leakage;
+- Gyarados uses route/cover/displacement semantics rather than TN inflation or an HP sponge;
+- Gastly invalidates unsupported physical approaches before numeric resolution;
+- Kabuto does not gain a routine ancient-Kanto spawn just because the setting is old;
+- Mew remains suitable for indirect/rare presence rather than routine capture or companionship.
 
 ### Exact next work
 
-The next coherent slice is **P4 full-schema pilot completion**:
+The pilot gate is closed. **Bulk P4 authoring may begin.**
 
-1. apply `p4-six-axis-v1` in the eight pilot species' actual `species_stat_profile` sections;
-2. finish the non-hazard dossier sections for each pilot species: provenance review status, ancient-strength classification, ecology, human perception/culture, identification progression, threat/check hooks, individual variation, companionship/logistics, mechanical hooks, materials/technology/emergency-item hooks, narrative hooks, P6 needs and cross-species links;
-3. preserve explicit `unknown` / `intentionally_unresolved` where evidence does not support a claim instead of filling pseudo-canon;
-4. mark each pilot `pilot_reviewed` only after schema-completeness and cross-species review passes;
-5. run a dedicated pilot completion audit;
-6. only then begin ecology/evolution-family-aware bulk authoring toward `151/151`.
+The next coherent slice is:
 
-Do **not** begin bulk 151-species authoring until all eight pilot dossiers pass the shared schema under the pinned scale.
+1. establish an auditable P4 species coverage manifest using the frozen schema status fields;
+2. select the first ecology/evolution-family-aware batch rather than raw Pokédex order;
+3. source-review and author that batch against `p4-six-axis-v1`;
+4. run provenance, schema-completeness, evolution/cross-species consistency and P2/P3 contradiction checks;
+5. promote only reviewed dossiers in the manifest;
+6. continue batchwise until the final `151/151` audit passes.
 
-If full-schema authoring exposes a material player-facing creative choice with multiple valid answers, raise the minimum Human Design Gate rather than silently freezing it.
+Do not reopen the shared schema or six-axis scale opportunistically. Change them only when a later species demonstrates a concrete structural failure or a real Human Design Gate.
 
 ## Later mandatory contracts
 
