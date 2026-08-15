@@ -2,7 +2,7 @@
 
 Status: **ACTIVE — P4 authoring/validation schema**  
 Date: **2026-08-15**  
-Depends on: `docs/P4_POKEMON_DOMAIN_CONTRACT.md`, D-011, D-013, D-016 through D-022, D-024, D-028, D-030, D-031
+Depends on: `docs/P4_POKEMON_DOMAIN_CONTRACT.md`, `docs/P4_HAZARD_SEVERITY_CLARIFICATION.md`, D-011, D-013, D-016 through D-022, D-024, D-028, D-030, D-031
 
 ## 1. Purpose
 
@@ -126,7 +126,7 @@ Requirements:
 - any manual exception must have a reason and evidence class;
 - there is no required summed combat-power field.
 
-During the pilot, `rating_scale_version` may be provisional. After pilot review it must be pinned for batch authoring.
+During the hazard-first pilot, `rating_scale_version` may be an explicit provisional identifier such as `pilot-unpinned` or a named calibration candidate. A dossier carrying an unpinned scale remains `draft` and does not satisfy the completion rule for the eventual `151/151` audit. After pilot review the selected scale must be pinned for batch authoring.
 
 ## 6. Capabilities and hazards
 
@@ -139,6 +139,23 @@ capabilities_and_hazards:
   behavioral_capabilities: []
   utility_interaction_capabilities: []
   immunities_or_approach_invalidators: []
+  hazard_records:
+    - hazard_key: stable-key
+      kind: venom | toxin | burn | electrical | respiratory | entanglement | drowning | psychic | ghost | other
+      delivery_or_exposure: []
+      prerequisite_or_trigger: []
+      warning_signs: []
+      immediate_effects: []
+      delayed_or_persistent_effects: []
+      ordinary_consequence_ceiling: string
+      exceptional_consequence_ceiling: string-or-none
+      countermeasures: []
+      emergency_consumable_hooks: []
+      context_amplifiers: []
+      context_mitigators: []
+      governing_species_axes: []
+      severity_is_not_capped_by_axis_rating: true
+      provenance_or_derivation_refs: []
   notes: []
 ```
 
@@ -147,7 +164,12 @@ Rules:
 - tags require source/derivation support;
 - tags are permissions/hazard semantics, not automatic flat modifiers;
 - an empty category is valid;
-- do not generate a tag merely because a main-series move exists if the dossier cannot justify it as a meaningful ancient-world capability.
+- do not generate a tag merely because a main-series move exists if the dossier cannot justify it as a meaningful ancient-world capability;
+- a material hazard that can change consequence type, timing, ceiling or required countermeasure needs an explicit `hazard_record` rather than only a loose tag;
+- `delivery_or_exposure` and post-exposure consequence are separate semantics;
+- `governing_species_axes` may affect landing, sustaining or resisting the hazard but **never cap its consequence severity**;
+- low ratings do not imply a harmless hazard and high ratings do not imply aggression or lethality;
+- a capability that is purely permissive/utility and has no separate consequence semantics may remain a tag without a `hazard_record` when the dossier makes that boundary clear.
 
 ## 7. Ancient-strength treatment
 
@@ -254,6 +276,7 @@ threat_and_encounter:
     - action: string
       relevant_species_axis: vigor | force | guard | potency | resistance | speed | none
       relevant_tags: []
+      relevant_hazard_keys: []
       difficulty_guidance: string
       notes: string
 ```
@@ -261,6 +284,8 @@ threat_and_encounter:
 `baseline_threat_band` is an authoring summary, not a replacement for stats/tags/behavior.
 
 Ordinary late-game triviality is legal. A dossier does not need to preserve combat relevance forever.
+
+A human action may contest a species axis, a capability/hazard permission, or both. The difficulty to avoid exposure and the consequence after exposure must not be collapsed into one number merely for convenience.
 
 ## 12. Individual variation
 
@@ -481,8 +506,8 @@ A dossier counts toward P4 `151/151` only when all of the following are true:
 1. National Dex identity is valid and unique.
 2. Provenance review is marked complete.
 3. Canonical six raw base stats are present or an explicit source exception is documented.
-4. All six P4 species ratings are populated under a pinned rating-scale version.
-5. Capability/hazard audit is complete, including explicit empty categories where appropriate.
+4. All six P4 species ratings are populated under a **pinned** rating-scale version.
+5. Capability/hazard audit is complete, including explicit empty categories where appropriate; every material consequence-changing hazard has a reviewed `hazard_record` or an explicit reason why no detailed record applies.
 6. Ancient-strength treatment is explicit.
 7. Ecology and observable-sign sections are substantive or intentionally unresolved with reason.
 8. Human perception/culture is substantive without pseudo-canon filling.
@@ -534,6 +559,8 @@ The pilot must intentionally include at least one dossier that tests each of the
 
 - a weak/common species whose ordinary individual should become routine as the human advances;
 - a named/apex exceptional individual from a normally weak species;
+- a low-stat/high-hazard species where consequence severity cannot be inferred from the six-axis ratings;
+- a formidable/high-stat species whose ordinary behavior does not justify assuming aggression;
 - swarm/colony danger;
 - aquatic/environment-dependent action;
 - high physical force/durability;
@@ -545,11 +572,16 @@ The pilot must intentionally include at least one dossier that tests each of the
 
 The schema may receive **field-level refinements** during pilot review, but removing the D-031 architecture requires a new Human Design Gate.
 
+The active roster and calibration matrix are defined in `docs/P4_PILOT_ROSTER_AND_CALIBRATION_PLAN.md`.
+
 ## 25. Immediate next work
 
-1. Choose the smallest pilot roster that covers the validation matrix.
-2. Freeze the first `rating_scale_version` and normalization thresholds using the pilot's canonical base-stat spread.
-3. Author pilot dossiers plus one concrete named/apex weak-species individual.
-4. Run cross-species/P2/P3 contradiction review.
-5. Revise this schema only where pilot evidence shows a real structural gap.
-6. Then begin ecology/evolution-family-aware 151-species batch authoring.
+1. Author source-reviewed hazard/behavior evidence packets for the selected pilot roster while keeping rating candidates explicitly provisional.
+2. Create the concrete named/apex weak-species semantic fixture without final numeric deltas.
+3. Exercise low-stat/high-hazard, high-stat/low-aggression, swarm, aquatic, large-body, elemental and anomalous encounter examples.
+4. **Only after those examples exist**, compare the preserved 5/6/7-tier candidates and pin the smallest useful `rating_scale_version`.
+5. Finalize pilot six-axis profiles and named/apex numeric deltas.
+6. Test ordinary weak-species trivialization after human progression without player-level enemy scaling.
+7. Run cross-species/P2/P3/provenance/schema-completeness review.
+8. Revise this schema only where pilot evidence shows a real structural gap.
+9. Then begin ecology/evolution-family-aware 151-species batch authoring.
