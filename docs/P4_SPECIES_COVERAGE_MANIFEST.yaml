@@ -104,9 +104,9 @@ species:
   - {national_dex: 40, species_key: wigglytuff, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 41, species_key: zubat, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
   - {national_dex: 42, species_key: golbat, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
-  - {national_dex: 43, species_key: oddish, dossier_status: not_started}
-  - {national_dex: 44, species_key: gloom, dossier_status: not_started}
-  - {national_dex: 45, species_key: vileplume, dossier_status: not_started}
+  - {national_dex: 43, species_key: oddish, dossier_status: complete, authoring_batch: B15-new, p6_followup_required: true}
+  - {national_dex: 44, species_key: gloom, dossier_status: complete, authoring_batch: B15-new, p6_followup_required: true}
+  - {national_dex: 45, species_key: vileplume, dossier_status: complete, authoring_batch: B15-new, p6_followup_required: true}
   - {national_dex: 46, species_key: paras, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 47, species_key: parasect, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 48, species_key: venonat, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
@@ -130,9 +130,9 @@ species:
   - {national_dex: 66, species_key: machop, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 67, species_key: machoke, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 68, species_key: machamp, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
-  - {national_dex: 69, species_key: bellsprout, dossier_status: not_started}
-  - {national_dex: 70, species_key: weepinbell, dossier_status: not_started}
-  - {national_dex: 71, species_key: victreebel, dossier_status: not_started}
+  - {national_dex: 69, species_key: bellsprout, dossier_status: complete, authoring_batch: B15-new, p6_followup_required: true}
+  - {national_dex: 70, species_key: weepinbell, dossier_status: complete, authoring_batch: B15-new, p6_followup_required: true}
+  - {national_dex: 71, species_key: victreebel, dossier_status: complete, authoring_batch: B15-new, p6_followup_required: true}
   - {national_dex: 72, species_key: tentacool, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
   - {national_dex: 73, species_key: tentacruel, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
   - {national_dex: 74, species_key: geodude, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}

@@ -1,13 +1,13 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 14 promoted**  
+Status: **PASS — Batch 15 promoted**  
 Date: **2026-08-16**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 14 source review, eight-species full-schema authoring, regression review, completion audit and atomic promotion.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 15 source review, six-species full-schema authoring, regression review, completion audit and atomic promotion.
 
 ## Structural checks
 
@@ -25,9 +25,9 @@ Result: **PASS**.
 ## Current status counts
 
 ```text
-dossier_complete_count == 111
+dossier_complete_count == 117
 pilot_reviewed_count == 2
-not_started_count == 38
+not_started_count == 32
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -39,64 +39,80 @@ Result: **PASS**.
 
 ## Prior-batch continuity check
 
-All 103 rows complete through Batch 13 remain complete. No earlier promotion was reverted.
+All 111 rows complete through Batch 14 remain complete. No earlier promotion was reverted.
 
 Result: **PASS**.
 
-## Batch 14 promotion check
+## Batch 15 promotion check
 
-Only these eight previously `not_started` rows are newly promoted:
+Only these six previously `not_started` rows are newly promoted:
 
 ```text
-027 sandshrew complete B14-new p6_followup_required=true
-028 sandslash complete B14-new p6_followup_required=true
-050 diglett   complete B14-new p6_followup_required=true
-051 dugtrio   complete B14-new p6_followup_required=true
-074 geodude   complete B14-new p6_followup_required=true
-075 graveler  complete B14-new p6_followup_required=true
-076 golem     complete B14-new p6_followup_required=true
-095 onix      complete B14-new p6_followup_required=true
+043 oddish      complete B15-new p6_followup_required=true
+044 gloom       complete B15-new p6_followup_required=true
+045 vileplume   complete B15-new p6_followup_required=true
+069 bellsprout  complete B15-new p6_followup_required=true
+070 weepinbell  complete B15-new p6_followup_required=true
+071 victreebel  complete B15-new p6_followup_required=true
 ```
 
 Result: **PASS**.
 
-## Batch 14 regression checks
+## Batch 15 botanical-body / agency regression
 
 ```text
-Ground_or_Rock_type_equals_burrowing_permission == false
-Speed_rating_equals_literal_burrowing_or_rolling_velocity == false
-Force_rating_equals_terrain_or_structure_damage_formula == false
-Diglett_hidden_lower_body_shape == intentionally_unresolved
-Dugtrio_active_entity_count == 1
-Dugtrio_ordinary_turn_count == 1
-Dugtrio_independent_health_state_count == 1
-Dugtrio_visible_companion_slot_cost == 1
-Geodude_rocklike_body_equals_object_or_ore == false
-Sandslash_regrowth_equals_repeatable_live_harvest == false
-Graveler_rolling_equals_unstoppable_state == false
-Golem_shed_shell_equals_automatic_loot == false
-Golem_self_explosion_equals_real_world_blast_formula == false
-Onix_50_mph_equals_runtime_fast_travel == false
-hazard_severity_capped_by_species_axis == false
+plantlike_body_equals_scenery_crop_forage_or_resource_node == false
+Oddish_burial_equals_perfect_concealment_or_generic_Grass_burrowing == false
+Gloom_attraction_equals_compulsion_or_player_agency_removal == false
+Victreebel_lure_equals_mind_control_forced_pathfinding_or_input_suppression == false
+Weepinbell_sharp_leaves_equal_detachable_equipment_or_free_crafting_stock == false
+secretions_pollen_seeds_leaves_or_petals_equal_automatic_loot == false
 ```
 
 Result: **PASS**.
 
-## Chronology / human-context checks
+## Batch 15 pollen / chemical-hazard regression
 
 ```text
-Diglett_later_farm_raising_equals_ancient_domestication_norm == false
-Golem_diversion_grooves_equal_setting_wide_infrastructure == false
-Golem_dynamite_wording_equals_ancient_dynamite_technology == false
-modern_evolution_levels_or_trade_equal_ancient_levels_XP_or_trade_institution == false
-Onix_later_Metal_Coat_context_equals_ancient_technology == false
+Vileplume_allergy_and_toxicity_are_distinguishable == true
+Vileplume_pollen_equals_constant_aura_or_continuous_dispersion_simulation == false
+Vileplume_toxicity_equals_automatic_paralysis == false
+Bellsprout_iron_corrosion_equals_universal_material_deletion == false
+Weepinbell_toxic_powder_and_acid_are_distinct_hazard_channels == true
+Weepinbell_or_Victreebel_dissolution_equals_global_material_delete_rule == false
+real_world_pH_reaction_rate_or_durability_formula_imported == false
+```
+
+Result: **PASS**.
+
+## Batch 15 movement / feeding-history regression
+
+```text
+Bellsprout_rooted_rehydration_is_temporary_species_local_state == true
+Bellsprout_rooting_equals_generic_healing_or_forced_movement_immunity == false
+Bellsprout_motion_reaction_equals_omniscient_awareness_or_automatic_initiative == false
+Victreebel_feeding_history_changes_acid_sweetness_qualitatively == true
+Victreebel_feeding_history_equals_kill_XP_hidden_level_or_permanent_stat_growth == false
+Victreebel_feeding_history_equals_recursive_corrosion_scaling_or_farm_loop == false
+```
+
+Result: **PASS**.
+
+## Evolution / chronology checks
+
+```text
+family_stage_capabilities_auto_inherit_without_evidence == false
+modern_level_21_metadata_equals_ancient_character_levels_or_kill_XP == false
+Leaf_Stone_metadata_equals_common_ancient_item_market == false
+Bellossom_and_Sun_Stone_remain_post_Gen1_provenance_context == true
+modern_abilities_or_move_terms_equal_fixed_ancient_mechanics == false
 ```
 
 Result: **PASS**.
 
 ## P6 follow-up audit
 
-All eight Batch 14 rows explicitly set `p6_followup_required: true` for burrow/tremor/roll telegraphs, hidden-anatomy-safe presentation, lithic-body readability without loot semantics, shed-material state, massive-body scale and route-hazard readability.
+All six Batch 15 rows explicitly set `p6_followup_required: true` for botanical-body readability without resource semantics, buried/rooted state presentation, scent/lure telegraphs, airborne pollen warning, separate toxin/corrosion channels, and feeding-history presentation without a progression meter.
 
 Result: **PASS**.
 
@@ -118,15 +134,16 @@ blocking_p4_gate_count == 0
 ```text
 manifest_structure == PASS
 prior_batch_continuity == PASS
-Batch_14_status_promotion == PASS
+Batch_15_status_promotion == PASS
 status_count_arithmetic == PASS
 P6_followup_explicitness == PASS
-burrowing_terrain_regression == PASS
-lithic_body_resource_regression == PASS
-rolling_explosive_hazard_regression == PASS
-multi_head_action_economy_regression == PASS
-chronology_human_context_regression == PASS
+botanical_body_object_resource_regression == PASS
+attraction_player_agency_regression == PASS
+pollen_toxin_corrosion_regression == PASS
+rooting_movement_reaction_regression == PASS
+feeding_history_progression_regression == PASS
+evolution_chronology_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 14 manifest promotion is complete. P4 remains active at `111 complete / 2 pilot_reviewed / 38 not_started`.
+Batch 15 manifest promotion is complete. P4 remains active at `117 complete / 2 pilot_reviewed / 32 not_started`.
