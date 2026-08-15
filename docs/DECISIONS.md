@@ -524,4 +524,43 @@ For implementation, derived carried Load must be recalculated only when load-rel
 
 The binding contract is `docs/P3_INVENTORY_RESOURCES_AND_ECONOMY_CONTRACT.md`.
 
-The next P3 work is bounded rare-psychic-gift mechanics, followed by deciding whether a separate fate/roll-intervention resource is necessary and then a P3 exit audit.
+D-029 subsequently resolves the rare-psychic-gift mechanics that followed this inventory/economy decision.
+
+## D-029 — Rare foreshadowing plus in-run psychic awakening
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-007  
+**Owner choice:** B + C, with explicit instruction that psychic humans remain rare
+
+Human psychic / miracle-worker play uses a **rare foreshadowing + in-run awakening** model.
+
+Standard character creation never grants usable psychic power directly and does not expose a normal `Psychic` class, Origin, Learned Practice, Competence, or magic-stat path. A small minority of thematically appropriate formative histories may instead resolve an **Unusual Sign / foreshadowed** state such as recurring impossible-feeling dreams, anticipatory unease, mind/emotion echoes, or unusual sensitivity to Psychic/Ghost phenomena. Foreshadowing is not itself a power, grants no universal modifier or reroll, and does not guarantee awakening.
+
+Actual usable psychic ability always requires an explicit rare authored **awakening event during play**. A foreshadowed character may qualify for more legible or safer awakening branches. A character with no creation-time sign can still awaken through an extraordinary transformative event, but that route is intentionally rarer and must not become a random routine reward.
+
+For later deterministic simulation/content tuning, strong creation-time foreshadowing should initially remain at roughly `<=10%` of ordinary creation histories/seeds and actual Gift awakening at roughly `<=5%` of ordinary runs. These are player-run frequency targets rather than claims about population-wide lore prevalence, and the first vertical slice need not guarantee an awakening.
+
+An ordinary awakened player character has one narrow Gift family by default. The initial family taxonomy is:
+
+- **Omen / Premonition** — symbolic or fragmentary warning/foresight;
+- **Mind Echo** — bounded emotional/mental impressions or limited directed thought exchange;
+- **Kinetic Touch** — limited nearby telekinetic influence;
+- **Dream Resonance** — meaningful sleep/dream/psychic-residue sensitivity;
+- **Veil Sense** — bounded sensitivity/resistance/interaction around Psychic/Ghost phenomena.
+
+A family does not grant every ability in that category. The character receives explicit facets/manifestations, normally beginning with one passive/observational facet and/or one narrow active manifestation. Ordinary progression does not grant a second Gift family.
+
+There is no psychic Competence, psychic Attribute, mana/focus bar, or generic spell list. Gift state supplies fictional permission. Psychic checks reuse `2d6 + Attribute + Competence + Context`; the supernatural action's Competence contribution is normally `+0`, with Sense, Will or Presence serving as the governing Attribute depending on the manifestation. Mundane Competences can assist interpretation/preparation only when fictionally relevant and do not become a hidden psychic-skill stack.
+
+Psychic effects are primarily event permissions and authored branches rather than a universal `Use Psychic Power` button. Passive reception is event-triggered rather than continuously polled. Focused manifestations use ordinary check/consequence logic. Rare **Miracle exertion** pushes an established Gift beyond safe routine use and normally advances Fatigue by at least one stage regardless of success, with Fear/Vitality/Injury consequences only where causally appropriate. This reuses existing survival state instead of creating a parallel magic-resource system.
+
+Psychic Gift does not automatically grant combat damage, mind control, flight, teleportation, healing, universal Ghost/Psychic immunity, Pokémon taming, or complete hidden information. Omen/Premonition does not grant universal rerolls, die replacement, automatic Fortune Spikes, or fate manipulation.
+
+Generic advancement points cannot create a Gift from `none`. After awakening, a new narrow facet may normally cost `1 advancement point + matching gift-growth eligibility` when comparable to an ordinary technique; major scope expansion requires an exceptional authored breakthrough and cannot be purchased from points alone.
+
+The Gift lifecycle is conceptually `none → foreshadowed → awakened`, with non-foreshadowed exceptional awakening also permitted. All creation/awakening transitions must be deterministic from authoritative state/seed and keyed authored events; reloading or rewinding must not create repeated psychic-lottery attempts.
+
+The binding contract is `docs/P3_RARE_PSYCHIC_GIFT_CONTRACT.md`.
+
+The next P3 work is deciding whether a separate fate/roll-intervention resource is necessary at all, followed by the P3 exit audit.
