@@ -436,3 +436,30 @@ Fear is not a sanity or morality meter, and Panicked does not automatically remo
 This contract applies to human player characters. P4 may use a species-appropriate companion/Pokémon survivability model rather than forcing Pokémon into human Vitality/Fatigue/Fear formulas.
 
 The binding contract is `docs/P3_HEALTH_PRESSURE_AND_INJURY_CONTRACT.md`.
+
+## D-026 — Veiled lifepath background with free specialization
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-004  
+**Owner choice:** short, initially opaque narrative choices that roughly determine the character's past/background; “fallen noble”-like histories are explicitly desired
+
+Character creation uses a **veiled lifepath + free specialization hybrid** rather than a visible class/job package picker.
+
+A new character first answers three short fiction-first formative prompts. The player sees memories, losses, duties, relationships, or learned habits rather than exact mechanical outcomes. Those answers deterministically resolve one **Origin** and one **Learned Practice**. The mapping is hidden during the formative sequence, but the final resulting background and complete mechanical sheet are revealed before confirmation.
+
+Veiled choices must remain thematically fair rather than functioning as trick answers. They must not secretly increase/decrease the seven core attributes. Ordinary characters begin at `1` in all seven attributes, then explicitly spend **4 attribute increases** after the background reveal, with a normal starting cap of `3`. This produces `11` total starting attribute points and preserves rating `4` as later progression/exceptional-character headroom.
+
+Learned Practice grants one trained Competence at `+1` plus a small relevant equipment/fictional-permission package. After the reveal, the player also chooses one separate personal trained Competence at `+1`. Ordinary creation does not start with `+2` expertise.
+
+Origin is not a class. It supplies narrative identity, relationships, recognition, keepsakes/resources, obligations, debts, claims, taboos, or opening event flags without locking future advancement or requiring a Pokémon companion.
+
+The desired “fallen noble” fantasy is approved. Because D-012/D-022 establish a pre-regional clan/village network rather than a mature Kanto-wide feudal state, the baseline seed is represented as `fallen_head_house` — **몰락한 옛 수장가의 후예**. Local prose may use stronger prestige language where supported, but must not imply a mature regional monarchy or standardized aristocratic estate system by accident.
+
+The initial Origin seed set also includes disaster survivor, outsider ward, shrine-raised child, route household, craft household, wilds household, and ordinary village household. Learned Practices initially cover hunting, route guidance, village guarding, foraging, healer apprenticeship, smithing, fishing, knowledge keeping, and ritual assistance.
+
+Rare psychic gifts remain a separate later P3 mechanism. A shrine/ritual background does not itself grant psychic powers or a spell system.
+
+The binding contract is `docs/P3_CHARACTER_CREATION_CONTRACT.md`.
+
+The next material Human Design Gate is **progression philosophy**: P3 must decide how human characters improve over a run/campaign before finalizing advancement-dependent mechanics.
