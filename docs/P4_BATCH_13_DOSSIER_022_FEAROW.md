@@ -76,7 +76,7 @@ capabilities_and_hazards:
   immunities_or_approach_invalidators: [open_ground_or_exposed_food_approaches_may_become_unsafe_when_a_Fearow_has_actual_line_of_sight_and_interest]
   hazard_records:
     - hazard_key: fearow-snatch-and-dive-pressure
-      kind: physical_and_resource_contest
+      kind: other
       delivery_or_exposure: [dive, beak_strike, exposed_food_snatch_attempt]
       prerequisite_or_trigger: [visible_food_or_prey, territorial_intrusion, direct_attack]
       warning_signs: [circling, altitude_change, repeated_focus_on_food_or_prey, wing_fold_before_dive]
@@ -195,7 +195,7 @@ mechanical_hooks:
   trouble_spike_complications: [open_camp_and_exposed_food_create_repeated_opportunity]
 hunting_materials_and_resources:
   killing_treatment: no_generic_loot
-  hunting_for_food: none_fixed
+  hunting_for_food: none
   shed_or_abandoned_materials: [ordinary_feathers_only_if_context_requires]
   natural_remains: [ordinary_remains_only_if_context_requires]
   dangerous_harvesting: [none_supported]
