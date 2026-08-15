@@ -563,4 +563,29 @@ The Gift lifecycle is conceptually `none → foreshadowed → awakened`, with no
 
 The binding contract is `docs/P3_RARE_PSYCHIC_GIFT_CONTRACT.md`.
 
-The next P3 work is deciding whether a separate fate/roll-intervention resource is necessary at all, followed by the P3 exit audit.
+D-030 subsequently resolves the final P3 fate/roll-intervention question.
+
+## D-030 — No Fate/reroll currency; concrete emergency consumables
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-008  
+**Owner choice:** A, clarified with Arkham-Horror-like danger consumables
+
+The game has **no universal Fate, Luck, Resolve, Destiny, Inspiration, reroll, die-replacement, result-upgrade, or similar meta-resource**. Once an ordinary check is rolled, the dice remain authoritative. A player cannot spend a generic resource to reroll dice, replace a die, cancel a natural double, manufacture a Fortune Spike, erase a Trouble Spike, or promote a bad outcome band after seeing it.
+
+Instead, emergency agency comes from **finite, fictionally real consumable items carried in the D-028 inventory/Load system**. The intended inspiration is the tension of carrying and spending useful danger-response items in games such as Arkham Horror, not copying a generic meta-currency.
+
+Emergency consumables use explicit authored timing windows: preparation before resolution, reaction after the threat/result is known but before its consequence is committed, or recovery after the consequence. When the exact item mechanism and trigger support it, an item may reduce Vitality loss, prevent/downgrade a matching impending Injury, enable stabilization, prevent a matching Fatigue/Fear escalation, open an escape/shelter/resistance option, counter a specific hazard, or protect another item/resource consequence.
+
+Emergency consumables **do not change the rolled dice**. Natural `6+6` and `1+1` remain genuine logged Fortune/Trouble Spikes. A consumable may mitigate a Trouble-Spike consequence only when its bounded trigger matches the fiction; it cannot remove the spike or reroll it.
+
+A legal emergency consumable must have a stable item identity, eligible trigger/hazard tags, legal timing, finite consumption count, exact effect, exclusions, Load/stack behavior, and any relevant preparation/knowledge/access requirement. The game must not disguise Fate points as a universal `lucky charm`, `emergency token`, or other item that simply cancels any failure.
+
+Generic everyday treatment can still use the pooled `Remedies` resource. Exact antidotes, protective preparations, wards, species-derived materials, and other exceptional items remain notable items and require P4/P5 source/setting justification where Pokémon phenomena are involved.
+
+P5 must preserve deterministic sequencing: `roll → outcome/spike → legal reaction window → player item choice → consumption → modified consequence → final state`. Emergency-item lookup occurs only on relevant state transitions and should use normalized/cached indexes rather than per-frame rescanning.
+
+The binding contract is `docs/P3_FATE_AND_EMERGENCY_CONSUMABLES_CONTRACT.md`.
+
+With D-030 resolved, `docs/P3_EXIT_AUDIT.md` reports **PASS** and no blocking P3 Human Design Gate remains. The next core phase is P4.
