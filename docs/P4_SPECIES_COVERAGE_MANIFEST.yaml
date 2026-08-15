@@ -205,11 +205,11 @@ species:
   - {national_dex: 141, species_key: kabutops, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
   - {national_dex: 142, species_key: aerodactyl, dossier_status: not_started}
   - {national_dex: 143, species_key: snorlax, dossier_status: not_started}
-  - {national_dex: 144, species_key: articuno, dossier_status: not_started}
-  - {national_dex: 145, species_key: zapdos, dossier_status: not_started}
-  - {national_dex: 146, species_key: moltres, dossier_status: not_started}
-  - {national_dex: 147, species_key: dratini, dossier_status: not_started}
-  - {national_dex: 148, species_key: dragonair, dossier_status: not_started}
-  - {national_dex: 149, species_key: dragonite, dossier_status: not_started}
+  - {national_dex: 144, species_key: articuno, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
+  - {national_dex: 145, species_key: zapdos, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
+  - {national_dex: 146, species_key: moltres, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
+  - {national_dex: 147, species_key: dratini, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
+  - {national_dex: 148, species_key: dragonair, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
+  - {national_dex: 149, species_key: dragonite, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
   - {national_dex: 150, species_key: mewtwo, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 151, species_key: mew, dossier_status: pilot_reviewed, authoring_batch: pilot, p6_followup_required: true}
