@@ -43,7 +43,11 @@ Current owner-approved direction:
 - natural `6+6` is a Fortune Spike and natural `1+1` is a Trouble Spike; neither bypasses fiction or the serious-selective-lethality contract;
 - human survival uses one numeric **Vitality** pool, three-stage **Fatigue**, three-stage **Fear**, and named discrete **Injuries** rather than four full meters;
 - `0 Vitality` means Incapacitated rather than dead; Light/Serious/Critical Injuries and death are explicit separate consequences;
-- Luck and Pokémon Bond are not core attributes; fate-like resources and individual relationship state remain separate systems;
+- character creation begins with **three partially opaque, fiction-first formative choices** that deterministically resolve an Origin and Learned Practice before the player sees the final background;
+- the hidden mapping is discovery-oriented but must not be a hidden stat trap: resulting mechanics are revealed before confirmation and attributes are specialized explicitly afterward;
+- ordinary new humans begin at `1` in all seven attributes, then spend **4 explicit attribute increases**, with a normal starting cap of `3`;
+- Learned Practice grants one trained Competence at `+1`; the player then chooses one additional personal trained Competence at `+1`; ordinary creation does not begin with `+2` expertise;
+- “fallen noble”-like backgrounds are approved, but the baseline pre-regional implementation is **몰락한 옛 수장가의 후예** (`fallen_head_house`) rather than silently introducing a mature Kanto-wide feudal aristocracy;
 - character creation, compact TRPG checks, dice outcomes, conditional events, discoveries/insights and persistent run state are core;
 - public repository and non-commercial intent do not create Pokémon IP permission;
 - resource provenance and mobile resource discipline remain first-class constraints.
@@ -135,57 +139,65 @@ P3 owns:
 - Fatigue is `Ready → Tired → Exhausted`; Fear is `Steady → Shaken → Panicked`; penalties apply only when the pressure is relevant rather than globally.
 - Injuries are named persistent records with `Light / Serious / Critical` severity, with at most three active mechanical Injury records for mobile readability.
 - Critical Injury and death remain explicit high-severity states with stabilization/rescue logic consistent with D-020.
+- **P3-HDG-004 / D-026:** character creation is a **veiled lifepath + free specialization hybrid**.
+- the default flow is three fiction-first formative choices → deterministic `Origin + Learned Practice` → reveal → explicit specialization.
+- formative-choice mappings are initially hidden, but choices must remain thematically fair and resulting mechanics are revealed before final confirmation.
+- formative choices do not secretly modify core attributes.
+- ordinary characters start all seven attributes at `1`, then spend `4` increases with starting cap `3` (`11` total starting attribute points).
+- Learned Practice grants one trained Competence `+1`; free specialization grants one additional different trained Competence `+1`; starting expert `+2` is reserved for later advancement/exceptional rules.
+- the Origin seed set includes `fallen_head_house` (몰락한 옛 수장가의 후예), disaster survivor, outsider ward, shrine-raised, route household, craft household, wilds household, and ordinary village household.
+- Learned Practice seeds include hunter, route guide, village guard, forager, healer apprentice, smith apprentice, fisher, keeper, and ritual attendant.
+- Origin/Practice are story-state packages rather than fixed classes and may create contacts, recognition, possessions, debts, duties, claims, taboos, equipment and event flags.
 
 Binding contracts:
 
 - `docs/P3_ATTRIBUTE_CONTRACT.md`
 - `docs/P3_DICE_AND_CHECK_CONTRACT.md`
 - `docs/P3_HEALTH_PRESSURE_AND_INJURY_CONTRACT.md`
+- `docs/P3_CHARACTER_CREATION_CONTRACT.md`
 
-Starting attribute allocation, exact character-creation shell, progression philosophy, inventory/economy abstraction, rare psychic-gift mechanics, and exact fate/insight resource rules remain open. The numeric envelopes above can be tuned in data without reopening their underlying rule architecture.
+Exact competence normalization, progression philosophy, inventory/economy abstraction, rare psychic-gift mechanics, and exact fate/insight resource rules remain open. Numeric envelopes above can be tuned in data without reopening their underlying rule architecture.
 
 ### Exact next Human Design Gate
 
-Resolve **P3-HDG-004 — character creation structure**.
+Resolve **P3-HDG-005 — progression philosophy**.
 
-The seven attributes and compact competence scale are fixed, but the project has not yet decided how much of a new character comes from free allocation versus an ancient-world background/occupation. This materially changes build freedom, replayability, onboarding, and how strongly the setting is expressed before the first event.
+Character creation now has explicit advancement headroom: starting attributes cap at `3` while the human scale already reserves `4`, and ordinary trained Competence begins at `+1` while `+2` represents expertise. P3 must decide **what player behavior actually earns growth** before finalizing competence taxonomy, fate/insight resources, economy rewards or rare-gift advancement.
 
-#### A — Mostly free point allocation
+#### A — Level / milestone point grants
 
-- player allocates starting attribute points and chooses competences directly;
-- background is mostly narrative identity/contact/equipment rather than mechanical package;
-- maximum build freedom and easiest optimization.
+- story milestones or major objectives grant advancement points;
+- player spends them directly on attributes, competences or later perks;
+- highly legible and easy to balance.
 
-**Impact:** clean and familiar, but occupations can feel cosmetic and new players must understand all seven attributes before making good choices.
+**Impact:** strongest conventional RPG progression and clear reward dopamine, but can feel detached from what the character actually did.
 
-#### B — Background/occupation packages
+#### B — Use-based improvement
 
-- choose a setting-native background such as hunter, gatherer, smith-lineage worker, healer apprentice, route guide, fisher, ritual specialist, etc.;
-- the package supplies most starting attributes/competences/equipment/contacts;
-- player makes only a few finishing choices.
+- repeated meaningful use, training and successful/failed experience gradually improve the relevant competence or attribute;
+- little or no generic advancement currency.
 
-**Impact:** strongest immediate world flavor and easiest onboarding, but mechanically constrains unusual builds and can drift toward class-like archetypes.
+**Impact:** immersive and organic, but encourages grinding/skill-spam unless heavily constrained and is harder to balance deterministically.
 
-#### C — Hybrid foundation + free specialization **(recommended)**
+#### C — Milestone growth + earned training/insight **(recommended)**
 
-- every human starts from the same ordinary baseline;
-- choose one setting-native **Background** for narrative permissions, one trained competence, starting relationship/equipment hooks, and possibly one bounded stat influence;
-- separately spend a small free attribute budget and choose personal specialization so two hunters or two healers need not share the same sheet;
-- Background is not a locked class and does not decide future progression.
+- major story/run milestones grant a small general advancement resource;
+- specific discoveries, mentors, repeated meaningful practice or hard-won insights unlock **what** can be improved or reduce its cost;
+- players choose the final spend rather than growth happening automatically from spammed actions;
+- attributes remain expensive/rare, Competence `+2`, new specialties, techniques and narrative permissions provide most ordinary growth.
 
-**Impact:** preserves ancient-world identity while keeping character-building freedom and human-only build diversity. It also maps cleanly to the `+0/+1/+2` competence contract without adding a large skill list.
+**Impact:** preserves clear reward moments and player agency while making advancement feel connected to the world. It also avoids Skyrim-like grind incentives and leaves room for bestiary/discovery rewards to feed progression without turning every encounter into XP farming.
 
-#### D — Short lifepath sequence
+#### D — Mostly horizontal progression
 
-- character creation resolves two or three formative-life choices/events such as upbringing, apprenticeship, hardship, taboo/contact, or expedition experience;
-- each step contributes attributes, competence, relationships, equipment, or knowledge;
-- final sheet emerges from the sequence rather than one package.
+- attributes change rarely or almost never;
+- most growth comes from new competences, techniques, contacts, equipment access, knowledge, route mastery and background evolution.
 
-**Impact:** strongest narrative/replay flavor and can make creation itself fun, but onboarding is longer and balancing combinations is substantially harder.
+**Impact:** strongest grounded-human tone and easiest long-term numeric balance, but some players may feel insufficient personal power growth.
 
-Recommendation: **C — Hybrid foundation + free specialization**.
+Recommendation: **C — Milestone growth + earned training/insight**.
 
-After this gate, P3 should bind exact starting allocation and the first background/occupation taxonomy, then resolve progression philosophy (which is separately owner-gated) before inventory/economy and rare psychic-gift mechanics.
+After this gate, P3 should freeze the competence/progression contract, then inventory/economy abstraction and rare psychic-gift mechanics before an exit audit.
 
 ## Later mandatory contracts
 
