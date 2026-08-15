@@ -144,7 +144,7 @@ species:
   - {national_dex: 80, species_key: slowbro, dossier_status: not_started}
   - {national_dex: 81, species_key: magnemite, dossier_status: not_started}
   - {national_dex: 82, species_key: magneton, dossier_status: not_started}
-  - {national_dex: 83, species_key: farfetchd, dossier_status: not_started}
+  - {national_dex: 83, species_key: farfetchd, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 84, species_key: doduo, dossier_status: not_started}
   - {national_dex: 85, species_key: dodrio, dossier_status: not_started}
   - {national_dex: 86, species_key: seel, dossier_status: not_started}
@@ -163,8 +163,8 @@ species:
   - {national_dex: 99, species_key: kingler, dossier_status: not_started}
   - {national_dex: 100, species_key: voltorb, dossier_status: not_started}
   - {national_dex: 101, species_key: electrode, dossier_status: not_started}
-  - {national_dex: 102, species_key: exeggcute, dossier_status: not_started}
-  - {national_dex: 103, species_key: exeggutor, dossier_status: not_started}
+  - {national_dex: 102, species_key: exeggcute, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
+  - {national_dex: 103, species_key: exeggutor, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 104, species_key: cubone, dossier_status: not_started}
   - {national_dex: 105, species_key: marowak, dossier_status: not_started}
   - {national_dex: 106, species_key: hitmonlee, dossier_status: not_started}
@@ -193,11 +193,11 @@ species:
   - {national_dex: 129, species_key: magikarp, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
   - {national_dex: 130, species_key: gyarados, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 131, species_key: lapras, dossier_status: pilot_reviewed, authoring_batch: pilot, p6_followup_required: true}
-  - {national_dex: 132, species_key: ditto, dossier_status: not_started}
-  - {national_dex: 133, species_key: eevee, dossier_status: not_started}
-  - {national_dex: 134, species_key: vaporeon, dossier_status: not_started}
-  - {national_dex: 135, species_key: jolteon, dossier_status: not_started}
-  - {national_dex: 136, species_key: flareon, dossier_status: not_started}
+  - {national_dex: 132, species_key: ditto, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
+  - {national_dex: 133, species_key: eevee, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
+  - {national_dex: 134, species_key: vaporeon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
+  - {national_dex: 135, species_key: jolteon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
+  - {national_dex: 136, species_key: flareon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 137, species_key: porygon, dossier_status: not_started}
   - {national_dex: 138, species_key: omanyte, dossier_status: not_started}
   - {national_dex: 139, species_key: omastar, dossier_status: not_started}

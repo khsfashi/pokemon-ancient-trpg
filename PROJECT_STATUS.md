@@ -211,23 +211,9 @@ Important preserved results:
 
 `docs/P4_BATCH_02_COMPLETION_AUDIT.md` = **PASS**.
 
-Current manifest audit after Batch 02:
+### P4 Batch 03 — COMPLETE
 
-```text
-dossier_complete_count == 20
-pilot_reviewed_count == 2
-not_started_count == 129
-draft_count == 0
-blocking_p4_gate_count == 0
-```
-
-The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
-
-### P4 Batch 03 — SELECTED
-
-Authority: `docs/P4_BATCH_03_BRANCHING_TRANSFORMATION_PLAN.md`.
-
-Selected new dossiers:
+Batch 03 completes eight dossiers:
 
 - #083 Farfetch'd
 - #102 Exeggcute
@@ -238,29 +224,29 @@ Selected new dossiers:
 - #135 Jolteon
 - #136 Flareon
 
-Batch 03 adds four domain pressures not exhausted by Batches 01-02:
+Primary outputs:
 
-1. **branching evolution** — Eevee has multiple mutually exclusive Generation-I evolution outcomes rather than one linear next species;
-2. **transformation is not evolution** — Ditto provides the explicit regression case;
-3. **multi-head / multi-will canonical species entity** — Exeggcute/Exeggutor test identity, coordination and companion-slot semantics without inventing a universal consciousness theory;
-4. **species-specific carried tool + learned fighting style** — Farfetch'd tests capability dependency and individual learned behavior without creating a generic loot/equipment system.
+- `docs/P4_BATCH_03_BRANCHING_TRANSFORMATION_PLAN.md`
+- `docs/P4_BATCH_03_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_03_FULL_SCHEMA_DOSSIERS.md`
+- `docs/P4_BATCH_03_COMPLETION_AUDIT.md`
 
-Selection-stage source reconnaissance found no blocking Human Design Gate. Full source review still owns the final evidence classification and may expose a gate if a durable cross-species rule becomes unavoidable.
+Batch 03 validates four new domain boundaries:
 
-## Exact next work
+1. **branching evolution** — Eevee can become Vaporeon/Jolteon/Flareon through mutually exclusive persistent-individual species transformations without a class/evolution menu;
+2. **transformation is not evolution** — Ditto may radically change form while retaining `species_key: ditto`, its persistent identity and its non-evolving family state;
+3. **multi-head / multi-will single entity** — Exeggcute and Exeggutor remain one species entity and one companion slot while internal coordination/disagreement remains species-local behavior; no universal soul/personhood rule is invented;
+4. **species-specific tool + learned style** — Farfetch'd stalk dependency and fighting-style variation fit capability/individual state without generic loot or held-item infrastructure.
 
-Continue **Batch 03** in this order:
+Elemental branch regressions also preserve hazard semantics:
 
-1. source-review #083 Farfetch'd, #102 Exeggcute, #103 Exeggutor, #132 Ditto, #133 Eevee, #134 Vaporeon, #135 Jolteon and #136 Flareon against current official evidence plus the pinned structured source inputs;
-2. confirm identity, typing, raw stats, family relation and modern trigger metadata where applicable;
-3. derive all eight `p4-six-axis-v1` profiles mechanically with no manual exception unless a concrete structural failure is demonstrated;
-4. author capability/hazard records before threat summaries;
-5. fill all eight full shared-schema dossiers;
-6. run Eevee branching-evolution consistency, Ditto transformation-not-evolution, Exeggcute/Exeggutor multi-head identity, and Farfetch'd species-equipment/learned-style regressions;
-7. run provenance, P2/P3/P4 contradiction and schema-completeness checks;
-8. if no blocking gate remains, atomically promote the eight manifest rows and write the Batch 03 completion audit.
+- Vaporeon water concealment changes tracking permission instead of Guard;
+- Jolteon electrical discharge and needlelike fur are separate exposure channels;
+- Flareon heat/fire changes fuel, enclosure and escape state rather than mapping official temperature prose into a universal damage formula.
 
-Expected manifest after a clean Batch 03 close:
+`docs/P4_BATCH_03_COMPLETION_AUDIT.md` = **PASS**.
+
+Current manifest audit after Batch 03:
 
 ```text
 dossier_complete_count == 28
@@ -269,6 +255,24 @@ not_started_count == 121
 draft_count == 0
 blocking_p4_gate_count == 0
 ```
+
+The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
+
+## Exact next work
+
+Continue **P4** by selecting Batch 04 using ecology/evolution-family/domain pressure rather than raw Pokédex order.
+
+Batch 04 selection should prioritize at least one still-unproven P4 boundary or materially different hazard/ecology pattern, then follow the established atomic loop:
+
+1. select a compact family/ecology-aware roster;
+2. source-review every selected species against current official evidence plus pinned structured inputs;
+3. expose a Human Design Gate only if a durable owner-level interpretation is genuinely required;
+4. derive `p4-six-axis-v1` mechanically with no manual exception unless the scale structurally fails;
+5. author capability/hazard records before threat summaries;
+6. fill every shared-schema section;
+7. run family/domain, provenance and P2/P3/P4 contradiction regressions;
+8. promote manifest rows only after the whole batch passes;
+9. write the batch completion audit and advance this handoff.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
