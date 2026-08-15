@@ -161,16 +161,18 @@ Only official evidence that actually describes biology/resource semantics is use
 
 ## 9. Companionship state
 
+Frozen schema classifications:
+
 ```text
-Cubone  difficult_but_possible
-Marowak difficult_but_possible
-Chansey difficult_but_possible
-Tangela difficult_but_possible
-Staryu  difficult_but_possible
+Cubone  eligible
+Marowak eligible
+Chansey eligible
+Tangela eligible
+Staryu  eligible
 Starmie exceptional_only
 ```
 
-All classifications require voluntary persistent bonds. None use defeat/capture, portable storage, or resource extraction as recruitment.
+`eligible` does not mean common or easy. All classifications require voluntary persistent bonds, and species-specific prerequisites/logistics remain in each dossier. None use defeat/capture, portable storage, or resource extraction as recruitment.
 
 ## 10. Completion state
 
