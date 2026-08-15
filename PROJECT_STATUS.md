@@ -150,7 +150,7 @@ Batch 12 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 12 state: `96 complete / 2 pilot_reviewed / 53 not_started`.
 
-### P4 Batch 13 — SELECTED
+### P4 Batch 13 — SOURCE REVIEW COMPLETE
 
 Aerial ecology / territoriality / traversal / multi-head control stress roster:
 
@@ -158,37 +158,42 @@ Aerial ecology / territoriality / traversal / multi-head control stress roster:
 - #021 Spearow / #022 Fearow
 - #084 Doduo / #085 Dodrio
 
-Primary selection output:
+Primary outputs so far:
 
 - `docs/P4_BATCH_13_AERIAL_ECOLOGY_TERRITORIALITY_MULTIHEAD_PLAN.md`
+- `docs/P4_BATCH_13_SOURCE_REVIEW.md`
 
-Batch 13 is deliberately selected to test these still-underrepresented boundaries before any manifest promotion:
+The source review validates these boundaries before full-schema authoring:
 
-1. **Flying type is not a universal traversal permission.** Species-local evidence must determine flight distance, endurance, aerial route access and whether terrestrial running is the dominant locomotion mode.
-2. **Navigation and patrol are not omniscience.** Pidgey homing and Pidgeotto/Fearow aerial search behavior must not become perfect routefinding, map revelation, automatic detection or unavoidable interception.
-3. **Extreme speed is not a real-time physics subsystem.** Any historical/versioned Pidgeot speed claim must remain source-scoped and cannot directly define per-round distance, kinetic damage or map travel time.
-4. **Territorial behavior is not generic aggro.** Pidgeotto/Spearow/Fearow encounter pressure remains context- and ecology-driven rather than unconditional combat on zone entry.
-5. **Food theft is not arbitrary inventory deletion.** Fearow behavior can create encounter consequences without granting deterministic loss of player-held items.
-6. **Multiple heads do not multiply entity/action count.** Doduo and Dodrio remain one Pokémon/entity; synchronization, lookout rotation, internal leadership and organ multiplicity do not create extra turns, initiative slots, companion slots or HP pools.
-7. **No new Human Design Gate is required for selection.** Existing contracts can represent all identified pressures conservatively pending source review.
+1. **Flying type is not a universal traversal permission.** Spearow has explicit long-distance flight limits; Doduo is primarily a fast ground runner with poor/difficult flight; Fearow has explicit sustained/all-day flight evidence. Flight distance/endurance must remain species-local.
+2. **Six-axis Speed is not literal travel velocity.** The strongest regression is Dodrio: its normalized Speed rating is `5` versus Doduo `3`, while current official species text says Dodrio cannot run as fast as Doduo but can run for longer stretches.
+3. **Navigation and patrol are not omniscience.** Pidgey nest-homing, Pidgeotto aerial patrol, Pidgeotto/Pidgeot prey vision and Fearow search behavior do not grant arbitrary routefinding, map revelation, perfect detection or stealth immunity.
+4. **Historical extreme-speed claims remain source facts without becoming a physics engine.** Pidgeot's version-tagged Mach-2 wording is retained, but it does not define per-round distance, real-world kinetic-energy damage, automatic initiative or map travel time.
+5. **Territoriality and theft remain authored encounter behavior.** Pidgeotto/Spearow/Fearow pressure is context-driven; Fearow food-snatching cannot silently delete inventory or infer hidden item knowledge.
+6. **Multiple heads/organs do not multiply entity resources.** Doduo and Dodrio each remain one Pokémon/entity, one ordinary initiative/turn, one visible companion slot if applicable and one health/injury entity. Synchronization, lookout rotation, redundant organs and head leadership remain anatomy/behavior state.
+7. **Doduo between-head telepathy remains internal and species-local.** It does not create external mind reading, truth detection, Psychic typing or a generic psychic subsystem.
+8. **Modern abilities/evolution/held-item tables remain context.** `Keen Eye`, `Tangled Feet`, `Run Away`, `Early Bird`, hidden abilities, modern level thresholds and `Sharp Beak` held-item data do not become literal ancient guarantees, percentages, loot or institutions.
+9. **No new Human Design Gate was required.** Existing P2/P3/P4 contracts represent all reviewed pressures conservatively.
 
-The coverage manifest is intentionally unchanged at `96 complete / 2 pilot_reviewed / 53 not_started` until source review + full-schema authoring + Batch 13 completion audit pass atomically.
+`docs/P4_BATCH_13_SOURCE_REVIEW.md` = **READY FOR FULL-SCHEMA AUTHORING**.
+
+The coverage manifest is intentionally unchanged at `96 complete / 2 pilot_reviewed / 53 not_started` until full-schema authoring + Batch 13 completion audit pass atomically.
 
 ## Exact next work
 
 Continue **P4 Batch 13** without entering P5:
 
-1. create the claim-level Batch 13 source review for #016-#018, #021-#022 and #084-#085 using current primary official Pokédex material plus pinned `SRC-DATA-001` structured provenance;
-2. inventory version-scoped claims for homing/navigation, territorial patrol, flight endurance/limitations, aerial prey search, historical extreme-speed wording, synchronized multi-head behavior, alternating sleep/watch, organ multiplicity and Dodrio head leadership;
-3. audit `Keen Eye`, `Tangled Feet`, `Run Away`, and `Early Bird` as modern mechanics/context rather than automatic ancient physiology;
-4. bind no travel-time, real-world kinetic-damage, perfect-detection, generic aggro, inventory-deletion, extra-turn or multi-HP-pool rule from those claims;
-5. keep the coverage manifest unchanged during source review;
-6. stop for owner input only if review exposes a genuinely product-defining universal rule that existing contracts cannot represent conservatively;
-7. after source review, author seven frozen-schema dossiers, run regression/completion audit, and only then promote the seven Batch 13 rows atomically;
+1. author seven frozen-schema dossiers for #016-#018, #021-#022 and #084-#085 from the reviewed claim packets;
+2. reproduce the seven `p4-six-axis-v1` profiles with no manual exceptions and keep literal traversal/perception separate from the Speed axis;
+3. preserve version-scoped evidence for Pidgeot Mach-2/altitude/gust claims, Pidgeotto long-distance prey carrying, Fearow flight endurance, Doduo high ground speed/internal telepathy and Dodrio multi-organ/head-control claims;
+4. keep navigation, territory, detection, theft and multi-head behavior event-driven rather than deterministic player-state mutation or multiplied action economy;
+5. preserve modern abilities, held items and level evolution thresholds as source context rather than ancient fixed mechanics;
+6. run source/provenance, frozen-schema, P2/P3/P4 contradiction, evolution-family and cross-species regression checks;
+7. create the Batch 13 completion audit and promote exactly these seven manifest rows atomically only if the audit passes, yielding expected state `103 complete / 2 pilot_reviewed / 46 not_started`;
 8. keep D-034 direct encounterability separate from baseline-era natural presence;
 9. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
 
-Current state remains:
+Current authoritative state remains:
 
 ```text
 dossier_complete_count == 96
