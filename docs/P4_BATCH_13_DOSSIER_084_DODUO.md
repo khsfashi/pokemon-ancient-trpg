@@ -86,7 +86,7 @@ capabilities_and_hazards:
   immunities_or_approach_invalidators: [some_simple_approaches_may_be_harder_against_an_active_lookout_but_never_impossible]
   hazard_records:
     - hazard_key: doduo-running-and-lookout-pressure
-      kind: physical_and_awareness
+      kind: other
       delivery_or_exposure: [rapid_ground_charge, kick_or_peck, abrupt_route_crossing]
       prerequisite_or_trigger: [panic_escape, territory_or_nest_pressure_if_authored, direct_attack]
       warning_signs: [alternating_head_focus, foot_drumming, body_alignment, sudden_acceleration]
@@ -205,7 +205,7 @@ mechanical_hooks:
   trouble_spike_complications: [narrow_route_turns_escape_into_a_charge_lane]
 hunting_materials_and_resources:
   killing_treatment: no_generic_loot
-  hunting_for_food: none_fixed
+  hunting_for_food: none
   shed_or_abandoned_materials: [none_fixed]
   natural_remains: [ordinary_remains_only_if_context_requires]
   dangerous_harvesting: [none_supported]
