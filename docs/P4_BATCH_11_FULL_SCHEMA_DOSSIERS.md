@@ -86,10 +86,12 @@ Arcanine_cultural_observation_equals_ownership == false
 Machop_human_labor_claim_required == false
 Machoke_voluntary_human_labor == source_backed
 Machoke_voluntary_human_labor_equals_setting_wide_institution == false
+Machoke_humanoid_silhouette_can_enable_brief_human_misidentification == project_D2
+Machoke_human_misidentification_equals_perfect_disguise_or_social_infiltration == false
 Machamp_human_service_claim_required == false
 ```
 
-The seven species intentionally do not share one domestication or human-use flag.
+The seven species intentionally do not share one domestication or human-use flag. Machoke's disguise-adjacent hook is only a low-information identity mistake when clothing, distance, darkness or obstruction hides obvious species features.
 
 ## 5. Species-associated object / resource regression
 
@@ -103,13 +105,18 @@ Persian_fur_admiration == source_backed
 Persian_fur_admiration_equals_harvest_or_trade_system == false
 
 Machoke_power_regulation_belt == source_backed
-Machoke_belt_maker_material_origin_replacement == unresolved
+Machoke_canonical_belt_maker_material_first_origin == unresolved
+Machoke_wild_belt_acquisition_path == unresolved
+Machoke_human_associated_premodern_regulation_girdle == project_D2_allowed
+Machoke_human_associated_girdle_material_palette == leather_textile_with_optional_limited_metal_reinforcement
+Machoke_human_crafted_repair_or_replacement_equals_species_wide_belt_origin_explanation == false
+Machoke_girdle_visual_language_equals_modern_championship_belt == false
 Machoke_belt_equals_anatomy == false
 Machoke_belt_equals_player_equipment_or_drop == false
 Machoke_belt_equals_factory_guild_or_modern_industry_proof == false
 ```
 
-The batch keeps unknown provenance explicit rather than inventing an economy or manufacturing chain.
+The batch now makes a deliberate distinction between **canonical first provenance**, which remains unknown, and **specific ancient human-associated replacement/repair**, which is project-authored D2. A bonded or locally known Machoke may have a bespoke leather/heavy-textile regulation girdle, optionally reinforced with limited metalwork, made or maintained by local craftspeople. That does not explain where every wild Machoke gets its first belt and does not create a manufacturing economy or player-equipment system.
 
 ## 6. Relationship / agency regression
 
@@ -119,12 +126,13 @@ Growlithe_bark_equals_infallible_friend_foe_detection == false
 Persian_pet_history_equals_safe_touch == false
 Arcanine_bark_pressure_equals_hypnosis_or_domination == false
 Arcanine_bark_can_force_player_action == false
+Machoke_human_shape_equals_automatic_stealth_success == false
 companionship_requires_voluntary_persistent_trust == true
 visible_companion_slots == 3
 portable_containment == false
 ```
 
-Arcanine awe pressure remains P3-agency-preserving social/fear pressure only.
+Arcanine awe pressure remains P3-agency-preserving social/fear pressure only. Machoke identity confusion remains a contextual perception event, not a supernatural disguise effect or guaranteed infiltration tool.
 
 ## 7. Training / growth regression
 
@@ -218,6 +226,6 @@ manual_stat_exception_count == 0
 blocking_human_design_gate_count == 0
 ```
 
-No Batch 11 dossier introduces a blocking Human Design Gate. Machoke belt provenance remains explicitly unresolved and safely deferred rather than generalized.
+No Batch 11 dossier introduces a blocking Human Design Gate. Machoke's canonical/wild belt origin remains explicitly unresolved, while a specific human-associated individual may use a project-authored ancient-style regulation girdle maintained through local bespoke craft. Its humanlike silhouette may create temporary mistaken-identity scenes but never a perfect disguise rule.
 
 The batch is ready for completion audit and atomic manifest promotion validation.
