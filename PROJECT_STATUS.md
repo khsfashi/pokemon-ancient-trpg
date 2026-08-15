@@ -205,7 +205,7 @@ Mandatory exit breadth: **National Pokédex #001-#151, 151/151 substantive dossi
 
 Authoritative planning input: `docs/GEN1_SPECIES_COVERAGE_PLAN.md`.
 
-### P4 shared foundation now established
+### P4 shared foundation established
 
 P4-HDG-001 / **D-031** establishes the approved Pokémon mechanical direction:
 
@@ -219,26 +219,23 @@ P4-HDG-001 / **D-031** establishes the approved Pokémon mechanical direction:
 - rare exceptional or named/apex individuals may receive explicit stat shifts, capabilities, learned behavior and history, including exceptionally dangerous members of normally weak species;
 - exceptional individuals are rare world entities, not generic elite-affix enemies generated to match player power.
 
-PR #38 additionally binds the hazard-severity clarification:
+The hazard-severity clarification additionally binds:
 
 - **species stats do not cap hazard severity**;
 - delivery/exposure semantics are separate from post-exposure consequence severity;
 - low-stat/high-hazard and high-stat/low-aggression cases must be validated before numeric scale selection;
-- the former abstract 5/6/7-tier choice is preserved as calibration candidates rather than selected in advance.
+- the former abstract 5/6/7-tier choice remains a set of calibration candidates until evidence-driven comparison.
 
 Binding P4 foundation documents:
 
 - `docs/P4_POKEMON_DOMAIN_CONTRACT.md`
 - `docs/P4_SPECIES_DOSSIER_SCHEMA.md`
 - `docs/P4_HAZARD_SEVERITY_CLARIFICATION.md`
-
-Active pilot execution plan:
-
 - `docs/P4_PILOT_ROSTER_AND_CALIBRATION_PLAN.md`
 
-### P4 pilot roster
+### P4 hazard-first pilot evidence pass
 
-The first hazard-first pilot uses eight species selected for overlapping validation coverage:
+The first pilot uses eight species selected for overlapping validation coverage:
 
 - **#019 Rattata** — common weak baseline, late-run triviality, named/apex weak-species fixture;
 - **#013 Weedle** — low-stat/high-hazard venom calibration;
@@ -249,29 +246,45 @@ The first hazard-first pilot uses eight species selected for overlapping validat
 - **#140 Kabuto** — fossil/history ambiguity;
 - **#151 Mew** — Mythical indirect/exceptional treatment.
 
-The concrete named/apex calibration fixture uses stable ID `pilot-rattata-apex-01`. Its semantic distinctions/history/warning hooks are authored before numeric deltas; exact deltas wait for the pinned rating scale.
+`docs/P4_PILOT_EVIDENCE_AND_HAZARD_PACKETS.md` now provides the first source-reviewed packet pass for all eight species and freezes ten semantic encounter fixtures for numeric calibration.
 
-This roster is a calibration set, not a claim that all eight species share the first playable locality.
+The pass establishes:
+
+- raw six-stat source values remain provenance-bearing source inputs rather than human-roll modifiers;
+- current official Pokédex evidence is separated from conservative derivation and project-authored extrapolation;
+- exact unsupported medical claims, especially Weedle venom severity, remain explicit `U` instead of being invented from type/BST/Potency;
+- Beedrill colony danger is repeated exposure/route pressure rather than a swarm stat bonus;
+- Lapras proves high capability does not imply hostility;
+- Gyarados proves large-body/destructive escalation can operate through environment and displacement rather than only HP damage;
+- Gastly proves anomalous physical approach invalidation must exist outside Defense arithmetic;
+- Kabuto can remain historically/locality unresolved without a fake direct spawn rule;
+- Mew can use indirect/singular observation without routine spawn/capture semantics.
+
+The concrete exceptional fixture remains stable ID `pilot-rattata-apex-01`:
+
+- persistent identity;
+- local D2 survival/history cause;
+- explicit `trap_wary`, route-memory/supply-targeting behavior and learnable warning signs;
+- no player-level spawning/scaling;
+- **no final numeric deltas until the rating scale is pinned**.
+
+No new owner-level Human Design Gate was exposed by this evidence pass.
 
 ### Exact next work
 
-Validate the shared contract through the **hazard-first P4 pilot** before scaling to 151 dossiers.
+The next coherent slice is **P4 numeric rating calibration**:
 
-The next coherent slice should:
+1. define reproducible mappings for the preserved **5-tier / 6-tier / 7-tier** six-axis candidates from the same raw source values;
+2. run the ten fixed semantic encounter fixtures against all candidates without changing their hazard/behavior semantics;
+3. compare monotonicity, useful differentiation, saturation, D-024 translation pressure and manual-exception pressure;
+4. pin the **smallest useful** `rating_scale_version` only if it passes all hazard/aggression/exception invariants;
+5. assign final six-axis profiles to the eight pilot species and numeric deltas to `pilot-rattata-apex-01`;
+6. run P2/P3 contradiction, provenance, cross-species and schema-completeness review;
+7. only then begin ecology/evolution-family-aware bulk authoring toward `151/151`.
 
-1. author source-reviewed evidence/hazard packets for the eight selected pilot species, preserving raw canonical stats and explicit provenance;
-2. define hazard delivery/exposure, warning signs, consequence ceilings, delayed effects, countermeasures and context amplification where materially relevant;
-3. author `pilot-rattata-apex-01` as a persistent semantic named/apex fixture without final numeric deltas;
-4. exercise concrete low-stat/high-hazard, high-stat/low-aggression, swarm, aquatic, large-body, elemental and Ghost/anomalous encounter examples;
-5. **only then** compare the preserved 5/6/7-tier rating candidates and pin the smallest `rating_scale_version` that preserves useful species differences without encoding hazard severity into stats;
-6. finalize the eight six-axis profiles and the named/apex numeric deltas;
-7. test ordinary Rattata-style weak-species trivialization after human progression without player-level enemy scaling;
-8. run P2/P3 contradiction, provenance, cross-species and schema-completeness review;
-9. revise shared P4 fields only where the pilot demonstrates a real structural contradiction.
+Do **not** begin bulk 151-species authoring until the pilot validates the shared rating model.
 
-Do **not** begin bulk 151-species authoring until the pilot validates both hazard semantics and the shared rating model.
-
-If the pilot exposes another material creative choice with multiple valid answers, raise the minimum Human Design Gate rather than silently freezing it.
+If calibration exposes a material player-facing creative choice with multiple valid answers, raise the minimum Human Design Gate rather than silently freezing it.
 
 ## Later mandatory contracts
 
