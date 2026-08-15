@@ -2,7 +2,7 @@
 
 Last explanatory handoff update: **2026-08-15**
 
-This file is the concise human-readable operational handoff. Durable product authority remains in `docs/DECISIONS.md` and the phase contracts. Live GitHub PR/issue/CI state wins when this file becomes stale.
+This file is the concise human-readable operational handoff. Durable product authority remains in `docs/DECISIONS.md` and phase contracts. Live GitHub PR/issue/CI state wins when this file becomes stale.
 
 ## Project direction
 
@@ -25,7 +25,8 @@ Current binding direction:
 - ordinary Pokémon do **not** auto-scale with player growth; weak species can become genuinely routine later, while rare exceptional/named individuals can remain dangerous through explicit individual stats, traits, history and ecology;
 - Pokémon **hazard severity is not capped by species stats**;
 - P4 six-axis normalization is pinned as **`p4-six-axis-v1`**, a deterministic 1..6 scale derived from preserved raw canonical base stats;
-- Pokémon evolution is a persistent-individual species transformation distinct from ordinary growth/maturation; no kill-XP, visible level meter or generic `Evolve` command is assumed;
+- Pokémon evolution is a species-specific persistent transformation distinct from ordinary growth/maturation; no kill-XP, visible level meter or generic `Evolve` command is assumed;
+- multi-origin Magneton evolution uses **D-033**: one active Magneton entity / one visible companion slot with three contributor histories retained; the intended player-facing feel can resemble three parallel minds, while literal brain/soul anatomy remains unresolved;
 - mandatory design roster is National Pokédex **#001-#151**, all 151 species;
 - the opening playable scope remains one bounded settlement-centered locality plus surrounding routes/ecologies.
 
@@ -33,15 +34,11 @@ Current binding direction:
 
 ### P0 — Governance (#1) — COMPLETE
 
-Autonomous continuation protocol, roadmap, decision log and Human Design Gate rules are established.
-
-Primary operational entry point: `AGENTS.md`.
+Autonomous continuation protocol, roadmap, decision log and Human Design Gate rules are established. Primary operational entry point: `AGENTS.md`.
 
 ### P1 — Reference/API/data/resource/IP research (#2) — COMPLETE
 
-P1 closed via PR #18.
-
-Primary outputs:
+Closed via PR #18. Primary outputs:
 
 - `docs/SOURCE_REGISTRY.md`
 - `docs/FAN_PROJECT_ENFORCEMENT_CASES.md`
@@ -52,29 +49,15 @@ Final production asset selection remains deferred to P6.
 
 ### P2 — World bible and setting contract (#3) — COMPLETE
 
-P2 closed through PR #26 with `docs/P2_EXIT_AUDIT.md` = **PASS**.
+`docs/P2_EXIT_AUDIT.md` = **PASS**. Primary contract: `docs/WORLD_BIBLE.md`.
 
-Primary contract: `docs/WORLD_BIBLE.md`.
-
-Key binding decisions: D-012 through D-022. `D-016` remains **PROVISIONAL** only in its universal historical wording: P4 decides ancient-strength treatment species by species rather than claiming all Pokémon were universally weakened by civilization.
+Key binding decisions: D-012 through D-022. `D-016` remains provisional only in its universal historical wording; P4 decides ancient-strength treatment species by species.
 
 ### P3 — Core TRPG rules and character model (#4) — COMPLETE
 
-P3 closed with `docs/P3_EXIT_AUDIT.md` = **PASS**.
+`docs/P3_EXIT_AUDIT.md` = **PASS**.
 
-Primary contracts:
-
-- `docs/P3_ATTRIBUTE_CONTRACT.md`
-- `docs/P3_DICE_AND_CHECK_CONTRACT.md`
-- `docs/P3_HEALTH_PRESSURE_AND_INJURY_CONTRACT.md`
-- `docs/P3_CHARACTER_CREATION_CONTRACT.md`
-- `docs/P3_PROGRESSION_AND_COMPETENCE_CONTRACT.md`
-- `docs/P3_INVENTORY_RESOURCES_AND_ECONOMY_CONTRACT.md`
-- `docs/P3_RARE_PSYCHIC_GIFT_CONTRACT.md`
-- `docs/P3_FATE_AND_EMERGENCY_CONSUMABLES_CONTRACT.md`
-- `docs/P3_EXIT_AUDIT.md`
-
-Important P3 runtime-facing invariants:
+Runtime-facing invariants:
 
 ```text
 human_attributes == 7
@@ -87,15 +70,15 @@ zero_companion_run_valid == true
 fate_or_reroll_currency == false
 ```
 
+Primary contracts are the `docs/P3_*_CONTRACT.md` files covering attributes, dice/checks, health/injury, creation, progression, inventory/economy, rare psychic Gifts, and emergency consumables.
+
 ## Current phase
 
 **P4 — Pokémon adaptation + complete Gen-I 151 species dossiers (#5) is active.**
 
-P4 must translate canonical Pokémon evidence into the ancient setting without turning the project into a conventional collect-them-all game.
+P4 exit requires **151/151 substantive reviewed dossiers**. Do not begin P5 before that audit passes.
 
-Mandatory P4 exit breadth: **National Pokédex #001-#151, 151/151 substantive reviewed dossiers**.
-
-Authoritative planning/contract inputs:
+Authoritative shared inputs:
 
 - `docs/GEN1_SPECIES_COVERAGE_PLAN.md`
 - `docs/P4_POKEMON_DOMAIN_CONTRACT.md`
@@ -110,14 +93,14 @@ Authoritative planning/contract inputs:
 
 **D-031** establishes fixed species baselines plus explicit individual variation:
 
-- Pokémon axes: `Vigor / Force / Guard / Potency / Resistance / Speed`;
-- canonical raw six stats remain preserved separately;
-- capability/hazard tags cover properties not representable by stats alone;
+- axes: `Vigor / Force / Guard / Potency / Resistance / Speed`;
+- canonical raw six stats remain separately preserved;
+- capability/hazard tags cover properties not representable by ratings;
 - no player-level enemy scaling;
-- rare named/apex individuals may have explicit stat deltas, capabilities, learned behavior and history;
-- generic `elite +HP` affixes generated to match player power are forbidden.
+- rare named/apex individuals may have explicit deltas, capabilities, learned behavior and history;
+- generic `elite +HP` affixes are forbidden.
 
-The pinned normalization is `p4-six-axis-v1`:
+Pinned normalization:
 
 ```text
 raw <40     => 1
@@ -128,127 +111,58 @@ raw <40     => 1
 >=120       => 6
 ```
 
-Hazard semantics remain orthogonal to those ratings. Exposure/delivery and post-exposure consequence are authored separately.
-
 **D-032** establishes evolution versus maturation:
 
-- age, experience, condition, scars, learned behavior, lineage and exceptional individual development may change an individual while it remains the same species;
+- same-species age/experience/scars/learning remain individual development;
 - evolution changes canonical species stage and may discontinuously change stats, capabilities, ecology, logistics and social burden;
-- persistent individual identity/history/bond survives evolution;
-- modern level/trade metadata is source context, not automatically an ancient-world law;
+- persistent history/bond survives evolution;
+- modern level/trade metadata is source context, not an automatic ancient-world law;
 - no kill-XP evolution, universal evolution gauge or generic companion `Evolve` command;
-- each family receives its own source-reviewed treatment;
-- when a reproducible mechanism is unsupported, `unknown` is preferred to pseudo-canon.
+- when a reproducible ancient mechanism is unsupported, `unknown` is preferred to pseudo-canon.
+
+**D-033 / P4-HDG-003** establishes the Magneton many-to-one exception model:
+
+- three contributing Magnemite may form one active Magneton entity;
+- Magneton uses one species/individual profile and occupies one visible companion slot;
+- contributor names, bonds, learned behaviors, injuries where still meaningful, and major event history remain queryable provenance;
+- the intended presentation can show three recognizable cognitive contributors or parallel viewpoints;
+- literal `three biological brains`, exact soul count, universal hive-mind metaphysics and generic splitting remain intentionally unresolved;
+- composite evolution is not a player-triggered slot-compression command;
+- P5/P7 should resolve the composite transition once and reuse the resulting active profile plus contributor provenance instead of recomputing/merging it repeatedly.
+
+Binding contract: `docs/P4_MAGNETON_COMPOSITE_IDENTITY_CONTRACT.md`.
 
 ### P4 pilot — COMPLETE
 
-Pilot species:
-
-- #019 Rattata
-- #013 Weedle
-- #015 Beedrill
-- #131 Lapras
-- #130 Gyarados
-- #092 Gastly
-- #140 Kabuto
-- #151 Mew
-
-The pilot established hazard-first authoring, `p4-six-axis-v1`, the `pilot-rattata-apex-01` exceptional-individual fixture, full-schema dossier completeness, Mythical/rare treatment and interaction-permission semantics.
+Pilot species: #019 Rattata, #013 Weedle, #015 Beedrill, #131 Lapras, #130 Gyarados, #092 Gastly, #140 Kabuto, #151 Mew.
 
 `docs/P4_PILOT_COMPLETION_AUDIT.md` = **PASS**.
 
 ### P4 Batch 01 — COMPLETE
 
-Batch 01 closed pilot-connected families through PR #44.
-
-New dossiers:
-
-- #014 Kakuna
-- #020 Raticate
-- #093 Haunter
-- #094 Gengar
-- #129 Magikarp
-- #141 Kabutops
-
-Six pilot family anchors were re-reviewed and promoted to `complete`: Weedle, Beedrill, Rattata, Gastly, Gyarados and Kabuto.
-
-Batch 01 established D-032 and verified:
-
-- metamorphosis/evolution does not collapse into ordinary stat growth;
-- Haunter → Gengar modern trade metadata does not create an invented ancient trade ritual;
-- the exceptional Rattata model remains valid beside ordinary Raticate;
-- Magikarp historical-strength evidence stays species-specific;
-- fossil/relict evidence does not create routine ancient spawns.
+Completed pilot-connected family closure through PR #44. New dossiers: #014 Kakuna, #020 Raticate, #093 Haunter, #094 Gengar, #129 Magikarp, #141 Kabutops; six pilot anchors were promoted to complete.
 
 `docs/P4_BATCH_01_COMPLETION_AUDIT.md` = **PASS**.
 
 ### P4 Batch 02 — COMPLETE
 
-Batch 02 closed through PR #45 with eight new dossiers:
+Completed #010 Caterpie, #011 Metapod, #012 Butterfree, #025 Pikachu, #026 Raichu, #063 Abra, #064 Kadabra, #065 Alakazam.
 
-- #010 Caterpie
-- #011 Metapod
-- #012 Butterfree
-- #025 Pikachu
-- #026 Raichu
-- #063 Abra
-- #064 Kadabra
-- #065 Alakazam
-
-It deliberately stress-tested three D-032 mechanism classes:
-
-1. biologically legible metamorphosis — Caterpie → Metapod → Butterfree;
-2. physical evolution-stone relationship — Pikachu → Raichu;
-3. modern level/trade metadata — Abra → Kadabra → Alakazam.
-
-Important preserved results:
-
-- Thunder Stone access does not create a shop/mine/generic evolution currency or forced companion evolution;
-- Abra-family modern level/trade metadata does not become kill-XP or an ancient exchange institution;
-- exact Psychic-family transformation trigger may remain unknown;
-- Alakazam can continue same-species aging/strengthening after final evolution, reinforcing the maturation/evolution distinction;
-- Butterfree poison scales, Pikachu/Raichu electricity and Psychic/Teleport effects retain explicit hazard/permission semantics rather than being reduced to stat or TN inflation.
+Validated metamorphosis, physical evolution-stone relationships, and modern level/trade metadata without importing kill-XP or an ancient trade institution.
 
 `docs/P4_BATCH_02_COMPLETION_AUDIT.md` = **PASS**.
 
 ### P4 Batch 03 — COMPLETE
 
-Batch 03 completes eight dossiers:
+Completed #083 Farfetch'd, #102 Exeggcute, #103 Exeggutor, #132 Ditto, #133 Eevee, #134 Vaporeon, #135 Jolteon, #136 Flareon.
 
-- #083 Farfetch'd
-- #102 Exeggcute
-- #103 Exeggutor
-- #132 Ditto
-- #133 Eevee
-- #134 Vaporeon
-- #135 Jolteon
-- #136 Flareon
-
-Primary outputs:
-
-- `docs/P4_BATCH_03_BRANCHING_TRANSFORMATION_PLAN.md`
-- `docs/P4_BATCH_03_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_03_FULL_SCHEMA_DOSSIERS.md`
-- `docs/P4_BATCH_03_COMPLETION_AUDIT.md`
-
-Batch 03 validates four new domain boundaries:
-
-1. **branching evolution** — Eevee can become Vaporeon/Jolteon/Flareon through mutually exclusive persistent-individual species transformations without a class/evolution menu;
-2. **transformation is not evolution** — Ditto may radically change form while retaining `species_key: ditto`, its persistent identity and its non-evolving family state;
-3. **multi-head / multi-will single entity** — Exeggcute and Exeggutor remain one species entity and one companion slot while internal coordination/disagreement remains species-local behavior; no universal soul/personhood rule is invented;
-4. **species-specific tool + learned style** — Farfetch'd stalk dependency and fighting-style variation fit capability/individual state without generic loot or held-item infrastructure.
-
-Elemental branch regressions also preserve hazard semantics:
-
-- Vaporeon water concealment changes tracking permission instead of Guard;
-- Jolteon electrical discharge and needlelike fur are separate exposure channels;
-- Flareon heat/fire changes fuel, enclosure and escape state rather than mapping official temperature prose into a universal damage formula.
+Validated branching evolution, transformation distinct from evolution, multi-head/multi-will single-entity semantics, and species-specific carried-tool behavior.
 
 `docs/P4_BATCH_03_COMPLETION_AUDIT.md` = **PASS**.
 
-### P4 Batch 04 — SOURCE REVIEW COMPLETE / BLOCKED ON P4-HDG-003
+### P4 Batch 04 — COMPLETE
 
-Batch 04 selection is owned by `docs/P4_BATCH_04_COMPOSITE_DEPENDENCY_PLAN.md` and source review is now recorded in `docs/P4_BATCH_04_SOURCE_REVIEW.md` for:
+Completed:
 
 - #046 Paras
 - #047 Parasect
@@ -259,54 +173,52 @@ Batch 04 selection is owned by `docs/P4_BATCH_04_COMPOSITE_DEPENDENCY_PLAN.md` a
 - #090 Shellder
 - #091 Cloyster
 
-Source review confirms that three of the four target boundaries fit existing contracts without a new owner decision:
+Primary outputs:
 
-1. **Paras/Parasect** — fungal growth/control is a species-local biological dependency; it does not create universal Pokémon mind/soul rules or a generic medicinal-harvest loop.
-2. **Slowpoke/Slowbro** — Shellder-triggered Slowbro and source-backed reversion to Slowpoke can be represented as one species-specific reversible dependency without a global de-evolution command; persistent history/bond still survives the stage change.
-3. **Shellder/Cloyster** — Shellder's participation in Slowbro does not replace its own Shellder → Cloyster family and does not automatically grant a separate free companion.
+- `docs/P4_BATCH_04_COMPOSITE_DEPENDENCY_PLAN.md`
+- `docs/P4_BATCH_04_SOURCE_REVIEW.md`
+- `docs/P4_MAGNETON_COMPOSITE_IDENTITY_CONTRACT.md`
+- `docs/P4_BATCH_04_FULL_SCHEMA_DOSSIERS.md`
+- `docs/P4_BATCH_04_COMPLETION_AUDIT.md`
 
-Magnemite/Magneton exposes the first blocking Batch 04 Human Design Gate. Official evidence states that three/several Magnemite join and that three Magnemite gathered to evolve into one canonical Magneton. This differs from Exeggcute because the contributing Magnemite can exist beforehand as separate persistent individuals.
+Batch 04 validates four additional boundaries:
 
-**P4-HDG-003** asks what happens when multiple independently persistent/bonded Magnemite with separate histories become one Magneton while D-013 still requires exactly three visible companion slots and D-032 says individual identity/history/bond survives evolution.
+1. **host/parasite control** — Paras/Parasect fungal control remains species-local; it does not create a universal mind/soul model or generic harvest loop.
+2. **source-backed reversible evolution** — Slowbro may revert to Slowpoke when its Shellder dependency is lost, without creating a global de-evolution command or erasing persistent history.
+3. **participant species versus own family** — Shellder may participate in Slowbro while retaining its independent Shellder → Cloyster evolution family; Slowbro does not grant a free second companion.
+4. **multi-origin composite evolution** — D-033 preserves one Magneton game entity and one companion slot while retaining the three Magnemite contributors' histories and allowing a bounded three-perspective presentation.
 
-Recommended answer in the source review is **Option A: one Magneton entity / one visible companion slot with contributor provenance retained as species-specific history**, without a generic splitting rule or universal soul theory.
+Additional hazard regressions preserve the orthogonal hazard model: spores are not capped by Paras stats, Slowpoke pain delay is timing rather than Guard, Magneton magnetic-field pressure is not merely Potency damage, Shellder closed-shell state changes approach permission, and Cloyster's spike volley/current hazards remain separate from Guard 6.
 
-No Batch 04 manifest row is promoted before this gate is resolved. Current manifest counts therefore remain:
+`docs/P4_BATCH_04_COMPLETION_AUDIT.md` = **PASS**.
+
+Current manifest audit after Batch 04:
 
 ```text
-dossier_complete_count == 28
+dossier_complete_count == 36
 pilot_reviewed_count == 2
-not_started_count == 121
+not_started_count == 113
 draft_count == 0
-```
-
-Operational P4 state now has:
-
-```text
-blocking_human_design_gate_count == 1
-blocking_gate == P4-HDG-003
+blocking_p4_gate_count == 0
 ```
 
 The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
 
 ## Exact next work
 
-Resolve **P4-HDG-003 — Magneton multi-origin persistent identity**.
+Continue **P4** by selecting Batch 05 using ecology/evolution-family/domain pressure rather than raw Pokédex order.
 
-Options are fully specified in `docs/P4_BATCH_04_SOURCE_REVIEW.md`:
+Batch 05 should prioritize at least one still-unproven boundary or materially different hazard/ecology pattern, then follow the established atomic loop:
 
-- **A (recommended):** Magneton becomes one active entity/one visible companion slot while all contributing Magnemite retain species-specific provenance/history records;
-- **B:** independently bonded companion Magnemite do not undergo baseline composite evolution;
-- **C:** one contributor becomes the continuing primary identity while the others are subsumed into provenance.
-
-After the owner selects an option:
-
-1. record the durable P4-HDG-003 decision and narrow shared invariant changes;
-2. author all eight Batch 04 full-schema dossiers;
-3. run host/parasite, reversible-evolution, Shellder-participant and Magneton composite/provenance regressions;
-4. run P2/P3/P4 contradiction and provenance checks;
-5. promote all eight manifest rows atomically only after the batch passes;
-6. write `docs/P4_BATCH_04_COMPLETION_AUDIT.md`.
+1. select a compact family/ecology-aware roster;
+2. source-review every selected species against current official evidence plus pinned structured inputs;
+3. expose a Human Design Gate only if a durable owner-level interpretation is genuinely required;
+4. derive `p4-six-axis-v1` mechanically with no manual exception unless the scale structurally fails;
+5. author capability/hazard records before threat summaries;
+6. fill every shared-schema section;
+7. run family/domain, provenance and P2/P3/P4 contradiction regressions;
+8. promote manifest rows only after the whole batch passes;
+9. write the batch completion audit and advance this handoff.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
