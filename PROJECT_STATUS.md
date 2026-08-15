@@ -188,7 +188,35 @@ Batch 07 validates these boundaries:
 
 `docs/P4_BATCH_07_COMPLETION_AUDIT.md` = **PASS**.
 
-Current manifest audit after Batch 07:
+### P4 Batch 08 — SELECTED
+
+Selected biological-resource / remains / regeneration stress roster:
+
+- #104 Cubone
+- #105 Marowak
+- #113 Chansey
+- #114 Tangela
+- #120 Staryu
+- #121 Starmie
+
+Primary selection plan:
+
+- `docs/P4_BATCH_08_BIOLOGICAL_RESOURCES_REMAINS_REGENERATION_PLAN.md`
+
+Batch 08 deliberately tests a still-unproven P4 boundary: **a Pokémon body or body-derived object is not automatically conventional RPG loot**.
+
+The selected cases distinguish:
+
+1. Cubone/Marowak identity-bound dead-relative remains and carried bones;
+2. Chansey's voluntary renewable nutritious eggs;
+3. Tangela's source-backed painless detachable/regrowing vines;
+4. Staryu/Starmie regeneration and valuable core anatomy without assuming immortality, safe extraction or renewable drops;
+5. modern high-value/secret-trade evidence without backfilling ancient market infrastructure;
+6. current later-generation family metadata for Chansey/Tangela without expanding P4's mandatory #001-#151 roster.
+
+No Human Design Gate is required for selection. Default treatment remains species-local and context-sensitive; source review should raise a gate only if faithful representation requires a durable setting-wide rule about death/remains ownership, sentient-body harvesting, regeneration/death semantics or another product-defining subsystem.
+
+Current manifest audit remains unchanged during selection:
 
 ```text
 dossier_complete_count == 58
@@ -202,15 +230,26 @@ The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
 
 ## Exact next work
 
-Select **P4 Batch 08** from the still-uncovered 91 species using coverage pressure rather than arbitrary Pokédex order. Prefer a bounded 6-8 species batch that closes a still-unproven high-value design boundary while avoiding duplicate proof of Batch 01-07 rules.
+Source-review **P4 Batch 08** using current official Pokémon material plus the pinned structured-data revision before any manifest promotion:
 
-Before authoring Batch 08 dossiers:
+- #104 Cubone
+- #105 Marowak
+- #113 Chansey
+- #114 Tangela
+- #120 Staryu
+- #121 Starmie
 
-- inspect the current 58-complete manifest and remaining species families;
-- choose a bounded 6-8 species batch with a clear regression purpose;
-- source-review official evidence and pinned structured data first;
-- open a Human Design Gate only if a genuinely product-defining ambiguity cannot be resolved from existing contracts;
-- do not promote manifest rows until the entire selected batch passes full-schema and contradiction audits.
+During source review:
+
+- classify each body-derived resource/remains case by whether injury/death is required, whether the resource is renewable, and whether use is voluntary, detachable, identity-bound or anatomically vital;
+- preserve Cubone's maternal-skull evidence without inventing demographics, a breeding simulator or a corpse-item rule;
+- preserve Chansey's egg sharing and Tangela's painless vine regrowth without generalizing either to other species;
+- resolve Staryu/Starmie core/regeneration claims conservatively and leave unsupported survival, weak-point or harvesting claims `unknown`;
+- treat modern Starmie accessory/secret-trade evidence as valuation/exploitation evidence, not authorization for ancient market infrastructure;
+- confirm Happiny/Blissey/Tangrowth and other later-generation relatives remain outside the mandatory P4 baseline;
+- open a Human Design Gate only if a genuinely product-defining ambiguity survives source review.
+
+If unblocked, continue through all six full-schema dossiers, resource/remains/regeneration regressions, P2/P3/P4 contradiction review, atomic manifest promotion and `docs/P4_BATCH_08_COMPLETION_AUDIT.md`.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
