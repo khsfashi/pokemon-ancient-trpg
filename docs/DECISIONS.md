@@ -589,3 +589,28 @@ P5 must preserve deterministic sequencing: `roll → outcome/spike → legal rea
 The binding contract is `docs/P3_FATE_AND_EMERGENCY_CONSUMABLES_CONTRACT.md`.
 
 With D-030 resolved, `docs/P3_EXIT_AUDIT.md` reports **PASS** and no blocking P3 Human Design Gate remains. The next core phase is P4.
+
+## D-031 — Fixed Pokémon species stats plus rare exceptional individuals
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P4-HDG-001  
+**Owner choice:** fixed species stats + individual variation + rare exceptional/named individuals + capability/hazard tags
+
+Pokémon use their own mechanical profile rather than the human seven-Attribute model.
+
+The stable P4 structure preserves six internal species axes — **Vigor / Force / Guard / Potency / Resistance / Speed** — derived from but stored separately from canonical raw `HP / Attack / Defense / Sp. Atk / Sp. Def / Speed` source values. Exact small-number normalization thresholds remain pilot-tunable balance data; canonical raw stats are never added directly to the human 2d6 roll.
+
+Ordinary species and individuals do **not** automatically scale with player progression. An ordinary Rattata remains an ordinary Rattata. As human Attributes, Competence, equipment, preparation and bestiary knowledge improve, encounters that were once risky may become routine enough that D-024 requires no roll. The world must not inflate ordinary enemy stats simply to preserve level-matched combat difficulty.
+
+Species stats are supplemented by explicit **capability/hazard tags** for properties such as flight, burrowing, venom, swarm behavior, environmental effects, Psychic phenomena and Ghost approach invalidation. These tags primarily change fictional permission, difficulty, consequence or available countermeasures rather than behaving as an unlimited stack of flat numeric bonuses.
+
+Individual Pokémon may vary from the species baseline. Ordinary variation should remain modest and readable. The setting also explicitly permits **rare exceptional individuals** whose stats, capabilities, temperament and learned behavior are substantially different for an authored world reason such as extreme longevity, harsh-lineage survival, environmental adaptation, territorial dominance or repeated experience.
+
+A locally notorious **named/apex individual** may remain a serious boss-scale threat even when its species is normally weak. In selected axes, an exceptional unevolved individual may outperform an ordinary evolved-form specimen without changing the canonical evolution relationship. This supports the owner's desired fiction of a terrifying, extremely developed ancient Rattata-like individual that punishes people who assume the species is harmless.
+
+Exceptional individuals are not generic `elite +30% HP` affix enemies and are never created merely to match the player's current power. Their stat shifts and distinctive traits must be explicit, deterministic where generated, rare enough that species baselines remain meaningful, and preferably foreshadowable through tracks, scars, rumors, learned habits or local history.
+
+There is no universal summed Pokémon combat-power score. Threat remains a combination of stats, capability/hazard tags, behavior, group context, environment and consequence severity.
+
+The binding shared contract is `docs/P4_POKEMON_DOMAIN_CONTRACT.md`; the authoring/validation shape is `docs/P4_SPECIES_DOSSIER_SCHEMA.md`.
