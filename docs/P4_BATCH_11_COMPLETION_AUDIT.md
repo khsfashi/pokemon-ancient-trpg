@@ -1,6 +1,6 @@
 # P4 Batch 11 — Completion Audit
 
-Status: **PASS — READY FOR ATOMIC MANIFEST PROMOTION**  
+Status: **PASS — MANIFEST PROMOTED**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Inputs: `docs/P4_BATCH_11_HUMAN_PROXIMITY_LABOR_CULTURE_PLAN.md`, `docs/P4_BATCH_11_SOURCE_REVIEW.md`, `docs/P4_BATCH_11_FULL_SCHEMA_DOSSIERS.md`, the seven indexed species dossier documents, `docs/P4_SPECIES_DOSSIER_SCHEMA.md`, `docs/P4_POKEMON_DOMAIN_CONTRACT.md`, `docs/P4_HAZARD_SEVERITY_CLARIFICATION.md`, `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`, `docs/P3_HEALTH_PRESSURE_AND_INJURY_CONTRACT.md`
@@ -266,9 +266,9 @@ blocking_human_design_gate_count == 0
 
 Result: **PASS**.
 
-## 17. Planned manifest promotion
+## 17. Manifest promotion result
 
-Only these seven rows are eligible for atomic promotion after this audit:
+Only these seven rows were promoted by this batch:
 
 ```text
 052 meowth
@@ -280,7 +280,7 @@ Only these seven rows are eligible for atomic promotion after this audit:
 068 machamp
 ```
 
-Expected post-promotion state:
+Post-promotion state:
 
 ```text
 dossier_complete_count == 87
@@ -312,8 +312,8 @@ evolution_stage_inheritance_regression == PASS
 hazard_agency_regression == PASS
 companionship_regression == PASS
 P2_P3_P4_contradiction_review == PASS
+manifest_promotion == PASS
 blocking_human_design_gate_count == 0
-ready_for_atomic_manifest_promotion == true
 ```
 
-Batch 11 full authoring is complete and passes the completion audit. Promote exactly the seven listed manifest rows, refresh the coverage audit to `87 complete / 2 pilot_reviewed / 62 not_started`, and then advance P4 to Batch 12 selection.
+Batch 11 is complete and the coverage manifest is promoted atomically to `87 complete / 2 pilot_reviewed / 62 not_started`. P4 advances to Batch 12 selection; P5 remains blocked until the mandatory 151/151 audit passes.
