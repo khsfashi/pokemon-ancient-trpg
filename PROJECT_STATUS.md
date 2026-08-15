@@ -31,7 +31,7 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 16:
+Current authoritative manifest state after Batch 16 and unchanged by Batch 17 selection:
 
 ```text
 dossier_complete_count == 123
@@ -92,28 +92,47 @@ Primary outputs:
 - updated `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - updated `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Batch 16 preserves claim-level epistemic status instead of flattening observation, measurement, scientist interpretation, folklore, analogy and version-scoped extraordinary wording into one narrator truth.
-
-Clefairy keeps full-moon gathering/floating and magnetic anomalies as species-local discrete phenomena without a lunar-stat, spawn-calendar or continuous magnetism system. Clefable keeps extreme hearing separate from moon-kin folklore and does not gain omniscience. Vulpix's one-tail-to-six change is ordinary maturation, separate from evolution, levels and kill-XP. Ninetales preserves curse, millennium-life, mystical-tail, human-speech-understanding and historical mind-control evidence with source scope; any mental influence or extraordinary tail consequence requires explicit warning, eligibility, counterplay and bounded resolution rather than passive agency removal.
-
-Mr. Mime's cross-source stable minimum is a real temporary invisible resisting barrier; conflicting belief/air/molecular explanations remain unresolved, and barriers cannot become permanent map geometry, indestructible walls or untelegraphed collisions. Jynx retains meaningful-looking vocal/rhythmic communication and version-scoped dance influence without assuming fluent human language, human personhood, ancient performance institutions or forced player input.
-
-Modern Fairy typing, abilities, current scientist/musician examples, Moon Stone/Fire Stone metadata, baby Pokémon and regional forms remain chronology-safe provenance context rather than automatic ancient institutions or generic magic/technology permissions.
-
 `docs/P4_BATCH_16_COMPLETION_AUDIT.md` = **PASS**.
+
+### P4 Batch 17 — SELECTED
+
+Roster:
+
+- #056 Mankey / #057 Primeape
+- #106 Hitmonlee / #107 Hitmonchan
+- #123 Scyther
+- #127 Pinsir
+
+Selection output:
+
+- `docs/P4_BATCH_17_COMBAT_MORPHOLOGY_AGGRESSION_PLAN.md`
+
+Batch 17 stresses combat morphology, temperament/aggression, pursuit wording, martial analogy, anatomical weapons, extreme speed claims, and multi-limb/combo descriptions without introducing universal rage/aggro meters, human martial-sport institutions, extra action economy, detachable weapon semantics, live-harvest loops, or literal momentum/kinetic-damage formulas.
+
+Current official Pokédex evidence is sufficient for selection: Mankey group/separation anger and abrupt temper; Primeape gaze-linked fury/pursuit plus researcher-theory containment wording; Hitmonlee controlled leg extension and impact hardening; Hitmonchan combination punching, extreme stated punch speed, muscular fists and recovery cadence; Scyther forearm scythes, high visual-relative speed and cutting-driven sharpening; Pinsir powerful pincers, territorial/cold-response ecology and later-region social observations.
+
+Post-Generation-I context including Annihilape, Tyrogue/Hitmontop, Scizor, Kleavor, Mega Pinsir, later abilities and regional observations remains chronology/provenance context only unless a later owner decision expands baseline scope.
+
+No blocking Human Design Gate is required at selection time.
 
 ## Exact next work
 
-Begin **P4 Batch 17 planning and source review** for the next coherent subset of the 26 remaining `not_started` Generation-I species.
+Create **P4 Batch 17 claim-level source review** for #056, #057, #106, #107, #123, and #127.
 
-The next batch must:
+The source review must:
 
-1. select a bounded thematic roster from the remaining manifest rows;
-2. review current official Pokédex text plus the pinned `SRC-DATA-001` historical/versioned evidence;
-3. reproduce `p4-six-axis-v1` profiles without interpreting raw stats as literal world formulas;
-4. identify any Human Design Gate before full-schema authoring;
-5. keep D-034 direct encounterability separate from baseline-era natural abundance;
-6. leave the coverage manifest unchanged until the entire batch's full-schema dossiers and completion audit pass atomically.
+1. inventory current official Pokédex text plus pinned `SRC-DATA-001` historical/versioned evidence;
+2. preserve observed fact, measurement/numeric wording, researcher interpretation, analogy/reputation, version-scoped extraordinary claims, and project extrapolation as separate evidence classes;
+3. reproduce `p4-six-axis-v1` profiles without interpreting raw stats or numerical Pokédex claims as literal world formulas;
+4. keep anger/pursuit behavior player-agency-safe and bounded rather than universal rage/aggro systems;
+5. keep Hitmonlee/Hitmonchan martial-looking physiology separate from human dojos, boxing rules, professions, combo-turn inflation, and physics simulation;
+6. keep Scyther/Pinsir natural weapons separate from detachable gear, automatic live harvesting, and universal material destruction;
+7. audit Annihilape, Tyrogue/Hitmontop, Scizor, Kleavor, Mega Pinsir, later abilities and regional observations as post-Gen-I context;
+8. identify any Human Design Gate before full-schema authoring;
+9. keep D-034 direct encounterability separate from baseline-era natural abundance;
+10. leave the coverage manifest unchanged until all six full-schema dossiers and the Batch 17 completion audit pass atomically.
+
+If all six later pass, expected coverage becomes `129 complete / 2 pilot_reviewed / 20 not_started`.
 
 Do not begin P5 until the mandatory `151/151` P4 exit audit passes.
 
