@@ -75,7 +75,7 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current authoritative manifest state after Batch 11:
+Current authoritative manifest state remains unchanged during Batch 12 source review:
 
 ```text
 dossier_complete_count == 87
@@ -152,7 +152,7 @@ Batch 11 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 11 state: `87 complete / 2 pilot_reviewed / 62 not_started`.
 
-### P4 Batch 12 — SELECTED
+### P4 Batch 12 — SOURCE REVIEW COMPLETE
 
 Foundational elemental anatomy / condition-signal / starter-meta stress roster:
 
@@ -160,36 +160,51 @@ Foundational elemental anatomy / condition-signal / starter-meta stress roster:
 - #004 Charmander / #005 Charmeleon / #006 Charizard
 - #007 Squirtle / #008 Wartortle / #009 Blastoise
 
-Primary selection output:
+Primary outputs so far:
 
 - `docs/P4_BATCH_12_FOUNDATIONAL_ELEMENTAL_ANATOMY_PLAN.md`
+- `docs/P4_BATCH_12_SOURCE_REVIEW.md`
 
-Batch 12 is selected to stress these boundaries before full authoring:
+Batch 12 source review validates these boundaries before full-schema authoring:
 
-1. **Body-integrated anatomy is not equipment or loot.** Seeds, bulbs, flowers, tail flames, shells and shell nozzles remain biological/persistent body state unless stronger evidence says otherwise.
-2. **Condition signals are not numeric HP UI.** Charmander's tail flame may qualitatively reflect condition/life-force without exposing exact HP, fixed thresholds or a universal death switch.
-3. **Modern ability mechanics are not automatically ancient physiology.** Overgrow, Blaze and Torrent remain canonical mechanic/context data unless source review supports narrower diegetic consequences.
-4. **Environmental energy is stage/species local.** Sunlight, season, ambient heat and water-jet recoil do not become generic type formulas.
-5. **Battle experience is not kill-XP.** Charizard's official battle-experience wording must remain compatible with the no-level/no-grind progression contract.
-6. **Analogy language does not upgrade human technology.** Blastoise's cannon/jet/rocket-like anatomy does not establish ancient human cannon or rocket infrastructure.
-7. **Cultural admiration is not domestication or harvesting.** Wartortle longevity symbolism/popularity among older people does not prove common ownership or transferable longevity benefits.
-8. **Modern starter familiarity is not setting evidence.** The three families are not automatically distributed to novices, safe companions, institutionally bred, or baseline-era guaranteed spawns.
-9. **No new Human Design Gate is required at selection.** Existing P2/P3/P4 contracts can conservatively represent all identified pressures.
+1. **Body-integrated anatomy is not equipment or loot.** Bulbasaur's seed, Ivysaur/Venusaur plant structures, Squirtle's shell and Blastoise's shell nozzles remain species anatomy/state rather than detachable inventory, armor, weapons or ordinary harvest resources.
+2. **Condition signals remain qualitative.** Charmander's tail flame can reveal broad weakness/health state without exposing numeric HP, fixed thresholds, exact injury state or a universal instant-death switch.
+3. **Modern low-HP abilities remain modern mechanic context.** Overgrow, Blaze and Torrent do not establish an ancient fixed-percentage physiology or automatic project damage multiplier.
+4. **Environmental effects remain stage/species local.** Ivysaur/Venusaur sunlight relationships, Charmeleon ambient heat and Blastoise recoil behavior do not become generic Grass/Fire/Water formulas.
+5. **Battle experience is not progression currency.** Charizard's hotter-flame-with-battle-history evidence can support explicit individual history/exceptional traits, not kill-XP, visible levels, repeatable stat grinding or player-scaled wild Pokémon.
+6. **Maturation remains distinct from evolution.** Squirtle's shell hardening after birth is ordinary biological development, not an evolution event or equippable armor upgrade.
+7. **Culture evidence is not domestication.** Wartortle's longevity symbolism/popularity among older people does not prove common ancient ownership, tail harvesting, lifespan transfer or a universal blessing mechanic.
+8. **Analogy language does not advance human technology.** Blastoise's cannon/jet/rocket-like function describes Pokémon anatomy and force; it does not establish ancient human cannon, rocket, pressure-vessel or industrial-metallurgy infrastructure.
+9. **Starter familiarity is not ancient ecology.** Modern starter-selection role does not authorize beginner distribution, guaranteed settlement presence, institutional breeding, routine companionship or baseline-era natural spawning.
+10. **Evolution-family facts remain stage local.** Charmander condition signals, Charmeleon heat/aggression, Charizard flight/history, Squirtle maturation, Wartortle culture and Blastoise nozzles are not automatically copied across stages.
+11. **Modern evolution levels remain metadata.** Pinned structured chains preserve 16/32 or 16/36 modern thresholds, but D-032 prevents importing those numbers as character levels or XP law.
+12. **No new Human Design Gate is required.** Existing P2/P3/P4 contracts represent all reviewed uncertainties conservatively.
 
-The coverage manifest remains unchanged during selection/source review: `87 complete / 2 pilot_reviewed / 62 not_started`.
+The coverage manifest remains unchanged during source review: `87 complete / 2 pilot_reviewed / 62 not_started`.
 
 ## Exact next work
 
-Continue **P4 Batch 12 source review** without entering P5:
+Continue **P4 Batch 12 full-schema authoring** without entering P5:
 
-1. source-review all nine selected species against current primary official Pokémon Pokédex material plus pinned `SRC-DATA-001` structured data;
-2. inventory version-specific evidence for plant/seed anatomy, tail-flame condition semantics, sunlight/season effects, aggression/flight, shell maturation, Wartortle cultural symbolism, and Blastoise jet/recoil anatomy;
-3. explicitly separate Overgrow/Blaze/Torrent modern battle semantics from source-backed diegetic physiology;
-4. preserve the no-kill-XP/no-visible-level contract when interpreting Charizard's battle-experience wording;
-5. preserve human technology chronology when interpreting cannon/jet/rocket analogy language;
-6. keep the coverage manifest unchanged during source review;
-7. proceed to full-schema authoring only if no blocking Human Design Gate appears;
-8. stop for owner input only if source evidence forces a genuinely product-defining universal rule that existing P2/P3/P4 contracts cannot represent conservatively.
+1. author frozen-schema dossiers for all nine selected species;
+2. preserve the source-reviewed anatomy/equipment, condition/HP, ability/physiology, sunlight/heat/progression, maturation/evolution, cultural/domestication, technology-analogy and starter-meta boundaries;
+3. create the Batch 12 dossier index/regression summary;
+4. run schema/provenance, P2/P3/P4 contradiction, stage-inheritance and cross-family regression checks;
+5. create `docs/P4_BATCH_12_COMPLETION_AUDIT.md`;
+6. promote exactly #001-#009 to `complete` only if all nine dossiers and the completion audit pass atomically;
+7. refresh `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` only after successful promotion;
+8. stop for owner input only if full authoring exposes a genuinely product-defining universal rule that existing contracts cannot represent conservatively.
+
+Expected clean Batch 12 completion state:
+
+```text
+dossier_complete_count == 96
+pilot_reviewed_count == 2
+not_started_count == 53
+draft_count == 0
+blocking_p4_gate_count == 0
+status_total == 151
+```
 
 Do not begin P5 before the mandatory P4 `151/151` exit audit passes.
 
