@@ -20,6 +20,7 @@ Current binding direction:
 - ancient-world lore follows **official evidence → bounded interpretation → explicit project extrapolation**;
 - species identification is knowledge-dependent: descriptive/local labels may precede stable official species identity;
 - contextual hunting/killing/material use is species- and culture-sensitive rather than generic loot logic;
+- body-derived value does **not** imply a generic corpse drop, safe extraction, ownership, harvest action or renewable resource; resource semantics are species- and state-specific;
 - rare human psychics / miracle-workers exist, but standard characters do not begin with usable psychic power; actual Gifts require rare authored awakening and ordinarily remain one narrow family;
 - Pokémon use a **separate six-axis species profile** plus capability/hazard tags rather than the human seven-Attribute model;
 - ordinary Pokémon do **not** auto-scale with player growth; weak species can become genuinely routine later, while rare exceptional/named individuals can remain dangerous through explicit individual stats, traits, history and ecology;
@@ -80,6 +81,18 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
+Current manifest state after Batch 08:
+
+```text
+dossier_complete_count == 64
+pilot_reviewed_count == 2
+not_started_count == 85
+draft_count == 0
+blocking_p4_gate_count == 0
+```
+
+The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
+
 ### P4 shared foundation — COMPLETE
 
 **D-031** establishes fixed species baselines plus explicit individual variation: `Vigor / Force / Guard / Potency / Resistance / Speed`; raw canonical stats remain preserved; capability/hazard tags cover non-rating properties; no player-level enemy scaling; rare named/apex individuals may use explicit deltas, capabilities, learned behavior and history; generic `elite +HP` affixes are forbidden.
@@ -105,15 +118,15 @@ Pilot species: #019 Rattata, #013 Weedle, #015 Beedrill, #131 Lapras, #130 Gyara
 
 ### P4 Batch 01 — COMPLETE
 
-Completed pilot-connected family closure: #014 Kakuna, #020 Raticate, #093 Haunter, #094 Gengar, #129 Magikarp, #141 Kabutops; six pilot anchors were promoted to complete. `docs/P4_BATCH_01_COMPLETION_AUDIT.md` = **PASS**.
+Completed #014 Kakuna, #020 Raticate, #093 Haunter, #094 Gengar, #129 Magikarp and #141 Kabutops; six pilot anchors were also promoted to complete. `docs/P4_BATCH_01_COMPLETION_AUDIT.md` = **PASS**.
 
 ### P4 Batch 02 — COMPLETE
 
-Completed #010 Caterpie, #011 Metapod, #012 Butterfree, #025 Pikachu, #026 Raichu, #063 Abra, #064 Kadabra, #065 Alakazam. Validated metamorphosis, physical evolution-stone relationships, and modern level/trade metadata without kill-XP or an ancient trade institution. `docs/P4_BATCH_02_COMPLETION_AUDIT.md` = **PASS**.
+Completed #010 Caterpie, #011 Metapod, #012 Butterfree, #025 Pikachu, #026 Raichu, #063 Abra, #064 Kadabra and #065 Alakazam. Validated metamorphosis, physical evolution-stone relationships and modern level/trade metadata without kill-XP or an ancient trade institution. `docs/P4_BATCH_02_COMPLETION_AUDIT.md` = **PASS**.
 
 ### P4 Batch 03 — COMPLETE
 
-Completed #083 Farfetch'd, #102 Exeggcute, #103 Exeggutor, #132 Ditto, #133 Eevee, #134 Vaporeon, #135 Jolteon, #136 Flareon. Validated branching evolution, transformation distinct from evolution, multi-head/multi-will single-entity semantics and species-specific carried-tool behavior. `docs/P4_BATCH_03_COMPLETION_AUDIT.md` = **PASS**.
+Completed #083 Farfetch'd, #102 Exeggcute, #103 Exeggutor, #132 Ditto, #133 Eevee, #134 Vaporeon, #135 Jolteon and #136 Flareon. Validated branching evolution, transformation distinct from evolution, multi-head/multi-will single-entity semantics and species-specific carried-tool behavior. `docs/P4_BATCH_03_COMPLETION_AUDIT.md` = **PASS**.
 
 ### P4 Batch 04 — COMPLETE
 
@@ -121,76 +134,27 @@ Completed #046 Paras, #047 Parasect, #079 Slowpoke, #080 Slowbro, #081 Magnemite
 
 ### P4 Batch 05 — COMPLETE
 
-Completed #088 Grimer, #089 Muk, #100 Voltorb, #101 Electrode, #109 Koffing, #110 Weezing, #137 Porygon and #150 Mewtwo.
-
-Batch 05 established that mandatory dossier coverage is separate from baseline-era contemporaneous presence: local preindustrial toxic niches can support bounded Grimer/Koffing-family extrapolation without industry; original Voltorb/Electrode remain unsupported/unknown in baseline; Porygon and Mewtwo remain noncontemporaneous while preserving their artificial origins; Hisuian evidence does not substitute for original forms; hazard severity remains independent of stat ratings.
-
-`docs/P4_BATCH_05_COMPLETION_AUDIT.md` = **PASS**.
+Completed #088 Grimer, #089 Muk, #100 Voltorb, #101 Electrode, #109 Koffing, #110 Weezing, #137 Porygon and #150 Mewtwo. Validated chronology-safe dossiers for noncontemporaneous/artificial species, preindustrial hazard extrapolation, original-form requirements and stat-independent hazards. `docs/P4_BATCH_05_COMPLETION_AUDIT.md` = **PASS**.
 
 ### P4 Batch 06 — COMPLETE
 
-Completed social-ecology / encounter-unit stress roster:
+Completed #029 Nidoran♀, #030 Nidorina, #031 Nidoqueen, #032 Nidoran♂, #033 Nidorino, #034 Nidoking, #115 Kangaskhan and #128 Tauros.
 
-- #029 Nidoran♀
-- #030 Nidorina
-- #031 Nidoqueen
-- #032 Nidoran♂
-- #033 Nidorino
-- #034 Nidoking
-- #115 Kangaskhan
-- #128 Tauros
-
-Primary outputs:
-
-- `docs/P4_BATCH_06_SOCIAL_ECOLOGY_PARENT_YOUNG_PLAN.md`
-- `docs/P4_BATCH_06_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_06_FULL_SCHEMA_DOSSIERS.md` plus its eight indexed species dossier documents
-- `docs/P4_BATCH_06_COMPLETION_AUDIT.md`
-
-Batch 06 validates these boundaries:
-
-1. **Nidoran♀ / Nidoran♂ remain separate canonical species and evolution chains**; their sex linkage does not create a reproduction/breeding simulator.
-2. **Nidorina / Nidoqueen social ecology is species-local state**; family presence, separation, young presence and young threat may change encounter permissions/behavior without universal morale, parenting or fixed parent-bonus mechanics.
-3. **Kangaskhan is one active entity / one visible companion slot with a real dependent child associated state**; the child is not inventory, a hidden free companion or an ordinary second combat actor, and Mega Kangaskhan's parent-and-child attack semantics are not imported.
-4. **Tauros herd protectors remain explicit D-031 individuals**; `tauros-herd-protector-prototype` carries scars, role and history with zero hidden stat deltas by default. Later explicit deltas require authored justification; no player scaling or generic elite affix exists.
-5. **Nidoking's transmission-tower comparison is capability evidence only** and does not backfill modern electrical infrastructure.
-6. **Poison, horn/barb, protective tackle, rampage and charge hazards remain orthogonal to ratings and obey D-020 serious selective lethality.**
+Validated separate Nidoran species/chains without a breeding simulator; species-local family/young encounter state without generic morale/parent bonuses; one-entity Kangaskhan with dependent-child state; explicit scarred Tauros herd protectors without hidden stat bonuses; infrastructure comparisons without infrastructure backfill; and stat-independent poison/charge/collision hazards.
 
 `docs/P4_BATCH_06_COMPLETION_AUDIT.md` = **PASS**.
 
 ### P4 Batch 07 — COMPLETE
 
-Completed rare-sky / dragon environmental-permission stress roster:
+Completed #144 Articuno, #145 Zapdos, #146 Moltres, #147 Dratini, #148 Dragonair and #149 Dragonite.
 
-- #144 Articuno
-- #145 Zapdos
-- #146 Moltres
-- #147 Dratini
-- #148 Dragonair
-- #149 Dragonite
-
-Primary outputs:
-
-- `docs/P4_BATCH_07_RARE_SKY_DRAGON_PLAN.md`
-- `docs/P4_BATCH_07_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_07_FULL_SCHEMA_DOSSIERS.md` plus its six indexed species dossier documents
-- `docs/P4_BATCH_07_COMPLETION_AUDIT.md`
-
-Batch 07 validates these boundaries:
-
-1. **Legendary rarity does not imply an unsupported global-singleton rule.** Articuno, Zapdos and Moltres remain exceptionally rare, while global population cardinality stays `unknown` unless a later narrative decision needs to freeze it.
-2. **D-034 direct encounterability does not require routine spawning.** Rare authored event/state chains may lead to a real encounter without forcing these species into the opening locality or ordinary random tables.
-3. **Environmental capability is separate from six-axis combat normalization.** Snow/cold, thundercloud electricity, fire/magma, rapid-water shedding sites and weather change are explicit route/exposure permissions whose consequence severity is not capped by ratings.
-4. **Dragonair does not create a generic global weather-control subsystem.** An authored event must name the actual resulting local weather state and its concrete route/exposure consequences.
-5. **Dragonite's world traversal is a capability, not its normalized Speed rating.** `Speed == 4` can coexist with source-backed extreme long-range flight; `Force == 6` does not imply automatic lethality.
-6. **Dratini-family modern levels remain source metadata only.** Repeated shedding is growth/maturation, while Dratini -> Dragonair -> Dragonite evolution remains persistent species transformation without kill-XP, a visible level meter or a generic `Evolve` command.
-7. **All six companionship classifications are `exceptional_only`, not impossible.** Rare voluntary bonds remain legal while defeat/capture ownership remains forbidden.
+Validated legendary rarity without unsupported singleton cardinality; D-034 direct encounterability through rare authored events rather than routine spawning; environmental permissions separate from six-axis ratings; event-scoped weather changes; Dragonite traversal capability separate from normalized Speed; and Dratini-family evolution/maturation without kill-XP.
 
 `docs/P4_BATCH_07_COMPLETION_AUDIT.md` = **PASS**.
 
-### P4 Batch 08 — SELECTED
+### P4 Batch 08 — COMPLETE
 
-Selected biological-resource / remains / regeneration stress roster:
+Completed biological-resource / remains / regeneration stress roster:
 
 - #104 Cubone
 - #105 Marowak
@@ -199,57 +163,41 @@ Selected biological-resource / remains / regeneration stress roster:
 - #120 Staryu
 - #121 Starmie
 
-Primary selection plan:
+Primary outputs:
 
 - `docs/P4_BATCH_08_BIOLOGICAL_RESOURCES_REMAINS_REGENERATION_PLAN.md`
+- `docs/P4_BATCH_08_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_08_FULL_SCHEMA_DOSSIERS.md` plus its six indexed species dossier documents
+- `docs/P4_BATCH_08_COMPLETION_AUDIT.md`
 
-Batch 08 deliberately tests a still-unproven P4 boundary: **a Pokémon body or body-derived object is not automatically conventional RPG loot**.
+Batch 08 validates these boundaries:
 
-The selected cases distinguish:
+1. **Body-derived value does not create a generic loot rule.** Cubone's maternal skull is identity-bound remains, Marowak's carried bone is a weapon/communication object with unproven harvest origin, and neither becomes a guaranteed corpse drop.
+2. **Renewable biological resources require species-specific evidence.** Chansey eggs use explicit voluntary sharing semantics; Tangela vines are the positive control for painless detachment, next-day regrowth and culinary use. Neither creates a generic farming/harvesting subsystem.
+3. **Regeneration remains separate from injury/death and stat normalization.** Staryu can restore major injury over roughly half a day, but this does not create immortality, death reversal, combat auto-healing or Vigor/Guard bonuses.
+4. **Commercial value does not imply safe extraction.** Starmie's core has value/exploitation evidence, while safe removal, survivability and regrowth remain `unknown`; no ancient black-market infrastructure or exact price is backfilled.
+5. **Modern structured `held_items` metadata stays in its own domain.** Thick Club, Lucky Egg, Stardust/Star Piece metadata is not reinterpreted as biological provenance or an ancient drop table.
+6. **Later-generation family/form context does not expand the mandatory roster.** Happiny, Blissey, Tangrowth and Alolan Marowak remain context only.
+7. **No new Human Design Gate was required.** Existing P2/P3/P4 injury, ethics, economy and species-local resource rules close all six dossiers conservatively.
 
-1. Cubone/Marowak identity-bound dead-relative remains and carried bones;
-2. Chansey's voluntary renewable nutritious eggs;
-3. Tangela's source-backed painless detachable/regrowing vines;
-4. Staryu/Starmie regeneration and valuable core anatomy without assuming immortality, safe extraction or renewable drops;
-5. modern high-value/secret-trade evidence without backfilling ancient market infrastructure;
-6. current later-generation family metadata for Chansey/Tangela without expanding P4's mandatory #001-#151 roster.
+`docs/P4_BATCH_08_COMPLETION_AUDIT.md` = **PASS**.
 
-No Human Design Gate is required for selection. Default treatment remains species-local and context-sensitive; source review should raise a gate only if faithful representation requires a durable setting-wide rule about death/remains ownership, sentient-body harvesting, regeneration/death semantics or another product-defining subsystem.
-
-Current manifest audit remains unchanged during selection:
-
-```text
-dossier_complete_count == 58
-pilot_reviewed_count == 2
-not_started_count == 91
-draft_count == 0
-blocking_p4_gate_count == 0
-```
-
-The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
+`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` was also refreshed because its explanatory text had remained stale at the Batch 06 `52 complete` snapshot even though the manifest had already promoted Batch 07. It now matches the authoritative Batch 08 state: `64 complete / 2 pilot_reviewed / 85 not_started`.
 
 ## Exact next work
 
-Source-review **P4 Batch 08** using current official Pokémon material plus the pinned structured-data revision before any manifest promotion:
+Select **P4 Batch 09** from the remaining 85 `not_started` species.
 
-- #104 Cubone
-- #105 Marowak
-- #113 Chansey
-- #114 Tangela
-- #120 Staryu
-- #121 Starmie
+Selection should maximize new contract pressure rather than merely choose adjacent Pokédex numbers. Prefer a compact 6–8 species batch that tests one or more still-underrepresented boundaries such as:
 
-During source review:
+- sleep, dream, hypnosis, fear or mind-state hazards without taking away player agency through a generic status system;
+- extreme physical scale / burrowing / terrain destruction / constriction without reducing world capability to six-axis ratings;
+- aquatic breathing, drowning, current, pressure or amphibious route permissions;
+- plant poison/spore/pollen ingestion/contact versus environmental exposure;
+- explicit toolmaking, carried objects, human imitation or settlement interaction without inventing infrastructure;
+- fossils/ancient survivorship where chronology can be tested without repeating Batch 05 artificial-origin cases.
 
-- classify each body-derived resource/remains case by whether injury/death is required, whether the resource is renewable, and whether use is voluntary, detachable, identity-bound or anatomically vital;
-- preserve Cubone's maternal-skull evidence without inventing demographics, a breeding simulator or a corpse-item rule;
-- preserve Chansey's egg sharing and Tangela's painless vine regrowth without generalizing either to other species;
-- resolve Staryu/Starmie core/regeneration claims conservatively and leave unsupported survival, weak-point or harvesting claims `unknown`;
-- treat modern Starmie accessory/secret-trade evidence as valuation/exploitation evidence, not authorization for ancient market infrastructure;
-- confirm Happiny/Blissey/Tangrowth and other later-generation relatives remain outside the mandatory P4 baseline;
-- open a Human Design Gate only if a genuinely product-defining ambiguity survives source review.
-
-If unblocked, continue through all six full-schema dossiers, resource/remains/regeneration regressions, P2/P3/P4 contradiction review, atomic manifest promotion and `docs/P4_BATCH_08_COMPLETION_AUDIT.md`.
+Before selecting, inspect remaining manifest rows and completed-batch coverage so the new batch adds a genuinely new stress axis. Create a selection plan first; do **not** promote manifest rows until source review, full-schema authoring and completion audit pass.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
