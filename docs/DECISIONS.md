@@ -404,7 +404,7 @@ A Fortune Spike creates an additional meaningful opportunity such as hidden info
 
 A Trouble Spike adds a context-appropriate complication but is not automatic death, permanent injury, companion loss, or arbitrary campaign destruction. D-020 serious selective lethality remains authoritative.
 
-The default P3 check scale uses compact human attribute ratings `0–4`, competence `+0/+1/+2`, ordinary combined context `-2..+2`, and static difficulties `7 / 9 / 11 / 13 / 15`, with routine and impossible actions receiving no roll until fiction changes.
+The default P3 check scale uses compact human attribute ratings `0–4`, competence `+0/+1/+2`, ordinary combined context `-2..+2`, and static difficulties `7 / 9 / 11 / 13 / 15`, with routine actions requiring no roll and structurally impossible actions receiving no roll until fiction changes.
 
 The reward cadence must not depend primarily on frequent Pokémon acquisition. Exceptional outcomes and Fortune Spikes can instead drive knowledge, discovery, route, relationship, resource, reputation, and event-flag rewards.
 
