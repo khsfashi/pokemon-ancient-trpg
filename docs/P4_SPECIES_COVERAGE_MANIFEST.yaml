@@ -107,8 +107,8 @@ species:
   - {national_dex: 43, species_key: oddish, dossier_status: not_started}
   - {national_dex: 44, species_key: gloom, dossier_status: not_started}
   - {national_dex: 45, species_key: vileplume, dossier_status: not_started}
-  - {national_dex: 46, species_key: paras, dossier_status: not_started}
-  - {national_dex: 47, species_key: parasect, dossier_status: not_started}
+  - {national_dex: 46, species_key: paras, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
+  - {national_dex: 47, species_key: parasect, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 48, species_key: venonat, dossier_status: not_started}
   - {national_dex: 49, species_key: venomoth, dossier_status: not_started}
   - {national_dex: 50, species_key: diglett, dossier_status: not_started}
@@ -140,10 +140,10 @@ species:
   - {national_dex: 76, species_key: golem, dossier_status: not_started}
   - {national_dex: 77, species_key: ponyta, dossier_status: not_started}
   - {national_dex: 78, species_key: rapidash, dossier_status: not_started}
-  - {national_dex: 79, species_key: slowpoke, dossier_status: not_started}
-  - {national_dex: 80, species_key: slowbro, dossier_status: not_started}
-  - {national_dex: 81, species_key: magnemite, dossier_status: not_started}
-  - {national_dex: 82, species_key: magneton, dossier_status: not_started}
+  - {national_dex: 79, species_key: slowpoke, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
+  - {national_dex: 80, species_key: slowbro, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
+  - {national_dex: 81, species_key: magnemite, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
+  - {national_dex: 82, species_key: magneton, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 83, species_key: farfetchd, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 84, species_key: doduo, dossier_status: not_started}
   - {national_dex: 85, species_key: dodrio, dossier_status: not_started}
@@ -151,8 +151,8 @@ species:
   - {national_dex: 87, species_key: dewgong, dossier_status: not_started}
   - {national_dex: 88, species_key: grimer, dossier_status: not_started}
   - {national_dex: 89, species_key: muk, dossier_status: not_started}
-  - {national_dex: 90, species_key: shellder, dossier_status: not_started}
-  - {national_dex: 91, species_key: cloyster, dossier_status: not_started}
+  - {national_dex: 90, species_key: shellder, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
+  - {national_dex: 91, species_key: cloyster, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 92, species_key: gastly, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 93, species_key: haunter, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
   - {national_dex: 94, species_key: gengar, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
