@@ -217,22 +217,37 @@ Batch 09 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` now matches the authoritative Batch 09 state: `72 complete / 2 pilot_reviewed / 77 not_started`.
 
+### P4 Batch 10 — SELECTED
+
+Selected terrain / temperature / sensory / aquatic-physiology stress roster:
+
+- #041 Zubat
+- #042 Golbat
+- #072 Tentacool
+- #073 Tentacruel
+- #077 Ponyta
+- #078 Rapidash
+- #111 Rhyhorn
+- #112 Rhydon
+
+Primary selection contract: `docs/P4_BATCH_10_TERRAIN_TEMPERATURE_SENSORY_AQUATIC_PLAN.md`.
+
+Selection targets four underrepresented boundaries without changing the coverage manifest yet:
+
+1. **Nonvisual sensory navigation and state-dependent flight** — Zubat's ultrasonic navigation/blindness and Golbat's feeding/body-state effects on flight must remain capabilities/constraints rather than hidden `Speed` rules.
+2. **Aquatic physiology and shoreline exposure** — Tentacool's low-tide desiccation and Tentacruel's venomous restraint/outbreak ecology prevent `Water type = amphibious safety` from becoming a universal assumption.
+3. **Heat/contact semantics and overland logistics** — Ponyta's acceptance-gated safe fiery contact and Rapidash's extreme overland speed/herd leadership must not become `bond = hazard immunity` or `Speed = mount travel` formulas.
+4. **Collision, terrain breach and volcanic tolerance** — Rhyhorn/Rhydon test turning/stopping constraints, boulder/bedrock interaction, steep terrain and lava-heat tolerance as species-local permissions/hazards independent from flat Force/Potency ratings.
+
+No new Human Design Gate is required for selection. Later-generation Crobat, Galarian Ponyta/Rapidash and Rhyperior remain provenance context only.
+
 ## Exact next work
 
-Select **P4 Batch 10** from the remaining 77 `not_started` species by coverage and design-stress value.
+Create **P4 Batch 10 source review** for #041 Zubat, #042 Golbat, #072 Tentacool, #073 Tentacruel, #077 Ponyta, #078 Rapidash, #111 Rhyhorn and #112 Rhydon.
 
-Selection should prefer a compact roster that exercises still-underrepresented P4 surfaces rather than repeating already-proven contracts. Candidate pressure areas include:
+The source review must establish evidence-backed boundaries for ultrasonic navigation/blindness, sunlight exposure, feeding-driven flight loss, shoreline dehydration, extendible venomous restraint, acceptance-gated fiery contact, extreme overland travel, collision-driven terrain breach, bedrock boring and volcanic/lava-heat tolerance.
 
-- large-bodied terrestrial traversal / terrain alteration without turning size into a universal rule;
-- fire/temperature/environment interactions distinct from raw Potency;
-- plant scent/spore/feeding ecology not already covered by Paras/Tangela;
-- aquatic respiratory / drowning / pressure or current interactions not already covered by Golduck/Staryu;
-- camouflage, burrowing, flight or sensory permissions that do not map cleanly to the six ratings;
-- remaining evolution families that can test stage-local ecology/capability changes without introducing generic evolution mechanics.
-
-Use current official evidence to justify the selection pressure. Raise a Human Design Gate only if the selected family forces a durable player-facing rule that existing P2/P3/P4 contracts cannot conservatively represent.
-
-Do **not** begin P5 while P4 remains incomplete. Do not promote Batch 10 manifest rows until its source review, full-schema dossiers and completion audit pass.
+Do **not** create universal mount, terrain-destruction, amphibious-respiration, type-based environmental-immunity, or `rating = traversal permission` systems. Do not promote the Batch 10 manifest rows until source review, full-schema dossiers and completion audit pass. Do not begin P5.
 
 ## Later mandatory contracts
 
