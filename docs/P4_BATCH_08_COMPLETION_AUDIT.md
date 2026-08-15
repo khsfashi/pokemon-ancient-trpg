@@ -1,6 +1,6 @@
 # P4 Batch 08 — Completion Audit
 
-Status: **PASS — READY FOR MANIFEST PROMOTION**  
+Status: **PASS — MANIFEST PROMOTED**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Inputs: `docs/P4_BATCH_08_BIOLOGICAL_RESOURCES_REMAINS_REGENERATION_PLAN.md`, `docs/P4_BATCH_08_SOURCE_REVIEW.md`, `docs/P4_BATCH_08_FULL_SCHEMA_DOSSIERS.md`, the six indexed species dossier documents, `docs/P4_SPECIES_DOSSIER_SCHEMA.md`, `docs/P2_INJURY_AND_LETHALITY_CONTRACT.md`, `docs/P2_KILLING_ETHICS_CONTRACT.md`, `docs/P3_INVENTORY_RESOURCES_AND_ECONOMY_CONTRACT.md`
@@ -43,13 +43,14 @@ Result: **PASS**.
 
 ## 3. Full-schema audit
 
-Each indexed dossier contains reviewed or explicitly absent values for the complete shared P4 surface.
+Each indexed dossier contains reviewed or explicitly absent values for the complete shared P4 surface and uses frozen schema enum values.
 
 ```text
 full_schema_dossier_count == 6
 dossier_status_complete_count == 6
 required_section_count_per_dossier == 20
 placeholder_TODO_count == 0
+schema_enum_normalization == PASS
 blocking_human_design_gate_count == 0
 ```
 
@@ -186,19 +187,23 @@ Result: **PASS**.
 
 ## 11. Companionship regression
 
+Frozen dossier-schema classifications:
+
 ```text
 visible_companion_slots == 3
 capture_equals_companionship == false
 portable_containment == false
 resource_output_equals_ownership == false
 
-Cubone_classification == difficult_but_possible
-Marowak_classification == difficult_but_possible
-Chansey_classification == difficult_but_possible
-Tangela_classification == difficult_but_possible
-Staryu_classification == difficult_but_possible
+Cubone_classification == eligible
+Marowak_classification == eligible
+Chansey_classification == eligible
+Tangela_classification == eligible
+Staryu_classification == eligible
 Starmie_classification == exceptional_only
 ```
+
+`eligible` does not assert that a bond is common or easy; each dossier retains its explicit trust/logistics prerequisites.
 
 Result: **PASS**.
 
@@ -224,9 +229,9 @@ blocking_human_design_gate_count == 0
 
 Result: **PASS**.
 
-## 13. Manifest promotion target
+## 13. Manifest promotion result
 
-Only these six rows may be promoted by this batch:
+Only these six rows were promoted by this batch:
 
 ```text
 104 cubone
@@ -237,7 +242,7 @@ Only these six rows may be promoted by this batch:
 121 starmie
 ```
 
-Expected post-promotion state:
+Post-promotion state:
 
 ```text
 dossier_complete_count == 64
@@ -254,6 +259,7 @@ The two remaining `pilot_reviewed` rows stay #131 Lapras and #151 Mew.
 ```text
 source_review == PASS
 full_schema_authoring == PASS
+schema_enum_normalization == PASS
 resource_provenance_regression == PASS
 generic_loot_inventory_regression == PASS
 regeneration_injury_death_regression == PASS
@@ -263,7 +269,8 @@ held_item_metadata_regression == PASS
 later_generation_scope_regression == PASS
 companionship_regression == PASS
 P2_P3_P4_contradiction_review == PASS
+manifest_promotion == PASS
 blocking_human_design_gate_count == 0
 ```
 
-Batch 08 is safe to promote atomically in the coverage manifest.
+Batch 08 is complete and the coverage manifest is promoted atomically to `64 complete / 2 pilot_reviewed / 85 not_started`.
