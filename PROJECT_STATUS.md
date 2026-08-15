@@ -75,7 +75,7 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current authoritative manifest state after Batch 10:
+Current authoritative manifest state after Batch 10 and before any Batch 11 promotion:
 
 ```text
 dossier_complete_count == 80
@@ -163,16 +163,48 @@ Batch 10 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 10 state: `80 complete / 2 pilot_reviewed / 69 not_started`.
 
+### P4 Batch 11 — SELECTED + SOURCE REVIEW COMPLETE
+
+Human-proximity / labor / culture / multi-limb action roster:
+
+- #052 Meowth
+- #053 Persian
+- #058 Growlithe
+- #059 Arcanine
+- #066 Machop
+- #067 Machoke
+- #068 Machamp
+
+Primary outputs so far:
+
+- `docs/P4_BATCH_11_HUMAN_PROXIMITY_LABOR_CULTURE_PLAN.md`
+- `docs/P4_BATCH_11_SOURCE_REVIEW.md`
+
+Source review validates these boundaries before full-schema authoring:
+
+1. **Human affinity does not establish normalized trainer culture.** Growlithe can be friendly/faithful to people and Machoke can voluntarily help people without routine ownership, containment, obedience or a universal labor institution.
+2. **Pet evidence establishes possibility, not prevalence.** Persian can be raised as a pet in official material, but this does not prove common ancient domestication or bypass companion-slot/bond rules.
+3. **Culture references remain chronology-bounded.** Arcanine's ancient picture-scroll evidence proves old human observation somewhere in official fiction, not the project's exact era, polity, region or art tradition.
+4. **Species-associated objects do not become economy/infrastructure by default.** Meowth's forehead coin does not prove project-era minted currency; Machoke's power-regulation belt is source-backed while its maker/material/origin remain explicitly unresolved.
+5. **Resource semantics remain conservative.** Persian's admired fur and Meowth/Machoke associated objects do not create harvest drops, equipment or craft systems.
+6. **Self-directed training is not a level system.** Machop can train physically without kill-XP, visible levels, repeatable stat grinding or player-scaled enemy growth.
+7. **Multi-limb anatomy is not extra action economy.** Machamp's four arms and extreme strike cadence remain species capabilities/threat fiction, not four turns or hundreds/thousands of attack rolls.
+8. **No new Human Design Gate is required.** Machoke belt provenance remains `unresolved` and later-phase-follow-up-safe rather than forcing a universal ancient manufacturing decision.
+
+The coverage manifest is intentionally unchanged during selection/source review.
+
 ## Exact next work
 
-Start **P4 Batch 11** without entering P5:
+Continue **P4 Batch 11** without entering P5:
 
-1. select a coherent stress-test roster from the remaining 69 `not_started` Gen-I species;
-2. create the Batch 11 plan and perform official/structured source review;
-3. record unresolved evidence conservatively and stop for a Human Design Gate only if a genuinely product-defining ambiguity appears;
-4. do **not** promote any Batch 11 manifest rows until their full-schema dossiers and completion audit pass atomically.
+1. author frozen full-schema dossiers for #052 Meowth, #053 Persian, #058 Growlithe, #059 Arcanine, #066 Machop, #067 Machoke and #068 Machamp;
+2. create the Batch 11 dossier index/regression summary;
+3. run provenance, human-proximity/culture/object/action-economy and evolution-family regressions;
+4. create `P4_BATCH_11_COMPLETION_AUDIT`;
+5. only if all seven pass atomically, promote exactly those seven manifest rows and refresh the manifest audit to the expected `87 complete / 2 pilot_reviewed / 62 not_started` state;
+6. stop for a Human Design Gate only if full authoring makes a genuinely product-defining universal rule unavoidable.
 
-The next continuation request should begin at **Batch 11 roster selection + source review**, not repeat Batch 10 work.
+Do not begin P5 before the mandatory P4 `151/151` exit audit passes.
 
 ## Later mandatory contracts
 
