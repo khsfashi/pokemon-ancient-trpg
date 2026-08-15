@@ -1,13 +1,13 @@
 # P4 Batch 01 — Completion Audit
 
-Status: **BLOCKED — authoring complete, one Human Design Gate remains**  
+Status: **PASS — Batch 01 closed**  
 Date: **2026-08-15**  
 Tracks: **#5**  
-Depends on: `docs/P4_BATCH_01_SOURCE_REVIEW.md`, `docs/P4_BATCH_01_FULL_SCHEMA_DOSSIERS.md`, `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`, `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
+Depends on: `docs/P4_BATCH_01_SOURCE_REVIEW.md`, `docs/P4_BATCH_01_FULL_SCHEMA_DOSSIERS.md`, `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`, `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`, `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## 1. Audit scope
 
-Batch 01 attempts to close the pilot-touched evolution families by adding complete shared-schema authoring for:
+Batch 01 closes the pilot-touched evolution families by adding complete shared-schema dossiers for:
 
 - #014 Kakuna
 - #020 Raticate
@@ -16,7 +16,7 @@ Batch 01 attempts to close the pilot-touched evolution families by adding comple
 - #129 Magikarp
 - #141 Kabutops
 
-and re-reviewing the existing pilot anchors:
+and re-reviewing/promoting these pilot anchors:
 
 - #013 Weedle
 - #015 Beedrill
@@ -25,7 +25,7 @@ and re-reviewing the existing pilot anchors:
 - #130 Gyarados
 - #140 Kabuto
 
-The batch may only promote all twelve reviewed family members coherently after every family-level blocking gate is resolved.
+P4-HDG-002 is resolved through owner-approved **A — unknown natural maturation**, refined into shared decision **D-032**: ordinary growth remains same-species development while evolution is a distinct species transformation.
 
 ## 2. Source/provenance audit
 
@@ -39,18 +39,19 @@ unsupported_claims_promoted_to_canon == 0
 
 Result: **PASS**.
 
-Key boundaries preserved:
+Important boundaries remain intact:
 
-- Kakuna shell heat is an identification/handling clue, not generic fire power.
-- Raticate swimming expands route semantics without becoming a universal aquatic-habitat rule.
-- Haunter wall traversal is a permission/approach problem, not inflated Guard.
+- Kakuna shell heat is a handling/identification clue, not generic fire power.
+- Raticate swimming creates route semantics without universal aquatic habitat.
+- Haunter wall traversal remains a permission/approach problem rather than inflated Guard.
 - Gengar shadow occupation and heat theft remain distinct hazards.
-- Magikarp's historical-strength statement is species-specific and does not create a global ancient-Pokémon stat multiplier.
-- Kabutops historical existence does not prove a routine living opening-region population.
+- Magikarp historical strength is species-specific evidence, not a global ancient-Pokémon multiplier.
+- Kabutops historical existence does not prove routine opening-region living presence.
+- Haunter -> Gengar's exact ancient trigger is intentionally unknown; modern trade metadata is not pseudo-canonized into an ancient institution or ritual.
 
 ## 3. Six-axis audit
 
-Every new species uses the pinned `p4-six-axis-v1` thresholds with no manual exception.
+Every new species uses `p4-six-axis-v1` with no manual numeric exception.
 
 ```text
 Kakuna   == 2/1/2/1/1/1
@@ -91,58 +92,76 @@ presentation_p6_followups_present == true
 cross_species_links_present == true
 open_questions_and_gates_present == true
 placeholder_only_required_sections == 0
+dossier_status == complete
 ```
 
-Result: **PASS for authored content**.
+Result: **PASS**.
 
-The six dossier identities intentionally remain `draft` until the family-level blocking gate is resolved and reviewed status can be promoted in the same change as the coverage manifest.
-
-## 5. Family consistency audit
+## 5. Evolution-family consistency audit
 
 ### Weedle -> Kakuna -> Beedrill
 
-**PASS**.
+**PASS.**
 
-- metamorphosis is persistent-individual biological development rather than kill-XP;
-- Kakuna immobility does not erase venom risk;
+- Cocoon metamorphosis is a real persistent-individual species transition, not kill-XP or ordinary stat growth.
+- Kakuna immobility does not erase venom risk.
 - Beedrill colony pressure remains repeated exposure/route pressure rather than a swarm stat bonus.
 
 ### Rattata -> Raticate
 
-**PASS**.
+**PASS.**
 
-- ordinary Raticate is physically stronger than ordinary Rattata;
-- both may become routine through human progression and preparation;
-- `pilot-rattata-apex-01` may still exceed ordinary Raticate in selected axes because exceptional individuals are independent authored entities.
+- Same-species age, experience and exceptional development remain ordinary/exceptional individual growth.
+- Rattata -> Raticate is a distinct species transformation.
+- Both ordinary stages may become routine through human progression/preparation.
+- `pilot-rattata-apex-01` may still exceed ordinary Raticate in selected axes.
 
 ### Gastly -> Haunter -> Gengar
 
-**BLOCKED ONLY BY P4-HDG-002**.
+**PASS under D-032.**
 
-The capability progression is coherent:
-
-- Gastly establishes Ghost materiality/approach invalidation;
-- Haunter extends it with wall traversal and contact hazards;
-- Gengar adds stronger shadow intrusion/heat-loss pressure without converting Potency into aggression.
-
-The unresolved point is the ancient interpretation of the modern Haunter -> Gengar trade trigger. The reviewed official evidence does not provide one uniquely recoverable setting-level mechanism.
+- Gastly establishes Ghost materiality/approach invalidation.
+- Haunter extends wall traversal and contact hazards.
+- Gengar adds stronger shadow/heat-loss pressure without making Potency synonymous with aggression.
+- Haunter -> Gengar is a rare natural transformation whose exact reproducible cause is unknown to ordinary humans.
+- No generic trade ritual, ownership transfer, or `Evolve` action is created.
 
 ### Magikarp -> Gyarados
 
-**PASS**.
+**PASS.**
 
-- the historical-strength evidence remains Magikarp-specific;
-- exact ancient numeric increase stays unresolved rather than fabricated;
-- transformation preserves individual identity and does not use visible player-facing levels as diegetic causation.
+- Historical-strength evidence remains Magikarp-specific.
+- Same-species strength/age/lineage variation remains distinct from evolution.
+- Magikarp -> Gyarados is a major persistent-individual species transformation rather than visible level or battle XP.
 
 ### Kabuto -> Kabutops
 
-**PASS**.
+**PASS.**
 
-- fossil evidence, historical existence, rare-relict evidence, and confirmed living presence remain separate knowledge states;
-- a living Kabutops encounter, if authored, can be severe without making the species routinely available.
+- Fossil evidence, historical existence, rare-relict evidence and confirmed living presence remain separate knowledge states.
+- Same-species development remains distinct from Kabuto -> Kabutops evolution.
+- Ancient chronology alone does not authorize routine living spawns.
 
-## 6. P2/P3/P4 contradiction audit
+## 6. D-032 evolution/maturation audit
+
+The owner clarified that **evolution is a miracle of the species** and should not feel like ordinary natural growth.
+
+The shared contract now enforces:
+
+```text
+ordinary_growth_equals_evolution == false
+kill_XP_causes_evolution == false
+visible_player_level_causes_evolution == false
+modern_trade_literalized_as_ancient_law == false
+generic_companion_evolve_action == false
+persistent_individual_identity_survives_evolution == true
+family_specific_evolution_treatment_required == true
+unknown_trigger_is_schema_legal == true
+```
+
+Result: **PASS**.
+
+## 7. P2/P3/P4 contradiction audit
 
 ```text
 portable_containment_assumed == false
@@ -162,58 +181,45 @@ global_ancient_stat_multiplier == false
 
 Result: **PASS**.
 
-## 7. Blocking gate
+## 8. Coverage-manifest audit
 
-Exactly one owner decision remains:
-
-**P4-HDG-002 — Ancient Haunter -> Gengar evolution interpretation**.
-
-Options are defined in `docs/P4_BATCH_01_SOURCE_REVIEW.md`:
-
-- **A — Unknown natural maturation** *(recommended)*
-- **B — Voluntary bond-transfer threshold**
-- **C — Liminal crossing ritual**
-- **D — Exceptional-only unresolved**
-
-Until this is resolved:
-
-```text
-batch_blocking_gate_count == 1
-new_dossier_promoted_complete_count == 0
-family_anchor_promoted_complete_count == 0
-coverage_manifest_reviewed_status_mutation == intentionally_deferred
-```
-
-## 8. Post-gate close procedure
-
-Once P4-HDG-002 is resolved, one follow-up change must atomically:
-
-1. record the decision in `docs/DECISIONS.md`;
-2. update Haunter/Gengar evolution interpretation in the source review and dossiers;
-3. re-run the Gastly-family consistency audit;
-4. set the six new dossiers to `complete`;
-5. promote the six Batch 01 pilot anchors to `complete`;
-6. update `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml` in the same change;
-7. update the manifest audit to prove:
+Atomic promotion is complete:
 
 ```text
 dossier_complete_count == 12
 pilot_reviewed_count == 2
 not_started_count == 137
+draft_count == 0
 blocking_p4_gate_count == 0
 ```
 
-8. select the next ecology/evolution-family-aware batch only after that audit passes.
+Result: **PASS**.
 
-## 9. Current verdict
+Lapras and Mew remain `pilot_reviewed`; all six new Batch 01 species and six relevant pilot-family anchors are `complete`.
+
+## 9. P4-HDG-002 resolution
+
+```text
+P4_HDG_002 == RESOLVED_A
+shared_decision == D-032
+Haunter_to_Gengar == rare_natural_species_transformation
+reproducible_ancient_trigger == unknown
+modern_trade_trigger == source_metadata_only
+blocking_human_design_gate_count == 0
+```
+
+The unknown trigger is an intentional world-knowledge boundary, not an unresolved product-design decision.
+
+## 10. Final verdict
 
 ```text
 source_review == PASS
 full_schema_authoring == PASS
-family_consistency == BLOCKED_ONE_GATE
+family_consistency == PASS
+evolution_maturation_contract == PASS
 P2_P3_P4_contradiction_review == PASS
-manifest_promotion == DEFERRED_BY_RULE
-batch_close == BLOCKED_P4-HDG-002
+manifest_promotion == PASS
+batch_close == PASS
 ```
 
-No additional schema or numeric-balance decision is required for Batch 01.
+**Batch 01 is complete.** The next coherent P4 action is to select Batch 02 using ecology/evolution-family-aware grouping and explicitly exercise D-032 across additional evolution mechanisms.
