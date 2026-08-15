@@ -24,6 +24,7 @@ Current owner-approved direction:
 - Pokémon use a **separate six-axis species profile** plus capability/hazard tags rather than the human seven-Attribute model;
 - ordinary Pokémon do **not** auto-scale with player growth; weak species can become genuinely routine later, while rare exceptional/named individuals can remain dangerous through explicit individual stats, traits, history and ecology;
 - Pokémon **hazard severity is not capped by species stats**; low-stat species may still create serious consequences through explicit venom, environmental, swarm or anomalous exposure mechanisms;
+- P4 six-axis normalization is pinned as **`p4-six-axis-v1`**, a deterministic 1..6 scale derived from preserved raw canonical base stats;
 - mandatory roster is National Pokédex **#001-#151**, all 151 species;
 - the opening playable scope remains one bounded settlement-centered locality plus surrounding routes/ecologies.
 
@@ -211,7 +212,6 @@ P4-HDG-001 / **D-031** establishes the approved Pokémon mechanical direction:
 
 - Pokémon keep a separate six-axis internal species profile: `Vigor / Force / Guard / Potency / Resistance / Speed`;
 - the six axes are derived from but kept separate from canonical raw `HP / Attack / Defense / Sp. Atk / Sp. Def / Speed` source values;
-- exact small-number normalization thresholds are pilot-tunable rather than copied from main-series battle math;
 - capability/hazard tags represent flight, venom, swarm behavior, Psychic/Ghost invalidators and other properties that numbers alone cannot express;
 - ordinary species/individuals do **not** level-scale to the player;
 - player growth, equipment and knowledge may make previously dangerous ordinary weak species routine enough to skip checks;
@@ -223,8 +223,7 @@ The hazard-severity clarification additionally binds:
 
 - **species stats do not cap hazard severity**;
 - delivery/exposure semantics are separate from post-exposure consequence severity;
-- low-stat/high-hazard and high-stat/low-aggression cases must be validated before numeric scale selection;
-- the former abstract 5/6/7-tier choice remains a set of calibration candidates until evidence-driven comparison.
+- low-stat/high-hazard and high-stat/low-aggression cases must remain valid after numeric calibration.
 
 Binding P4 foundation documents:
 
@@ -232,6 +231,8 @@ Binding P4 foundation documents:
 - `docs/P4_SPECIES_DOSSIER_SCHEMA.md`
 - `docs/P4_HAZARD_SEVERITY_CLARIFICATION.md`
 - `docs/P4_PILOT_ROSTER_AND_CALIBRATION_PLAN.md`
+- `docs/P4_PILOT_EVIDENCE_AND_HAZARD_PACKETS.md`
+- `docs/P4_RATING_SCALE_CALIBRATION.md`
 
 ### P4 hazard-first pilot evidence pass
 
@@ -246,7 +247,7 @@ The first pilot uses eight species selected for overlapping validation coverage:
 - **#140 Kabuto** — fossil/history ambiguity;
 - **#151 Mew** — Mythical indirect/exceptional treatment.
 
-`docs/P4_PILOT_EVIDENCE_AND_HAZARD_PACKETS.md` now provides the first source-reviewed packet pass for all eight species and freezes ten semantic encounter fixtures for numeric calibration.
+`docs/P4_PILOT_EVIDENCE_AND_HAZARD_PACKETS.md` provides the first source-reviewed packet pass for all eight species and freezes ten semantic encounter fixtures.
 
 The pass establishes:
 
@@ -260,31 +261,72 @@ The pass establishes:
 - Kabuto can remain historically/locality unresolved without a fake direct spawn rule;
 - Mew can use indirect/singular observation without routine spawn/capture semantics.
 
-The concrete exceptional fixture remains stable ID `pilot-rattata-apex-01`:
+### P4 numeric rating calibration complete
 
-- persistent identity;
-- local D2 survival/history cause;
-- explicit `trap_wary`, route-memory/supply-targeting behavior and learnable warning signs;
-- no player-level spawning/scaling;
-- **no final numeric deltas until the rating scale is pinned**.
+`docs/P4_RATING_SCALE_CALIBRATION.md` pins:
 
-No new owner-level Human Design Gate was exposed by this evidence pass.
+`rating_scale_version: p4-six-axis-v1`
+
+The deterministic mapping shared by all six axes is:
+
+- raw `<40` → rating `1`;
+- raw `40..59` → rating `2`;
+- raw `60..79` → rating `3`;
+- raw `80..99` → rating `4`;
+- raw `100..119` → rating `5`;
+- raw `>=120` → rating `6`.
+
+Why 6 tiers:
+
+- the 5-tier candidate saturated at raw `100`, collapsing Mew's all-100 profile and Gyarados `Attack 125` into the same maximum band;
+- the 6-tier candidate preserves `100..119` as exceptional while reserving `120+` for source-extreme axes;
+- the 7-tier candidate mostly adds low-end granularity while increasing translation pressure against D-024's five static TN bands;
+- 6 tiers are therefore the **smallest useful** candidate.
+
+Pinned pilot profiles (`Vigor/Force/Guard/Potency/Resistance/Speed`):
+
+- Rattata `1/2/1/1/1/3`;
+- Weedle `2/1/1/1/1/2`;
+- Beedrill `3/4/2/2/4/3`;
+- Lapras `6/4/4/4/4/3`;
+- Gyarados `4/6/3/3/5/4`;
+- Gastly `1/1/1/5/1/4`;
+- Kabuto `1/4/4/2/2/2`;
+- Mew `5/5/5/5/5/5`.
+
+The concrete exceptional fixture `pilot-rattata-apex-01` now has pinned deltas:
+
+`Vigor +1 / Force +2 / Guard +0 / Potency +0 / Resistance +0 / Speed +2`
+
+Resolved profile:
+
+`2/4/1/1/1/5`
+
+Its danger remains primarily the combination of explicit physical exceptionalism plus `trap_wary`, route memory, supply-targeting, false commitment, persistent identity, warning signs and authored terrain/history. It is not an HP sponge and never scales with the player.
+
+D-024 integration remains bounded:
+
+- Pokémon rating is an encounter-authoring input, not a second modifier stack;
+- rating 6 does not create TN 17;
+- direct extreme approaches use TN 15, changed permissions, alternate approaches, or `Impossible until fiction changes` as appropriate;
+- hazard severity and aggression remain independent from stat magnitude.
+
+Calibration audit result: **PASS** for P2/P3 contradiction, provenance, D-031 invariants and schema sufficiency. No new Human Design Gate was exposed.
 
 ### Exact next work
 
-The next coherent slice is **P4 numeric rating calibration**:
+The next coherent slice is **P4 full-schema pilot completion**:
 
-1. define reproducible mappings for the preserved **5-tier / 6-tier / 7-tier** six-axis candidates from the same raw source values;
-2. run the ten fixed semantic encounter fixtures against all candidates without changing their hazard/behavior semantics;
-3. compare monotonicity, useful differentiation, saturation, D-024 translation pressure and manual-exception pressure;
-4. pin the **smallest useful** `rating_scale_version` only if it passes all hazard/aggression/exception invariants;
-5. assign final six-axis profiles to the eight pilot species and numeric deltas to `pilot-rattata-apex-01`;
-6. run P2/P3 contradiction, provenance, cross-species and schema-completeness review;
-7. only then begin ecology/evolution-family-aware bulk authoring toward `151/151`.
+1. apply `p4-six-axis-v1` in the eight pilot species' actual `species_stat_profile` sections;
+2. finish the non-hazard dossier sections for each pilot species: provenance review status, ancient-strength classification, ecology, human perception/culture, identification progression, threat/check hooks, individual variation, companionship/logistics, mechanical hooks, materials/technology/emergency-item hooks, narrative hooks, P6 needs and cross-species links;
+3. preserve explicit `unknown` / `intentionally_unresolved` where evidence does not support a claim instead of filling pseudo-canon;
+4. mark each pilot `pilot_reviewed` only after schema-completeness and cross-species review passes;
+5. run a dedicated pilot completion audit;
+6. only then begin ecology/evolution-family-aware bulk authoring toward `151/151`.
 
-Do **not** begin bulk 151-species authoring until the pilot validates the shared rating model.
+Do **not** begin bulk 151-species authoring until all eight pilot dossiers pass the shared schema under the pinned scale.
 
-If calibration exposes a material player-facing creative choice with multiple valid answers, raise the minimum Human Design Gate rather than silently freezing it.
+If full-schema authoring exposes a material player-facing creative choice with multiple valid answers, raise the minimum Human Design Gate rather than silently freezing it.
 
 ## Later mandatory contracts
 
