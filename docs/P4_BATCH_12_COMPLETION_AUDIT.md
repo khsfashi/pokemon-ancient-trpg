@@ -1,6 +1,6 @@
 # P4 Batch 12 — Completion Audit
 
-Status: **PASS — MANIFEST PROMOTION READY**  
+Status: **PASS — MANIFEST PROMOTED**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Inputs: `docs/P4_BATCH_12_FOUNDATIONAL_ELEMENTAL_ANATOMY_PLAN.md`, `docs/P4_BATCH_12_SOURCE_REVIEW.md`, `docs/P4_BATCH_12_FULL_SCHEMA_DOSSIERS.md`, the nine indexed species dossier documents, `docs/P4_SPECIES_DOSSIER_SCHEMA.md`, `docs/P4_POKEMON_DOMAIN_CONTRACT.md`, `docs/P4_HAZARD_SEVERITY_CLARIFICATION.md`, `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`, `docs/P3_HEALTH_PRESSURE_AND_INJURY_CONTRACT.md`
@@ -271,23 +271,23 @@ blocking_human_design_gate_count == 0
 
 Result: **PASS**.
 
-## 17. Manifest promotion target
+## 17. Manifest promotion result
 
-Only these nine rows are eligible for promotion by this batch:
+Only these nine rows were promoted by this batch:
 
 ```text
-001 bulbasaur
-002 ivysaur
-003 venusaur
-004 charmander
-005 charmeleon
-006 charizard
-007 squirtle
-008 wartortle
-009 blastoise
+001 bulbasaur  complete B12-new p6_followup_required=true
+002 ivysaur    complete B12-new p6_followup_required=true
+003 venusaur   complete B12-new p6_followup_required=true
+004 charmander complete B12-new p6_followup_required=true
+005 charmeleon complete B12-new p6_followup_required=true
+006 charizard  complete B12-new p6_followup_required=true
+007 squirtle   complete B12-new p6_followup_required=true
+008 wartortle  complete B12-new p6_followup_required=true
+009 blastoise  complete B12-new p6_followup_required=true
 ```
 
-Expected post-promotion state:
+Post-promotion state:
 
 ```text
 dossier_complete_count == 96
@@ -319,7 +319,8 @@ evolution_stage_inheritance_regression == PASS
 threat_progression_compatibility == PASS
 companionship_regression == PASS
 P2_P3_P4_contradiction_review == PASS
+manifest_promotion == PASS
 blocking_human_design_gate_count == 0
 ```
 
-Batch 12 full-schema authoring is complete and the nine manifest rows may now be promoted atomically. P5 remains blocked until the mandatory P4 `151/151` exit audit passes.
+Batch 12 is complete and the coverage manifest is now `96 complete / 2 pilot_reviewed / 53 not_started`. P4 advances to Batch 13 selection; P5 remains blocked until the mandatory P4 `151/151` exit audit passes.
