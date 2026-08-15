@@ -165,8 +165,8 @@ species:
   - {national_dex: 101, species_key: electrode, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 102, species_key: exeggcute, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 103, species_key: exeggutor, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
-  - {national_dex: 104, species_key: cubone, dossier_status: not_started}
-  - {national_dex: 105, species_key: marowak, dossier_status: not_started}
+  - {national_dex: 104, species_key: cubone, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
+  - {national_dex: 105, species_key: marowak, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 106, species_key: hitmonlee, dossier_status: not_started}
   - {national_dex: 107, species_key: hitmonchan, dossier_status: not_started}
   - {national_dex: 108, species_key: lickitung, dossier_status: not_started}
@@ -174,15 +174,15 @@ species:
   - {national_dex: 110, species_key: weezing, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 111, species_key: rhyhorn, dossier_status: not_started}
   - {national_dex: 112, species_key: rhydon, dossier_status: not_started}
-  - {national_dex: 113, species_key: chansey, dossier_status: not_started}
-  - {national_dex: 114, species_key: tangela, dossier_status: not_started}
+  - {national_dex: 113, species_key: chansey, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
+  - {national_dex: 114, species_key: tangela, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 115, species_key: kangaskhan, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 116, species_key: horsea, dossier_status: not_started}
   - {national_dex: 117, species_key: seadra, dossier_status: not_started}
   - {national_dex: 118, species_key: goldeen, dossier_status: not_started}
   - {national_dex: 119, species_key: seaking, dossier_status: not_started}
-  - {national_dex: 120, species_key: staryu, dossier_status: not_started}
-  - {national_dex: 121, species_key: starmie, dossier_status: not_started}
+  - {national_dex: 120, species_key: staryu, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
+  - {national_dex: 121, species_key: starmie, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 122, species_key: mr-mime, dossier_status: not_started}
   - {national_dex: 123, species_key: scyther, dossier_status: not_started}
   - {national_dex: 124, species_key: jynx, dossier_status: not_started}
