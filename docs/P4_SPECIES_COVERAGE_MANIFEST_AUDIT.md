@@ -1,6 +1,6 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 01 promoted**  
+Status: **PASS — Batch 02 promoted**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`  
@@ -8,7 +8,7 @@ Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 01 family closure and P4-HDG-002 resolution.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 02 full-schema authoring and promotion. Batch 02 deliberately stress-tests D-032 across a biologically legible metamorphic family, a physical evolution-stone family, and a modern trade-metadata Psychic family.
 
 The manifest remains status-oriented and does not duplicate dossier prose or canonical source data.
 
@@ -34,9 +34,7 @@ p6_followup_required
 blocking_gate_refs
 ```
 
-`authoring_batch` remains an allowed operational field.
-
-For `pilot_reviewed` and `complete`, `p6_followup_required` must be explicit on the species row.
+`authoring_batch` remains an allowed operational field. For `pilot_reviewed` and `complete`, `p6_followup_required` must be explicit on the species row.
 
 ## Structural checks
 
@@ -51,27 +49,20 @@ mandatory_species_ids == {1..151}
 
 Result: **PASS**.
 
-## Batch 01 promotion check
+## Batch 02 promotion check
 
-The six new Batch 01 dossiers are complete:
+The eight new Batch 02 dossiers are now complete:
 
-- #014 Kakuna
-- #020 Raticate
-- #093 Haunter
-- #094 Gengar
-- #129 Magikarp
-- #141 Kabutops
+- #010 Caterpie
+- #011 Metapod
+- #012 Butterfree
+- #025 Pikachu
+- #026 Raichu
+- #063 Abra
+- #064 Kadabra
+- #065 Alakazam
 
-The six reviewed family anchors are also promoted to complete:
-
-- #013 Weedle
-- #015 Beedrill
-- #019 Rattata
-- #092 Gastly
-- #130 Gyarados
-- #140 Kabuto
-
-The two pilot species outside Batch 01 family closure remain `pilot_reviewed`:
+The twelve Batch 01-complete species remain complete, and the two pilot species outside completed batch-family closure remain `pilot_reviewed`:
 
 - #131 Lapras
 - #151 Mew
@@ -79,56 +70,90 @@ The two pilot species outside Batch 01 family closure remain `pilot_reviewed`:
 All other mandatory species remain `not_started`.
 
 ```text
-dossier_complete_count == 12
+dossier_complete_count == 20
 pilot_reviewed_count == 2
-not_started_count == 137
+not_started_count == 129
 draft_count == 0
 blocking_p4_gate_count == 0
 ```
 
 Result: **PASS**.
 
-## P6 follow-up audit
+## Batch 02 P6 follow-up audit
 
-Explicit reviewed flags are:
+All eight new dossiers require later P6 readability/provenance work because their gameplay depends on visible transformation, environmental-hazard, material-trigger, or Psychic-state communication:
 
 ```text
-Weedle    true
-Kakuna    true
-Beedrill  true
-Rattata   false
-Raticate  false
-Gastly    true
-Haunter   true
-Gengar    true
-Magikarp  false
-Gyarados  true
-Lapras    true
-Kabuto    true
-Kabutops  true
-Mew       true
+Caterpie   true
+Metapod    true
+Butterfree true
+Pikachu    true
+Raichu     true
+Abra       true
+Kadabra    true
+Alakazam   true
 ```
 
-Unreviewed species remain `unknown` through `not_started` defaults.
+Previously reviewed flags are preserved unchanged. Unreviewed species remain `unknown` through `not_started` defaults.
 
 Result: **PASS**.
 
-## P4-HDG-002 / D-032 check
+## D-032 mechanism regression check
 
-P4-HDG-002 is resolved by owner choice **A — Unknown natural maturation**, refined into the shared D-032 rule:
-
-- ordinary growth/maturation remains same-species development;
-- evolution is a discontinuous species transformation;
-- Haunter -> Gengar occurs as a rare natural transformation whose reproducible cause is unknown to ordinary humans;
-- modern trade metadata is preserved but does not become an ancient exchange institution or ritual;
-- exact unknown cause is now an intentional knowledge boundary, not a blocking design gate.
+### Caterpie family
 
 ```text
-P4_HDG_002 == RESOLVED_A
-shared_evolution_rule == D-032
-Haunter_blocking_gate_refs == []
-Gengar_blocking_gate_refs == []
+ordinary_Caterpie_growth_equals_evolution == false
+Caterpie_to_Metapod == metamorphic_species_transformation
+Metapod_to_Butterfree == metamorphic_species_transformation
+modern_level_threshold_diegetic == false
 ```
+
+### Pikachu family
+
+```text
+Pikachu_to_Raichu == rare_Thunder_Stone_mediated_transformation
+Thunder_Stone_common_shop_item == false
+Thunder_Stone_generic_upgrade_currency == false
+forced_companion_evolution == false
+```
+
+### Abra family
+
+```text
+modern_level_metadata_literalized == false
+modern_trade_metadata_literalized == false
+ancient_trade_ritual_created == false
+human_Psychic_Gift_forces_evolution == false
+exact_reproducible_trigger == unknown
+Alakazam_same_species_aging_can_increase_strength == true
+```
+
+Result: **PASS**.
+
+The unknown Psychic-family trigger is an intentional knowledge boundary, not a blocking product-design decision.
+
+## Hazard and permission regression check
+
+Batch 02 preserves the P4 hazard contract:
+
+```text
+low_stat_species_can_have_material_hazard == true
+hazard_severity_capped_by_axis_rating == false
+group_environment_pressure_is_stat_bonus == false
+teleport_evasion_is_flat_TN_inflation == false
+psychic_space_control_requires_permission_review == true
+high_species_stats_imply_aggression == false
+```
+
+Important examples:
+
+- Caterpie defensive odor stays a bounded deterrence/nuisance exposure rather than an invented toxin.
+- Butterfree poison scales use airflow/exposure semantics rather than Potency as a damage ceiling.
+- Pikachu group electrical build changes environmental state instead of adding a swarm stat bonus.
+- Raichu voltage prose does not become a universal damage formula.
+- Abra Teleport can invalidate ordinary restraint/pursuit rather than merely raising TN.
+- Kadabra/Alakazam Psychic control can invalidate unsupported physical approaches before numeric checks.
 
 Result: **PASS**.
 
@@ -153,10 +178,11 @@ blocking_p4_gate_count == 0
 
 ```text
 manifest_structure == PASS
-Batch_01_status_promotion == PASS
+Batch_02_status_promotion == PASS
 P6_followup_explicitness == PASS
-P4_HDG_002_resolution == PASS
+D032_mechanism_regression == PASS
+hazard_permission_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 01 is closed and the manifest is ready for Batch 02 selection.
+Batch 02 manifest promotion is complete.
