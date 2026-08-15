@@ -31,12 +31,12 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 14; Batch 15 source review does not mutate coverage:
+Current authoritative manifest state after Batch 15:
 
 ```text
-dossier_complete_count == 111
+dossier_complete_count == 117
 pilot_reviewed_count == 2
-not_started_count == 38
+not_started_count == 32
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -70,60 +70,40 @@ Batch 11   PASS
 Batch 12   PASS
 Batch 13   PASS
 Batch 14   PASS
+Batch 15   PASS
 ```
 
-### P4 Batch 14 — COMPLETE
+### P4 Batch 15 — COMPLETE
 
 Roster:
 
-- #027 Sandshrew / #028 Sandslash
-- #050 Diglett / #051 Dugtrio
-- #074 Geodude / #075 Graveler / #076 Golem
-- #095 Onix
+- #043 Oddish / #044 Gloom / #045 Vileplume
+- #069 Bellsprout / #070 Weepinbell / #071 Victreebel
 
 Primary outputs:
 
-- `docs/P4_BATCH_14_SUBTERRANEAN_TERRAIN_LITHIC_BODY_PLAN.md`
-- `docs/P4_BATCH_14_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_14_FULL_SCHEMA_DOSSIERS.md` plus eight indexed dossier files
-- `docs/P4_BATCH_14_COMPLETION_AUDIT.md`
+- `docs/P4_BATCH_15_BOTANICAL_CHEMICAL_PREDATION_PLAN.md`
+- `docs/P4_BATCH_15_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_15_FULL_SCHEMA_DOSSIERS.md` plus six indexed dossier files
+- `docs/P4_BATCH_15_COMPLETION_AUDIT.md`
 - updated `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - updated `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Batch 14 completion preserves the reviewed boundaries: species-local burrowing/climbing/rolling/boring; no real-world terrain or blast formulas; Diglett hidden anatomy unresolved; Dugtrio one entity/turn/health state/companion slot; Geodude never becomes scenery/ore; Sandslash regrowth is not a harvest loop; Graveler rolling is not unstoppable; Golem shed shell is a nonlethal contextual material path rather than automatic loot; Golem self-explosion does not import dynamite technology; Onix source speed/tunnels/navigation do not become fast travel, guaranteed collapse or harvestable navigation resources.
+Batch 15 preserves plantlike bodies as living Pokémon rather than scenery/resources; keeps Oddish burial and Bellsprout rooting species-local; preserves Gloom/Victreebel sensory attraction without compulsion; separates Vileplume allergy, toxin and versioned paralysis/immobilization without a permanent aura; keeps Weepinbell toxic powder separate from corrosive/digestive fluid; treats extreme corrosion wording as severe authored fiction rather than matter deletion or chemistry simulation; and keeps Victreebel feeding-history sweetness qualitative rather than kill-XP, hidden levels, permanent stat growth or a farming loop.
 
-`docs/P4_BATCH_14_COMPLETION_AUDIT.md` = **PASS**.
+Evolution-stage inheritance remains evidence-gated. Modern level 21, Leaf Stone, abilities and move metadata remain source context under D-032, while Bellossom/Sun Stone remains post-Generation-I provenance context only.
 
-### P4 Batch 15 — SOURCE REVIEW COMPLETE / DOSSIER AUTHORING NEXT
-
-Botanical bodies / chemical ecology / lure predation stress roster:
-
-- #043 Oddish / #044 Gloom / #045 Vileplume
-- #069 Bellsprout / #070 Weepinbell / #071 Victreebel
-
-Primary outputs so far:
-
-- `docs/P4_BATCH_15_BOTANICAL_CHEMICAL_PREDATION_PLAN.md`
-- `docs/P4_BATCH_15_SOURCE_REVIEW.md`
-
-The source review confirms all six deterministic `p4-six-axis-v1` profiles with zero manual exceptions and finds no blocking Human Design Gate. It preserves plantlike bodies as living Pokémon rather than scenery/resources; keeps Oddish/Bellsprout rooting and burial species-local; treats Gloom/Victreebel lure chemistry as sensory influence rather than compulsion; distinguishes Vileplume allergy/toxin/paralysis source claims without a permanent poison aura; preserves Bellsprout/Weepinbell/Victreebel extreme corrosion wording as severe species-local fiction rather than universal material deletion; keeps Weepinbell's cutting leaves and chemical fluids out of automatic loot/equipment semantics; and treats Victreebel feeding-history sweetness as qualitative ecology rather than kill-XP or permanent scaling.
-
-Historical extreme wording remains version-scoped instead of becoming global formulas, including Gloom fainting/memory-loss claims, Bellsprout iron-corrosion/evade-any-attack language and Victreebel bones/hard-object dissolution statements. Modern abilities, move mechanics, level 21 evolution metadata, Leaf Stone triggers and the later Bellossom/Sun Stone branch remain provenance context under D-032 rather than ancient progression or item-economy law.
-
-The coverage manifest remains `111 complete / 2 pilot_reviewed / 38 not_started`. If all six dossiers and the Batch 15 completion audit pass, expected coverage becomes `117 complete / 2 pilot_reviewed / 32 not_started`.
+`docs/P4_BATCH_15_COMPLETION_AUDIT.md` = **PASS**.
 
 ## Exact next work
 
-Author the six **P4 Batch 15 frozen full-schema dossiers** for:
+Remain in P4 and select a coherent **Batch 16** roster from the remaining 32 `not_started` species.
 
-- #043 Oddish / #044 Gloom / #045 Vileplume
-- #069 Bellsprout / #070 Weepinbell / #071 Victreebel
+Prioritize still-underrepresented canon/mechanical pressure rather than simple Pokédex order. Before binding the roster, inspect remaining species against existing Batch 01-15 coverage so Batch 16 adds new stress cases instead of duplicating already-reviewed boundaries.
 
-Create the Batch 15 dossier index/regression summary and `P4_BATCH_15_COMPLETION_AUDIT`. Verify all six required 20-section schemas, deterministic rating profiles, provenance/version boundaries, evolution-stage inheritance, botanical-body/object/resource regressions, attraction/agency regressions, pollen/allergy/toxin exposure separation, corrosion/material-deletion regressions, feeding-history/no-scaling regressions, P2/P3/P4 contradiction checks and zero blocking Human Design Gates.
+Then create the Batch 16 selection/pressure plan and proceed to claim-level source review. Do not mutate the coverage manifest during selection/source review.
 
-Only if every check passes, atomically promote exactly #043-#045 and #069-#071 from `not_started` to `complete`, refresh the coverage-manifest audit, and advance to Batch 16 selection.
-
-Do not begin P5.
+Do not begin P5 until the mandatory `151/151` P4 exit audit passes.
 
 ## Later roadmap
 
