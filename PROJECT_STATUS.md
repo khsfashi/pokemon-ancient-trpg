@@ -21,6 +21,8 @@ Current owner-approved direction:
 - species identification is knowledge-dependent: descriptive/local labels may precede stable official species identity;
 - contextual hunting/killing/material use is species- and culture-sensitive rather than generic loot logic;
 - rare human psychics / miracle-workers are allowed, but standard characters do not begin with usable psychic power; actual Gifts require rare authored awakening and ordinarily remain one narrow family;
+- Pokémon use a **separate six-axis species profile** plus capability/hazard tags rather than the human seven-Attribute model;
+- ordinary Pokémon do **not** auto-scale with player growth; weak species can become genuinely routine later, while rare exceptional/named individuals can remain dangerous through explicit individual stats, traits, history and ecology;
 - mandatory roster is National Pokédex **#001-#151**, all 151 species;
 - the opening playable scope remains one bounded settlement-centered locality plus surrounding routes/ecologies.
 
@@ -202,31 +204,42 @@ Mandatory exit breadth: **National Pokédex #001-#151, 151/151 substantive dossi
 
 Authoritative planning input: `docs/GEN1_SPECIES_COVERAGE_PLAN.md`.
 
+### P4 shared foundation now established
+
+P4-HDG-001 / **D-031** establishes the approved Pokémon mechanical direction:
+
+- Pokémon keep a separate six-axis internal species profile: `Vigor / Force / Guard / Potency / Resistance / Speed`;
+- the six axes are derived from but kept separate from canonical raw `HP / Attack / Defense / Sp. Atk / Sp. Def / Speed` source values;
+- exact small-number normalization thresholds are pilot-tunable rather than copied from main-series battle math;
+- capability/hazard tags represent flight, venom, swarm behavior, Psychic/Ghost invalidators and other properties that numbers alone cannot express;
+- ordinary species/individuals do **not** level-scale to the player;
+- player growth, equipment and knowledge may make previously dangerous ordinary weak species routine enough to skip checks;
+- ordinary individual variation remains modest;
+- rare exceptional or named/apex individuals may receive explicit stat shifts, capabilities, learned behavior and history, including exceptionally dangerous members of normally weak species;
+- exceptional individuals are rare world entities, not generic elite-affix enemies generated to match player power.
+
+Binding P4 foundation documents:
+
+- `docs/P4_POKEMON_DOMAIN_CONTRACT.md`
+- `docs/P4_SPECIES_DOSSIER_SCHEMA.md`
+
 ### Exact next work
 
-Freeze the **shared P4 Pokémon-domain contract + species dossier schema before scaling species authoring**.
+Validate the shared contract through the **P4 pilot** before scaling to 151 dossiers.
 
-The first P4 slice should define at minimum:
+The next coherent slice should:
 
-- canonical/source-backed fields versus project-owned derived fields;
-- evidence/provenance classification inherited from D-018;
-- threat/danger representation and how Pokémon plug into P3 checks without forcing the human seven-Attribute model;
-- encounter/behavior-state concepts;
-- identification/knowledge progression under D-019;
-- bond/companionship eligibility, rarity, trust/fear/relationship boundaries under D-013;
-- species-specific logistics and companion burdens;
-- move/ability/type adaptation boundaries;
-- evolution adaptation boundaries;
-- species-specific ancient-strength classification for D-016;
-- hunting/killing/material/resource treatment under D-021/D-028/D-030;
-- technology/craft hooks or explicit `none` under D-017;
-- emergency-consumable/protective-material hooks only when evidence supports them;
-- Legendary/Mythical exceptional treatment;
-- machine-checkable dossier completeness and eventual `151/151` coverage manifest.
+1. choose the smallest deliberately diverse pilot roster covering common weak wildlife, swarm/colony danger, aquatic ecology, large physical danger, elemental hazard, Psychic/Ghost approach invalidation, evolution adaptation, fossil/history ambiguity and Legendary/Mythical treatment;
+2. include at least one concrete **named/apex exceptional individual from a normally weak species** so the approved extreme-ancient-Rattata-style fantasy is mechanically tested rather than merely documented;
+3. define and pin the first small-number `rating_scale_version` that normalizes canonical six base stats into the six P4 axes;
+4. author the pilot dossiers against `docs/P4_SPECIES_DOSSIER_SCHEMA.md`;
+5. test ordinary weak-species trivialization after human progression without player-level enemy scaling;
+6. run P2/P3 contradiction, provenance, cross-species and schema-completeness review;
+7. revise shared P4 fields only where the pilot demonstrates a real structural contradiction.
 
-Before authoring all 151, P4 should validate the schema on a deliberately diverse pilot set and revise shared rules if contradictions appear.
+Do **not** begin bulk 151-species authoring until the pilot validates the shared schema and rating model.
 
-If a shared Pokémon rule exposes a material creative choice with multiple valid answers, raise the minimum Human Design Gate rather than silently freezing it.
+If the pilot exposes another material creative choice with multiple valid answers, raise the minimum Human Design Gate rather than silently freezing it.
 
 ## Later mandatory contracts
 
