@@ -1,16 +1,17 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 03 promoted**  
+Status: **PASS — Batch 04 promoted**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`  
-Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
+Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`  
+Composite identity authority: `docs/P4_MAGNETON_COMPOSITE_IDENTITY_CONTRACT.md`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 03 source review, full-schema authoring and atomic promotion. Batch 03 stress-tests branching evolution, transformation distinct from evolution, multi-part/multi-will single-entity semantics, and species-specific carried-tool behavior.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 04 source review, P4-HDG-003 resolution, full-schema authoring and atomic promotion.
 
-The manifest remains status-oriented and does not duplicate dossier prose or canonical source data.
+Batch 04 stress-tests host/parasite control, reversible interspecies-dependent evolution, a participant species with its own independent evolution family, and multi-origin composite evolution.
 
 ## Manifest resolution contract
 
@@ -34,7 +35,7 @@ p6_followup_required
 blocking_gate_refs
 ```
 
-`authoring_batch` remains an allowed operational field. For `pilot_reviewed` and `complete`, `p6_followup_required` must be explicit on the species row.
+`authoring_batch` remains an allowed operational field. `pilot_reviewed` and `complete` rows require explicit `p6_followup_required`.
 
 ## Structural checks
 
@@ -49,20 +50,20 @@ mandatory_species_ids == {1..151}
 
 Result: **PASS**.
 
-## Batch 03 promotion check
+## Batch 04 promotion check
 
-The eight new Batch 03 dossiers are now complete:
+New complete dossiers:
 
-- #083 Farfetch'd
-- #102 Exeggcute
-- #103 Exeggutor
-- #132 Ditto
-- #133 Eevee
-- #134 Vaporeon
-- #135 Jolteon
-- #136 Flareon
+- #046 Paras
+- #047 Parasect
+- #079 Slowpoke
+- #080 Slowbro
+- #081 Magnemite
+- #082 Magneton
+- #090 Shellder
+- #091 Cloyster
 
-The twenty Batch 01/02-complete species remain complete. The two pilot species outside completed batch-family closure remain `pilot_reviewed`:
+The previous 28 completed species remain complete. The two remaining pilot-reviewed species remain:
 
 - #131 Lapras
 - #151 Mew
@@ -70,96 +71,100 @@ The twenty Batch 01/02-complete species remain complete. The two pilot species o
 All other mandatory species remain `not_started`.
 
 ```text
-dossier_complete_count == 28
+dossier_complete_count == 36
 pilot_reviewed_count == 2
-not_started_count == 121
+not_started_count == 113
 draft_count == 0
 blocking_p4_gate_count == 0
 ```
 
 Result: **PASS**.
 
-## Batch 03 P6 follow-up audit
+## Batch 04 P6 follow-up audit
 
-All eight new dossiers require later P6 readability/provenance work because their gameplay depends on visible carried-tool state, internal-part coordination, transformation identity, branching evolution or elemental/environmental state communication:
+All eight new rows explicitly set `p6_followup_required: true`.
 
-```text
-Farfetch'd true
-Exeggcute  true
-Exeggutor  true
-Ditto      true
-Eevee      true
-Vaporeon   true
-Jolteon    true
-Flareon    true
-```
+Reasons include spore/cloud readability, Slowbro attachment and reversion states, electromagnetic field/metal interaction, Magneton contributor continuity, Shellder shell state and Cloyster projectile/current state.
 
-Previously reviewed flags are preserved unchanged. Unreviewed species remain `unknown` through `not_started` defaults.
+No P4 document chooses final asset provenance, style, bundling or mobile budgets.
 
 Result: **PASS**.
 
-## Batch 03 domain regression check
+## Batch 04 domain regression check
 
-### Farfetch'd
+### Paras / Parasect
 
 ```text
-stalk_is_species_behavior_dependency == true
-stalk_is_generic_loot == false
-learned_style_is_individual_behavior == true
-generic_held_item_system_created == false
+host_fungal_control_is_species_local == true
+universal_mind_or_soul_rule_created == false
+spore_hazard_is_separate_from_low_species_stats == true
+medicinal_use_becomes_generic_loot == false
 ```
 
-### Exeggcute / Exeggutor
+### Slowpoke / Slowbro
 
 ```text
-multi_part_species_entity_count == 1
-multi_part_companion_slot_count == 1
-internal_head_plurality_can_affect_behavior == true
-universal_soul_or_personhood_rule_created == false
-rare_head_loss_is_farmable_duplication == false
+delayed_pain_equals_Guard_bonus == false
+Shellder_attachment_can_create_Slowbro == true
+Shellder_loss_can_restore_Slowpoke == true
+global_deevolution_system_created == false
+persistent_history_survives_reversion == true
 ```
 
-### Ditto
+### Shellder / Cloyster
 
 ```text
-transformation_equals_evolution == false
-transformed_shape_changes_species_key == false
-transformed_shape_can_change_scene_permissions == true
-permanent_copied_dossier_replacement == false
+Shellder_participant_role_replaces_own_family == false
+Slowbro_grants_free_Shellder_companion == false
+closed_shell_changes_approach_permission == true
+Cloyster_projectile_hazard_is_separate_from_Guard == true
 ```
 
-### Eevee family
+### Magnemite / Magneton
 
 ```text
-branching_evolution_is_menu_class_change == false
-stone_inventory_forces_evolution == false
-persistent_individual_history_survives == true
-later_generation_branches_expand_GenI_baseline == false
-generic_evolution_stone_economy_created == false
+metallic_Pokemon_proves_modern_human_industry == false
+Magneton_species_entity_count == 1
+Magneton_visible_companion_slot_count == 1
+Magneton_contributor_history_count == 3
+contributor_history_retained == true
+three_stat_blocks_summed == false
+three_independent_actions_assumed == false
+literal_three_brains_claimed_as_canon == false
+generic_split_action_created == false
 ```
 
 Result: **PASS**.
 
 ## Hazard and permission regression check
 
-Batch 03 preserves the P4 hazard contract:
-
 ```text
 hazard_severity_capped_by_axis_rating == false
 high_species_stats_imply_aggression == false
 invalid_approach_review_occurs_before_numeric_check == true
-Vaporeon_submerged_visual_tracking_can_be_invalid == true
-Jolteon_electric_and_fur_exposure_are_distinct == true
-Flareon_heat_changes_environment_state == true
-Ditto_identity_pressure_is_not_only_TN_inflation == true
+Paras_spore_contact_can_matter_despite_low_Vigor == true
+Slowpoke_reaction_delay_is_timing_not_defense == true
+Magnemite_hover_changes_position_permission == true
+Magneton_field_can_invalidate_metal_heavy_approach == true
+Shellder_closed_shell_can_invalidate_soft_body_attack == true
+Cloyster_current_hazard_is_environmental_not_Guard == true
 ```
 
-Important examples:
+Result: **PASS**.
 
-- Vaporeon's water concealment changes tracking permission instead of inflating Guard.
-- Jolteon's electrical discharge and needlelike fur use separate exposure records; conductive context matters without altering species stats.
-- Flareon's fire can ignite dry environments and alter escape routes; official heat descriptions do not become a universal temperature-to-Injury equation.
-- Ditto's copied appearance can invalidate appearance-only identification before any numeric check.
+## D-033 composite persistence audit
+
+P4-HDG-003 owner choice A is represented by a one-entity active profile plus retained contributor provenance.
+
+```text
+active_Magneton_profile_count == 1
+component_provenance_count == 3
+relationship_history_erased == false
+slot_compression_command == false
+universal_multi_body_identity_rule == false
+```
+
+The player-facing presentation may evoke three brains or three simultaneous viewpoints, but the exact anatomical brain count and soul/consciousness mechanism remain unsupported and intentionally unresolved.
 
 Result: **PASS**.
 
@@ -167,7 +172,7 @@ Result: **PASS**.
 
 Future P4 PRs must update this manifest atomically with reviewed status changes.
 
-A row may be promoted to `complete` only when the corresponding dossier satisfies all completion domains in `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and has no blocking P4 Human Design Gate.
+A row may be promoted to `complete` only when the corresponding dossier satisfies `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and has no blocking P4 Human Design Gate.
 
 Do not infer completion from imported source data, raw stats, sprites, outline prose or selection into a future batch.
 
@@ -184,14 +189,15 @@ blocking_p4_gate_count == 0
 
 ```text
 manifest_structure == PASS
-Batch_03_status_promotion == PASS
+Batch_04_status_promotion == PASS
 P6_followup_explicitness == PASS
-species_equipment_regression == PASS
-multi_head_single_entity_regression == PASS
-transformation_not_evolution_regression == PASS
-branching_evolution_regression == PASS
+host_parasite_regression == PASS
+reversible_evolution_regression == PASS
+participant_species_regression == PASS
+composite_multi_origin_regression == PASS
+D-033_identity_regression == PASS
 hazard_permission_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 03 manifest promotion is complete.
+Batch 04 manifest promotion is complete.
