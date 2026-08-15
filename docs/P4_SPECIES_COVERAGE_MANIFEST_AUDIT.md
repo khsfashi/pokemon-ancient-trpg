@@ -1,13 +1,13 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 13 promoted**  
-Date: **2026-08-15**  
+Status: **PASS — Batch 14 promoted**  
+Date: **2026-08-16**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 13 source review, seven-species full-schema authoring, regression review, completion audit and atomic promotion.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 14 source review, eight-species full-schema authoring, regression review, completion audit and atomic promotion.
 
 ## Structural checks
 
@@ -25,9 +25,9 @@ Result: **PASS**.
 ## Current status counts
 
 ```text
-dossier_complete_count == 103
+dossier_complete_count == 111
 pilot_reviewed_count == 2
-not_started_count == 46
+not_started_count == 38
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -39,50 +39,64 @@ Result: **PASS**.
 
 ## Prior-batch continuity check
 
-All 96 rows complete through Batch 12 remain complete. No earlier promotion was reverted.
+All 103 rows complete through Batch 13 remain complete. No earlier promotion was reverted.
 
 Result: **PASS**.
 
-## Batch 13 promotion check
+## Batch 14 promotion check
 
-Only these seven previously `not_started` rows are newly promoted:
+Only these eight previously `not_started` rows are newly promoted:
 
 ```text
-016 pidgey    complete B13-new p6_followup_required=true
-017 pidgeotto complete B13-new p6_followup_required=true
-018 pidgeot   complete B13-new p6_followup_required=true
-021 spearow   complete B13-new p6_followup_required=true
-022 fearow    complete B13-new p6_followup_required=true
-084 doduo     complete B13-new p6_followup_required=true
-085 dodrio    complete B13-new p6_followup_required=true
+027 sandshrew complete B14-new p6_followup_required=true
+028 sandslash complete B14-new p6_followup_required=true
+050 diglett   complete B14-new p6_followup_required=true
+051 dugtrio   complete B14-new p6_followup_required=true
+074 geodude   complete B14-new p6_followup_required=true
+075 graveler  complete B14-new p6_followup_required=true
+076 golem     complete B14-new p6_followup_required=true
+095 onix      complete B14-new p6_followup_required=true
 ```
 
 Result: **PASS**.
 
-## Batch 13 regression checks
+## Batch 14 regression checks
 
 ```text
-Flying_type_equals_unlimited_traversal == false
-Speed_rating_equals_literal_velocity == false
-Pidgeot_Mach_2_equals_real_world_physics_formula == false
-territoriality_equals_auto_combat == false
-Keen_Eye_equals_perfect_detection == false
-Fearow_food_snatching_equals_inventory_mutation_permission == false
-Doduo_active_entity_count == 1
-Dodrio_active_entity_count == 1
-Doduo_ordinary_turn_count == 1
-Dodrio_ordinary_turn_count == 1
-Doduo_independent_HP_pool_count == 1
-Dodrio_independent_HP_pool_count == 1
-Doduo_internal_telepathy_equals_external_mind_reading == false
-Dodrio_three_hearts_or_lung_sets_equal_extra_lives == false
+Ground_or_Rock_type_equals_burrowing_permission == false
+Speed_rating_equals_literal_burrowing_or_rolling_velocity == false
+Force_rating_equals_terrain_or_structure_damage_formula == false
+Diglett_hidden_lower_body_shape == intentionally_unresolved
+Dugtrio_active_entity_count == 1
+Dugtrio_ordinary_turn_count == 1
+Dugtrio_independent_health_state_count == 1
+Dugtrio_visible_companion_slot_cost == 1
+Geodude_rocklike_body_equals_object_or_ore == false
+Sandslash_regrowth_equals_repeatable_live_harvest == false
+Graveler_rolling_equals_unstoppable_state == false
+Golem_shed_shell_equals_automatic_loot == false
+Golem_self_explosion_equals_real_world_blast_formula == false
+Onix_50_mph_equals_runtime_fast_travel == false
+hazard_severity_capped_by_species_axis == false
+```
+
+Result: **PASS**.
+
+## Chronology / human-context checks
+
+```text
+Diglett_later_farm_raising_equals_ancient_domestication_norm == false
+Golem_diversion_grooves_equal_setting_wide_infrastructure == false
+Golem_dynamite_wording_equals_ancient_dynamite_technology == false
+modern_evolution_levels_or_trade_equal_ancient_levels_XP_or_trade_institution == false
+Onix_later_Metal_Coat_context_equals_ancient_technology == false
 ```
 
 Result: **PASS**.
 
 ## P6 follow-up audit
 
-All seven Batch 13 rows explicitly set `p6_followup_required: true` for aerial scale/telegraph, local patrol/territory readability, Fearow resource-contest readability, and Doduo/Dodrio multi-head presentation without multi-entity UI.
+All eight Batch 14 rows explicitly set `p6_followup_required: true` for burrow/tremor/roll telegraphs, hidden-anatomy-safe presentation, lithic-body readability without loot semantics, shed-material state, massive-body scale and route-hazard readability.
 
 Result: **PASS**.
 
@@ -104,13 +118,15 @@ blocking_p4_gate_count == 0
 ```text
 manifest_structure == PASS
 prior_batch_continuity == PASS
-Batch_13_status_promotion == PASS
+Batch_14_status_promotion == PASS
 status_count_arithmetic == PASS
 P6_followup_explicitness == PASS
-traversal_speed_regression == PASS
-detection_territory_theft_regression == PASS
-multi_head_organ_regression == PASS
+burrowing_terrain_regression == PASS
+lithic_body_resource_regression == PASS
+rolling_explosive_hazard_regression == PASS
+multi_head_action_economy_regression == PASS
+chronology_human_context_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 13 manifest promotion is complete. P4 remains active at `103 complete / 2 pilot_reviewed / 46 not_started`.
+Batch 14 manifest promotion is complete. P4 remains active at `111 complete / 2 pilot_reviewed / 38 not_started`.
