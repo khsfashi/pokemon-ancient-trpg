@@ -71,6 +71,8 @@ Arcanine_old_human_cultural_observation == source_backed
 Arcanine_cultural_observation_equals_owned_or_domesticated == false
 Machoke_voluntary_human_help == source_backed
 Machoke_voluntary_human_help_equals_owned_worker_or_labor_institution == false
+Machoke_humanoid_shape_can_support_brief_human_misidentification == project_D2
+Machoke_human_misidentification_equals_perfect_disguise_or_social_infiltration == false
 ```
 
 Result: **PASS**.
@@ -148,23 +150,34 @@ Force_4_equals_fixed_mass_formula == false
 
 Result: **PASS**.
 
-## 10. Machoke belt / labor regression
+## 10. Machoke belt / labor / identity regression
 
 ```text
 Machoke_power_regulation_belt == source_backed
-Machoke_belt_maker == unresolved
-Machoke_belt_material == unresolved
-Machoke_belt_origin == unresolved
-Machoke_belt_replacement_cycle == unresolved
+Machoke_canonical_belt_maker == unresolved
+Machoke_canonical_belt_material == unresolved
+Machoke_canonical_belt_first_origin == unresolved
 Machoke_belt_wild_acquisition_path == unresolved
 Machoke_belt_removability_and_safe_handling == unresolved
+Machoke_human_associated_premodern_regulation_girdle == project_D2_allowed
+Machoke_human_associated_girdle_material_palette == leather_textile_with_optional_limited_metal_reinforcement
+Machoke_local_craft_can_repair_or_replace_specific_girdle == project_D2_allowed
+human_crafted_replacement_equals_every_wild_Machoke_belt_origin == false
+girdle_visual_language_equals_modern_championship_belt == false
 belt_equals_anatomy == false
 belt_equals_player_equipment_or_loot == false
 belt_equals_factory_guild_or_modern_industry_proof == false
 voluntary_heavy_labor == source_backed
 voluntary_labor_equals_commandable_resource == false
 voluntary_labor_equals_setting_wide_institution == false
+Machoke_humanoid_silhouette_can_be_mistaken_for_human_when_heavily_covered == project_D2
+human_misidentification_requires_low_information_context == true
+human_misidentification_equals_transformation_voice_mimicry_or_guaranteed_infiltration == false
 ```
+
+The official source still does not explain the belt's canonical first maker, material or wild acquisition path. The project now deliberately allows a separate ancient-setting layer: a specific human-associated Machoke may wear a bespoke premodern regulation girdle made, repaired or reinforced by local craftspeople using leather or heavy textile with limited metal reinforcement. This explains that individual object's maintenance or replacement only; it does not explain every wild belt, create trainer-issued gear, or establish a manufacturing economy.
+
+The human-shape hook is likewise bounded. A hood, cloak, wrappings or simple armor may make Machoke read as a large human laborer, guard or fighter at a glance, especially at distance or in poor light, but exposed species features, movement, voice, close inspection or conversation can break the mistake.
 
 Result: **PASS**.
 
@@ -217,6 +230,7 @@ capability_equals_type_wide_permission == false
 warning_signal_equals_automatic_success == false
 mental_pressure_equals_forced_player_action == false
 relationship_state_equals_hazard_immunity == false
+contextual_human_misidentification_equals_forced_player_belief == false
 ```
 
 Result: **PASS**.
@@ -239,7 +253,7 @@ Machoke_classification == eligible
 Machamp_classification == exceptional_only
 ```
 
-Companionship does not grant currency detection, guaranteed pet safety, unconditional obedience, forced riding, free labor, belt ownership, structure-breaking permissions or extra actions per limb.
+Companionship does not grant currency detection, guaranteed pet safety, unconditional obedience, forced riding, free labor, belt ownership, structure-breaking permissions, guaranteed human disguise or extra actions per limb. A bonded Machoke may instead incur a concrete local maintenance/logistics hook if its specific regulation girdle uses human craft.
 
 Result: **PASS**.
 
@@ -260,6 +274,7 @@ generic_Pokemon_labor_system_created == false
 generic_currency_detection_or_loot_system_created == false
 generic_species_equipment_industry_created == false
 generic_strength_mass_or_structure_damage_formula_created == false
+generic_disguise_power_created == false
 per_limb_action_economy_created == false
 blocking_human_design_gate_count == 0
 ```
@@ -305,7 +320,7 @@ pet_warning_resource_regression == PASS
 human_affinity_guarding_regression == PASS
 chronology_agency_regression == PASS
 training_growth_regression == PASS
-belt_labor_regression == PASS
+belt_labor_identity_regression == PASS
 multi_limb_action_economy_regression == PASS
 strength_object_interaction_regression == PASS
 evolution_stage_inheritance_regression == PASS
@@ -316,4 +331,4 @@ manifest_promotion == PASS
 blocking_human_design_gate_count == 0
 ```
 
-Batch 11 is complete and the coverage manifest is promoted atomically to `87 complete / 2 pilot_reviewed / 62 not_started`. P4 advances to Batch 12 selection; P5 remains blocked until the mandatory 151/151 audit passes.
+Batch 11 is complete and the coverage manifest remains at `87 complete / 2 pilot_reviewed / 62 not_started`. P4 advances to Batch 12 selection; P5 remains blocked until the mandatory 151/151 audit passes.
