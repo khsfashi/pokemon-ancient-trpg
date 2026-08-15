@@ -1,17 +1,16 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 04 promoted**  
+Status: **PASS — Batch 05 promoted**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`  
-Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`  
-Composite identity authority: `docs/P4_MAGNETON_COMPOSITE_IDENTITY_CONTRACT.md`
+Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 04 source review, P4-HDG-003 resolution, full-schema authoring and atomic promotion.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 05 source review, chronology classification, full-schema authoring and atomic promotion.
 
-Batch 04 stress-tests host/parasite control, reversible interspecies-dependent evolution, a participant species with its own independent evolution family, and multi-origin composite evolution.
+Batch 05 proves a new P4 boundary: **mandatory dossier coverage is not the same thing as baseline-era encounter availability**.
 
 ## Manifest resolution contract
 
@@ -50,20 +49,20 @@ mandatory_species_ids == {1..151}
 
 Result: **PASS**.
 
-## Batch 04 promotion check
+## Batch 05 promotion check
 
 New complete dossiers:
 
-- #046 Paras
-- #047 Parasect
-- #079 Slowpoke
-- #080 Slowbro
-- #081 Magnemite
-- #082 Magneton
-- #090 Shellder
-- #091 Cloyster
+- #088 Grimer
+- #089 Muk
+- #100 Voltorb
+- #101 Electrode
+- #109 Koffing
+- #110 Weezing
+- #137 Porygon
+- #150 Mewtwo
 
-The previous 28 completed species remain complete. The two remaining pilot-reviewed species remain:
+The previous 36 completed species remain complete. The two remaining pilot-reviewed species remain:
 
 - #131 Lapras
 - #151 Mew
@@ -71,100 +70,103 @@ The previous 28 completed species remain complete. The two remaining pilot-revie
 All other mandatory species remain `not_started`.
 
 ```text
-dossier_complete_count == 36
+dossier_complete_count == 44
 pilot_reviewed_count == 2
-not_started_count == 113
+not_started_count == 105
 draft_count == 0
 blocking_p4_gate_count == 0
 ```
 
 Result: **PASS**.
 
-## Batch 04 P6 follow-up audit
+## Batch 05 P6 follow-up audit
 
 All eight new rows explicitly set `p6_followup_required: true`.
 
-Reasons include spore/cloud readability, Slowbro attachment and reversion states, electromagnetic field/metal interaction, Magneton contributor continuity, Shellder shell state and Cloyster projectile/current state.
+Primary follow-ups include:
+
+- Grimer/Muk contamination-zone readability;
+- Koffing/Weezing gas density, wind and ventilation readability;
+- original/Hisuian Voltorb-family form disambiguation if later content needs both;
+- explicit chronology-locked presentation for Porygon and Mewtwo so `complete` cannot be mistaken for baseline spawn permission.
 
 No P4 document chooses final asset provenance, style, bundling or mobile budgets.
 
 Result: **PASS**.
 
-## Batch 04 domain regression check
-
-### Paras / Parasect
+## Presence / chronology regression
 
 ```text
-host_fungal_control_is_species_local == true
-universal_mind_or_soul_rule_created == false
-spore_hazard_is_separate_from_low_species_stats == true
-medicinal_use_becomes_generic_loot == false
+mandatory_dossier_coverage_equals_spawn_authorization == false
+Grimer_baseline_presence == plausible_derived
+Muk_baseline_presence == plausible_derived
+Koffing_baseline_presence == plausible_derived
+Weezing_baseline_presence == plausible_derived
+Voltorb_original_baseline_presence == unsupported_unknown
+Electrode_original_baseline_presence == unsupported_unknown
+Porygon_baseline_presence == noncontemporaneous
+Mewtwo_baseline_presence == noncontemporaneous
 ```
 
-### Slowpoke / Slowbro
+A `complete` row can therefore contain reviewed `unknown` or `not_applicable_baseline` ecology/encounter/bond fields where chronology requires them.
+
+Result: **PASS**.
+
+## Pollution / infrastructure regression
 
 ```text
-delayed_pain_equals_Guard_bonus == false
-Shellder_attachment_can_create_Slowbro == true
-Shellder_loss_can_restore_Slowpoke == true
-global_deevolution_system_created == false
-persistent_history_survives_reversion == true
-```
-
-### Shellder / Cloyster
-
-```text
-Shellder_participant_role_replaces_own_family == false
-Slowbro_grants_free_Shellder_companion == false
-closed_shell_changes_approach_permission == true
-Cloyster_projectile_hazard_is_separate_from_Guard == true
-```
-
-### Magnemite / Magneton
-
-```text
-metallic_Pokemon_proves_modern_human_industry == false
-Magneton_species_entity_count == 1
-Magneton_visible_companion_slot_count == 1
-Magneton_contributor_history_count == 3
-contributor_history_retained == true
-three_stat_blocks_summed == false
-three_independent_actions_assumed == false
-literal_three_brains_claimed_as_canon == false
-generic_split_action_created == false
+Grimer_or_Muk_requires_factory == false
+Grimer_or_Muk_requires_sewer_system == false
+Koffing_or_Weezing_requires_factory == false
+Weezing_perfume_use_creates_mass_industry == false
+generic_poison_harvest_economy_created == false
+localized_preindustrial_toxic_niche_allowed == true
 ```
 
 Result: **PASS**.
 
-## Hazard and permission regression check
+## Regional-form regression
+
+```text
+Hisuian_Voltorb_history_exists == true
+Hisuian_Electrode_history_exists == true
+Hisuian_form_substitutes_original_Gen1_form == false
+original_form_ancient_presence_proven == false
+ancient_Poke_Ball_infrastructure_created == false
+ancient_power_grid_created == false
+original_and_Hisuian_evolution_metadata_collapsed == false
+```
+
+Result: **PASS**.
+
+## Artificial-origin regression
+
+```text
+Porygon_advanced_science_origin_preserved == true
+Porygon_cyberspace_preserved == true
+baseline_cyberspace_created == false
+Porygon_historical_observation_creates_time_travel_rule == false
+Mewtwo_genetic_manipulation_origin_preserved == true
+ancient_genetics_lab_created == false
+Mewtwo_is_rare_ancient_wildlife == false
+Legendary_status_equals_spawn_permission == false
+```
+
+Result: **PASS**.
+
+## Hazard and permission regression
 
 ```text
 hazard_severity_capped_by_axis_rating == false
-high_species_stats_imply_aggression == false
-invalid_approach_review_occurs_before_numeric_check == true
-Paras_spore_contact_can_matter_despite_low_Vigor == true
-Slowpoke_reaction_delay_is_timing_not_defense == true
-Magnemite_hover_changes_position_permission == true
-Magneton_field_can_invalidate_metal_heavy_approach == true
-Shellder_closed_shell_can_invalidate_soft_body_attack == true
-Cloyster_current_hazard_is_environmental_not_Guard == true
+Grimer_Potency_2_makes_toxin_harmless == false
+Muk_environmental_toxicity_is_only_melee_damage == false
+Voltorb_Force_1_makes_explosion_harmless == false
+Electrode_Speed_6_equals_flat_damage_bonus == false
+Koffing_Guard_4_defines_explosion_damage == false
+Weezing_Guard_6_defines_gas_severity == false
+Porygon_digital_traversal_requires_baseline_cyberspace == false
+Mewtwo_hazard_profile_grants_baseline_encounter == false
 ```
-
-Result: **PASS**.
-
-## D-033 composite persistence audit
-
-P4-HDG-003 owner choice A is represented by a one-entity active profile plus retained contributor provenance.
-
-```text
-active_Magneton_profile_count == 1
-component_provenance_count == 3
-relationship_history_erased == false
-slot_compression_command == false
-universal_multi_body_identity_rule == false
-```
-
-The player-facing presentation may evoke three brains or three simultaneous viewpoints, but the exact anatomical brain count and soul/consciousness mechanism remain unsupported and intentionally unresolved.
 
 Result: **PASS**.
 
@@ -174,7 +176,7 @@ Future P4 PRs must update this manifest atomically with reviewed status changes.
 
 A row may be promoted to `complete` only when the corresponding dossier satisfies `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and has no blocking P4 Human Design Gate.
 
-Do not infer completion from imported source data, raw stats, sprites, outline prose or selection into a future batch.
+Do not infer completion from imported source data, raw stats, sprites, outline prose, batch selection, or baseline encounter availability alone.
 
 P4 exit remains:
 
@@ -189,15 +191,14 @@ blocking_p4_gate_count == 0
 
 ```text
 manifest_structure == PASS
-Batch_04_status_promotion == PASS
+Batch_05_status_promotion == PASS
 P6_followup_explicitness == PASS
-host_parasite_regression == PASS
-reversible_evolution_regression == PASS
-participant_species_regression == PASS
-composite_multi_origin_regression == PASS
-D-033_identity_regression == PASS
+presence_chronology_regression == PASS
+pollution_infrastructure_regression == PASS
+regional_form_regression == PASS
+artificial_origin_regression == PASS
 hazard_permission_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 04 manifest promotion is complete.
+Batch 05 manifest promotion is complete. P4 remains active at `44 complete / 2 pilot_reviewed / 105 not_started`.
