@@ -62,15 +62,15 @@ status_defaults:
     blocking_gate_refs: []
 
 species:
-  - {national_dex: 1, species_key: bulbasaur, dossier_status: not_started}
-  - {national_dex: 2, species_key: ivysaur, dossier_status: not_started}
-  - {national_dex: 3, species_key: venusaur, dossier_status: not_started}
-  - {national_dex: 4, species_key: charmander, dossier_status: not_started}
-  - {national_dex: 5, species_key: charmeleon, dossier_status: not_started}
-  - {national_dex: 6, species_key: charizard, dossier_status: not_started}
-  - {national_dex: 7, species_key: squirtle, dossier_status: not_started}
-  - {national_dex: 8, species_key: wartortle, dossier_status: not_started}
-  - {national_dex: 9, species_key: blastoise, dossier_status: not_started}
+  - {national_dex: 1, species_key: bulbasaur, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
+  - {national_dex: 2, species_key: ivysaur, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
+  - {national_dex: 3, species_key: venusaur, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
+  - {national_dex: 4, species_key: charmander, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
+  - {national_dex: 5, species_key: charmeleon, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
+  - {national_dex: 6, species_key: charizard, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
+  - {national_dex: 7, species_key: squirtle, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
+  - {national_dex: 8, species_key: wartortle, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
+  - {national_dex: 9, species_key: blastoise, dossier_status: complete, authoring_batch: B12-new, p6_followup_required: true}
   - {national_dex: 10, species_key: caterpie, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 11, species_key: metapod, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 12, species_key: butterfree, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}

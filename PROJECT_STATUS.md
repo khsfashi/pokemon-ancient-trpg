@@ -75,12 +75,12 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current authoritative manifest state remains unchanged during Batch 12 source review:
+Current authoritative manifest state after Batch 12:
 
 ```text
-dossier_complete_count == 87
+dossier_complete_count == 96
 pilot_reviewed_count == 2
-not_started_count == 62
+not_started_count == 53
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -111,48 +111,12 @@ Batch 08   PASS
 Batch 09   PASS
 Batch 10   PASS
 Batch 11   PASS
+Batch 12   PASS
 ```
 
 Important batch contracts and audits remain in the corresponding `docs/P4_BATCH_*` files. The manifest is the machine-readable source of coverage truth.
 
-### P4 Batch 11 — COMPLETE
-
-Human-proximity / labor / culture / multi-limb action roster:
-
-- #052 Meowth
-- #053 Persian
-- #058 Growlithe
-- #059 Arcanine
-- #066 Machop
-- #067 Machoke
-- #068 Machamp
-
-Primary outputs:
-
-- `docs/P4_BATCH_11_HUMAN_PROXIMITY_LABOR_CULTURE_PLAN.md`
-- `docs/P4_BATCH_11_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_11_FULL_SCHEMA_DOSSIERS.md` plus seven indexed species dossier documents
-- `docs/P4_BATCH_11_COMPLETION_AUDIT.md`
-
-Batch 11 validates these boundaries:
-
-1. **Human affinity does not create trainer culture.** Growlithe may be unusually friendly and faithful to people, but relationship, companionship and slot accounting remain explicit and voluntary.
-2. **Pet evidence establishes possibility, not prevalence.** Persian can have human-associated history without common ancient domestication, universal safe handling or ownership shortcuts.
-3. **Old cultural evidence does not pin project chronology.** Arcanine's ancient picture-scroll evidence supports old human observation somewhere in official fiction, not this exact future-Kanto locality, polity or literacy/art infrastructure.
-4. **Species-associated objects remain bounded.** Meowth's forehead coinlike feature does not establish minted currency or loot; Machoke's regulation belt is source-backed while maker, material, origin, replacement and safe removal remain unresolved.
-5. **Value and appearance do not create harvesting systems.** Persian's admired fur does not become a pelt/drop economy.
-6. **Self-training is not character leveling.** Machop can train without kill-XP, visible levels, repeatable stat grinding or player-scaled enemy growth.
-7. **Extreme strength remains scene-specific.** Machop/Machoke heavy-object permissions do not create a `Force -> kg` or structure-damage formula.
-8. **Four arms are not four turns.** Machamp's anatomy and extreme strike cadence are represented as bounded close-range multi-angle pressure, never one action per limb or one roll per strike.
-9. **Mental pressure preserves player agency.** Arcanine's majestic bark can create awe/intimidation pressure but never hypnosis, domination or forced player action.
-10. **Evolution-family facts do not auto-copy.** Human affinity, pet evidence, labor behavior, belts and multi-arm pressure stay species/stage specific.
-11. **No new Human Design Gate was required.** All unresolved object provenance remains safe for later owning phases without blocking P5 consumption.
-
-`docs/P4_BATCH_11_COMPLETION_AUDIT.md` = **PASS**.
-
-`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 11 state: `87 complete / 2 pilot_reviewed / 62 not_started`.
-
-### P4 Batch 12 — SOURCE REVIEW COMPLETE
+### P4 Batch 12 — COMPLETE
 
 Foundational elemental anatomy / condition-signal / starter-meta stress roster:
 
@@ -160,53 +124,52 @@ Foundational elemental anatomy / condition-signal / starter-meta stress roster:
 - #004 Charmander / #005 Charmeleon / #006 Charizard
 - #007 Squirtle / #008 Wartortle / #009 Blastoise
 
-Primary outputs so far:
+Primary outputs:
 
 - `docs/P4_BATCH_12_FOUNDATIONAL_ELEMENTAL_ANATOMY_PLAN.md`
 - `docs/P4_BATCH_12_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_12_FULL_SCHEMA_DOSSIERS.md` plus nine indexed species dossier documents
+- `docs/P4_BATCH_12_COMPLETION_AUDIT.md`
 
-Batch 12 source review validates these boundaries before full-schema authoring:
+Batch 12 validates these boundaries:
 
-1. **Body-integrated anatomy is not equipment or loot.** Bulbasaur's seed, Ivysaur/Venusaur plant structures, Squirtle's shell and Blastoise's shell nozzles remain species anatomy/state rather than detachable inventory, armor, weapons or ordinary harvest resources.
-2. **Condition signals remain qualitative.** Charmander's tail flame can reveal broad weakness/health state without exposing numeric HP, fixed thresholds, exact injury state or a universal instant-death switch.
-3. **Modern low-HP abilities remain modern mechanic context.** Overgrow, Blaze and Torrent do not establish an ancient fixed-percentage physiology or automatic project damage multiplier.
-4. **Environmental effects remain stage/species local.** Ivysaur/Venusaur sunlight relationships, Charmeleon ambient heat and Blastoise recoil behavior do not become generic Grass/Fire/Water formulas.
-5. **Battle experience is not progression currency.** Charizard's hotter-flame-with-battle-history evidence can support explicit individual history/exceptional traits, not kill-XP, visible levels, repeatable stat grinding or player-scaled wild Pokémon.
-6. **Maturation remains distinct from evolution.** Squirtle's shell hardening after birth is ordinary biological development, not an evolution event or equippable armor upgrade.
-7. **Culture evidence is not domestication.** Wartortle's longevity symbolism/popularity among older people does not prove common ancient ownership, tail harvesting, lifespan transfer or a universal blessing mechanic.
-8. **Analogy language does not advance human technology.** Blastoise's cannon/jet/rocket-like function describes Pokémon anatomy and force; it does not establish ancient human cannon, rocket, pressure-vessel or industrial-metallurgy infrastructure.
-9. **Starter familiarity is not ancient ecology.** Modern starter-selection role does not authorize beginner distribution, guaranteed settlement presence, institutional breeding, routine companionship or baseline-era natural spawning.
-10. **Evolution-family facts remain stage local.** Charmander condition signals, Charmeleon heat/aggression, Charizard flight/history, Squirtle maturation, Wartortle culture and Blastoise nozzles are not automatically copied across stages.
-11. **Modern evolution levels remain metadata.** Pinned structured chains preserve 16/32 or 16/36 modern thresholds, but D-032 prevents importing those numbers as character levels or XP law.
-12. **No new Human Design Gate is required.** Existing P2/P3/P4 contracts represent all reviewed uncertainties conservatively.
+1. **Integrated anatomy is not equipment, inventory or loot.** Bulbasaur's seed, Ivysaur's bud, Venusaur's flower, Squirtle's shell and Blastoise's nozzles remain body-integrated species anatomy/state.
+2. **Charmander's tail flame is qualitative condition information, not HP UI.** It can communicate broad weakness/health without exact values, fixed thresholds or guaranteed death prediction.
+3. **Overgrow, Blaze and Torrent remain modern mechanic context.** They do not create ancient fixed-percentage physiology or automatic project damage multipliers.
+4. **Sunlight, season and local heat remain species/stage local.** Ivysaur/Venusaur and Charmeleon do not create generic Grass/Fire environmental formulas.
+5. **Charizard battle history supports explicit individual variation, not progression currency.** Veteran individuals may be exceptional through persistent history/traits, never kill-XP, visible levels, repeatable stat grinding or player scaling.
+6. **Squirtle shell hardening is maturation, not evolution or an armor upgrade.** Human smithing/repair rules are not inferred from biological shell state.
+7. **Wartortle longevity symbolism is culture, not magic or domestication.** Popularity among older people does not prove lifespan transfer, tail harvesting, common ownership or a care institution.
+8. **Blastoise weapon analogies do not advance human technology.** Cannon/jet/rocket-like wording describes anatomy and force, not ancient cannon, rockets, pressure vessels or industrial metallurgy.
+9. **Modern starter familiarity does not authorize ancient distribution.** The three families are not automatically beginner-safe, institutionally bred, settlement-common or routine companions.
+10. **Evolution-family facts remain stage-local.** Condition signals, heat, flight, maturation, symbolism and nozzles do not auto-copy across related stages.
+11. **Threat progression remains compatible with the RPG direction.** Ordinary low-tier species may become routine later; exceptional unevolved individuals may still become boss-grade through explicit authored profiles.
+12. **No new Human Design Gate was required.** Existing P2/P3/P4 contracts represent all reviewed uncertainties conservatively.
 
-The coverage manifest remains unchanged during source review: `87 complete / 2 pilot_reviewed / 62 not_started`.
+`docs/P4_BATCH_12_COMPLETION_AUDIT.md` = **PASS**.
+
+`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 12 state: `96 complete / 2 pilot_reviewed / 53 not_started`.
 
 ## Exact next work
 
-Continue **P4 Batch 12 full-schema authoring** without entering P5:
+Continue **P4 Batch 13** without entering P5:
 
-1. author frozen-schema dossiers for all nine selected species;
-2. preserve the source-reviewed anatomy/equipment, condition/HP, ability/physiology, sunlight/heat/progression, maturation/evolution, cultural/domestication, technology-analogy and starter-meta boundaries;
-3. create the Batch 12 dossier index/regression summary;
-4. run schema/provenance, P2/P3/P4 contradiction, stage-inheritance and cross-family regression checks;
-5. create `docs/P4_BATCH_12_COMPLETION_AUDIT.md`;
-6. promote exactly #001-#009 to `complete` only if all nine dossiers and the completion audit pass atomically;
-7. refresh `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` only after successful promotion;
-8. stop for owner input only if full authoring exposes a genuinely product-defining universal rule that existing contracts cannot represent conservatively.
+1. select the next coherent roster from the remaining 53 `not_started` species by still-underrepresented ecology/capability/design pressure rather than Dex order alone;
+2. check current primary official evidence plus pinned structured provenance before binding any new interpretation;
+3. create the Batch 13 selection plan and claim-level source review without promoting the manifest early;
+4. stop for owner input only if the review exposes a genuinely product-defining universal rule that existing contracts cannot represent conservatively;
+5. after source review, author frozen-schema dossiers, run batch regression/completion audit, and promote only the reviewed Batch 13 rows atomically;
+6. keep D-034 direct encounterability separate from baseline-era natural presence;
+7. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
 
-Expected clean Batch 12 completion state:
+Current state remains:
 
 ```text
 dossier_complete_count == 96
 pilot_reviewed_count == 2
 not_started_count == 53
-draft_count == 0
 blocking_p4_gate_count == 0
-status_total == 151
 ```
-
-Do not begin P5 before the mandatory P4 `151/151` exit audit passes.
 
 ## Later mandatory contracts
 
