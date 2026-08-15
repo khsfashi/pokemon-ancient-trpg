@@ -204,21 +204,55 @@ blocking_p4_gate_count == 0
 
 The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
 
+### P4 Batch 05 — SELECTED
+
+Selected chronology/anachronism stress roster:
+
+- #088 Grimer
+- #089 Muk
+- #100 Voltorb
+- #101 Electrode
+- #109 Koffing
+- #110 Weezing
+- #137 Porygon
+- #150 Mewtwo
+
+Primary planning output: `docs/P4_BATCH_05_HISTORICAL_PRESENCE_ANACHRONISM_PLAN.md`.
+
+Batch 05 deliberately tests the still-unproven distinction between **mandatory 151-species dossier coverage** and **baseline-era contemporaneous presence**:
+
+1. Grimer/Muk and Koffing/Weezing test polluted/refuse/toxic ecologies without silently backfilling factories, sewers, modern waste systems or a generic poison-harvest economy.
+2. Original Voltorb/Electrode test modern power-plant/Poké Ball association versus distinct historical Hisuian-form evidence; regional-form history must not be substituted for the mandatory original Gen-I form or used to invent baseline Poké Balls.
+3. Porygon tests explicit artificial advanced-science/cyberspace origin against the iron-age baseline.
+4. Mewtwo tests explicit human genetic-manipulation origin at Legendary scale.
+5. The source review must allow `unsupported`, `noncontemporaneous`, or `not applicable` ancient-era fields when evidence requires them rather than inventing time travel, lost laboratories, or advanced infrastructure.
+
+Selection itself exposes no blocking Human Design Gate. Any durable chronology exception such as routine time travel or ancient advanced laboratories remains owner-gated if later source review proves it necessary.
+
+Manifest rows remain unchanged until the batch passes full source/schema/regression review:
+
+```text
+dossier_complete_count == 36
+pilot_reviewed_count == 2
+not_started_count == 113
+draft_count == 0
+blocking_p4_gate_count == 0
+```
+
 ## Exact next work
 
-Continue **P4** by selecting Batch 05 using ecology/evolution-family/domain pressure rather than raw Pokédex order.
+Source-review **#088 Grimer, #089 Muk, #100 Voltorb, #101 Electrode, #109 Koffing, #110 Weezing, #137 Porygon, and #150 Mewtwo**.
 
-Batch 05 should prioritize at least one still-unproven boundary or materially different hazard/ecology pattern, then follow the established atomic loop:
+Before full-schema authoring:
 
-1. select a compact family/ecology-aware roster;
-2. source-review every selected species against current official evidence plus pinned structured inputs;
-3. expose a Human Design Gate only if a durable owner-level interpretation is genuinely required;
-4. derive `p4-six-axis-v1` mechanically with no manual exception unless the scale structurally fails;
-5. author capability/hazard records before threat summaries;
-6. fill every shared-schema section;
-7. run family/domain, provenance and P2/P3/P4 contradiction regressions;
-8. promote manifest rows only after the whole batch passes;
-9. write the batch completion audit and advance this handoff.
+1. confirm current official identity/forms, raw six stats and evolution metadata;
+2. classify origin/habitat/technology/pollution claims under C1/C2/D1/D2/U;
+3. assign a source-review conclusion for each species' baseline-era presence: `supported`, `plausible-derived`, `unsupported/unknown`, or `source-conflicted/noncontemporaneous`;
+4. prove whether Porygon and Mewtwo can reach complete P4 dossier status while baseline ancient ecology/encounter/companionship fields remain chronology-safe and explicitly non-applicable;
+5. prove whether original Voltorb/Electrode have support independent of Hisuian forms and modern Poké Ball/power-plant context;
+6. expose a Human Design Gate only if a durable owner-level chronology exception is genuinely required.
+
+If unblocked, continue through all eight `p4-six-axis-v1` profiles, hazard records, full-schema dossiers, family/form/chronology regressions, manifest promotion and the Batch 05 completion audit. Expected clean-close manifest: `44 complete / 2 pilot_reviewed / 105 not_started`.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
