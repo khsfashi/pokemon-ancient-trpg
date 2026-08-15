@@ -88,8 +88,8 @@ species:
   - {national_dex: 24, species_key: arbok, dossier_status: not_started}
   - {national_dex: 25, species_key: pikachu, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 26, species_key: raichu, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
-  - {national_dex: 27, species_key: sandshrew, dossier_status: not_started}
-  - {national_dex: 28, species_key: sandslash, dossier_status: not_started}
+  - {national_dex: 27, species_key: sandshrew, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
+  - {national_dex: 28, species_key: sandslash, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
   - {national_dex: 29, species_key: nidoran-f, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 30, species_key: nidorina, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 31, species_key: nidoqueen, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
@@ -111,8 +111,8 @@ species:
   - {national_dex: 47, species_key: parasect, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 48, species_key: venonat, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 49, species_key: venomoth, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
-  - {national_dex: 50, species_key: diglett, dossier_status: not_started}
-  - {national_dex: 51, species_key: dugtrio, dossier_status: not_started}
+  - {national_dex: 50, species_key: diglett, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
+  - {national_dex: 51, species_key: dugtrio, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
   - {national_dex: 52, species_key: meowth, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 53, species_key: persian, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 54, species_key: psyduck, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
@@ -135,9 +135,9 @@ species:
   - {national_dex: 71, species_key: victreebel, dossier_status: not_started}
   - {national_dex: 72, species_key: tentacool, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
   - {national_dex: 73, species_key: tentacruel, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
-  - {national_dex: 74, species_key: geodude, dossier_status: not_started}
-  - {national_dex: 75, species_key: graveler, dossier_status: not_started}
-  - {national_dex: 76, species_key: golem, dossier_status: not_started}
+  - {national_dex: 74, species_key: geodude, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
+  - {national_dex: 75, species_key: graveler, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
+  - {national_dex: 76, species_key: golem, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
   - {national_dex: 77, species_key: ponyta, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
   - {national_dex: 78, species_key: rapidash, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
   - {national_dex: 79, species_key: slowpoke, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
@@ -156,7 +156,7 @@ species:
   - {national_dex: 92, species_key: gastly, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 93, species_key: haunter, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
   - {national_dex: 94, species_key: gengar, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
-  - {national_dex: 95, species_key: onix, dossier_status: not_started}
+  - {national_dex: 95, species_key: onix, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
   - {national_dex: 96, species_key: drowzee, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 97, species_key: hypno, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 98, species_key: krabby, dossier_status: not_started}
