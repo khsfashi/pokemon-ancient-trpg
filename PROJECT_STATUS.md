@@ -81,12 +81,12 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current manifest state after Batch 08:
+Current manifest state after Batch 09:
 
 ```text
-dossier_complete_count == 64
+dossier_complete_count == 72
 pilot_reviewed_count == 2
-not_started_count == 85
+not_started_count == 77
 draft_count == 0
 blocking_p4_gate_count == 0
 ```
@@ -182,11 +182,9 @@ Batch 08 validates these boundaries:
 
 `docs/P4_BATCH_08_COMPLETION_AUDIT.md` = **PASS**.
 
-`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` was also refreshed because its explanatory text had remained stale at the Batch 06 `52 complete` snapshot even though the manifest had already promoted Batch 07. It now matches the authoritative Batch 08 state: `64 complete / 2 pilot_reviewed / 85 not_started`.
+### P4 Batch 09 — COMPLETE
 
-### P4 Batch 09 — SELECTED
-
-Selected mind-state / agency / exposure-hazard stress roster:
+Completed mind-state / agency / exposure-hazard / traversal stress roster:
 
 - #039 Jigglypuff
 - #040 Wigglytuff
@@ -197,28 +195,44 @@ Selected mind-state / agency / exposure-hazard stress roster:
 - #096 Drowzee
 - #097 Hypno
 
-Selection contract: `docs/P4_BATCH_09_MIND_STATE_AGENCY_HAZARDS_PLAN.md`.
+Primary outputs:
 
-The batch is designed to distinguish auditory sleep/drowsiness, dream sensing/consumption, hypnosis, involuntary psychic manifestation, body-contact versus airborne toxin exposure, and aquatic route permission without introducing a generic mental-status or mind-control system. Existing P3 player-agency, Will/pressure and P4 species-local hazard contracts are sufficient for selection, so no new Human Design Gate is currently blocking the batch.
+- `docs/P4_BATCH_09_MIND_STATE_AGENCY_HAZARDS_PLAN.md`
+- `docs/P4_BATCH_09_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_09_FULL_SCHEMA_DOSSIERS.md` plus its eight indexed species dossier documents
+- `docs/P4_BATCH_09_COMPLETION_AUDIT.md`
 
-The manifest deliberately remains unchanged at `64 complete / 2 pilot_reviewed / 85 not_started` until Batch 09 source review, full-schema dossiers and completion audit pass.
+Batch 09 validates these boundaries:
+
+1. **Drowsiness, induced sleep and hypnosis remain distinct.** Sleep can temporarily remove ordinary conscious action, but no failed mental check silently hands player-character action selection to the GM or engine.
+2. **Dream access is not omniscient mind reading.** Drowzee's reviewed permission is sleep-bound subjective dream sensing/consumption; waking thought reading, objective truth detection, hidden-state inspection and automatic memory theft remain unsupported.
+3. **Hypnosis is not arbitrary domination.** Hypno uses visible pendulum/gaze exposure with drowsiness or bounded hypnosis pressure; no generic command, personality rewrite or persistent domination subsystem is introduced.
+4. **Evolution-family membership does not auto-copy hazards.** Jigglypuff's auditory sleep claim is not automatically cloned into Wigglytuff; Psyduck's headache-triggered involuntary manifestation is not automatically cloned into Golduck; each stage is authored from stage-local evidence.
+5. **Toxin delivery routes stay species-specific.** Venonat uses body-surface/contact toxin semantics while Venomoth supports dispersed toxic scales/powder; neither creates a universal Poison-type delivery rule.
+6. **Psyduck's psychic manifestation is involuntary but bounded.** Headache/distress can trigger an episode and Psyduck may not remember it afterward, but there is no unrestricted random psychic-catastrophe table and no automatic target amnesia.
+7. **Golduck proves explicit traversal permission distinct from normalized Speed.** Rough-water/high-wave swimming is a species capability; it does not create `Speed = Swim`, make the human route safe, or backfill navigation technology from forehead glow.
+8. **No new Human Design Gate was required.** Existing P3 agency/Will/pressure and P4 hazard/exposure rules represent the batch conservatively.
+
+`docs/P4_BATCH_09_COMPLETION_AUDIT.md` = **PASS**.
+
+`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` now matches the authoritative Batch 09 state: `72 complete / 2 pilot_reviewed / 77 not_started`.
 
 ## Exact next work
 
-Perform **P4 Batch 09 source review** for #039 Jigglypuff, #040 Wigglytuff, #048 Venonat, #049 Venomoth, #054 Psyduck, #055 Golduck, #096 Drowzee and #097 Hypno.
+Select **P4 Batch 10** from the remaining 77 `not_started` species by coverage and design-stress value.
 
-The review must establish evidence-backed boundaries between:
+Selection should prefer a compact roster that exercises still-underrepresented P4 surfaces rather than repeating already-proven contracts. Candidate pressure areas include:
 
-- drowsiness and induced sleep;
-- dream sensing/consumption and unsupported omniscient mind reading;
-- hypnosis/mental pressure and unsupported arbitrary player-character command;
-- Psyduck's involuntary power manifestation and unbounded random hazard logic;
-- Venonat body-contact toxin and Venomoth airborne/dispersed exposure;
-- Golduck aquatic traversal permission and six-axis Speed.
+- large-bodied terrestrial traversal / terrain alteration without turning size into a universal rule;
+- fire/temperature/environment interactions distinct from raw Potency;
+- plant scent/spore/feeding ecology not already covered by Paras/Tangela;
+- aquatic respiratory / drowning / pressure or current interactions not already covered by Golduck/Staryu;
+- camouflage, burrowing, flight or sensory permissions that do not map cleanly to the six ratings;
+- remaining evolution families that can test stage-local ecology/capability changes without introducing generic evolution mechanics.
 
-Use current primary official evidence plus the project's pinned structured-data provenance. Classify source fact versus synthesis/inference/extrapolation explicitly. Raise a Human Design Gate only if credible source evidence forces a persistent player-facing rule that existing P3/P4 contracts cannot conservatively represent.
+Use current official evidence to justify the selection pressure. Raise a Human Design Gate only if the selected family forces a durable player-facing rule that existing P2/P3/P4 contracts cannot conservatively represent.
 
-Do **not** promote the eight manifest rows yet. Do **not** begin P5 while P4 remains incomplete. Continue through full-schema authoring and completion audit only after the source review closes these boundaries.
+Do **not** begin P5 while P4 remains incomplete. Do not promote Batch 10 manifest rows until its source review, full-schema dossiers and completion audit pass.
 
 ## Later mandatory contracts
 
