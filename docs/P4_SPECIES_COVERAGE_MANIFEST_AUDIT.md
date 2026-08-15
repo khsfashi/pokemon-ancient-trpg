@@ -1,23 +1,22 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — initial manifest scaffold**  
+Status: **PASS — Batch 01 promoted**  
 Date: **2026-08-15**  
 Tracks: **#5**  
-Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
+Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`  
+Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## Purpose
 
-This audit establishes the first machine-readable 151-species coverage baseline required by the P4 schema and Generation-I coverage contract.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 01 family closure and P4-HDG-002 resolution.
 
-The manifest is deliberately status-oriented. It does not duplicate dossier prose or canonical source data.
+The manifest remains status-oriented and does not duplicate dossier prose or canonical source data.
 
 ## Manifest resolution contract
 
-The manifest is normalized rather than repeating identical status fields 151 times:
-
 `resolved_record = status_defaults[dossier_status] merged with species row`
 
-Every resolved species record must contain:
+Every resolved species record contains:
 
 ```text
 national_dex
@@ -35,23 +34,9 @@ p6_followup_required
 blocking_gate_refs
 ```
 
-One operational field is additionally allowed:
+`authoring_batch` remains an allowed operational field.
 
-```text
-authoring_batch
-```
-
-Status conventions:
-
-- `dossier_status`: `not_started | draft | pilot_reviewed | complete`
-- section statuses: `not_started | in_progress | complete`
-- `p6_followup_required`: `unknown | true | false`
-- `blocking_gate_refs`: empty/non-empty gate reference list
-- `authoring_batch`: empty, `pilot`, `B01-anchor`, `B01-new`, or a later stable batch key
-
-`not_started` exists only at manifest level for species with no dossier yet. A materialized dossier still uses the schema's `draft | pilot_reviewed | complete` identity status.
-
-For `pilot_reviewed` and `complete`, `p6_followup_required` must be provided explicitly by the species row; there is intentionally no status-default value that could hide a missing P6 decision.
+For `pilot_reviewed` and `complete`, `p6_followup_required` must be explicit on the species row.
 
 ## Structural checks
 
@@ -66,69 +51,94 @@ mandatory_species_ids == {1..151}
 
 Result: **PASS**.
 
-## Initial status checks
+## Batch 01 promotion check
 
-The eight pilot species are `pilot_reviewed`, and their resolved shared completion-domain statuses are `complete`:
+The six new Batch 01 dossiers are complete:
+
+- #014 Kakuna
+- #020 Raticate
+- #093 Haunter
+- #094 Gengar
+- #129 Magikarp
+- #141 Kabutops
+
+The six reviewed family anchors are also promoted to complete:
 
 - #013 Weedle
 - #015 Beedrill
 - #019 Rattata
 - #092 Gastly
 - #130 Gyarados
-- #131 Lapras
 - #140 Kabuto
+
+The two pilot species outside Batch 01 family closure remain `pilot_reviewed`:
+
+- #131 Lapras
 - #151 Mew
 
-All other 143 species begin as `not_started`.
+All other mandatory species remain `not_started`.
 
 ```text
-dossier_complete_count == 0
-pilot_reviewed_count == 8
-not_started_count == 143
+dossier_complete_count == 12
+pilot_reviewed_count == 2
+not_started_count == 137
+draft_count == 0
 blocking_p4_gate_count == 0
 ```
 
-This is intentional: pilot status is preserved instead of silently promoting it before the relevant bulk-family consistency review.
+Result: **PASS**.
 
-## P6 follow-up carryover
+## P6 follow-up audit
 
-The manifest copies the explicit pilot follow-up flags from the reviewed pilot dossiers:
-
-- Rattata: `false`
-- Weedle: `true`
-- Beedrill: `true`
-- Lapras: `true`
-- Gyarados: `true`
-- Gastly: `true`
-- Kabuto: `true`
-- Mew: `true`
-
-Unreviewed species remain `unknown` until their dossier determines the flag.
-
-## Batch 01 selection check
-
-`docs/P4_BATCH_01_PILOT_FAMILY_CLOSURE_PLAN.md` selects:
+Explicit reviewed flags are:
 
 ```text
-#014 Kakuna
-#020 Raticate
-#093 Haunter
-#094 Gengar
-#129 Magikarp
-#141 Kabutops
+Weedle    true
+Kakuna    true
+Beedrill  true
+Rattata   false
+Raticate  false
+Gastly    true
+Haunter   true
+Gengar    true
+Magikarp  false
+Gyarados  true
+Lapras    true
+Kabuto    true
+Kabutops  true
+Mew       true
 ```
 
-The manifest marks exactly those six as `B01-new` and the associated six reviewed family anchors as `B01-anchor`.
+Unreviewed species remain `unknown` through `not_started` defaults.
 
 Result: **PASS**.
 
-## Mutation rules
+## P4-HDG-002 / D-032 check
 
-Future P4 PRs must update the manifest in the same change that changes a species' reviewed status.
+P4-HDG-002 is resolved by owner choice **A — Unknown natural maturation**, refined into the shared D-032 rule:
 
-A row may be promoted to `complete` only when the dossier satisfies all 20 completion rules in `docs/P4_SPECIES_DOSSIER_SCHEMA.md`.
+- ordinary growth/maturation remains same-species development;
+- evolution is a discontinuous species transformation;
+- Haunter -> Gengar occurs as a rare natural transformation whose reproducible cause is unknown to ordinary humans;
+- modern trade metadata is preserved but does not become an ancient exchange institution or ritual;
+- exact unknown cause is now an intentional knowledge boundary, not a blocking design gate.
 
-Do not infer completion from imported source data, raw stats, or the existence of a prose file.
+```text
+P4_HDG_002 == RESOLVED_A
+shared_evolution_rule == D-032
+Haunter_blocking_gate_refs == []
+Gengar_blocking_gate_refs == []
+```
+
+Result: **PASS**.
+
+## Mutation rules preserved
+
+Future P4 PRs must update this manifest atomically with reviewed status changes.
+
+A row may be promoted to `complete` only when the corresponding dossier satisfies all completion domains in `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and has no blocking P4 Human Design Gate.
+
+Do not infer completion from imported source data, raw stats, sprites, or prose existence alone.
 
 P4 exit remains:
 
@@ -138,3 +148,15 @@ dossier_complete_count == 151
 source_review_complete_count == 151
 blocking_p4_gate_count == 0
 ```
+
+## Verdict
+
+```text
+manifest_structure == PASS
+Batch_01_status_promotion == PASS
+P6_followup_explicitness == PASS
+P4_HDG_002_resolution == PASS
+blocking_p4_gate_count == 0
+```
+
+Batch 01 is closed and the manifest is ready for Batch 02 selection.
