@@ -81,7 +81,7 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current manifest state after Batch 09:
+Current manifest state after Batch 09, unchanged by the Batch 10 source review:
 
 ```text
 dossier_complete_count == 72
@@ -217,7 +217,7 @@ Batch 09 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` now matches the authoritative Batch 09 state: `72 complete / 2 pilot_reviewed / 77 not_started`.
 
-### P4 Batch 10 — SELECTED
+### P4 Batch 10 — SOURCE REVIEW COMPLETE
 
 Selected terrain / temperature / sensory / aquatic-physiology stress roster:
 
@@ -230,24 +230,31 @@ Selected terrain / temperature / sensory / aquatic-physiology stress roster:
 - #111 Rhyhorn
 - #112 Rhydon
 
-Primary selection contract: `docs/P4_BATCH_10_TERRAIN_TEMPERATURE_SENSORY_AQUATIC_PLAN.md`.
+Primary outputs so far:
 
-Selection targets four underrepresented boundaries without changing the coverage manifest yet:
+- `docs/P4_BATCH_10_TERRAIN_TEMPERATURE_SENSORY_AQUATIC_PLAN.md`
+- `docs/P4_BATCH_10_SOURCE_REVIEW.md`
 
-1. **Nonvisual sensory navigation and state-dependent flight** — Zubat's ultrasonic navigation/blindness and Golbat's feeding/body-state effects on flight must remain capabilities/constraints rather than hidden `Speed` rules.
-2. **Aquatic physiology and shoreline exposure** — Tentacool's low-tide desiccation and Tentacruel's venomous restraint/outbreak ecology prevent `Water type = amphibious safety` from becoming a universal assumption.
-3. **Heat/contact semantics and overland logistics** — Ponyta's acceptance-gated safe fiery contact and Rapidash's extreme overland speed/herd leadership must not become `bond = hazard immunity` or `Speed = mount travel` formulas.
-4. **Collision, terrain breach and volcanic tolerance** — Rhyhorn/Rhydon test turning/stopping constraints, boulder/bedrock interaction, steep terrain and lava-heat tolerance as species-local permissions/hazards independent from flat Force/Potency ratings.
+The source review passes with no blocking Human Design Gate and freezes these authoring boundaries:
 
-No new Human Design Gate is required for selection. Later-generation Crobat, Galarian Ponyta/Rapidash and Rhyperior remain provenance context only.
+1. **Nonvisual sensory navigation remains species-local.** Zubat's blindness/sound-wave survey is explicit capability evidence; Flying type and normalized Speed do not imply echolocation, darkness immunity or perfect navigation.
+2. **Capability loss can be state-driven without stat mutation.** Golbat can consume enough blood to become unable to fly; this changes flight permission rather than its six-axis baseline.
+3. **Water typing does not grant amphibious safety.** Tentacool can be stranded and desiccated at low tide; exact dehydration timing, respiration and land tolerance remain unresolved rather than becoming a generic Water-Pokémon subsystem.
+4. **Tentacruel separates restraint from venom exposure.** Extendible venomous tentacles support entanglement plus toxin pressure, while 80 tentacles do not create 80 actions and rare outbreaks do not become permanent ecological exclusion.
+5. **Ponyta's safe fiery contact is acceptance-gated and narrow.** Acceptance can make its burning mane harmless to touch for that person; it does not grant generic Fire immunity or universal companion hazard immunity.
+6. **Rapidash has explicit extreme overland capability without a mount formula.** 150 mph and Hisui travel evidence establish exceptional running, but do not become exact universal cruising speed, rider capacity or `Speed = travel time` conversion.
+7. **Rhyhorn charge is dangerous despite low normalized Speed.** Poor turning/stopping plus boulder-breaking collision are species-local trajectory/terrain-breach permissions, not a Force-derived destruction table.
+8. **Rhydon has species-local bedrock and volcanic permissions.** Bedrock boring, steep-terrain access and protection from lava's heat do not imply Ground/Rock type immunity, universal heat immunity or safe lava submersion.
+9. **Later-generation context stays contextual.** Crobat, Galarian Ponyta/Rapidash and Rhyperior do not expand the mandatory roster or backfill capabilities.
+10. **No manifest promotion occurs at source-review time.** The eight rows remain `not_started` until full-schema authoring and completion audit pass atomically.
+
+`docs/P4_BATCH_10_SOURCE_REVIEW.md` = **PASS / READY FOR FULL-SCHEMA AUTHORING**.
 
 ## Exact next work
 
-Create **P4 Batch 10 source review** for #041 Zubat, #042 Golbat, #072 Tentacool, #073 Tentacruel, #077 Ponyta, #078 Rapidash, #111 Rhyhorn and #112 Rhydon.
+Author the **eight P4 Batch 10 full-schema species dossiers** for #041 Zubat, #042 Golbat, #072 Tentacool, #073 Tentacruel, #077 Ponyta, #078 Rapidash, #111 Rhyhorn and #112 Rhydon using `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and the reviewed boundaries in `docs/P4_BATCH_10_SOURCE_REVIEW.md`.
 
-The source review must establish evidence-backed boundaries for ultrasonic navigation/blindness, sunlight exposure, feeding-driven flight loss, shoreline dehydration, extendible venomous restraint, acceptance-gated fiery contact, extreme overland travel, collision-driven terrain breach, bedrock boring and volcanic/lava-heat tolerance.
-
-Do **not** create universal mount, terrain-destruction, amphibious-respiration, type-based environmental-immunity, or `rating = traversal permission` systems. Do not promote the Batch 10 manifest rows until source review, full-schema dossiers and completion audit pass. Do not begin P5.
+Then create/update `docs/P4_BATCH_10_FULL_SCHEMA_DOSSIERS.md`, run the Batch 10 completion audit, and only if all eight records pass with zero blocking Human Design Gates promote the manifest atomically to the expected `80 complete / 2 pilot_reviewed / 69 not_started` state. Do not begin P5.
 
 ## Later mandatory contracts
 
