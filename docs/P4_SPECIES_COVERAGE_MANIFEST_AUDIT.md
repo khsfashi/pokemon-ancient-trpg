@@ -1,6 +1,6 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 10 promoted**  
+Status: **PASS — Batch 11 promoted**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`  
@@ -8,7 +8,7 @@ Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 10 source review, full-schema authoring, species-local capability regressions and atomic promotion.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 11 source review, full-schema authoring, human-proximity / culture / object / training / action-economy regressions, and atomic promotion.
 
 The manifest is authoritative; this document matches its current resolved state.
 
@@ -51,12 +51,12 @@ Result: **PASS**.
 
 ## Current status counts
 
-After Batch 10 promotion:
+After Batch 11 promotion:
 
 ```text
-dossier_complete_count == 80
+dossier_complete_count == 87
 pilot_reviewed_count == 2
-not_started_count == 69
+not_started_count == 62
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -71,7 +71,7 @@ Result: **PASS**.
 
 ## Prior-batch continuity check
 
-All 72 rows complete through Batch 09 remain complete. No earlier promotion was reverted while applying Batch 10.
+All 80 rows complete through Batch 10 remain complete. No earlier promotion was reverted while applying Batch 11.
 
 Representative continuity anchors remain:
 
@@ -85,72 +85,81 @@ Representative continuity anchors remain:
 144 articuno    complete B07-new
 120 staryu      complete B08-new
 039 jigglypuff  complete B09-new
-097 hypno       complete B09-new
+041 zubat       complete B10-new
+112 rhydon      complete B10-new
 ```
 
 Result: **PASS**.
 
-## Batch 10 promotion check
+## Batch 11 promotion check
 
-Only these eight previously `not_started` rows are newly promoted:
+Only these seven previously `not_started` rows are newly promoted:
 
 ```text
-041 zubat      complete B10-new p6_followup_required=true
-042 golbat     complete B10-new p6_followup_required=true
-072 tentacool  complete B10-new p6_followup_required=true
-073 tentacruel complete B10-new p6_followup_required=true
-077 ponyta     complete B10-new p6_followup_required=true
-078 rapidash   complete B10-new p6_followup_required=true
-111 rhyhorn    complete B10-new p6_followup_required=true
-112 rhydon     complete B10-new p6_followup_required=true
+052 meowth    complete B11-new p6_followup_required=true
+053 persian   complete B11-new p6_followup_required=true
+058 growlithe complete B11-new p6_followup_required=true
+059 arcanine  complete B11-new p6_followup_required=true
+066 machop    complete B11-new p6_followup_required=true
+067 machoke   complete B11-new p6_followup_required=true
+068 machamp   complete B11-new p6_followup_required=true
 ```
 
 No unrelated species row changes status.
 
 Result: **PASS**.
 
-## State / capability regression
+## Human-proximity / relationship regression
 
 ```text
-Golbat_overfed_flight_loss_mutates_base_stats == false
-Tentacool_dehydration_changes_Water_type == false
-Ponyta_newborn_locomotion_requires_second_species_profile == false
-Rhyhorn_charge_danger_capped_by_Speed_1 == false
-Rhydon_bedrock_or_heat_permission_derived_from_axis_formula == false
+Persian_pet_possibility_equals_common_ancient_domestication == false
+Growlithe_human_affinity_equals_automatic_companionship == false
+Growlithe_faithfulness_equals_unconditional_obedience == false
+Machoke_voluntary_help_equals_owned_worker == false
+Machoke_voluntary_help_equals_setting_wide_labor_institution == false
+visible_companion_slots == 3
+portable_containment == false
 ```
 
 Result: **PASS**.
 
-## Type-permission regression
+## Object / resource / economy regression
 
 ```text
-Flying_type_equals_sound_navigation == false
-Water_type_equals_amphibious_safety == false
-Fire_bond_equals_generic_fire_immunity == false
-Ground_or_Rock_type_equals_lava_immunity == false
+Meowth_forehead_coinlike_feature_equals_minted_currency == false
+Meowth_Pickup_equals_loot_generation == false
+Persian_admired_fur_equals_harvest_or_trade_system == false
+Machoke_belt_equals_anatomy == false
+Machoke_belt_equals_player_equipment_or_drop == false
+Machoke_belt_equals_factory_guild_or_modern_industry_proof == false
+```
+
+The Meowth forehead feature and Machoke belt preserve unresolved provenance rather than inventing material, manufacturing, removal, replacement, market, or crafting semantics.
+
+Result: **PASS**.
+
+## Chronology / agency regression
+
+```text
+Arcanine_ancient_picture_scroll == source_backed
+picture_scroll_equals_exact_project_era_or_polity == false
+Arcanine_majestic_bark_equals_hypnosis_or_domination == false
+Arcanine_bark_can_force_specific_player_action == false
+Hisuian_Arcanine_added_to_mandatory_roster == false
 ```
 
 Result: **PASS**.
 
-## Hazard-separation regression
+## Training / strength / action-economy regression
 
 ```text
-Golbat_bite_contact_equals_fixed_blood_loss_damage == false
-Tentacruel_restraint_equals_venom_resolution == false
-Tentacruel_80_tentacles_equals_80_actions == false
-Rhyhorn_collision_equals_generic_terrain_HP_system == false
-hazard_severity_capped_by_species_axis == false
-```
-
-Result: **PASS**.
-
-## Traversal regression
-
-```text
-Rapidash_extreme_overland_running == species_local_permission
-Rapidash_150_mph_equals_constant_cruising_speed == false
-Speed_5_equals_map_travel_formula == false
-Rhydon_steep_terrain_access_equals_human_safe_route == false
+Machop_self_directed_training == source_backed
+training_equals_kill_XP_or_visible_level_meter == false
+training_equals_repeatable_stat_grind_or_player_scaling == false
+Force_rating_equals_fixed_mass_or_structure_damage_formula == false
+Machamp_four_arms_equals_four_turns_or_actions == false
+Machamp_high_strike_count_equals_one_roll_per_strike == false
+Machamp_Speed_2_equals_slow_arm_reaction == false
 ```
 
 Result: **PASS**.
@@ -158,29 +167,30 @@ Result: **PASS**.
 ## Evolution-family regression
 
 ```text
-Zubat_sound_navigation_auto_inherited_by_Golbat == false
-Tentacool_shoreline_dehydration_auto_inherited_by_Tentacruel == false
-Ponyta_safe_mane_contact_auto_inherited_by_Rapidash == false
-Rhyhorn_charge_auto_inherited_by_Rhydon == false
-Crobat_Galarian_Ponyta_Rapidash_Rhyperior_added_to_mandatory_roster == false
+Meowth_shiny_interest_auto_inherited_by_Persian == false
+Persian_pet_evidence_auto_inherited_by_Meowth == false
+Growlithe_human_affinity_auto_inherited_as_Arcanine_domestication == false
+Arcanine_awe_bark_auto_inherited_by_Growlithe == false
+Machop_training_auto_inherited_as_Machoke_labor == false
+Machoke_labor_or_belt_auto_inherited_by_Machamp == false
+Machamp_four_arm_pressure_auto_inherited_by_Machoke == false
 ```
 
 Result: **PASS**.
 
 ## P6 follow-up audit
 
-All eight Batch 10 rows explicitly set `p6_followup_required: true`.
+All seven Batch 11 rows explicitly set `p6_followup_required: true`.
 
 Primary follow-ups include:
 
-- Zubat sound-navigation and sunlight-vulnerability readability without perfect-radar implications;
-- Golbat feeding and overfed no-flight state readability without base-stat mutation;
-- Tentacool healthy aquatic versus stranded/dehydrated state readability;
-- Tentacruel tentacle reach, restraint, venom and outbreak readability without one-action-per-tentacle presentation;
-- Ponyta acceptance-gated mane contact and maturation-state readability without generic Fire immunity;
-- Rapidash run-lane, herd-leader and extreme-travel readability without exact speed simulation;
-- Rhyhorn committed charge line, poor turning/stopping and bounded terrain-breach readability;
-- Rhydon horn-boring, steep-terrain and volcanic-heat permission readability without type immunity.
+- Meowth night eye-shine, shiny-object attention and forehead feature without inventory/currency affordance;
+- Persian tail-warning and individual human-association readability without a tame/pet flag;
+- Growlithe friendly / warning / guarding states and bark readability without ownership or enemy-scan implications;
+- Arcanine scale, running and majestic-bark/awe presentation without mind-control language;
+- Machop heavy-object scale and training history without level or progress-meter presentation;
+- Machoke belt provenance/readability and voluntary task state without player-equipment or command-menu affordances;
+- Machamp four-arm multi-angle pressure and range readability without per-arm action counters.
 
 No P4 document chooses final asset provenance, style, bundling or mobile budgets.
 
@@ -192,7 +202,7 @@ Future P4 PRs must update this manifest atomically with reviewed status changes.
 
 A row may be promoted to `complete` only when the corresponding dossier satisfies `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and has no blocking P4 Human Design Gate.
 
-Do not infer completion from imported source data, raw stats, sprites, outline prose, batch selection, encounter availability, modern move/ability tables, family relationship, type membership, travel claims or environmental feats alone.
+Do not infer completion from imported source data, raw stats, sprites, outline prose, batch selection, encounter availability, modern move/ability tables, family relationship, human-affinity text, pet evidence, work evidence, species-associated objects or limb count alone.
 
 P4 exit remains:
 
@@ -208,15 +218,15 @@ blocking_p4_gate_count == 0
 ```text
 manifest_structure == PASS
 prior_batch_continuity == PASS
-Batch_10_status_promotion == PASS
+Batch_11_status_promotion == PASS
 status_count_arithmetic == PASS
 P6_followup_explicitness == PASS
-state_capability_regression == PASS
-type_permission_regression == PASS
-hazard_separation_regression == PASS
-traversal_regression == PASS
+human_proximity_regression == PASS
+object_resource_economy_regression == PASS
+chronology_agency_regression == PASS
+training_strength_action_economy_regression == PASS
 evolution_stage_inheritance_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 10 manifest promotion is complete. P4 remains active at `80 complete / 2 pilot_reviewed / 69 not_started`.
+Batch 11 manifest promotion is complete. P4 remains active at `87 complete / 2 pilot_reviewed / 62 not_started`.

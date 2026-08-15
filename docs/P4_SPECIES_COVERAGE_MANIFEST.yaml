@@ -113,23 +113,23 @@ species:
   - {national_dex: 49, species_key: venomoth, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 50, species_key: diglett, dossier_status: not_started}
   - {national_dex: 51, species_key: dugtrio, dossier_status: not_started}
-  - {national_dex: 52, species_key: meowth, dossier_status: not_started}
-  - {national_dex: 53, species_key: persian, dossier_status: not_started}
+  - {national_dex: 52, species_key: meowth, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
+  - {national_dex: 53, species_key: persian, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 54, species_key: psyduck, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 55, species_key: golduck, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 56, species_key: mankey, dossier_status: not_started}
   - {national_dex: 57, species_key: primeape, dossier_status: not_started}
-  - {national_dex: 58, species_key: growlithe, dossier_status: not_started}
-  - {national_dex: 59, species_key: arcanine, dossier_status: not_started}
+  - {national_dex: 58, species_key: growlithe, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
+  - {national_dex: 59, species_key: arcanine, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 60, species_key: poliwag, dossier_status: not_started}
   - {national_dex: 61, species_key: poliwhirl, dossier_status: not_started}
   - {national_dex: 62, species_key: poliwrath, dossier_status: not_started}
   - {national_dex: 63, species_key: abra, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 64, species_key: kadabra, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 65, species_key: alakazam, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
-  - {national_dex: 66, species_key: machop, dossier_status: not_started}
-  - {national_dex: 67, species_key: machoke, dossier_status: not_started}
-  - {national_dex: 68, species_key: machamp, dossier_status: not_started}
+  - {national_dex: 66, species_key: machop, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
+  - {national_dex: 67, species_key: machoke, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
+  - {national_dex: 68, species_key: machamp, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 69, species_key: bellsprout, dossier_status: not_started}
   - {national_dex: 70, species_key: weepinbell, dossier_status: not_started}
   - {national_dex: 71, species_key: victreebel, dossier_status: not_started}
