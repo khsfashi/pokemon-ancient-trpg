@@ -31,7 +31,7 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 14; Batch 15 selection does not mutate coverage:
+Current authoritative manifest state after Batch 14; Batch 15 source review does not mutate coverage:
 
 ```text
 dossier_complete_count == 111
@@ -94,31 +94,36 @@ Batch 14 completion preserves the reviewed boundaries: species-local burrowing/c
 
 `docs/P4_BATCH_14_COMPLETION_AUDIT.md` = **PASS**.
 
-### P4 Batch 15 — SELECTED / SOURCE REVIEW NEXT
+### P4 Batch 15 — SOURCE REVIEW COMPLETE / DOSSIER AUTHORING NEXT
 
 Botanical bodies / chemical ecology / lure predation stress roster:
 
 - #043 Oddish / #044 Gloom / #045 Vileplume
 - #069 Bellsprout / #070 Weepinbell / #071 Victreebel
 
-Primary output so far:
+Primary outputs so far:
 
 - `docs/P4_BATCH_15_BOTANICAL_CHEMICAL_PREDATION_PLAN.md`
+- `docs/P4_BATCH_15_SOURCE_REVIEW.md`
 
-Selection is grounded in current primary official Pokédex material and introduces no blocking Human Design Gate. The batch must keep plantlike Pokémon distinct from scenery/forage/resource nodes; keep rooting and buried states species-local; separate scent/nectar attraction from compulsion; separate allergenic/poisonous pollen from a permanent poison aura; treat acid/dissolving language as species-local corrosive evidence rather than universal material deletion; and keep Victreebel feeding-history changes qualitative rather than farmable stat scaling.
+The source review confirms all six deterministic `p4-six-axis-v1` profiles with zero manual exceptions and finds no blocking Human Design Gate. It preserves plantlike bodies as living Pokémon rather than scenery/resources; keeps Oddish/Bellsprout rooting and burial species-local; treats Gloom/Victreebel lure chemistry as sensory influence rather than compulsion; distinguishes Vileplume allergy/toxin/paralysis source claims without a permanent poison aura; preserves Bellsprout/Weepinbell/Victreebel extreme corrosion wording as severe species-local fiction rather than universal material deletion; keeps Weepinbell's cutting leaves and chemical fluids out of automatic loot/equipment semantics; and treats Victreebel feeding-history sweetness as qualitative ecology rather than kill-XP or permanent scaling.
 
-The coverage manifest remains `111 complete / 2 pilot_reviewed / 38 not_started` until Batch 15 source review, full-schema dossiers and completion audit authorize atomic promotion. If all six pass, expected coverage becomes `117 complete / 2 pilot_reviewed / 32 not_started`.
+Historical extreme wording remains version-scoped instead of becoming global formulas, including Gloom fainting/memory-loss claims, Bellsprout iron-corrosion/evade-any-attack language and Victreebel bones/hard-object dissolution statements. Modern abilities, move mechanics, level 21 evolution metadata, Leaf Stone triggers and the later Bellossom/Sun Stone branch remain provenance context under D-032 rather than ancient progression or item-economy law.
+
+The coverage manifest remains `111 complete / 2 pilot_reviewed / 38 not_started`. If all six dossiers and the Batch 15 completion audit pass, expected coverage becomes `117 complete / 2 pilot_reviewed / 32 not_started`.
 
 ## Exact next work
 
-Create **P4 Batch 15 source review** for:
+Author the six **P4 Batch 15 frozen full-schema dossiers** for:
 
 - #043 Oddish / #044 Gloom / #045 Vileplume
 - #069 Bellsprout / #070 Weepinbell / #071 Victreebel
 
-The review must establish claim-level evidence and version scope for plantlike stillness/root locomotion, buried/rest states, nectar/odor, pollen, motion reaction, rooting/rehydration, acid/protective fluid, cutting anatomy, lure predation and feeding-history changes. Audit `Chlorophyll`, Grass/Poison typing, relevant moves and modern evolution metadata as source context rather than automatic ancient physiology; prevent Bellossom/Sun Stone post-Gen-I contamination; distinguish attraction from mind control and acid from universal destruction; keep chemical fluids/pollen from becoming automatic loot or continuous simulation requirements; preserve D-034 encounterability separation; and raise a Human Design Gate only if a durable owner-facing decision becomes unavoidable.
+Create the Batch 15 dossier index/regression summary and `P4_BATCH_15_COMPLETION_AUDIT`. Verify all six required 20-section schemas, deterministic rating profiles, provenance/version boundaries, evolution-stage inheritance, botanical-body/object/resource regressions, attraction/agency regressions, pollen/allergy/toxin exposure separation, corrosion/material-deletion regressions, feeding-history/no-scaling regressions, P2/P3/P4 contradiction checks and zero blocking Human Design Gates.
 
-Do not promote the manifest yet. Do not begin P5.
+Only if every check passes, atomically promote exactly #043-#045 and #069-#071 from `not_started` to `complete`, refresh the coverage-manifest audit, and advance to Batch 16 selection.
+
+Do not begin P5.
 
 ## Later roadmap
 
