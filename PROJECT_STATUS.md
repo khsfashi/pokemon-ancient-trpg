@@ -213,9 +213,9 @@ blocking_p4_gate_count == 0
 
 The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
 
-### P4 Batch 06 — SELECTED
+### P4 Batch 06 — SOURCE REVIEW COMPLETE
 
-Selected social-ecology / encounter-unit stress roster:
+Reviewed social-ecology / encounter-unit stress roster:
 
 - #029 Nidoran♀
 - #030 Nidorina
@@ -226,17 +226,21 @@ Selected social-ecology / encounter-unit stress roster:
 - #115 Kangaskhan
 - #128 Tauros
 
-Selection plan: `docs/P4_BATCH_06_SOCIAL_ECOLOGY_PARENT_YOUNG_PLAN.md`.
+Primary source-review outputs:
 
-Batch 06 deliberately targets still-underrepresented boundaries:
+- `docs/P4_BATCH_06_SOCIAL_ECOLOGY_PARENT_YOUNG_PLAN.md`
+- `docs/P4_BATCH_06_SOURCE_REVIEW.md`
 
-1. **Nidoran♀ / Nidoran♂ paired families** — preserve separate canonical National Dex species identities rather than collapsing them into a generic sex/form toggle.
-2. **Nidorina / Nidoqueen social state** — family presence, separation and young-defense behavior may change encounter permissions without creating a universal morale or parenting subsystem.
-3. **Kangaskhan** — parent plus dependent young pressures the active-entity/companion-slot model; selection leaves separately persistent child identity unresolved and requires a Human Design Gate only if a narrow species-local model is insufficient.
-4. **Tauros** — herd protector and battle-scar evidence directly stress-tests fixed ordinary baselines plus explicit exceptional individuals, with no player-level scaling or generic elite affix.
-5. **Modern comparison discipline** — Nidoking's modern-object strength comparisons describe capability and do not authorize modern infrastructure in the ancient baseline.
+Batch 06 source review closes the selection questions without a blocking Human Design Gate:
 
-Selection does **not** alter the coverage manifest. It remains:
+1. **Nidoran♀ / Nidoran♂ remain separate canonical species rows** — the paired sex-linked families are not collapsed into a generic sex/form toggle and do not require a general reproduction simulator.
+2. **Nidorina / Nidoqueen social behavior remains species-local** — family presence, separation and defending-young context may alter encounter behavior/permissions without creating universal morale, parenting or fixed parent-bonus mechanics.
+3. **Kangaskhan closes under one entity / one slot** — the child is a real dependent associated organism/state, but current ordinary-form evidence does not require a second companion slot, separate species profile, independent ordinary combat action or separately persistent injury/death/history model. Mega Kangaskhan's explicit parent-and-child attack rule is not imported into ordinary baseline behavior.
+4. **Tauros herd protectors remain explicit individuals** — battle scars, social role, learned behavior and explicit D-031 deltas may define exceptional herd members; ordinary Tauros do not player-scale and no generic elite affix is introduced.
+5. **Nidoking's transmission-tower comparison is capability evidence only** — it does not backfill modern electrical infrastructure into the iron-age baseline.
+6. **All eight six-axis ratings reproduce mechanically** — no manual normalization exception is required; hazards remain orthogonal to stats.
+
+Source-review manifest state remains unchanged:
 
 ```text
 dossier_complete_count == 44
@@ -246,7 +250,7 @@ draft_count == 0
 blocking_p4_gate_count == 0
 ```
 
-A clean future Batch 06 close would target:
+A clean Batch 06 completion still targets:
 
 ```text
 dossier_complete_count == 52
@@ -258,17 +262,17 @@ blocking_p4_gate_count == 0
 
 ## Exact next work
 
-Source-review **P4 Batch 06**: #029 Nidoran♀, #030 Nidorina, #031 Nidoqueen, #032 Nidoran♂, #033 Nidorino, #034 Nidoking, #115 Kangaskhan and #128 Tauros.
+Author the eight full `p4-six-axis-v1` Batch 06 dossiers for #029 Nidoran♀, #030 Nidorina, #031 Nidoqueen, #032 Nidoran♂, #033 Nidorino, #034 Nidoking, #115 Kangaskhan and #128 Tauros.
 
-Before full-schema authoring:
+Before manifest promotion:
 
-- verify all eight identities, raw stats, forms and evolution metadata from current official / pinned structured sources;
-- preserve #029 and #032 as separate species rows and avoid inventing a generic reproduction system;
-- classify Nidorina/Nidoqueen family behavior as species-local encounter state rather than universal morale/parenting mechanics;
-- explicitly test whether Kangaskhan's child can remain a bounded dependent associated state while Kangaskhan is one active species entity / one visible companion slot;
-- if faithful Kangaskhan representation requires separately persistent child injury/death/history state or independent ordinary actions that change slot accounting, raise a Human Design Gate instead of silently deciding it;
-- test Tauros herd-protector/named-exception behavior against D-031 fixed baselines and the no-player-scaling rule;
-- leave manifest rows unchanged until source review + full-schema authoring + regressions pass.
+- preserve the two Nidoran evolution families as separate species identities and separate evolution chains;
+- encode Nidorina/Nidoqueen social effects as bounded species-local encounter states rather than universal morale/parenting mechanics;
+- encode Kangaskhan as one active species entity / one visible companion slot with a dependent associated child state, without importing Mega Kangaskhan's second-action semantics;
+- encode Tauros protector/named-exception cases through explicit individual history/state under D-031 rather than hidden scaling or generic elite affixes;
+- encode poison, horn/barb, protective rush, rampage and charge hazards as exposure/permission/state records orthogonal to six-axis ratings;
+- run family, evolution, companionship, parent/young, herd/protector, hazard, serious-lethality, P2/P3/P4 contradiction and provenance regressions;
+- promote exactly the eight manifest rows only after the whole batch passes, then write the Batch 06 completion audit.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
