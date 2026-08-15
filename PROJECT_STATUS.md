@@ -31,7 +31,7 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 14:
+Current authoritative manifest state after Batch 14; Batch 15 selection does not mutate coverage:
 
 ```text
 dossier_complete_count == 111
@@ -94,17 +94,31 @@ Batch 14 completion preserves the reviewed boundaries: species-local burrowing/c
 
 `docs/P4_BATCH_14_COMPLETION_AUDIT.md` = **PASS**.
 
+### P4 Batch 15 — SELECTED / SOURCE REVIEW NEXT
+
+Botanical bodies / chemical ecology / lure predation stress roster:
+
+- #043 Oddish / #044 Gloom / #045 Vileplume
+- #069 Bellsprout / #070 Weepinbell / #071 Victreebel
+
+Primary output so far:
+
+- `docs/P4_BATCH_15_BOTANICAL_CHEMICAL_PREDATION_PLAN.md`
+
+Selection is grounded in current primary official Pokédex material and introduces no blocking Human Design Gate. The batch must keep plantlike Pokémon distinct from scenery/forage/resource nodes; keep rooting and buried states species-local; separate scent/nectar attraction from compulsion; separate allergenic/poisonous pollen from a permanent poison aura; treat acid/dissolving language as species-local corrosive evidence rather than universal material deletion; and keep Victreebel feeding-history changes qualitative rather than farmable stat scaling.
+
+The coverage manifest remains `111 complete / 2 pilot_reviewed / 38 not_started` until Batch 15 source review, full-schema dossiers and completion audit authorize atomic promotion. If all six pass, expected coverage becomes `117 complete / 2 pilot_reviewed / 32 not_started`.
+
 ## Exact next work
 
-Continue **P4**:
+Create **P4 Batch 15 source review** for:
 
-1. select a coherent **Batch 15** roster from the remaining 38 `not_started` species;
-2. prioritize still-underrepresented canon/mechanical pressure rather than simple Pokédex order;
-3. check current primary official species material before binding the roster;
-4. open a Human Design Gate only if a durable owner-facing decision cannot be conservatively resolved;
-5. otherwise follow the established sequence: selection plan → claim-level source review → full-schema dossiers → completion audit → atomic manifest promotion;
-6. keep D-034 direct encounterability separate from baseline-era natural presence;
-7. do not begin P5 until P4 reaches the mandatory 151/151 exit audit.
+- #043 Oddish / #044 Gloom / #045 Vileplume
+- #069 Bellsprout / #070 Weepinbell / #071 Victreebel
+
+The review must establish claim-level evidence and version scope for plantlike stillness/root locomotion, buried/rest states, nectar/odor, pollen, motion reaction, rooting/rehydration, acid/protective fluid, cutting anatomy, lure predation and feeding-history changes. Audit `Chlorophyll`, Grass/Poison typing, relevant moves and modern evolution metadata as source context rather than automatic ancient physiology; prevent Bellossom/Sun Stone post-Gen-I contamination; distinguish attraction from mind control and acid from universal destruction; keep chemical fluids/pollen from becoming automatic loot or continuous simulation requirements; preserve D-034 encounterability separation; and raise a Human Design Gate only if a durable owner-facing decision becomes unavoidable.
+
+Do not promote the manifest yet. Do not begin P5.
 
 ## Later roadmap
 
