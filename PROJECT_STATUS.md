@@ -31,7 +31,7 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 16 and unchanged by Batch 17 selection:
+Current authoritative manifest state after Batch 16 and deliberately unchanged by the Batch 17 selection/source review:
 
 ```text
 dossier_complete_count == 123
@@ -94,7 +94,7 @@ Primary outputs:
 
 `docs/P4_BATCH_16_COMPLETION_AUDIT.md` = **PASS**.
 
-### P4 Batch 17 — SELECTED
+### P4 Batch 17 — SOURCE REVIEW COMPLETE
 
 Roster:
 
@@ -103,36 +103,70 @@ Roster:
 - #123 Scyther
 - #127 Pinsir
 
-Selection output:
+Primary outputs so far:
 
 - `docs/P4_BATCH_17_COMBAT_MORPHOLOGY_AGGRESSION_PLAN.md`
+- `docs/P4_BATCH_17_SOURCE_REVIEW.md`
 
-Batch 17 stresses combat morphology, temperament/aggression, pursuit wording, martial analogy, anatomical weapons, extreme speed claims, and multi-limb/combo descriptions without introducing universal rage/aggro meters, human martial-sport institutions, extra action economy, detachable weapon semantics, live-harvest loops, or literal momentum/kinetic-damage formulas.
+The Batch 17 source review classifies direct observation, measurements/numeric wording, researcher interpretation, analogy/reputation and version-scoped extraordinary claims separately. The reviewed evidence fits existing P2/P3/P4 contracts with **no blocking Human Design Gate**.
 
-Current official Pokédex evidence is sufficient for selection: Mankey group/separation anger and abrupt temper; Primeape gaze-linked fury/pursuit plus researcher-theory containment wording; Hitmonlee controlled leg extension and impact hardening; Hitmonchan combination punching, extreme stated punch speed, muscular fists and recovery cadence; Scyther forearm scythes, high visual-relative speed and cutting-driven sharpening; Pinsir powerful pincers, territorial/cold-response ecology and later-region social observations.
+Key conclusions:
 
-Post-Generation-I context including Annihilape, Tyrogue/Hitmontop, Scizor, Kleavor, Mega Pinsir, later abilities and regional observations remains chronology/provenance context only unless a later owner decision expands baseline scope.
+- Mankey's volatile anger, colony behavior and strong historical no-escape wording support severe authored escalation pressure, not a universal rage meter, permanent hostility or global no-flee rule.
+- Primeape's gaze-linked fury and tenacious pursuit remain bounded encounter behavior. Poké Ball persistence is current researcher-theory/modern-containment context, and historical “end of the world” pursuit wording is not a literal distance rule.
+- Hitmonlee's controlled leg extension, impact hardening and repeated kicks are physiology, not detachable equipment, arbitrary traversal, extra turns or force/armor-penetration formulas.
+- Hitmonchan's combinations, 300+ mph current punch wording, concrete/bullet-train historical wording and roughly three-minute recovery cadence do not create boxing institutions, combo action inflation, kinetic-energy simulation or a real-time global cooldown.
+- Scyther's forearm scythes, visual-relative speed, camouflage, hard-object cutting/sharpening and rare flight remain species-local capabilities rather than detachable weapon loot, permanent invisibility, universal material destruction or guaranteed first action/escape denial.
+- Pinsir's pincers, lifting/crushing claims, cold sensitivity and sleeping/burrowing behavior remain contextual capability/ecology rather than universal grapple/carry formulas, mining/traversal or exact temperature simulation.
+- Annihilape, Tyrogue/Hitmontop, Scizor, Kleavor, Mega Pinsir, later abilities and later-region observations remain chronology/provenance context only.
+- all six `p4-six-axis-v1` profiles reproduce with zero manual exceptions.
+- D-034 direct encounterability remains separate from baseline-era abundance, human proximity and ordinary companionship.
 
-No blocking Human Design Gate is required at selection time.
+Deterministic profiles:
+
+```text
+Mankey     2/4/1/1/2/3
+Primeape   3/5/3/3/3/4
+Hitmonlee  2/6/2/1/5/4
+Hitmonchan 2/5/3/1/5/3
+Scyther    3/5/4/2/4/5
+Pinsir     3/6/5/2/3/4
+```
+
+Source-review validation:
+
+```text
+reviewed_species_count == 6
+current_official_species_pages_verified == 6
+pinned_species_records_reviewed == 6
+rating_profile_reproducible_count == 6
+manual_rating_exception_count == 0
+p2_contradiction_count == 0
+p3_contradiction_count == 0
+p4_contract_contradiction_count == 0
+blocking_human_design_gate_count == 0
+coverage_manifest_changed == false
+ready_for_full_schema_authoring == true
+```
 
 ## Exact next work
 
-Create **P4 Batch 17 claim-level source review** for #056, #057, #106, #107, #123, and #127.
+Author the six **P4 Batch 17 frozen full-schema dossiers** for #056, #057, #106, #107, #123 and #127.
 
-The source review must:
+The authoring pass must:
 
-1. inventory current official Pokédex text plus pinned `SRC-DATA-001` historical/versioned evidence;
-2. preserve observed fact, measurement/numeric wording, researcher interpretation, analogy/reputation, version-scoped extraordinary claims, and project extrapolation as separate evidence classes;
-3. reproduce `p4-six-axis-v1` profiles without interpreting raw stats or numerical Pokédex claims as literal world formulas;
-4. keep anger/pursuit behavior player-agency-safe and bounded rather than universal rage/aggro systems;
-5. keep Hitmonlee/Hitmonchan martial-looking physiology separate from human dojos, boxing rules, professions, combo-turn inflation, and physics simulation;
-6. keep Scyther/Pinsir natural weapons separate from detachable gear, automatic live harvesting, and universal material destruction;
-7. audit Annihilape, Tyrogue/Hitmontop, Scizor, Kleavor, Mega Pinsir, later abilities and regional observations as post-Gen-I context;
-8. identify any Human Design Gate before full-schema authoring;
-9. keep D-034 direct encounterability separate from baseline-era natural abundance;
-10. leave the coverage manifest unchanged until all six full-schema dossiers and the Batch 17 completion audit pass atomically.
+1. consume the reviewed claim-level evidence without upgrading analogy, researcher theory, measurements or version-scoped extraordinary wording into universal rules;
+2. use the reviewed deterministic `p4-six-axis-v1` profiles with zero hidden manual exceptions;
+3. preserve player-agency-safe warning, escalation, de-escalation and bounded pursuit handling for Mankey/Primeape;
+4. preserve one entity / one ordinary turn / one health state / one visible companion slot despite bilateral limbs, combinations or natural weapons;
+5. keep Hitmonlee/Hitmonchan martial-looking physiology separate from human fighting institutions, equipment and physics formulas;
+6. keep Scyther/Pinsir body-integrated weapons separate from automatic equipment, live harvesting, generic destructible terrain and universal material checks;
+7. keep post-Generation-I family/form/region evidence as provenance context rather than mandatory baseline realization;
+8. create the Batch 17 dossier index/regression summary and completion audit;
+9. rerun P2/P3/P4 contradiction, provenance, schema, action-economy, agency, chronology and D-034 separation checks;
+10. only after every check passes, atomically promote exactly the six Batch 17 manifest rows.
 
-If all six later pass, expected coverage becomes `129 complete / 2 pilot_reviewed / 20 not_started`.
+If all six pass, expected coverage becomes `129 complete / 2 pilot_reviewed / 20 not_started`.
 
 Do not begin P5 until the mandatory `151/151` P4 exit audit passes.
 
