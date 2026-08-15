@@ -12,7 +12,7 @@ Current binding direction:
 
 - setting is intentionally **earlier than the Hisui-era precedent**;
 - first playable land is **future-Kanto territory before mature Kanto regional civilization exists**;
-- ordinary material culture has an **iron-age / medieval-fantasy-like baseline**, with narrow Pokémon-dependent technology islands only where canon evidence and local practice justify them;
+- ordinary material culture has an **iron-age / medieval-fantasy-like baseline**, with narrow Pokémon-dependent technology/culture islands only where canon evidence and local practice justify them;
 - humans and Pokémon are not integrated through normalized trainer culture, routine ownership, Poké Balls, PC storage, or portable containment;
 - Pokémon companionship is rare and meaningful with exactly **three visible companion slots**, while `0/3` is a first-class complete run;
 - the world uses **serious selective lethality**: injury, lasting impairment, Critical condition and death are real, but ordinary defeat or `0 Vitality` is not automatic death;
@@ -75,12 +75,12 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current authoritative manifest state after Batch 10 and before any Batch 11 promotion:
+Current authoritative manifest state after Batch 11:
 
 ```text
-dossier_complete_count == 80
+dossier_complete_count == 87
 pilot_reviewed_count == 2
-not_started_count == 69
+not_started_count == 62
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -110,60 +110,12 @@ Batch 07   PASS
 Batch 08   PASS
 Batch 09   PASS
 Batch 10   PASS
+Batch 11   PASS
 ```
 
 Important batch contracts and audits remain in the corresponding `docs/P4_BATCH_*` files. The manifest is the machine-readable source of coverage truth.
 
-### P4 Batch 08 — COMPLETE
-
-Biological-resource / remains / regeneration roster: #104 Cubone, #105 Marowak, #113 Chansey, #114 Tangela, #120 Staryu, #121 Starmie.
-
-Key validated boundaries: no generic corpse loot; renewable biological resources require species-specific evidence; regeneration is separate from death and stats; commercial value does not imply safe extraction; held-item metadata is not biological provenance.
-
-### P4 Batch 09 — COMPLETE
-
-Mind-state / agency / exposure-route / traversal roster: #039 Jigglypuff, #040 Wigglytuff, #048 Venonat, #049 Venomoth, #054 Psyduck, #055 Golduck, #096 Drowzee, #097 Hypno.
-
-Key validated boundaries: drowsiness/sleep/hypnosis remain distinct; dream access is not omniscient mind reading; hypnosis is not arbitrary domination; toxin delivery remains species-specific; Psyduck's manifestation is involuntary but bounded; Golduck traversal permission is separate from normalized Speed.
-
-### P4 Batch 10 — COMPLETE
-
-Terrain / temperature / sensory / aquatic-physiology roster:
-
-- #041 Zubat
-- #042 Golbat
-- #072 Tentacool
-- #073 Tentacruel
-- #077 Ponyta
-- #078 Rapidash
-- #111 Rhyhorn
-- #112 Rhydon
-
-Primary outputs:
-
-- `docs/P4_BATCH_10_TERRAIN_TEMPERATURE_SENSORY_AQUATIC_PLAN.md`
-- `docs/P4_BATCH_10_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_10_FULL_SCHEMA_DOSSIERS.md` plus its eight indexed species dossier documents
-- `docs/P4_BATCH_10_COMPLETION_AUDIT.md`
-
-Batch 10 validates these boundaries:
-
-1. **Nonvisual sensory navigation remains species-local.** Zubat's sound-wave survey does not become a Flying-type or Speed-derived radar system.
-2. **Capability loss can be state-driven without stat mutation.** Golbat overfeeding can remove flight permission without changing its six-axis baseline.
-3. **Water typing does not grant amphibious safety.** Tentacool low-tide stranding/dehydration remains species physiology, not a generic Water-Pokémon system.
-4. **Tentacruel separates restraint from venom exposure.** Eighty tentacles do not create eighty actions; outbreak state is event/ecology pressure rather than a permanent biome rule.
-5. **Ponyta's safe fiery contact is narrow and acceptance-gated.** It does not grant generic Fire immunity, attack immunity or automatic riding permission.
-6. **Rapidash has extreme overland capability without a travel/mount formula.** Canon speed/travel evidence is permission evidence, not exact project map timing or rider capacity.
-7. **Rhyhorn charge remains dangerous despite low normalized Speed.** Poor turning/stopping and boulder-breaking are species-local trajectory/terrain permissions, not a Force-derived structure-damage table.
-8. **Rhydon has species-local bedrock/steep-terrain/lava-heat permissions.** They do not imply Ground/Rock type immunity, safe lava immersion or human-safe following.
-9. **Evolution-family capabilities do not auto-copy between stages.** Crobat, Galarian Ponyta/Rapidash and Rhyperior remain later-generation context only.
-10. **No new Human Design Gate was required.** Batch 10 closes with zero blocking P4 gates.
-
-`docs/P4_BATCH_10_COMPLETION_AUDIT.md` = **PASS**.
-
-`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 10 state: `80 complete / 2 pilot_reviewed / 69 not_started`.
-
-### P4 Batch 11 — SELECTED + SOURCE REVIEW COMPLETE
+### P4 Batch 11 — COMPLETE
 
 Human-proximity / labor / culture / multi-limb action roster:
 
@@ -175,34 +127,41 @@ Human-proximity / labor / culture / multi-limb action roster:
 - #067 Machoke
 - #068 Machamp
 
-Primary outputs so far:
+Primary outputs:
 
 - `docs/P4_BATCH_11_HUMAN_PROXIMITY_LABOR_CULTURE_PLAN.md`
 - `docs/P4_BATCH_11_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_11_FULL_SCHEMA_DOSSIERS.md` plus seven indexed species dossier documents
+- `docs/P4_BATCH_11_COMPLETION_AUDIT.md`
 
-Source review validates these boundaries before full-schema authoring:
+Batch 11 validates these boundaries:
 
-1. **Human affinity does not establish normalized trainer culture.** Growlithe can be friendly/faithful to people and Machoke can voluntarily help people without routine ownership, containment, obedience or a universal labor institution.
-2. **Pet evidence establishes possibility, not prevalence.** Persian can be raised as a pet in official material, but this does not prove common ancient domestication or bypass companion-slot/bond rules.
-3. **Culture references remain chronology-bounded.** Arcanine's ancient picture-scroll evidence proves old human observation somewhere in official fiction, not the project's exact era, polity, region or art tradition.
-4. **Species-associated objects do not become economy/infrastructure by default.** Meowth's forehead coin does not prove project-era minted currency; Machoke's power-regulation belt is source-backed while its maker/material/origin remain explicitly unresolved.
-5. **Resource semantics remain conservative.** Persian's admired fur and Meowth/Machoke associated objects do not create harvest drops, equipment or craft systems.
-6. **Self-directed training is not a level system.** Machop can train physically without kill-XP, visible levels, repeatable stat grinding or player-scaled enemy growth.
-7. **Multi-limb anatomy is not extra action economy.** Machamp's four arms and extreme strike cadence remain species capabilities/threat fiction, not four turns or hundreds/thousands of attack rolls.
-8. **No new Human Design Gate is required.** Machoke belt provenance remains `unresolved` and later-phase-follow-up-safe rather than forcing a universal ancient manufacturing decision.
+1. **Human affinity does not create trainer culture.** Growlithe may be unusually friendly and faithful to people, but relationship, companionship and slot accounting remain explicit and voluntary.
+2. **Pet evidence establishes possibility, not prevalence.** Persian can have human-associated history without common ancient domestication, universal safe handling or ownership shortcuts.
+3. **Old cultural evidence does not pin project chronology.** Arcanine's ancient picture-scroll evidence supports old human observation somewhere in official fiction, not this exact future-Kanto locality, polity or literacy/art infrastructure.
+4. **Species-associated objects remain bounded.** Meowth's forehead coinlike feature does not establish minted currency or loot; Machoke's regulation belt is source-backed while maker, material, origin, replacement and safe removal remain unresolved.
+5. **Value and appearance do not create harvesting systems.** Persian's admired fur does not become a pelt/drop economy.
+6. **Self-training is not character leveling.** Machop can train without kill-XP, visible levels, repeatable stat grinding or player-scaled enemy growth.
+7. **Extreme strength remains scene-specific.** Machop/Machoke heavy-object permissions do not create a `Force -> kg` or structure-damage formula.
+8. **Four arms are not four turns.** Machamp's anatomy and extreme strike cadence are represented as bounded close-range multi-angle pressure, never one action per limb or one roll per strike.
+9. **Mental pressure preserves player agency.** Arcanine's majestic bark can create awe/intimidation pressure but never hypnosis, domination or forced player action.
+10. **Evolution-family facts do not auto-copy.** Human affinity, pet evidence, labor behavior, belts and multi-arm pressure stay species/stage specific.
+11. **No new Human Design Gate was required.** All unresolved object provenance remains safe for later owning phases without blocking P5 consumption.
 
-The coverage manifest is intentionally unchanged during selection/source review.
+`docs/P4_BATCH_11_COMPLETION_AUDIT.md` = **PASS**.
+
+`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 11 state: `87 complete / 2 pilot_reviewed / 62 not_started`.
 
 ## Exact next work
 
-Continue **P4 Batch 11** without entering P5:
+Continue **P4 Batch 12** without entering P5:
 
-1. author frozen full-schema dossiers for #052 Meowth, #053 Persian, #058 Growlithe, #059 Arcanine, #066 Machop, #067 Machoke and #068 Machamp;
-2. create the Batch 11 dossier index/regression summary;
-3. run provenance, human-proximity/culture/object/action-economy and evolution-family regressions;
-4. create `P4_BATCH_11_COMPLETION_AUDIT`;
-5. only if all seven pass atomically, promote exactly those seven manifest rows and refresh the manifest audit to the expected `87 complete / 2 pilot_reviewed / 62 not_started` state;
-6. stop for a Human Design Gate only if full authoring makes a genuinely product-defining universal rule unavoidable.
+1. select the next manageable batch from the remaining 62 `not_started` species, prioritizing still-underrepresented ecology/capability/design pressure rather than simple Dex order;
+2. create a bounded Batch 12 selection plan and identify the exact regression surface it is intended to stress;
+3. source-review the selected species against current primary official Pokémon material plus pinned `SRC-DATA-001` structured data;
+4. keep the coverage manifest unchanged during selection and source review;
+5. proceed to full-schema authoring only if no blocking Human Design Gate appears;
+6. stop for owner input only if source evidence forces a genuinely product-defining universal rule that existing P2/P3/P4 contracts cannot represent conservatively.
 
 Do not begin P5 before the mandatory P4 `151/151` exit audit passes.
 
