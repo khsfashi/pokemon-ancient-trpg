@@ -48,6 +48,10 @@ Current owner-approved direction:
 - ordinary new humans begin at `1` in all seven attributes, then spend **4 explicit attribute increases**, with a normal starting cap of `3`;
 - Learned Practice grants one trained Competence at `+1`; the player then chooses one additional personal trained Competence at `+1`; ordinary creation does not begin with `+2` expertise;
 - “fallen noble”-like backgrounds are approved, but the baseline pre-regional implementation is **몰락한 옛 수장가의 후예** (`fallen_head_house`) rather than silently introducing a mature Kanto-wide feudal aristocracy;
+- human progression uses **milestone-earned advancement + earned training/insight eligibility**, not character levels, kill-XP or use-count grinding;
+- ordinary permanent advancement costs initially use `1 / 2 / 3`: trained Competence, expert Competence, then core-attribute increase respectively, each requiring matching growth eligibility;
+- defeating or killing Pokémon grants no universal XP; progression comes from authored milestones, knowledge, insight, training, reputation, relationships, equipment/access and other meaningful consequences;
+- the normalized Competence catalog is intentionally compact, and there is no universal Pokémon `taming`/`handling` Competence;
 - character creation, compact TRPG checks, dice outcomes, conditional events, discoveries/insights and persistent run state are core;
 - public repository and non-commercial intent do not create Pokémon IP permission;
 - resource provenance and mobile resource discipline remain first-class constraints.
@@ -148,6 +152,15 @@ P3 owns:
 - the Origin seed set includes `fallen_head_house` (몰락한 옛 수장가의 후예), disaster survivor, outsider ward, shrine-raised, route household, craft household, wilds household, and ordinary village household.
 - Learned Practice seeds include hunter, route guide, village guard, forager, healer apprentice, smith apprentice, fisher, keeper, and ritual attendant.
 - Origin/Practice are story-state packages rather than fixed classes and may create contacts, recognition, possessions, debts, duties, claims, taboos, equipment and event flags.
+- **P3-HDG-005 / D-027:** progression is **milestone growth + earned training/insight eligibility**.
+- there is no general human level, kill-XP or repeated-use skill XP; authored milestones grant a small one-shot `advancement_points` resource.
+- an improvement also requires matching growth eligibility created by actual experience, training, mentorship, discovery or another authored causal source.
+- initial costs are `+0→+1 Competence = 1`, `+1→+2 Competence = 2`, `Attribute +1 = 3`, each plus eligibility; normal human attribute cap remains `4`.
+- permanent advancement spending occurs at safe/checkpoint moments rather than during immediate danger.
+- the initial normalized Competence catalog is `arms`, `hunting`, `wayfinding`, `foraging`, `medicine`, `smithing`, `crafting`, `fishing`, `recordkeeping`, `ritual`, `stealth`, `negotiation`.
+- a check receives at most one Competence bonus; repeated relevant Competences do not stack.
+- there is no universal Pokémon handling/taming Competence and defeating Pokémon grants no universal XP.
+- knowledge, routes, relationships, reputation, techniques, equipment/access and narrative permissions are first-class horizontal progression rewards.
 
 Binding contracts:
 
@@ -155,49 +168,26 @@ Binding contracts:
 - `docs/P3_DICE_AND_CHECK_CONTRACT.md`
 - `docs/P3_HEALTH_PRESSURE_AND_INJURY_CONTRACT.md`
 - `docs/P3_CHARACTER_CREATION_CONTRACT.md`
+- `docs/P3_PROGRESSION_AND_COMPETENCE_CONTRACT.md`
 
-Exact competence normalization, progression philosophy, inventory/economy abstraction, rare psychic-gift mechanics, and exact fate/insight resource rules remain open. Numeric envelopes above can be tuned in data without reopening their underlying rule architecture.
+Inventory/economy abstraction, rare psychic-gift mechanics, exact fate/roll-intervention resource rules and the final P3 exit audit remain open. Numeric envelopes above can be tuned in data without reopening their underlying rule architecture.
 
-### Exact next Human Design Gate
+### Exact next work
 
-Resolve **P3-HDG-005 — progression philosophy**.
+Define **P3 inventory / resources / economy abstraction**.
 
-Character creation now has explicit advancement headroom: starting attributes cap at `3` while the human scale already reserves `4`, and ordinary trained Competence begins at `+1` while `+2` represents expertise. P3 must decide **what player behavior actually earns growth** before finalizing competence taxonomy, fate/insight resources, economy rewards or rare-gift advancement.
+The contract must preserve the pre-regional village/clan economy and dangerous-travel tone without turning the mobile text RPG into a slot-by-slot survival spreadsheet. It should decide:
 
-#### A — Level / milestone point grants
+- what inventory detail is mechanically meaningful versus abstracted;
+- how carried supplies, tools, weapons, armor and bulky items are represented;
+- how food/water/medicine/travel preparation interact with Fatigue, Injury and Context;
+- how barter, obligations, local value and any limited currency-like medium are represented without inventing a mature Kanto-wide standardized economy;
+- how Pokémon-derived materials remain species/context-sensitive under D-021/P4 rather than generic loot;
+- what resource rewards can substitute for frequent Pokémon acquisition and conventional XP.
 
-- story milestones or major objectives grant advancement points;
-- player spends them directly on attributes, competences or later perks;
-- highly legible and easy to balance.
+If multiple materially different economy/inventory fantasies remain after a compact design pass, raise the minimum Human Design Gate rather than silently choosing one.
 
-**Impact:** strongest conventional RPG progression and clear reward dopamine, but can feel detached from what the character actually did.
-
-#### B — Use-based improvement
-
-- repeated meaningful use, training and successful/failed experience gradually improve the relevant competence or attribute;
-- little or no generic advancement currency.
-
-**Impact:** immersive and organic, but encourages grinding/skill-spam unless heavily constrained and is harder to balance deterministically.
-
-#### C — Milestone growth + earned training/insight **(recommended)**
-
-- major story/run milestones grant a small general advancement resource;
-- specific discoveries, mentors, repeated meaningful practice or hard-won insights unlock **what** can be improved or reduce its cost;
-- players choose the final spend rather than growth happening automatically from spammed actions;
-- attributes remain expensive/rare, Competence `+2`, new specialties, techniques and narrative permissions provide most ordinary growth.
-
-**Impact:** preserves clear reward moments and player agency while making advancement feel connected to the world. It also avoids Skyrim-like grind incentives and leaves room for bestiary/discovery rewards to feed progression without turning every encounter into XP farming.
-
-#### D — Mostly horizontal progression
-
-- attributes change rarely or almost never;
-- most growth comes from new competences, techniques, contacts, equipment access, knowledge, route mastery and background evolution.
-
-**Impact:** strongest grounded-human tone and easiest long-term numeric balance, but some players may feel insufficient personal power growth.
-
-Recommendation: **C — Milestone growth + earned training/insight**.
-
-After this gate, P3 should freeze the competence/progression contract, then inventory/economy abstraction and rare psychic-gift mechanics before an exit audit.
+After inventory/economy, P3 should bind rare psychic-gift mechanics, resolve any necessary fate/roll-intervention resource rule, then run a P3 exit audit before entering P4.
 
 ## Later mandatory contracts
 
