@@ -404,7 +404,7 @@ A Fortune Spike creates an additional meaningful opportunity such as hidden info
 
 A Trouble Spike adds a context-appropriate complication but is not automatic death, permanent injury, companion loss, or arbitrary campaign destruction. D-020 serious selective lethality remains authoritative.
 
-The default P3 check scale uses compact human attribute ratings `0–4`, competence `+0/+1/+2`, ordinary combined context `-2..+2`, and static difficulties `7 / 9 / 11 / 13 / 15`, with routine actions requiring no roll and structurally impossible actions receiving no roll until fiction changes.
+The default P3 check scale uses compact human attribute ratings `0–4`, competence `+0/+1/+2`, ordinary combined context `-2..+2`, and static difficulties `7 / 9 / 11 / 13 / 15`, with routine and impossible actions receiving no roll until fiction changes.
 
 The reward cadence must not depend primarily on frequent Pokémon acquisition. Exceptional outcomes and Fortune Spikes can instead drive knowledge, discovery, route, relationship, resource, reputation, and event-flag rewards.
 
@@ -462,4 +462,37 @@ Rare psychic gifts remain a separate later P3 mechanism. A shrine/ritual backgro
 
 The binding contract is `docs/P3_CHARACTER_CREATION_CONTRACT.md`.
 
-The next material Human Design Gate is **progression philosophy**: P3 must decide how human characters improve over a run/campaign before finalizing advancement-dependent mechanics.
+## D-027 — Milestone growth plus earned training/insight
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-005  
+**Owner choice:** C
+
+Human progression uses **milestone-earned advancement plus fiction/experience-gated eligibility**.
+
+Meaningful authored milestones grant a small spendable advancement resource, while actual experience, discoveries, mentors, deliberate training, difficult survival or hard-won insights determine which permanent improvements are currently eligible. The player chooses the final improvement rather than growth happening automatically from repeated actions.
+
+There is no general character level, kill-XP table, or use-count skill grinding. Repeated sword swings, repeated Medicine checks, repeated failures, walking distance, routine crafting loops, or repeatedly defeating Pokémon do not directly accumulate permanent skill XP.
+
+The initial advancement envelope is:
+
+- new trained Competence `+0 → +1`: **1 advancement point** plus matching eligibility;
+- expert Competence `+1 → +2`: **2 advancement points** plus expert-grade eligibility;
+- core attribute `+1`, to the normal human cap `4`: **3 advancement points** plus a significant breakthrough eligibility.
+
+Attributes are intentionally rarer to improve than Competence. Ordinary growth should also come from knowledge, techniques, relationships, reputation, route mastery, equipment/resource access and narrative permissions.
+
+The default normalized Competence catalog is compact: `arms`, `hunting`, `wayfinding`, `foraging`, `medicine`, `smithing`, `crafting`, `fishing`, `recordkeeping`, `ritual`, `stealth`, and `negotiation`. A check receives at most one Competence bonus.
+
+There is deliberately no universal Pokémon `taming`/`handling` Competence. Pokémon interaction and companionship remain species-, knowledge-, context- and relationship-dependent under D-013 and P4.
+
+Defeating or killing Pokémon grants no universal XP. Such events can still cause real progression when they complete authored milestones, reveal knowledge, unlock training, change reputation, or create another specific consequence.
+
+Permanent advancement spending occurs at explicit safe/checkpoint moments rather than during immediate danger. Milestones and eligibility grants must be deterministic, stateful and non-farmable.
+
+Rare psychic gifts remain separate from ordinary Competence. Generic advancement cannot create a psychic faculty in a character who does not already possess an explicitly established gift state.
+
+The binding contract is `docs/P3_PROGRESSION_AND_COMPETENCE_CONTRACT.md`.
+
+The next P3 work is inventory/resource/economy abstraction, followed by bounded rare-psychic-gift mechanics and a P3 exit audit.
