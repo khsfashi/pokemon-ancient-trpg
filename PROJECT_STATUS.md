@@ -75,12 +75,12 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current authoritative manifest state after Batch 12:
+Current authoritative manifest state after Batch 13:
 
 ```text
-dossier_complete_count == 96
+dossier_complete_count == 103
 pilot_reviewed_count == 2
-not_started_count == 53
+not_started_count == 46
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -112,45 +112,12 @@ Batch 09   PASS
 Batch 10   PASS
 Batch 11   PASS
 Batch 12   PASS
+Batch 13   PASS
 ```
 
 Important batch contracts and audits remain in the corresponding `docs/P4_BATCH_*` files. The manifest is the machine-readable source of coverage truth.
 
-### P4 Batch 12 — COMPLETE
-
-Foundational elemental anatomy / condition-signal / starter-meta stress roster:
-
-- #001 Bulbasaur / #002 Ivysaur / #003 Venusaur
-- #004 Charmander / #005 Charmeleon / #006 Charizard
-- #007 Squirtle / #008 Wartortle / #009 Blastoise
-
-Primary outputs:
-
-- `docs/P4_BATCH_12_FOUNDATIONAL_ELEMENTAL_ANATOMY_PLAN.md`
-- `docs/P4_BATCH_12_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_12_FULL_SCHEMA_DOSSIERS.md` plus nine indexed species dossier documents
-- `docs/P4_BATCH_12_COMPLETION_AUDIT.md`
-
-Batch 12 validates these boundaries:
-
-1. **Integrated anatomy is not equipment, inventory or loot.** Bulbasaur's seed, Ivysaur's bud, Venusaur's flower, Squirtle's shell and Blastoise's nozzles remain body-integrated species anatomy/state.
-2. **Charmander's tail flame is qualitative condition information, not HP UI.** It can communicate broad weakness/health without exact values, fixed thresholds or guaranteed death prediction.
-3. **Overgrow, Blaze and Torrent remain modern mechanic context.** They do not create ancient fixed-percentage physiology or automatic project damage multipliers.
-4. **Sunlight, season and local heat remain species/stage local.** Ivysaur/Venusaur and Charmeleon do not create generic Grass/Fire environmental formulas.
-5. **Charizard battle history supports explicit individual variation, not progression currency.** Veteran individuals may be exceptional through persistent history/traits, never kill-XP, visible levels, repeatable stat grinding or player scaling.
-6. **Squirtle shell hardening is maturation, not evolution or an armor upgrade.** Human smithing/repair rules are not inferred from biological shell state.
-7. **Wartortle longevity symbolism is culture, not magic or domestication.** Popularity among older people does not prove lifespan transfer, tail harvesting, common ownership or a care institution.
-8. **Blastoise weapon analogies do not advance human technology.** Cannon/jet/rocket-like wording describes anatomy and force, not ancient cannon, rockets, pressure vessels or industrial metallurgy.
-9. **Modern starter familiarity does not authorize ancient distribution.** The three families are not automatically beginner-safe, institutionally bred, settlement-common or routine companions.
-10. **Evolution-family facts remain stage-local.** Condition signals, heat, flight, maturation, symbolism and nozzles do not auto-copy across related stages.
-11. **Threat progression remains compatible with the RPG direction.** Ordinary low-tier species may become routine later; exceptional unevolved individuals may still become boss-grade through explicit authored profiles.
-12. **No new Human Design Gate was required.** Existing P2/P3/P4 contracts represent all reviewed uncertainties conservatively.
-
-`docs/P4_BATCH_12_COMPLETION_AUDIT.md` = **PASS**.
-
-`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 12 state: `96 complete / 2 pilot_reviewed / 53 not_started`.
-
-### P4 Batch 13 — SOURCE REVIEW COMPLETE
+### P4 Batch 13 — COMPLETE
 
 Aerial ecology / territoriality / traversal / multi-head control stress roster:
 
@@ -158,47 +125,48 @@ Aerial ecology / territoriality / traversal / multi-head control stress roster:
 - #021 Spearow / #022 Fearow
 - #084 Doduo / #085 Dodrio
 
-Primary outputs so far:
+Primary outputs:
 
 - `docs/P4_BATCH_13_AERIAL_ECOLOGY_TERRITORIALITY_MULTIHEAD_PLAN.md`
 - `docs/P4_BATCH_13_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_13_FULL_SCHEMA_DOSSIERS.md` plus seven indexed species dossier documents
+- `docs/P4_BATCH_13_COMPLETION_AUDIT.md`
 
-The source review validates these boundaries before full-schema authoring:
+Batch 13 validates these boundaries:
 
-1. **Flying type is not a universal traversal permission.** Spearow has explicit long-distance flight limits; Doduo is primarily a fast ground runner with poor/difficult flight; Fearow has explicit sustained/all-day flight evidence. Flight distance/endurance must remain species-local.
-2. **Six-axis Speed is not literal travel velocity.** The strongest regression is Dodrio: its normalized Speed rating is `5` versus Doduo `3`, while current official species text says Dodrio cannot run as fast as Doduo but can run for longer stretches.
-3. **Navigation and patrol are not omniscience.** Pidgey nest-homing, Pidgeotto aerial patrol, Pidgeotto/Pidgeot prey vision and Fearow search behavior do not grant arbitrary routefinding, map revelation, perfect detection or stealth immunity.
-4. **Historical extreme-speed claims remain source facts without becoming a physics engine.** Pidgeot's version-tagged Mach-2 wording is retained, but it does not define per-round distance, real-world kinetic-energy damage, automatic initiative or map travel time.
-5. **Territoriality and theft remain authored encounter behavior.** Pidgeotto/Spearow/Fearow pressure is context-driven; Fearow food-snatching cannot silently delete inventory or infer hidden item knowledge.
-6. **Multiple heads/organs do not multiply entity resources.** Doduo and Dodrio each remain one Pokémon/entity, one ordinary initiative/turn, one visible companion slot if applicable and one health/injury entity. Synchronization, lookout rotation, redundant organs and head leadership remain anatomy/behavior state.
-7. **Doduo between-head telepathy remains internal and species-local.** It does not create external mind reading, truth detection, Psychic typing or a generic psychic subsystem.
-8. **Modern abilities/evolution/held-item tables remain context.** `Keen Eye`, `Tangled Feet`, `Run Away`, `Early Bird`, hidden abilities, modern level thresholds and `Sharp Beak` held-item data do not become literal ancient guarantees, percentages, loot or institutions.
-9. **No new Human Design Gate was required.** Existing P2/P3/P4 contracts represent all reviewed pressures conservatively.
+1. **Flying type is not a universal traversal permission.** Spearow has explicit long-distance flight limits; Doduo is primarily a ground runner; Fearow has strong sustained-flight evidence.
+2. **Six-axis Speed is not literal travel velocity.** Dodrio has normalized `Speed 5` versus Doduo `Speed 3`, while current official text says Dodrio cannot run as fast as Doduo but can run for longer stretches.
+3. **Pidgey homing is home/nest-oriented, not arbitrary routefinding or map reveal.**
+4. **Pidgeotto patrol/vision and prey carrying do not create perfect surveillance, passenger transport or payload formulas.**
+5. **Pidgeot extreme source claims remain extraordinary without becoming a physics engine.** Version-scoped Mach-2, altitude and gust evidence is retained without kinetic-energy, initiative or fast-travel formulas.
+6. **Fearow food snatching is authored encounter pressure, not inventory mutation permission.** Exposed provisions require warning/counterplay/consequence resolution.
+7. **Multiple heads/organs do not multiply entity resources.** Doduo and Dodrio each remain one entity, one ordinary turn, one health state and one visible companion slot.
+8. **Doduo between-head telepathy remains internal and species-local.** It does not create external mind reading or a generic psychic subsystem.
+9. **Dodrio redundant organs support anatomy/endurance, not extra lives.** Head leadership supports internal behavior state, not arbitrary player control loss.
+10. **Modern abilities, held-item data and evolution levels remain source context rather than ancient fixed mechanics.**
+11. **No new Human Design Gate was required.**
 
-`docs/P4_BATCH_13_SOURCE_REVIEW.md` = **READY FOR FULL-SCHEMA AUTHORING**.
+`docs/P4_BATCH_13_COMPLETION_AUDIT.md` = **PASS**.
 
-The coverage manifest is intentionally unchanged at `96 complete / 2 pilot_reviewed / 53 not_started` until full-schema authoring + Batch 13 completion audit pass atomically.
+`docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 13 state: `103 complete / 2 pilot_reviewed / 46 not_started`.
 
 ## Exact next work
 
-Continue **P4 Batch 13** without entering P5:
+Continue **P4** without entering P5:
 
-1. author seven frozen-schema dossiers for #016-#018, #021-#022 and #084-#085 from the reviewed claim packets;
-2. reproduce the seven `p4-six-axis-v1` profiles with no manual exceptions and keep literal traversal/perception separate from the Speed axis;
-3. preserve version-scoped evidence for Pidgeot Mach-2/altitude/gust claims, Pidgeotto long-distance prey carrying, Fearow flight endurance, Doduo high ground speed/internal telepathy and Dodrio multi-organ/head-control claims;
-4. keep navigation, territory, detection, theft and multi-head behavior event-driven rather than deterministic player-state mutation or multiplied action economy;
-5. preserve modern abilities, held items and level evolution thresholds as source context rather than ancient fixed mechanics;
-6. run source/provenance, frozen-schema, P2/P3/P4 contradiction, evolution-family and cross-species regression checks;
-7. create the Batch 13 completion audit and promote exactly these seven manifest rows atomically only if the audit passes, yielding expected state `103 complete / 2 pilot_reviewed / 46 not_started`;
-8. keep D-034 direct encounterability separate from baseline-era natural presence;
-9. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
+1. select a coherent **Batch 14** roster from the remaining 46 `not_started` species using `docs/GEN1_SPECIES_COVERAGE_PLAN.md` and unresolved-system pressure as the selection criterion;
+2. create the Batch 14 plan before source review;
+3. review current official evidence plus pinned `SRC-DATA-001`, preserving claim-level provenance and version/region context;
+4. stop for a Human Design Gate only if a source-backed fact genuinely requires a new product-wide rule that existing P2/P3/P4 contracts cannot represent conservatively;
+5. keep D-034 direct encounterability separate from baseline-era natural presence;
+6. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
 
-Current authoritative state remains:
+Current authoritative state:
 
 ```text
-dossier_complete_count == 96
+dossier_complete_count == 103
 pilot_reviewed_count == 2
-not_started_count == 53
+not_started_count == 46
 blocking_p4_gate_count == 0
 ```
 
