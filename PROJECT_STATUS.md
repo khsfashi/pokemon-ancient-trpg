@@ -75,7 +75,7 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current authoritative manifest state after Batch 13:
+Current authoritative manifest state after Batch 13; Batch 14 selection does not mutate coverage:
 
 ```text
 dossier_complete_count == 103
@@ -150,16 +150,42 @@ Batch 13 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 13 state: `103 complete / 2 pilot_reviewed / 46 not_started`.
 
+### P4 Batch 14 — SELECTED
+
+Subterranean traversal / terrain integrity / lithic body / self-propelled hazard stress roster:
+
+- #027 Sandshrew / #028 Sandslash
+- #050 Diglett / #051 Dugtrio
+- #074 Geodude / #075 Graveler / #076 Golem
+- #095 Onix
+
+Selection contract:
+
+- `docs/P4_BATCH_14_SUBTERRANEAN_TERRAIN_LITHIC_BODY_PLAN.md`
+
+Batch 14 is intentionally selected to pressure these still-underrepresented boundaries without introducing global terrain simulation:
+
+1. **Ground/Rock typing is not universal burrowing permission.** Explicit tunneling capability remains species-local.
+2. **Terrain interaction is not a generic terrain-destruction/mining formula.** Dugtrio soil loosening and Onix boring require authored substrate/context.
+3. **Rocklike bodies are not scenery, ore, equipment or automatic loot.** Geodude camouflage and Golem shed shell remain biological/species-specific semantics.
+4. **Rolling, explosive and boring locomotion are not real-world physics formulas.** Graveler/Golem/Onix movement does not become momentum, blast-energy or fast-travel math.
+5. **Hidden/multiple body structures do not invite pseudo-canon or extra actions.** Diglett hidden anatomy stays unresolved where evidence is absent; Dugtrio remains one entity/turn/health state/companion slot.
+6. **No new Human Design Gate is required for selection.**
+
+The coverage manifest remains unchanged until all eight receive source review, full-schema dossiers and a passing Batch 14 completion audit.
+
 ## Exact next work
 
 Continue **P4** without entering P5:
 
-1. select a coherent **Batch 14** roster from the remaining 46 `not_started` species using `docs/GEN1_SPECIES_COVERAGE_PLAN.md` and unresolved-system pressure as the selection criterion;
-2. create the Batch 14 plan before source review;
-3. review current official evidence plus pinned `SRC-DATA-001`, preserving claim-level provenance and version/region context;
-4. stop for a Human Design Gate only if a source-backed fact genuinely requires a new product-wide rule that existing P2/P3/P4 contracts cannot represent conservatively;
-5. keep D-034 direct encounterability separate from baseline-era natural presence;
-6. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
+1. create the **P4 Batch 14 source review** for #027-#028, #050-#051, #074-#076 and #095;
+2. inventory current and historically relevant official evidence plus pinned `SRC-DATA-001`, preserving claim-level provenance and version/region context;
+3. establish explicit boundaries for burrowing versus Ground/Rock typing, underground ambush versus perfect stealth, terrain interaction versus destruction/mining formulas, rocklike body versus object/resource semantics, Golem shed material/explosion behavior, and Onix high-speed boring versus real-time physics/travel formulas;
+4. preserve Diglett hidden-body uncertainty instead of inventing anatomy and keep Dugtrio one-entity action economy consistent with earlier composite/multi-head regressions;
+5. stop for a Human Design Gate only if a source-backed fact genuinely requires a new product-wide rule that existing P2/P3/P4 contracts cannot represent conservatively;
+6. do not promote the manifest until the complete Batch 14 authoring/audit gate passes;
+7. keep D-034 direct encounterability separate from baseline-era natural presence;
+8. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
 
 Current authoritative state:
 
