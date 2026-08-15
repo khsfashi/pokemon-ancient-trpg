@@ -525,3 +525,34 @@ For implementation, derived carried Load must be recalculated only when load-rel
 The binding contract is `docs/P3_INVENTORY_RESOURCES_AND_ECONOMY_CONTRACT.md`.
 
 The next P3 work is bounded rare-psychic-gift mechanics, followed by deciding whether a separate fate/roll-intervention resource is necessary and then a P3 exit audit.
+
+## D-029 — Rare latent gift plus exceptional awakening
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-007  
+**Owner choice:** B + C, with rarity explicitly preserved
+
+Playable human psychic/miracle-worker capability uses a **rare latent-gift + exceptional-awakening hybrid**.
+
+The ordinary character-creation flow does **not** offer `psychic`, `seer`, `mage`, or another supernatural class as a direct selectable build. Most human characters have no psychic gift at all and remain fully valid, completeable protagonists.
+
+Gift state is conceptually separated into at least:
+
+- `none` — no established psychic faculty;
+- `latent` — an exceptionally rare inborn/anomalous potential exists but is not yet a reliable usable power;
+- `awakened` — the gift has manifested and can support bounded mechanics.
+
+A very small minority of characters may have a latent or already manifested gift surfaced through the veiled-lifepath opening. Ordinary formative choices alone must not provide a simple guaranteed recipe for selecting psychic power as a routine optimization. If a starting gift materially changes mechanics, the result is revealed before final character confirmation so the veiled system does not become a hidden stat trap.
+
+The primary/default route for playable psychic capability is **awakening during the run** through an explicit exceptional event, encounter, crisis, Psychic/Ghost phenomenon, mentor, dream, discovery, or other authored causal trigger. Awakening is not granted merely for spending generic advancement points, repeatedly attempting psychic actions, grinding a Competence, or reaching a character level.
+
+Rarity is a world and content contract, not merely flavor text. P5 must control awakening eligibility through explicit state and authored conditions, and later tuning may set exact occurrence rates/availability without making psychic awakening a routine expected reward. A full run with no psychic gift must remain normal and completeable.
+
+A gift remains **separate from Origin and Learned Practice**. A hunter, smith apprentice, route guide, healer apprentice, ritual attendant, fallen head-house descendant, or other background may independently possess or awaken a gift. Shrine/ritual background does not automatically imply psychic ability.
+
+One gifted person should normally possess only a narrow faculty or closely related manifestation family rather than access to a universal spell list. Exact manifestation families, activation checks, costs/risks, progression and reusable-versus-event-only boundaries remain the next P3 rules work.
+
+Generic D-027 advancement may improve control over an already established gift only after the psychic contract defines the required gift-specific eligibility. It cannot convert `none` into `latent` or `awakened` by purchase alone.
+
+This decision preserves D-015's intended social fantasy: genuine human psychics exist and can occupy a wizard-shaped narrative niche, but encountering or becoming one should remain exceptional rather than ordinary character-build infrastructure.
