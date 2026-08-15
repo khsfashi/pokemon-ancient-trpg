@@ -149,8 +149,8 @@ species:
   - {national_dex: 85, species_key: dodrio, dossier_status: not_started}
   - {national_dex: 86, species_key: seel, dossier_status: not_started}
   - {national_dex: 87, species_key: dewgong, dossier_status: not_started}
-  - {national_dex: 88, species_key: grimer, dossier_status: not_started}
-  - {national_dex: 89, species_key: muk, dossier_status: not_started}
+  - {national_dex: 88, species_key: grimer, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
+  - {national_dex: 89, species_key: muk, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 90, species_key: shellder, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 91, species_key: cloyster, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 92, species_key: gastly, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
@@ -161,8 +161,8 @@ species:
   - {national_dex: 97, species_key: hypno, dossier_status: not_started}
   - {national_dex: 98, species_key: krabby, dossier_status: not_started}
   - {national_dex: 99, species_key: kingler, dossier_status: not_started}
-  - {national_dex: 100, species_key: voltorb, dossier_status: not_started}
-  - {national_dex: 101, species_key: electrode, dossier_status: not_started}
+  - {national_dex: 100, species_key: voltorb, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
+  - {national_dex: 101, species_key: electrode, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 102, species_key: exeggcute, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 103, species_key: exeggutor, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 104, species_key: cubone, dossier_status: not_started}
@@ -170,8 +170,8 @@ species:
   - {national_dex: 106, species_key: hitmonlee, dossier_status: not_started}
   - {national_dex: 107, species_key: hitmonchan, dossier_status: not_started}
   - {national_dex: 108, species_key: lickitung, dossier_status: not_started}
-  - {national_dex: 109, species_key: koffing, dossier_status: not_started}
-  - {national_dex: 110, species_key: weezing, dossier_status: not_started}
+  - {national_dex: 109, species_key: koffing, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
+  - {national_dex: 110, species_key: weezing, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 111, species_key: rhyhorn, dossier_status: not_started}
   - {national_dex: 112, species_key: rhydon, dossier_status: not_started}
   - {national_dex: 113, species_key: chansey, dossier_status: not_started}
@@ -198,7 +198,7 @@ species:
   - {national_dex: 134, species_key: vaporeon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 135, species_key: jolteon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 136, species_key: flareon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
-  - {national_dex: 137, species_key: porygon, dossier_status: not_started}
+  - {national_dex: 137, species_key: porygon, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 138, species_key: omanyte, dossier_status: not_started}
   - {national_dex: 139, species_key: omastar, dossier_status: not_started}
   - {national_dex: 140, species_key: kabuto, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
@@ -211,5 +211,5 @@ species:
   - {national_dex: 147, species_key: dratini, dossier_status: not_started}
   - {national_dex: 148, species_key: dragonair, dossier_status: not_started}
   - {national_dex: 149, species_key: dragonite, dossier_status: not_started}
-  - {national_dex: 150, species_key: mewtwo, dossier_status: not_started}
+  - {national_dex: 150, species_key: mewtwo, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 151, species_key: mew, dossier_status: pilot_reviewed, authoring_batch: pilot, p6_followup_required: true}
