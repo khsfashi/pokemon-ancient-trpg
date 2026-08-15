@@ -96,10 +96,10 @@ species:
   - {national_dex: 32, species_key: nidoran-m, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 33, species_key: nidorino, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 34, species_key: nidoking, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
-  - {national_dex: 35, species_key: clefairy, dossier_status: not_started}
-  - {national_dex: 36, species_key: clefable, dossier_status: not_started}
-  - {national_dex: 37, species_key: vulpix, dossier_status: not_started}
-  - {national_dex: 38, species_key: ninetales, dossier_status: not_started}
+  - {national_dex: 35, species_key: clefairy, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
+  - {national_dex: 36, species_key: clefable, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
+  - {national_dex: 37, species_key: vulpix, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
+  - {national_dex: 38, species_key: ninetales, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
   - {national_dex: 39, species_key: jigglypuff, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 40, species_key: wigglytuff, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 41, species_key: zubat, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
@@ -183,9 +183,9 @@ species:
   - {national_dex: 119, species_key: seaking, dossier_status: not_started}
   - {national_dex: 120, species_key: staryu, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 121, species_key: starmie, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
-  - {national_dex: 122, species_key: mr-mime, dossier_status: not_started}
+  - {national_dex: 122, species_key: mr-mime, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
   - {national_dex: 123, species_key: scyther, dossier_status: not_started}
-  - {national_dex: 124, species_key: jynx, dossier_status: not_started}
+  - {national_dex: 124, species_key: jynx, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
   - {national_dex: 125, species_key: electabuzz, dossier_status: not_started}
   - {national_dex: 126, species_key: magmar, dossier_status: not_started}
   - {national_dex: 127, species_key: pinsir, dossier_status: not_started}
