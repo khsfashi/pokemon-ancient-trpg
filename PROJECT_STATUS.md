@@ -184,22 +184,41 @@ Batch 08 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` was also refreshed because its explanatory text had remained stale at the Batch 06 `52 complete` snapshot even though the manifest had already promoted Batch 07. It now matches the authoritative Batch 08 state: `64 complete / 2 pilot_reviewed / 85 not_started`.
 
+### P4 Batch 09 — SELECTED
+
+Selected mind-state / agency / exposure-hazard stress roster:
+
+- #039 Jigglypuff
+- #040 Wigglytuff
+- #048 Venonat
+- #049 Venomoth
+- #054 Psyduck
+- #055 Golduck
+- #096 Drowzee
+- #097 Hypno
+
+Selection contract: `docs/P4_BATCH_09_MIND_STATE_AGENCY_HAZARDS_PLAN.md`.
+
+The batch is designed to distinguish auditory sleep/drowsiness, dream sensing/consumption, hypnosis, involuntary psychic manifestation, body-contact versus airborne toxin exposure, and aquatic route permission without introducing a generic mental-status or mind-control system. Existing P3 player-agency, Will/pressure and P4 species-local hazard contracts are sufficient for selection, so no new Human Design Gate is currently blocking the batch.
+
+The manifest deliberately remains unchanged at `64 complete / 2 pilot_reviewed / 85 not_started` until Batch 09 source review, full-schema dossiers and completion audit pass.
+
 ## Exact next work
 
-Select **P4 Batch 09** from the remaining 85 `not_started` species.
+Perform **P4 Batch 09 source review** for #039 Jigglypuff, #040 Wigglytuff, #048 Venonat, #049 Venomoth, #054 Psyduck, #055 Golduck, #096 Drowzee and #097 Hypno.
 
-Selection should maximize new contract pressure rather than merely choose adjacent Pokédex numbers. Prefer a compact 6–8 species batch that tests one or more still-underrepresented boundaries such as:
+The review must establish evidence-backed boundaries between:
 
-- sleep, dream, hypnosis, fear or mind-state hazards without taking away player agency through a generic status system;
-- extreme physical scale / burrowing / terrain destruction / constriction without reducing world capability to six-axis ratings;
-- aquatic breathing, drowning, current, pressure or amphibious route permissions;
-- plant poison/spore/pollen ingestion/contact versus environmental exposure;
-- explicit toolmaking, carried objects, human imitation or settlement interaction without inventing infrastructure;
-- fossils/ancient survivorship where chronology can be tested without repeating Batch 05 artificial-origin cases.
+- drowsiness and induced sleep;
+- dream sensing/consumption and unsupported omniscient mind reading;
+- hypnosis/mental pressure and unsupported arbitrary player-character command;
+- Psyduck's involuntary power manifestation and unbounded random hazard logic;
+- Venonat body-contact toxin and Venomoth airborne/dispersed exposure;
+- Golduck aquatic traversal permission and six-axis Speed.
 
-Before selecting, inspect remaining manifest rows and completed-batch coverage so the new batch adds a genuinely new stress axis. Create a selection plan first; do **not** promote manifest rows until source review, full-schema authoring and completion audit pass.
+Use current primary official evidence plus the project's pinned structured-data provenance. Classify source fact versus synthesis/inference/extrapolation explicitly. Raise a Human Design Gate only if credible source evidence forces a persistent player-facing rule that existing P3/P4 contracts cannot conservatively represent.
 
-Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
+Do **not** promote the eight manifest rows yet. Do **not** begin P5 while P4 remains incomplete. Continue through full-schema authoring and completion audit only after the source review closes these boundaries.
 
 ## Later mandatory contracts
 
