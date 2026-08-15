@@ -246,9 +246,9 @@ Elemental branch regressions also preserve hazard semantics:
 
 `docs/P4_BATCH_03_COMPLETION_AUDIT.md` = **PASS**.
 
-### P4 Batch 04 — SELECTED
+### P4 Batch 04 — SOURCE REVIEW COMPLETE / BLOCKED ON P4-HDG-003
 
-Batch 04 is selected in `docs/P4_BATCH_04_COMPOSITE_DEPENDENCY_PLAN.md` with eight new dossiers:
+Batch 04 selection is owned by `docs/P4_BATCH_04_COMPOSITE_DEPENDENCY_PLAN.md` and source review is now recorded in `docs/P4_BATCH_04_SOURCE_REVIEW.md` for:
 
 - #046 Paras
 - #047 Parasect
@@ -259,47 +259,54 @@ Batch 04 is selected in `docs/P4_BATCH_04_COMPOSITE_DEPENDENCY_PLAN.md` with eig
 - #090 Shellder
 - #091 Cloyster
 
-Selection pressure is deliberately different from Batches 01-03:
+Source review confirms that three of the four target boundaries fit existing contracts without a new owner decision:
 
-1. Paras/Parasect tests host/parasite control across maturation and evolution without inventing universal Pokémon metaphysics.
-2. Slowpoke/Slowbro tests a canonically interspecies-triggered and reversible evolution: Shellder attachment can create Slowbro and Shellder loss can restore Slowpoke.
-3. Shellder/Cloyster separates Shellder's own evolution family from its role in another species' evolution.
-4. Magnemite/Magneton tests a canonical species entity formed from several/three recognizable Magnemite units, creating a new prior-individual provenance and potential companion-slot/identity pressure beyond Exeggcute's already-clustered baseline.
+1. **Paras/Parasect** — fungal growth/control is a species-local biological dependency; it does not create universal Pokémon mind/soul rules or a generic medicinal-harvest loop.
+2. **Slowpoke/Slowbro** — Shellder-triggered Slowbro and source-backed reversion to Slowpoke can be represented as one species-specific reversible dependency without a global de-evolution command; persistent history/bond still survives the stage change.
+3. **Shellder/Cloyster** — Shellder's participation in Slowbro does not replace its own Shellder → Cloyster family and does not automatically grant a separate free companion.
 
-The selection plan does **not** resolve a universal identity/soul rule. Full source review must first determine whether Magneton can remain a bounded species-specific composite-history case or exposes a genuine Human Design Gate for multiple independently persistent/bonded Magnemite becoming one entity.
+Magnemite/Magneton exposes the first blocking Batch 04 Human Design Gate. Official evidence states that three/several Magnemite join and that three Magnemite gathered to evolve into one canonical Magneton. This differs from Exeggcute because the contributing Magnemite can exist beforehand as separate persistent individuals.
 
-Current manifest remains unchanged until the entire batch passes:
+**P4-HDG-003** asks what happens when multiple independently persistent/bonded Magnemite with separate histories become one Magneton while D-013 still requires exactly three visible companion slots and D-032 says individual identity/history/bond survives evolution.
+
+Recommended answer in the source review is **Option A: one Magneton entity / one visible companion slot with contributor provenance retained as species-specific history**, without a generic splitting rule or universal soul theory.
+
+No Batch 04 manifest row is promoted before this gate is resolved. Current manifest counts therefore remain:
 
 ```text
 dossier_complete_count == 28
 pilot_reviewed_count == 2
 not_started_count == 121
 draft_count == 0
-blocking_p4_gate_count == 0
+```
+
+Operational P4 state now has:
+
+```text
+blocking_human_design_gate_count == 1
+blocking_gate == P4-HDG-003
 ```
 
 The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
 
 ## Exact next work
 
-Source-review **P4 Batch 04**:
+Resolve **P4-HDG-003 — Magneton multi-origin persistent identity**.
 
-- #046 Paras
-- #047 Parasect
-- #079 Slowpoke
-- #080 Slowbro
-- #081 Magnemite
-- #082 Magneton
-- #090 Shellder
-- #091 Cloyster
+Options are fully specified in `docs/P4_BATCH_04_SOURCE_REVIEW.md`:
 
-Required order:
+- **A (recommended):** Magneton becomes one active entity/one visible companion slot while all contributing Magnemite retain species-specific provenance/history records;
+- **B:** independently bonded companion Magnemite do not undergo baseline composite evolution;
+- **C:** one contributor becomes the continuing primary identity while the others are subsumed into provenance.
 
-1. confirm identity, typing, raw six stats and evolution-family metadata;
-2. collect current official evidence for host/parasite control, Slowbro's Shellder-trigger/reversion, Magneton's multi-Magnemite formation, and Shellder/Cloyster shell hazards;
-3. classify claims under C1/C2/D1/D2/U;
-4. test whether Magneton's multi-origin identity/companionship semantics create a blocking Human Design Gate;
-5. if unblocked, derive `p4-six-axis-v1`, author hazards/capabilities, fill all eight shared-schema dossiers, run domain/provenance/P2-P4 regressions, promote the manifest atomically, and write the Batch 04 completion audit.
+After the owner selects an option:
+
+1. record the durable P4-HDG-003 decision and narrow shared invariant changes;
+2. author all eight Batch 04 full-schema dossiers;
+3. run host/parasite, reversible-evolution, Shellder-participant and Magneton composite/provenance regressions;
+4. run P2/P3/P4 contradiction and provenance checks;
+5. promote all eight manifest rows atomically only after the batch passes;
+6. write `docs/P4_BATCH_04_COMPLETION_AUDIT.md`.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
