@@ -246,7 +246,29 @@ Elemental branch regressions also preserve hazard semantics:
 
 `docs/P4_BATCH_03_COMPLETION_AUDIT.md` = **PASS**.
 
-Current manifest audit after Batch 03:
+### P4 Batch 04 — SELECTED
+
+Batch 04 is selected in `docs/P4_BATCH_04_COMPOSITE_DEPENDENCY_PLAN.md` with eight new dossiers:
+
+- #046 Paras
+- #047 Parasect
+- #079 Slowpoke
+- #080 Slowbro
+- #081 Magnemite
+- #082 Magneton
+- #090 Shellder
+- #091 Cloyster
+
+Selection pressure is deliberately different from Batches 01-03:
+
+1. Paras/Parasect tests host/parasite control across maturation and evolution without inventing universal Pokémon metaphysics.
+2. Slowpoke/Slowbro tests a canonically interspecies-triggered and reversible evolution: Shellder attachment can create Slowbro and Shellder loss can restore Slowpoke.
+3. Shellder/Cloyster separates Shellder's own evolution family from its role in another species' evolution.
+4. Magnemite/Magneton tests a canonical species entity formed from several/three recognizable Magnemite units, creating a new prior-individual provenance and potential companion-slot/identity pressure beyond Exeggcute's already-clustered baseline.
+
+The selection plan does **not** resolve a universal identity/soul rule. Full source review must first determine whether Magneton can remain a bounded species-specific composite-history case or exposes a genuine Human Design Gate for multiple independently persistent/bonded Magnemite becoming one entity.
+
+Current manifest remains unchanged until the entire batch passes:
 
 ```text
 dossier_complete_count == 28
@@ -260,19 +282,24 @@ The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
 
 ## Exact next work
 
-Continue **P4** by selecting Batch 04 using ecology/evolution-family/domain pressure rather than raw Pokédex order.
+Source-review **P4 Batch 04**:
 
-Batch 04 selection should prioritize at least one still-unproven P4 boundary or materially different hazard/ecology pattern, then follow the established atomic loop:
+- #046 Paras
+- #047 Parasect
+- #079 Slowpoke
+- #080 Slowbro
+- #081 Magnemite
+- #082 Magneton
+- #090 Shellder
+- #091 Cloyster
 
-1. select a compact family/ecology-aware roster;
-2. source-review every selected species against current official evidence plus pinned structured inputs;
-3. expose a Human Design Gate only if a durable owner-level interpretation is genuinely required;
-4. derive `p4-six-axis-v1` mechanically with no manual exception unless the scale structurally fails;
-5. author capability/hazard records before threat summaries;
-6. fill every shared-schema section;
-7. run family/domain, provenance and P2/P3/P4 contradiction regressions;
-8. promote manifest rows only after the whole batch passes;
-9. write the batch completion audit and advance this handoff.
+Required order:
+
+1. confirm identity, typing, raw six stats and evolution-family metadata;
+2. collect current official evidence for host/parasite control, Slowbro's Shellder-trigger/reversion, Magneton's multi-Magnemite formation, and Shellder/Cloyster shell hazards;
+3. classify claims under C1/C2/D1/D2/U;
+4. test whether Magneton's multi-origin identity/companionship semantics create a blocking Human Design Gate;
+5. if unblocked, derive `p4-six-axis-v1`, author hazards/capabilities, fill all eight shared-schema dossiers, run domain/provenance/P2-P4 regressions, promote the manifest atomically, and write the Batch 04 completion audit.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
