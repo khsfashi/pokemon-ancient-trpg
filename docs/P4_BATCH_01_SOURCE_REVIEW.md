@@ -1,9 +1,9 @@
 # P4 Batch 01 — Source Review
 
-Status: **SOURCE REVIEW COMPLETE — one Human Design Gate exposed**  
+Status: **SOURCE REVIEW COMPLETE — P4-HDG-002 RESOLVED**  
 Date: **2026-08-15**  
 Tracks: **#5**  
-Depends on: `docs/P4_BATCH_01_PILOT_FAMILY_CLOSURE_PLAN.md`, `docs/P4_POKEMON_DOMAIN_CONTRACT.md`, `docs/P4_SPECIES_DOSSIER_SCHEMA.md`, `docs/P4_PILOT_FULL_SCHEMA_DOSSIERS.md`
+Depends on: `docs/P4_BATCH_01_PILOT_FAMILY_CLOSURE_PLAN.md`, `docs/P4_POKEMON_DOMAIN_CONTRACT.md`, `docs/P4_SPECIES_DOSSIER_SCHEMA.md`, `docs/P4_PILOT_FULL_SCHEMA_DOSSIERS.md`, `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## 1. Review rule
 
@@ -18,6 +18,8 @@ Batch 01 reuses the existing P4 evidence policy:
 
 Inherited structured revision: `SRC-DATA-001@2cda0b56`.
 
+D-032 additionally requires that **ordinary growth/maturation and evolution remain distinct concepts**. Modern level/trade metadata is preserved as source context but is never translated automatically into kill-XP, a visible level threshold, an ancient trading institution, or an invented ritual.
+
 No Batch 01 source claim changes D-031, `p4-six-axis-v1`, the no-player-scaling rule, or the hazard-severity clarification.
 
 ## 2. Source registry for this batch
@@ -27,11 +29,11 @@ No Batch 01 source claim changes D-031, `p4-six-axis-v1`, the no-player-scaling 
 | `OFFICIAL-DEX-KAKUNA-US` | `https://www.pokemon.com/us/pokedex/kakuna` | defensive stinger/poison evidence, identity/type/ability/family |
 | `OFFICIAL-DEX-KAKUNA-PH` | `https://ph.portal-pokemon.com/play/pokedex/0014` | cocoon immobility, tree-clinging, internal metamorphic heat, physical metadata |
 | `OFFICIAL-DEX-RATICATE-SG` | `https://sg.portal-pokemon.com/play/pokedex/0020` | swimming adaptation, whisker sensitivity, identity/type/abilities/family |
-| `OFFICIAL-DEX-HAUNTER-SG` | `https://sg.portal-pokemon.com/play/pokedex/0093` | darkness stalking, gaseous touch, wall traversal, lethal-withering lick rumor, Levitate, physical metadata |
+| `OFFICIAL-DEX-HAUNTER-SG` | `https://sg.portal-pokemon.com/play/pokedex/0093` | darkness stalking, gaseous touch, wall traversal, lethal-withering lick evidence, physical metadata |
 | `OFFICIAL-DEX-GENGAR-SG` | `https://sg.portal-pokemon.com/play/pokedex/0094` | shadow intrusion, heat theft, life-stealing intent, protective-charm warning, identity/type/ability/family |
 | `OFFICIAL-DEX-MAGIKARP-PH` | `https://ph.portal-pokemon.com/play/pokedex/0129` | weakness/hardiness, broad aquatic tolerance, historical-strength statement, identity/type/ability/family |
 | `OFFICIAL-DEX-KABUTOPS-SG` | `https://sg.portal-pokemon.com/play/pokedex/0141` | extinct status, land-adaptation evidence, ~29-knot swimming, prey pursuit with scythes, identity/type/abilities/family |
-| `POKEAPI-EVOLUTION-CONTRACT` | `https://pokeapi.co/docs/v2` | structured distinction between evolution relationship and trigger metadata; Rattata example documents level-up trigger semantics |
+| `POKEAPI-EVOLUTION-CONTRACT` | `https://pokeapi.co/docs/v2` | structured distinction between evolution relationship and modern trigger metadata |
 
 The repository stores paraphrases and source pointers rather than reproducing long flavor-text passages.
 
@@ -74,8 +76,14 @@ C1:
 D1:
 
 - `immobile != harmless`: approach and handling are easier than against Beedrill, but direct grabbing can still create venom exposure.
-- Colony/parent-stage pressure belongs to cross-species encounter context, not a Kakuna stat bonus.
+- Colony/family pressure belongs to cross-species encounter context, not a Kakuna stat bonus.
 - The hot shell is a tracking/identification clue and a narrow handling hazard, not evidence for general fire capability.
+
+D-032 evolution treatment:
+
+- Weedle -> Kakuna -> Beedrill is a biologically legible metamorphic family.
+- The cocoon transition is still a discontinuous species event rather than ordinary aging or a level-up stat increment.
+- Timing, survival and habitat can matter without inventing a visible XP threshold.
 
 No blocking gap.
 
@@ -92,7 +100,13 @@ D1:
 
 - Compared with Rattata, the species baseline justifies stronger bite/gnaw pressure and better physical contest values without preserving mandatory late-game difficulty.
 - Swimming widens escape/access routes around rivers, wetlands, shorelines, and flooded storage; it does not imply a universal aquatic habitat.
-- The existing named-apex Rattata may still exceed an ordinary Raticate in selected axes because individual history is separate from evolution-stage baseline.
+- The existing named-apex Rattata may still exceed an ordinary Raticate in selected axes because individual growth/history is separate from evolution-stage baseline.
+
+D-032 evolution treatment:
+
+- Ordinary Rattata growth remains same-species development.
+- Rattata -> Raticate is a separate species transformation; modern level metadata is not kill-XP or an automatic age counter.
+- P5 may author readiness/maturation conditions, but evolution itself remains a meaningful event.
 
 No blocking gap.
 
@@ -104,15 +118,21 @@ C1:
 - Levitate is an exposed ability input.
 - It stalks in total darkness and can touch with a gaseous hand; contact is associated with uncontrollable shuddering.
 - Official material describes it as able to pass through walls and appear from unexpected positions.
-- Official material preserves a lethal-withering rumor/consequence around being licked.
+- Official material preserves a potentially lethal progressive-withering consequence around being licked.
 
 D1:
 
 - Ordinary physical barriers and weapon approaches can be invalid rather than merely difficult when Haunter is not materially committed.
-- Darkness, enclosed ruins, and blind corners amplify encounter risk because warning and line-of-retreat information are reduced.
-- The lick hazard must have separate exposure and post-exposure consequence semantics; Potency 5 does not itself define lethality.
+- Darkness, enclosed ruins and blind corners amplify encounter risk because warning and line-of-retreat information are reduced.
+- The lick hazard keeps exposure and post-exposure consequence semantics separate; Potency 5 does not itself define lethality.
 
-No blocking gap for the Haunter dossier itself.
+D2 / D-032:
+
+- Haunter may naturally reach Gengar through a rare species transformation.
+- Ordinary humans do not know a reproducible trigger.
+- A companion Haunter has no generic intentional `Evolve` action; a transformation requires a rare authored event/state.
+
+No blocking gap remains.
 
 ### #094 Gengar / 팬텀
 
@@ -122,21 +142,23 @@ C1:
 - Official material supports entering/occupying a victim's shadow, stealing body heat, and waiting for an opportunity to take life.
 - A protective charm is explicitly presented in official material as an urgent response when a victim's shadow displays an anomalous warning sign.
 - Cursed Body is the current exposed ability input.
+- The Haunter -> Gengar family relationship is canonical, while modern structured metadata uses a trade trigger.
 
 D1:
 
-- Shadow occupation is a permission-level anomalous hazard: ordinary line-of-sight, walls, and conventional guard posture may not be sufficient counterplay.
-- Heat loss creates a distinct environmental/physiological hazard track and can raise Fear or exposure consequences without making every Gengar automatically aggressive.
-- Protective-charms can support a narrow P3 emergency-consumable hook, but P4 must not invent ingredients, universal efficacy, or a generic anti-Ghost item economy.
+- Shadow occupation is a permission-level anomalous hazard: ordinary line-of-sight, walls and conventional guard posture may not be sufficient counterplay.
+- Heat loss creates a distinct environmental/physiological hazard track without making every Gengar automatically aggressive.
+- Protective charms can support a narrow P3 emergency-consumable hook, but P4 must not invent ingredients, universal efficacy, or a generic anti-Ghost item economy.
 
-U / blocking design gap:
+D2 / owner-approved P4-HDG-002 resolution:
 
-- The family relationship `Haunter -> Gengar` is canonical.
-- Modern structured evolution metadata uses a trade trigger.
-- The reviewed official Pokédex evidence does **not** establish a biological, ritual, social, geographic, or temporal cause that can simply replace trade in this ancient setting.
-- Choosing a universal ancient trigger would therefore create durable project lore rather than recover an existing official fact.
+- **A — Unknown natural maturation** is binding, refined by D-032.
+- Gengar exists naturally, and a Haunter can undergo a rare natural species transformation into Gengar.
+- The biological/anomalous trigger is not known or reproducible by ordinary humans.
+- The modern trade trigger remains modern gameplay/source metadata and is **not** interpreted as an ancient trading institution, ownership-transfer ritual, or known biological law.
+- Future content may expose case-specific signs or hypotheses but may not establish a universal trigger without new source review or a later owner decision.
 
-This exposes **P4-HDG-002 — Ancient Haunter -> Gengar evolution interpretation**.
+No blocking gap remains. The exact underlying cause is intentionally unknown, not a pending design gate.
 
 ### #129 Magikarp / 잉어킹
 
@@ -144,15 +166,21 @@ C1:
 
 - Water-type base stage of the Magikarp/Gyarados family.
 - Official material describes modern Magikarp as very weak but unusually hardy and able to live in many kinds of water.
-- Official material explicitly states that distant-past Magikarp were somewhat stronger than their present-day descendants.
+- Official material explicitly states that distant-past Magikarp were somewhat stronger than present-day descendants.
 - Swift Swim is an exposed ability input.
 
 D1:
 
-- This is direct support for a species-specific `canon_historical_change` classification.
-- The historical statement does not supply exact ancient base stats, so P4 must not invent a universal numeric buff or retroactively modify `p4-six-axis-v1` without a later balance decision.
-- Ancient Magikarp can be authored as physically more capable or less helpless than the modern stereotype while remaining far below ordinary Gyarados in overall threat.
+- This directly supports a species-specific `canon_historical_change` classification.
+- The historical statement does not supply exact ancient base stats, so P4 does not invent a universal numeric buff or modify `p4-six-axis-v1`.
+- Ancient Magikarp may be less helpless than the modern stereotype while remaining far below ordinary Gyarados in overall threat.
 - Hardiness supports environmental survival, not combat aggression.
+
+D-032 evolution treatment:
+
+- Magikarp growth and lineage strength variation remain same-species concepts.
+- Magikarp -> Gyarados is a separate, dramatic species transformation with persistent individual identity.
+- Modern level metadata is not a visible age/XP meter; P5 must give the transformation an authored rare-event context rather than automatic battle grinding.
 
 No blocking gap.
 
@@ -169,9 +197,15 @@ C1:
 
 D1:
 
-- If living evidence is ever present in this pre-Hisui setting, Kabutops is a high-force pursuit predator with credible aquatic ambush/closing pressure.
-- The setting's age does not itself prove that the opening region has a living population: Kabuto's reviewed rare-relict evidence remains locality-specific, and Kabutops requires separate evidence or authored exceptional treatment.
-- Fossils, shed remains, old hunting damage, myths, or indirect ecological traces can all count as dossier/gameplay hooks without manufacturing a routine spawn table.
+- If living evidence is present in this pre-Hisui setting, Kabutops is a high-force pursuit predator with credible aquatic ambush/closing pressure.
+- The setting's age does not itself prove that the opening region has a living population; Kabuto's reviewed rare-relict evidence remains locality-specific.
+- Fossils, old hunting damage, myths or indirect ecological traces can all count as dossier/gameplay hooks without manufacturing a routine spawn table.
+
+D-032 evolution treatment:
+
+- Kabuto growth within a relict lineage is separate from Kabuto -> Kabutops transformation.
+- Modern level metadata is not a diegetic automatic progression meter.
+- Exact ancient transformation conditions remain source-unknown and may be authored only within the D-032 boundary.
 
 No blocking gap.
 
@@ -179,58 +213,62 @@ No blocking gap.
 
 ### Weedle -> Kakuna -> Beedrill
 
-PASS with the following invariant:
+**PASS.**
 
 - venom remains a consequence mechanism independent of raw stat scale;
 - Kakuna is less mobile but not automatically safe to handle;
+- metamorphosis is a real species transition, distinct from ordinary growth;
 - Beedrill colony pressure remains repeated exposure/route control rather than a generic swarm stat bonus.
 
 ### Rattata -> Raticate
 
-PASS with the following invariant:
+**PASS.**
 
-- ordinary maturation raises baseline physical capability;
-- player progression is still allowed to make both ordinary stages routine;
+- ordinary growth and exceptional individual development remain same-species changes;
+- evolution changes the family stage but does not guarantee permanent encounter relevance;
+- player progression may still make both ordinary stages routine;
 - `pilot-rattata-apex-01` remains legal and may exceed ordinary Raticate on selected axes.
 
 ### Gastly -> Haunter -> Gengar
 
-PARTIAL PASS:
+**PASS under D-032 / P4-HDG-002 choice A.**
 
 - Ghost materiality/approach invalidation remains coherent;
 - hazard severity remains separate from Potency;
-- Haunter and Gengar evidence supports progressively stronger predatory/anomalous pressure;
-- family closure is blocked only by the ancient interpretation of the modern trade trigger.
+- Haunter and Gengar support progressively stronger predatory/anomalous pressure;
+- Haunter -> Gengar is a rare natural transformation with an unknown reproducible cause;
+- no ancient trade institution or ritual is invented to mimic the modern trade trigger.
 
 ### Magikarp -> Gyarados
 
-PASS with the following invariant:
+**PASS.**
 
 - stronger ancient Magikarp is canon-supported but species-specific;
-- the transformation remains a persistent-individual biological change, not player kill-XP;
+- ordinary growth/lineage variation remains distinct from evolution;
+- the transformation preserves persistent individual identity and is not player kill-XP;
 - no source supports turning ancient Magikarp into miniature Gyarados by blanket stat inflation.
 
 ### Kabuto -> Kabutops
 
-PASS with the following invariant:
+**PASS.**
 
-- fossil evidence, historical existence, rare-relict evidence, and confirmed local living presence remain distinct knowledge states;
-- ancient-setting chronology alone never guarantees an opening-region spawn.
+- fossil evidence, historical existence, rare-relict evidence and confirmed local living presence remain distinct knowledge states;
+- ancient-setting chronology alone never guarantees an opening-region spawn;
+- same-species development is distinct from the Kabuto -> Kabutops transformation.
 
-## 6. Human Design Gate
+## 6. Human Design Gate resolution
 
 ### P4-HDG-002 — Ancient Haunter -> Gengar evolution interpretation
 
-Owner choice is required before Batch 01 can be promoted to `complete`.
+**RESOLVED: A — Unknown natural maturation, generalized through D-032.**
 
-Candidate directions:
+The phrase `natural maturation` does **not** mean ordinary aging automatically becomes evolution. It means the transformation occurs naturally within the species family without a known human-reproducible recipe. D-032 keeps ordinary growth and the rare transformation separate.
 
-- **A — Unknown natural maturation:** treat `trade` as non-diegetic modern gameplay metadata. Gengar exists naturally, but ordinary humans do not know a reproducible Haunter evolution trigger. Player-owned/companion Haunter cannot intentionally evolve through a generic action until a later rare authored event establishes a case-specific cause.
-- **B — Voluntary bond-transfer threshold:** preserve the exchange motif by making evolution possible when a Haunter voluntarily changes its enduring human/community bond. This is thematically close to trade but is new D2 species-wide lore.
-- **C — Liminal crossing ritual:** interpret trade as a proxy for crossing an ownership/social boundary and bind evolution to an ancient reciprocal transfer rite. This preserves a recognizable trade analogue but risks over-civilizing a wild Ghost family and requires more invented ritual detail.
-- **D — Exceptional-only unresolved:** ordinary wild Gengar exists, but Haunter-to-Gengar transformation is treated as rare, exceptional, and not governed by a universal reproducible rule in baseline P4. Specific future events may author individual causes without claiming a species-wide mechanism.
+Evidence boundary:
 
-Recommended default: **A**. It is the smallest extrapolation, preserves the canonical family without pretending a gameplay trade mechanic is a discovered biological law, and keeps Gengar appropriately mysterious in a low-technology pre-Hisui setting.
+- `Haunter -> Gengar` family relationship: source-backed;
+- modern trade trigger: source/mechanical metadata;
+- rare natural transformation with no known reproducible ancient trigger: D2 project interpretation approved by the owner.
 
 ## 7. Review result
 
@@ -238,10 +276,11 @@ Recommended default: **A**. It is the smallest extrapolation, preserves the cano
 source_review_species_count == 6
 source_review_complete_count == 6
 rating_profile_reproducible_count == 6
-family_consistency_pass_count == 4
-family_consistency_partial_count == 1
-blocking_human_design_gate_count == 1
-blocking_gate == P4-HDG-002
+family_consistency_pass_count == 5
+family_consistency_partial_count == 0
+blocking_human_design_gate_count == 0
+P4_HDG_002 == RESOLVED_A
+shared_evolution_rule == D-032
 ```
 
-The next authoring artifact may fill all non-gated schema sections now, but manifest promotion for Batch 01 must wait for P4-HDG-002.
+Batch 01 may now proceed to final dossier promotion and coverage-manifest audit.
