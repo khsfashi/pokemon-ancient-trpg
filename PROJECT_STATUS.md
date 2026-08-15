@@ -29,6 +29,7 @@ Current binding direction:
 - multi-origin Magneton evolution uses **D-033**: one active Magneton entity / one visible companion slot with three contributor histories retained; the intended player-facing feel can resemble three parallel minds, while literal brain/soul anatomy remains unresolved;
 - mandatory design roster is National Pokédex **#001-#151**, all 151 species;
 - **mandatory dossier coverage does not imply baseline-era spawn authorization**; unsupported or noncontemporaneous species may have complete dossiers with explicit `unknown` / `not_applicable_baseline` ancient fields;
+- **D-034 requires all 151 mandatory species to be directly encounterable somewhere in total game content**; baseline-era natural presence remains separate, and noncontemporaneous species require rare authored chronology-anomaly/displacement paths rather than routine ancient spawns;
 - the opening playable scope remains one bounded settlement-centered locality plus surrounding routes/ecologies.
 
 ## Completed phases
@@ -212,25 +213,62 @@ blocking_p4_gate_count == 0
 
 The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
 
+### P4 Batch 06 — SELECTED
+
+Selected social-ecology / encounter-unit stress roster:
+
+- #029 Nidoran♀
+- #030 Nidorina
+- #031 Nidoqueen
+- #032 Nidoran♂
+- #033 Nidorino
+- #034 Nidoking
+- #115 Kangaskhan
+- #128 Tauros
+
+Selection plan: `docs/P4_BATCH_06_SOCIAL_ECOLOGY_PARENT_YOUNG_PLAN.md`.
+
+Batch 06 deliberately targets still-underrepresented boundaries:
+
+1. **Nidoran♀ / Nidoran♂ paired families** — preserve separate canonical National Dex species identities rather than collapsing them into a generic sex/form toggle.
+2. **Nidorina / Nidoqueen social state** — family presence, separation and young-defense behavior may change encounter permissions without creating a universal morale or parenting subsystem.
+3. **Kangaskhan** — parent plus dependent young pressures the active-entity/companion-slot model; selection leaves separately persistent child identity unresolved and requires a Human Design Gate only if a narrow species-local model is insufficient.
+4. **Tauros** — herd protector and battle-scar evidence directly stress-tests fixed ordinary baselines plus explicit exceptional individuals, with no player-level scaling or generic elite affix.
+5. **Modern comparison discipline** — Nidoking's modern-object strength comparisons describe capability and do not authorize modern infrastructure in the ancient baseline.
+
+Selection does **not** alter the coverage manifest. It remains:
+
+```text
+dossier_complete_count == 44
+pilot_reviewed_count == 2
+not_started_count == 105
+draft_count == 0
+blocking_p4_gate_count == 0
+```
+
+A clean future Batch 06 close would target:
+
+```text
+dossier_complete_count == 52
+pilot_reviewed_count == 2
+not_started_count == 97
+draft_count == 0
+blocking_p4_gate_count == 0
+```
+
 ## Exact next work
 
-Select **P4 Batch 06** from the remaining `105 not_started` species by ecology/evolution-family/domain-pressure coverage.
+Source-review **P4 Batch 06**: #029 Nidoran♀, #030 Nidorina, #031 Nidoqueen, #032 Nidoran♂, #033 Nidorino, #034 Nidoking, #115 Kangaskhan and #128 Tauros.
 
-Selection should prefer a compact set that tests at least one still-underrepresented P4 boundary rather than repeating already-proven stress cases. Candidate pressure classes include:
+Before full-schema authoring:
 
-1. direct predator/prey or herd/pack ecology where behavior, group size and ordinary late-game triviality need explicit separation from player scaling;
-2. aquatic/amphibious route and drowning/current permissions not already exhausted by Lapras/Cloyster;
-3. mineral/rock/ground burrowing or terrain-changing species that may affect route permissions without inventing general mining technology;
-4. culturally loaded or humanoid-adjacent species where human perception and companionship need strong canon-boundary discipline;
-5. Legendary or rare-natural species that are genuinely contemporaneous candidates, to contrast with Batch 05's artificial noncontemporaneous cases.
-
-For Batch 06 selection:
-
-- keep family/ecology adjacency when it improves regression value;
-- avoid selecting only easy linear evolution families;
-- do not silently resolve a Human Design Gate during selection;
-- leave manifest rows unchanged until source review + full-schema authoring + regressions pass;
-- prefer current official Pokémon sources and the pinned structured normalization input.
+- verify all eight identities, raw stats, forms and evolution metadata from current official / pinned structured sources;
+- preserve #029 and #032 as separate species rows and avoid inventing a generic reproduction system;
+- classify Nidorina/Nidoqueen family behavior as species-local encounter state rather than universal morale/parenting mechanics;
+- explicitly test whether Kangaskhan's child can remain a bounded dependent associated state while Kangaskhan is one active species entity / one visible companion slot;
+- if faithful Kangaskhan representation requires separately persistent child injury/death/history state or independent ordinary actions that change slot accounting, raise a Human Design Gate instead of silently deciding it;
+- test Tauros herd-protector/named-exception behavior against D-031 fixed baselines and the no-player-scaling rule;
+- leave manifest rows unchanged until source review + full-schema authoring + regressions pass.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
