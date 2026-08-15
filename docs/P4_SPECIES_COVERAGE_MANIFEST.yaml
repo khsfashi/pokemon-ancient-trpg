@@ -74,14 +74,14 @@ species:
   - {national_dex: 10, species_key: caterpie, dossier_status: not_started}
   - {national_dex: 11, species_key: metapod, dossier_status: not_started}
   - {national_dex: 12, species_key: butterfree, dossier_status: not_started}
-  - {national_dex: 13, species_key: weedle, dossier_status: pilot_reviewed, authoring_batch: B01-anchor, p6_followup_required: true}
-  - {national_dex: 14, species_key: kakuna, dossier_status: not_started, authoring_batch: B01-new}
-  - {national_dex: 15, species_key: beedrill, dossier_status: pilot_reviewed, authoring_batch: B01-anchor, p6_followup_required: true}
+  - {national_dex: 13, species_key: weedle, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
+  - {national_dex: 14, species_key: kakuna, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
+  - {national_dex: 15, species_key: beedrill, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 16, species_key: pidgey, dossier_status: not_started}
   - {national_dex: 17, species_key: pidgeotto, dossier_status: not_started}
   - {national_dex: 18, species_key: pidgeot, dossier_status: not_started}
-  - {national_dex: 19, species_key: rattata, dossier_status: pilot_reviewed, authoring_batch: B01-anchor, p6_followup_required: false}
-  - {national_dex: 20, species_key: raticate, dossier_status: not_started, authoring_batch: B01-new}
+  - {national_dex: 19, species_key: rattata, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: false}
+  - {national_dex: 20, species_key: raticate, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
   - {national_dex: 21, species_key: spearow, dossier_status: not_started}
   - {national_dex: 22, species_key: fearow, dossier_status: not_started}
   - {national_dex: 23, species_key: ekans, dossier_status: not_started}
@@ -153,9 +153,9 @@ species:
   - {national_dex: 89, species_key: muk, dossier_status: not_started}
   - {national_dex: 90, species_key: shellder, dossier_status: not_started}
   - {national_dex: 91, species_key: cloyster, dossier_status: not_started}
-  - {national_dex: 92, species_key: gastly, dossier_status: pilot_reviewed, authoring_batch: B01-anchor, p6_followup_required: true}
-  - {national_dex: 93, species_key: haunter, dossier_status: not_started, authoring_batch: B01-new}
-  - {national_dex: 94, species_key: gengar, dossier_status: not_started, authoring_batch: B01-new}
+  - {national_dex: 92, species_key: gastly, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
+  - {national_dex: 93, species_key: haunter, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
+  - {national_dex: 94, species_key: gengar, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
   - {national_dex: 95, species_key: onix, dossier_status: not_started}
   - {national_dex: 96, species_key: drowzee, dossier_status: not_started}
   - {national_dex: 97, species_key: hypno, dossier_status: not_started}
@@ -190,8 +190,8 @@ species:
   - {national_dex: 126, species_key: magmar, dossier_status: not_started}
   - {national_dex: 127, species_key: pinsir, dossier_status: not_started}
   - {national_dex: 128, species_key: tauros, dossier_status: not_started}
-  - {national_dex: 129, species_key: magikarp, dossier_status: not_started, authoring_batch: B01-new}
-  - {national_dex: 130, species_key: gyarados, dossier_status: pilot_reviewed, authoring_batch: B01-anchor, p6_followup_required: true}
+  - {national_dex: 129, species_key: magikarp, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
+  - {national_dex: 130, species_key: gyarados, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 131, species_key: lapras, dossier_status: pilot_reviewed, authoring_batch: pilot, p6_followup_required: true}
   - {national_dex: 132, species_key: ditto, dossier_status: not_started}
   - {national_dex: 133, species_key: eevee, dossier_status: not_started}
@@ -201,8 +201,8 @@ species:
   - {national_dex: 137, species_key: porygon, dossier_status: not_started}
   - {national_dex: 138, species_key: omanyte, dossier_status: not_started}
   - {national_dex: 139, species_key: omastar, dossier_status: not_started}
-  - {national_dex: 140, species_key: kabuto, dossier_status: pilot_reviewed, authoring_batch: B01-anchor, p6_followup_required: true}
-  - {national_dex: 141, species_key: kabutops, dossier_status: not_started, authoring_batch: B01-new}
+  - {national_dex: 140, species_key: kabuto, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
+  - {national_dex: 141, species_key: kabutops, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
   - {national_dex: 142, species_key: aerodactyl, dossier_status: not_started}
   - {national_dex: 143, species_key: snorlax, dossier_status: not_started}
   - {national_dex: 144, species_key: articuno, dossier_status: not_started}
