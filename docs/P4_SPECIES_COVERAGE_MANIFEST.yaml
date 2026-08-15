@@ -71,9 +71,9 @@ species:
   - {national_dex: 7, species_key: squirtle, dossier_status: not_started}
   - {national_dex: 8, species_key: wartortle, dossier_status: not_started}
   - {national_dex: 9, species_key: blastoise, dossier_status: not_started}
-  - {national_dex: 10, species_key: caterpie, dossier_status: not_started}
-  - {national_dex: 11, species_key: metapod, dossier_status: not_started}
-  - {national_dex: 12, species_key: butterfree, dossier_status: not_started}
+  - {national_dex: 10, species_key: caterpie, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
+  - {national_dex: 11, species_key: metapod, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
+  - {national_dex: 12, species_key: butterfree, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 13, species_key: weedle, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 14, species_key: kakuna, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
   - {national_dex: 15, species_key: beedrill, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
@@ -86,8 +86,8 @@ species:
   - {national_dex: 22, species_key: fearow, dossier_status: not_started}
   - {national_dex: 23, species_key: ekans, dossier_status: not_started}
   - {national_dex: 24, species_key: arbok, dossier_status: not_started}
-  - {national_dex: 25, species_key: pikachu, dossier_status: not_started}
-  - {national_dex: 26, species_key: raichu, dossier_status: not_started}
+  - {national_dex: 25, species_key: pikachu, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
+  - {national_dex: 26, species_key: raichu, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 27, species_key: sandshrew, dossier_status: not_started}
   - {national_dex: 28, species_key: sandslash, dossier_status: not_started}
   - {national_dex: 29, species_key: nidoran-f, dossier_status: not_started}
@@ -124,9 +124,9 @@ species:
   - {national_dex: 60, species_key: poliwag, dossier_status: not_started}
   - {national_dex: 61, species_key: poliwhirl, dossier_status: not_started}
   - {national_dex: 62, species_key: poliwrath, dossier_status: not_started}
-  - {national_dex: 63, species_key: abra, dossier_status: not_started}
-  - {national_dex: 64, species_key: kadabra, dossier_status: not_started}
-  - {national_dex: 65, species_key: alakazam, dossier_status: not_started}
+  - {national_dex: 63, species_key: abra, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
+  - {national_dex: 64, species_key: kadabra, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
+  - {national_dex: 65, species_key: alakazam, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 66, species_key: machop, dossier_status: not_started}
   - {national_dex: 67, species_key: machoke, dossier_status: not_started}
   - {national_dex: 68, species_key: machamp, dossier_status: not_started}
