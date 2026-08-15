@@ -152,16 +152,44 @@ Batch 11 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 11 state: `87 complete / 2 pilot_reviewed / 62 not_started`.
 
+### P4 Batch 12 — SELECTED
+
+Foundational elemental anatomy / condition-signal / starter-meta stress roster:
+
+- #001 Bulbasaur / #002 Ivysaur / #003 Venusaur
+- #004 Charmander / #005 Charmeleon / #006 Charizard
+- #007 Squirtle / #008 Wartortle / #009 Blastoise
+
+Primary selection output:
+
+- `docs/P4_BATCH_12_FOUNDATIONAL_ELEMENTAL_ANATOMY_PLAN.md`
+
+Batch 12 is selected to stress these boundaries before full authoring:
+
+1. **Body-integrated anatomy is not equipment or loot.** Seeds, bulbs, flowers, tail flames, shells and shell nozzles remain biological/persistent body state unless stronger evidence says otherwise.
+2. **Condition signals are not numeric HP UI.** Charmander's tail flame may qualitatively reflect condition/life-force without exposing exact HP, fixed thresholds or a universal death switch.
+3. **Modern ability mechanics are not automatically ancient physiology.** Overgrow, Blaze and Torrent remain canonical mechanic/context data unless source review supports narrower diegetic consequences.
+4. **Environmental energy is stage/species local.** Sunlight, season, ambient heat and water-jet recoil do not become generic type formulas.
+5. **Battle experience is not kill-XP.** Charizard's official battle-experience wording must remain compatible with the no-level/no-grind progression contract.
+6. **Analogy language does not upgrade human technology.** Blastoise's cannon/jet/rocket-like anatomy does not establish ancient human cannon or rocket infrastructure.
+7. **Cultural admiration is not domestication or harvesting.** Wartortle longevity symbolism/popularity among older people does not prove common ownership or transferable longevity benefits.
+8. **Modern starter familiarity is not setting evidence.** The three families are not automatically distributed to novices, safe companions, institutionally bred, or baseline-era guaranteed spawns.
+9. **No new Human Design Gate is required at selection.** Existing P2/P3/P4 contracts can conservatively represent all identified pressures.
+
+The coverage manifest remains unchanged during selection/source review: `87 complete / 2 pilot_reviewed / 62 not_started`.
+
 ## Exact next work
 
-Continue **P4 Batch 12** without entering P5:
+Continue **P4 Batch 12 source review** without entering P5:
 
-1. select the next manageable batch from the remaining 62 `not_started` species, prioritizing still-underrepresented ecology/capability/design pressure rather than simple Dex order;
-2. create a bounded Batch 12 selection plan and identify the exact regression surface it is intended to stress;
-3. source-review the selected species against current primary official Pokémon material plus pinned `SRC-DATA-001` structured data;
-4. keep the coverage manifest unchanged during selection and source review;
-5. proceed to full-schema authoring only if no blocking Human Design Gate appears;
-6. stop for owner input only if source evidence forces a genuinely product-defining universal rule that existing P2/P3/P4 contracts cannot represent conservatively.
+1. source-review all nine selected species against current primary official Pokémon Pokédex material plus pinned `SRC-DATA-001` structured data;
+2. inventory version-specific evidence for plant/seed anatomy, tail-flame condition semantics, sunlight/season effects, aggression/flight, shell maturation, Wartortle cultural symbolism, and Blastoise jet/recoil anatomy;
+3. explicitly separate Overgrow/Blaze/Torrent modern battle semantics from source-backed diegetic physiology;
+4. preserve the no-kill-XP/no-visible-level contract when interpreting Charizard's battle-experience wording;
+5. preserve human technology chronology when interpreting cannon/jet/rocket analogy language;
+6. keep the coverage manifest unchanged during source review;
+7. proceed to full-schema authoring only if no blocking Human Design Gate appears;
+8. stop for owner input only if source evidence forces a genuinely product-defining universal rule that existing P2/P3/P4 contracts cannot represent conservatively.
 
 Do not begin P5 before the mandatory P4 `151/151` exit audit passes.
 
