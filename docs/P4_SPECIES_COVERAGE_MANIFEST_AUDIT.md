@@ -1,6 +1,6 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 08 promoted**  
+Status: **PASS — Batch 09 promoted**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`  
@@ -8,11 +8,9 @@ Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 08 source review, full-schema authoring, resource/remains/regeneration regressions and promotion.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 09 source review, full-schema authoring, mind-state/agency/exposure-route/traversal regressions and promotion.
 
-It also corrects the previous explanatory audit text, which still reported the Batch 06 `52 complete / 2 pilot_reviewed / 97 not_started` snapshot even though the manifest itself had already promoted Batch 07 to 58 complete species.
-
-The manifest is authoritative; this document now matches its current resolved state.
+The manifest is authoritative; this document matches its current resolved state.
 
 ## Manifest resolution contract
 
@@ -53,12 +51,12 @@ Result: **PASS**.
 
 ## Current status counts
 
-After Batch 08 promotion:
+After Batch 09 promotion:
 
 ```text
-dossier_complete_count == 64
+dossier_complete_count == 72
 pilot_reviewed_count == 2
-not_started_count == 85
+not_started_count == 77
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -71,9 +69,9 @@ The two remaining `pilot_reviewed` species are unchanged:
 
 Result: **PASS**.
 
-## Batch 07 continuity check
+## Batch 07 / Batch 08 continuity check
 
-Batch 07 rows remain complete:
+Earlier promoted rows remain complete. In particular:
 
 ```text
 144 articuno  complete B07-new
@@ -82,83 +80,91 @@ Batch 07 rows remain complete:
 147 dratini   complete B07-new
 148 dragonair complete B07-new
 149 dragonite complete B07-new
+
+104 cubone    complete B08-new
+105 marowak   complete B08-new
+113 chansey   complete B08-new
+114 tangela   complete B08-new
+120 staryu    complete B08-new
+121 starmie   complete B08-new
 ```
 
-No Batch 07 promotion was lost while refreshing the previously stale explanatory audit.
+No prior promotion was lost while applying Batch 09.
 
 Result: **PASS**.
 
-## Batch 08 promotion check
+## Batch 09 promotion check
 
-Only these six previously `not_started` rows are newly promoted:
+Only these eight previously `not_started` rows are newly promoted:
 
 ```text
-104 cubone  complete B08-new p6_followup_required=true
-105 marowak complete B08-new p6_followup_required=true
-113 chansey complete B08-new p6_followup_required=true
-114 tangela complete B08-new p6_followup_required=true
-120 staryu  complete B08-new p6_followup_required=true
-121 starmie complete B08-new p6_followup_required=true
+039 jigglypuff complete B09-new p6_followup_required=true
+040 wigglytuff complete B09-new p6_followup_required=true
+048 venonat    complete B09-new p6_followup_required=true
+049 venomoth   complete B09-new p6_followup_required=true
+054 psyduck    complete B09-new p6_followup_required=true
+055 golduck    complete B09-new p6_followup_required=true
+096 drowzee    complete B09-new p6_followup_required=true
+097 hypno      complete B09-new p6_followup_required=true
 ```
 
 No unrelated species row changes status.
 
 Result: **PASS**.
 
-## Batch 08 resource/remains/regeneration regression
+## Mind-state / agency regression
 
 ```text
-Cubone_skull_generic_loot == false
-Marowak_bone_guaranteed_drop == false
-Chansey_egg_voluntary_resource == true
-Chansey_egg_farm_created == false
-Tangela_detached_vine_species_local_renewable_resource == true
-Tangela_permission_generalizes_to_other_species == false
-Staryu_regeneration_equals_immortality == false
-Staryu_regeneration_equals_combat_auto_heal == false
-Starmie_core_value_equals_safe_removal == false
-Starmie_core_regrowth == unknown
+Jigglypuff_auditory_sleep == species_local
+Wigglytuff_auto_inherits_Jigglypuff_sleep == false
+Drowzee_dream_access_requires_sleeping_dreaming_target == true
+Drowzee_dream_equals_objective_truth == false
+Hypno_hypnosis_equals_arbitrary_command == false
+silent_player_action_rewriting == false
+one_universal_mental_save == false
 ```
 
 Result: **PASS**.
 
-## Structured-data domain regression
-
-Pinned PokeAPI gameplay `held_items` remain source metadata in their own domain and do not become P4 body-resource facts.
+## Exposure-route regression
 
 ```text
-modern_held_item_metadata_equals_ancient_loot_table == false
-Thick_Club_equals_body_drop == false
-Lucky_Egg_equals_Chansey_biological_output == false
-Stardust_or_Star_Piece_equals_Staryu_body_product == false
+Venonat_primary_review_route == body_surface_contact
+Venomoth_primary_review_route == dispersed_toxic_scale_or_powder
+Venonat_airborne_cloud_inferred == false
+all_Poison_type_species_share_powder_rule == false
+exposure_avoidance_equals_post_exposure_consequence == false
 ```
 
 Result: **PASS**.
 
-## Later-generation scope regression
+## Psyduck / Golduck regression
 
 ```text
-Happiny_mandatory_P4_row_created == false
-Blissey_mandatory_P4_row_created == false
-Tangrowth_mandatory_P4_row_created == false
-Alolan_Marowak_substitutes_original == false
-mandatory_species_range == [1, 151]
+Psyduck_headache_triggered_manifestation_can_be_involuntary == true
+Psyduck_random_unbounded_psychic_table == false
+Psyduck_target_amnesia_inferred == false
+Golduck_rough_water_route_permission == true
+Golduck_Speed_equals_Swim_formula == false
+Psyduck_headache_trait_auto_inherited_by_Golduck == false
 ```
 
 Result: **PASS**.
 
 ## P6 follow-up audit
 
-All six Batch 08 rows explicitly set `p6_followup_required: true`.
+All eight Batch 09 rows explicitly set `p6_followup_required: true`.
 
 Primary follow-ups include:
 
-- Cubone skull/remains readability without equipment/drop affordance;
-- Marowak bone throw and rhythmic communication readability;
-- Chansey offer-versus-protect egg posture without harvest/shop affordance;
-- Tangela painless vine detachment and next-day regrowth without gore or generic harvest UI;
-- Staryu elapsed regeneration state distinct from death or combat HP ticks;
-- Starmie core/signal readability without weak-point, loot or technology implications.
+- Jigglypuff auditory exposure and sleep readability with a non-audio accessibility path;
+- Wigglytuff inflation/impact telegraphing without inheriting Jigglypuff's sleep affordance;
+- Venonat contact-hazard readability distinct from Venomoth's airborne/dispersed hazard;
+- Venomoth scale-cloud/airflow readability without fixed-radius damage-circle implications;
+- Psyduck distress and involuntary manifestation readability without a player-controllable charge meter;
+- Golduck route-permission readability without a numeric Swim stat;
+- Drowzee subjective dream information labeling without omniscient mind-reading UI;
+- Hypno pendulum/gaze exposure cues while preserving player action agency.
 
 No P4 document chooses final asset provenance, style, bundling or mobile budgets.
 
@@ -170,7 +176,7 @@ Future P4 PRs must update this manifest atomically with reviewed status changes.
 
 A row may be promoted to `complete` only when the corresponding dossier satisfies `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and has no blocking P4 Human Design Gate.
 
-Do not infer completion from imported source data, raw stats, sprites, outline prose, batch selection, encounter availability, modern held-item tables, or material value alone.
+Do not infer completion from imported source data, raw stats, sprites, outline prose, batch selection, encounter availability, modern move/ability tables, family relationship, or type membership alone.
 
 P4 exit remains:
 
@@ -185,14 +191,15 @@ blocking_p4_gate_count == 0
 
 ```text
 manifest_structure == PASS
-Batch_07_continuity == PASS
-Batch_08_status_promotion == PASS
+prior_batch_continuity == PASS
+Batch_09_status_promotion == PASS
 status_count_arithmetic == PASS
 P6_followup_explicitness == PASS
-resource_remains_regeneration_regression == PASS
-held_item_domain_regression == PASS
-later_generation_scope_regression == PASS
+mind_state_agency_regression == PASS
+exposure_route_regression == PASS
+involuntary_psychic_regression == PASS
+aquatic_route_permission_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 08 manifest promotion is complete. P4 remains active at `64 complete / 2 pilot_reviewed / 85 not_started`.
+Batch 09 manifest promotion is complete. P4 remains active at `72 complete / 2 pilot_reviewed / 77 not_started`.
