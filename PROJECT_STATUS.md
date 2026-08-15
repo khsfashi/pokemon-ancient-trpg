@@ -95,13 +95,36 @@ Evolution-stage inheritance remains evidence-gated. Modern level 21, Leaf Stone,
 
 `docs/P4_BATCH_15_COMPLETION_AUDIT.md` = **PASS**.
 
+### P4 Batch 16 — SELECTED
+
+Roster:
+
+- #035 Clefairy / #036 Clefable
+- #037 Vulpix / #038 Ninetales
+- #122 Mr. Mime
+- #124 Jynx
+
+Selection plan:
+
+- `docs/P4_BATCH_16_FOLKLORE_SUPERNATURAL_HUMANOID_PLAN.md`
+
+Batch 16 targets the still-underrepresented boundary between direct observation and folklore/interpretation. It preserves Clefairy lunar floating/magnetic-field evidence without a generic moon-magic system; keeps Clefable moon-origin wording legendary rather than automatically objective cosmology; separates Vulpix ordinary tail maturation from evolution; keeps Ninetales mystical/lifespan/curse traditions source-scoped; treats Mr. Mime invisible walls as direct species-local capability rather than arbitrary world editing; and keeps Jynx humanlike cries/behavior distinct from confirmed human language, profession or ancient co-civilization.
+
+The manifest is intentionally unchanged during selection/source review:
+
+```text
+117 complete / 2 pilot_reviewed / 32 not_started
+```
+
+No blocking Human Design Gate is required at selection time.
+
 ## Exact next work
 
-Remain in P4 and select a coherent **Batch 16** roster from the remaining 32 `not_started` species.
+Create the **P4 Batch 16 claim-level source review** for #035-#038, #122 and #124.
 
-Prioritize still-underrepresented canon/mechanical pressure rather than simple Pokédex order. Before binding the roster, inspect remaining species against existing Batch 01-15 coverage so Batch 16 adds new stress cases instead of duplicating already-reviewed boundaries.
+The source review must preserve explicit epistemic categories for direct observation, measurement, scientist interpretation, legend/hearsay, analogy, cross-source synthesis and project extrapolation; inspect stronger historical Ninetales curse/revenge and Jynx dance/language wording; audit Vulpix maturation versus evolution; keep Mr. Mime barriers species-local and counterplay-safe; and prevent modern Fairy typing, abilities, baby Pokémon, regional forms, musicians or standardized evolution items from becoming automatic ancient-world institutions.
 
-Then create the Batch 16 selection/pressure plan and proceed to claim-level source review. Do not mutate the coverage manifest during selection/source review.
+Do not mutate the coverage manifest during source review. If all six later pass full-schema authoring and completion audit, expected coverage becomes `123 complete / 2 pilot_reviewed / 26 not_started`.
 
 Do not begin P5 until the mandatory `151/151` P4 exit audit passes.
 
