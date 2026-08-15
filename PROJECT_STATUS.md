@@ -75,7 +75,7 @@ Authoritative shared inputs:
 - `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 - `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-Current authoritative manifest state after Batch 13; Batch 14 selection does not mutate coverage:
+Current authoritative manifest state after Batch 13; Batch 14 source review does not mutate coverage:
 
 ```text
 dossier_complete_count == 103
@@ -150,7 +150,7 @@ Batch 13 validates these boundaries:
 
 `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md` matches the authoritative Batch 13 state: `103 complete / 2 pilot_reviewed / 46 not_started`.
 
-### P4 Batch 14 — SELECTED
+### P4 Batch 14 — SOURCE REVIEW COMPLETE / DOSSIER AUTHORING NEXT
 
 Subterranean traversal / terrain integrity / lithic body / self-propelled hazard stress roster:
 
@@ -159,35 +159,45 @@ Subterranean traversal / terrain integrity / lithic body / self-propelled hazard
 - #074 Geodude / #075 Graveler / #076 Golem
 - #095 Onix
 
-Selection contract:
+Primary outputs so far:
 
 - `docs/P4_BATCH_14_SUBTERRANEAN_TERRAIN_LITHIC_BODY_PLAN.md`
+- `docs/P4_BATCH_14_SOURCE_REVIEW.md`
 
-Batch 14 is intentionally selected to pressure these still-underrepresented boundaries without introducing global terrain simulation:
+Batch 14 source review establishes these boundaries:
 
-1. **Ground/Rock typing is not universal burrowing permission.** Explicit tunneling capability remains species-local.
-2. **Terrain interaction is not a generic terrain-destruction/mining formula.** Dugtrio soil loosening and Onix boring require authored substrate/context.
-3. **Rocklike bodies are not scenery, ore, equipment or automatic loot.** Geodude camouflage and Golem shed shell remain biological/species-specific semantics.
-4. **Rolling, explosive and boring locomotion are not real-world physics formulas.** Graveler/Golem/Onix movement does not become momentum, blast-energy or fast-travel math.
-5. **Hidden/multiple body structures do not invite pseudo-canon or extra actions.** Diglett hidden anatomy stays unresolved where evidence is absent; Dugtrio remains one entity/turn/health state/companion slot.
-6. **No new Human Design Gate is required for selection.**
+1. **Ground/Rock typing is not universal burrowing permission.** Burrowing, climbing, rolling and boring remain species-local capabilities supported by explicit evidence.
+2. **Six-axis Speed/Force are not real-world terrain physics.** Dugtrio extreme depth/speed claims, Golem explosive movement and Onix 50-mph boring are preserved without per-round distance, momentum, TNT/blast or structure-damage formulas.
+3. **Underground does not mean perfect stealth.** Diglett can leave raised-earth signs; Dugtrio unexpected-direction attacks remain authored ambush pressure rather than unavoidable surprise or guaranteed escape denial.
+4. **Diglett hidden anatomy remains intentionally unresolved.** No fan-derived lower-body pseudo-canon is authored.
+5. **Diglett later farm-raising evidence is chronology-scoped.** Official versioned material proves possible agricultural use in later/other social contexts, not normalized ancient proto-Kanto domestication.
+6. **Dugtrio remains one Pokémon/entity despite three heads/triplet wording.** One ordinary turn, one health state, one initiative presence and one visible companion slot if applicable.
+7. **Rocklike bodies are not scenery, ore or automatic loot.** Geodude misidentification and Geodude/Golem/Onix material wording remain creature/anatomy semantics.
+8. **Sandslash regeneration is biology, not a renewable harvest loop.** Broken claw/spike regrowth and yearly spike turnover do not create ordinary weapon/resource farming.
+9. **Graveler rolling and rock consumption are ecology/hazard facts, not unstoppable collision, automatic landslide or generic mineral mechanics.**
+10. **Golem annual shed shell is a source-backed nonlethal material path.** Crop value does not create automatic drops, ownership rights or a setting-wide fertilizer industry.
+11. **Golem self-explosion/dynamite-resistance wording remains extraordinary canon fiction without importing real-world explosives simulation or ancient dynamite technology.**
+12. **Onix high-speed boring, tremors, long tunnels and internal magnetic-navigation evidence remain species-local.** They do not create fast travel, safe permanent routes, guaranteed collapse or harvestable compass/gem resources.
+13. **Existing P2/P3/P4 contracts are sufficient.** No new Human Design Gate is required.
 
-The coverage manifest remains unchanged until all eight receive source review, full-schema dossiers and a passing Batch 14 completion audit.
+The source review reproduces all eight `p4-six-axis-v1` profiles with zero manual exceptions and leaves the coverage manifest untouched.
 
 ## Exact next work
 
 Continue **P4** without entering P5:
 
-1. create the **P4 Batch 14 source review** for #027-#028, #050-#051, #074-#076 and #095;
-2. inventory current and historically relevant official evidence plus pinned `SRC-DATA-001`, preserving claim-level provenance and version/region context;
-3. establish explicit boundaries for burrowing versus Ground/Rock typing, underground ambush versus perfect stealth, terrain interaction versus destruction/mining formulas, rocklike body versus object/resource semantics, Golem shed material/explosion behavior, and Onix high-speed boring versus real-time physics/travel formulas;
-4. preserve Diglett hidden-body uncertainty instead of inventing anatomy and keep Dugtrio one-entity action economy consistent with earlier composite/multi-head regressions;
-5. stop for a Human Design Gate only if a source-backed fact genuinely requires a new product-wide rule that existing P2/P3/P4 contracts cannot represent conservatively;
-6. do not promote the manifest until the complete Batch 14 authoring/audit gate passes;
-7. keep D-034 direct encounterability separate from baseline-era natural presence;
-8. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
+1. author the **eight frozen-schema Batch 14 dossiers** for #027-#028, #050-#051, #074-#076 and #095;
+2. preserve claim-level provenance and the source-review boundaries around burrowing, terrain signs, hidden anatomy, regeneration/shedding, rocklike bodies, rolling hazards, self-explosion and high-speed boring;
+3. keep Dugtrio at one entity/turn/health state/companion slot and keep Diglett's lower-body anatomy unresolved;
+4. preserve Diglett farm-raising, Golem human diversion works/dynamite comparisons and other later-context human evidence without importing normalized ancient trainer/domestication/technology institutions;
+5. create the Batch 14 dossier index/regression summary and `P4_BATCH_14_COMPLETION_AUDIT`;
+6. promote exactly the eight Batch 14 manifest rows only if the full-schema/regression/completion audit passes atomically;
+7. if promoted successfully, refresh the manifest audit to the expected `111 complete / 2 pilot_reviewed / 38 not_started` state;
+8. keep D-034 direct encounterability separate from baseline-era natural presence;
+9. stop for a Human Design Gate only if full-schema authoring exposes a durable owner-facing decision that the source review could not conservatively resolve;
+10. do not begin P5 until the mandatory P4 `151/151` exit audit passes.
 
-Current authoritative state:
+Current authoritative state remains:
 
 ```text
 dossier_complete_count == 103
