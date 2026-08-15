@@ -90,12 +90,12 @@ species:
   - {national_dex: 26, species_key: raichu, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 27, species_key: sandshrew, dossier_status: not_started}
   - {national_dex: 28, species_key: sandslash, dossier_status: not_started}
-  - {national_dex: 29, species_key: nidoran-f, dossier_status: not_started}
-  - {national_dex: 30, species_key: nidorina, dossier_status: not_started}
-  - {national_dex: 31, species_key: nidoqueen, dossier_status: not_started}
-  - {national_dex: 32, species_key: nidoran-m, dossier_status: not_started}
-  - {national_dex: 33, species_key: nidorino, dossier_status: not_started}
-  - {national_dex: 34, species_key: nidoking, dossier_status: not_started}
+  - {national_dex: 29, species_key: nidoran-f, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
+  - {national_dex: 30, species_key: nidorina, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
+  - {national_dex: 31, species_key: nidoqueen, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
+  - {national_dex: 32, species_key: nidoran-m, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
+  - {national_dex: 33, species_key: nidorino, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
+  - {national_dex: 34, species_key: nidoking, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 35, species_key: clefairy, dossier_status: not_started}
   - {national_dex: 36, species_key: clefable, dossier_status: not_started}
   - {national_dex: 37, species_key: vulpix, dossier_status: not_started}
@@ -176,7 +176,7 @@ species:
   - {national_dex: 112, species_key: rhydon, dossier_status: not_started}
   - {national_dex: 113, species_key: chansey, dossier_status: not_started}
   - {national_dex: 114, species_key: tangela, dossier_status: not_started}
-  - {national_dex: 115, species_key: kangaskhan, dossier_status: not_started}
+  - {national_dex: 115, species_key: kangaskhan, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 116, species_key: horsea, dossier_status: not_started}
   - {national_dex: 117, species_key: seadra, dossier_status: not_started}
   - {national_dex: 118, species_key: goldeen, dossier_status: not_started}
@@ -189,7 +189,7 @@ species:
   - {national_dex: 125, species_key: electabuzz, dossier_status: not_started}
   - {national_dex: 126, species_key: magmar, dossier_status: not_started}
   - {national_dex: 127, species_key: pinsir, dossier_status: not_started}
-  - {national_dex: 128, species_key: tauros, dossier_status: not_started}
+  - {national_dex: 128, species_key: tauros, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 129, species_key: magikarp, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
   - {national_dex: 130, species_key: gyarados, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 131, species_key: lapras, dossier_status: pilot_reviewed, authoring_batch: pilot, p6_followup_required: true}
