@@ -77,13 +77,13 @@ species:
   - {national_dex: 13, species_key: weedle, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 14, species_key: kakuna, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
   - {national_dex: 15, species_key: beedrill, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
-  - {national_dex: 16, species_key: pidgey, dossier_status: not_started}
-  - {national_dex: 17, species_key: pidgeotto, dossier_status: not_started}
-  - {national_dex: 18, species_key: pidgeot, dossier_status: not_started}
+  - {national_dex: 16, species_key: pidgey, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
+  - {national_dex: 17, species_key: pidgeotto, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
+  - {national_dex: 18, species_key: pidgeot, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
   - {national_dex: 19, species_key: rattata, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: false}
   - {national_dex: 20, species_key: raticate, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
-  - {national_dex: 21, species_key: spearow, dossier_status: not_started}
-  - {national_dex: 22, species_key: fearow, dossier_status: not_started}
+  - {national_dex: 21, species_key: spearow, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
+  - {national_dex: 22, species_key: fearow, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
   - {national_dex: 23, species_key: ekans, dossier_status: not_started}
   - {national_dex: 24, species_key: arbok, dossier_status: not_started}
   - {national_dex: 25, species_key: pikachu, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
@@ -145,8 +145,8 @@ species:
   - {national_dex: 81, species_key: magnemite, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 82, species_key: magneton, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
   - {national_dex: 83, species_key: farfetchd, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
-  - {national_dex: 84, species_key: doduo, dossier_status: not_started}
-  - {national_dex: 85, species_key: dodrio, dossier_status: not_started}
+  - {national_dex: 84, species_key: doduo, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
+  - {national_dex: 85, species_key: dodrio, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
   - {national_dex: 86, species_key: seel, dossier_status: not_started}
   - {national_dex: 87, species_key: dewgong, dossier_status: not_started}
   - {national_dex: 88, species_key: grimer, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
