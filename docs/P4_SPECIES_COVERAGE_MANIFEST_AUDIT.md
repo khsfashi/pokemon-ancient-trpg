@@ -1,6 +1,6 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 02 promoted**  
+Status: **PASS — Batch 03 promoted**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`  
@@ -8,7 +8,7 @@ Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 02 full-schema authoring and promotion. Batch 02 deliberately stress-tests D-032 across a biologically legible metamorphic family, a physical evolution-stone family, and a modern trade-metadata Psychic family.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 03 source review, full-schema authoring and atomic promotion. Batch 03 stress-tests branching evolution, transformation distinct from evolution, multi-part/multi-will single-entity semantics, and species-specific carried-tool behavior.
 
 The manifest remains status-oriented and does not duplicate dossier prose or canonical source data.
 
@@ -49,20 +49,20 @@ mandatory_species_ids == {1..151}
 
 Result: **PASS**.
 
-## Batch 02 promotion check
+## Batch 03 promotion check
 
-The eight new Batch 02 dossiers are now complete:
+The eight new Batch 03 dossiers are now complete:
 
-- #010 Caterpie
-- #011 Metapod
-- #012 Butterfree
-- #025 Pikachu
-- #026 Raichu
-- #063 Abra
-- #064 Kadabra
-- #065 Alakazam
+- #083 Farfetch'd
+- #102 Exeggcute
+- #103 Exeggutor
+- #132 Ditto
+- #133 Eevee
+- #134 Vaporeon
+- #135 Jolteon
+- #136 Flareon
 
-The twelve Batch 01-complete species remain complete, and the two pilot species outside completed batch-family closure remain `pilot_reviewed`:
+The twenty Batch 01/02-complete species remain complete. The two pilot species outside completed batch-family closure remain `pilot_reviewed`:
 
 - #131 Lapras
 - #151 Mew
@@ -70,90 +70,96 @@ The twelve Batch 01-complete species remain complete, and the two pilot species 
 All other mandatory species remain `not_started`.
 
 ```text
-dossier_complete_count == 20
+dossier_complete_count == 28
 pilot_reviewed_count == 2
-not_started_count == 129
+not_started_count == 121
 draft_count == 0
 blocking_p4_gate_count == 0
 ```
 
 Result: **PASS**.
 
-## Batch 02 P6 follow-up audit
+## Batch 03 P6 follow-up audit
 
-All eight new dossiers require later P6 readability/provenance work because their gameplay depends on visible transformation, environmental-hazard, material-trigger, or Psychic-state communication:
+All eight new dossiers require later P6 readability/provenance work because their gameplay depends on visible carried-tool state, internal-part coordination, transformation identity, branching evolution or elemental/environmental state communication:
 
 ```text
-Caterpie   true
-Metapod    true
-Butterfree true
-Pikachu    true
-Raichu     true
-Abra       true
-Kadabra    true
-Alakazam   true
+Farfetch'd true
+Exeggcute  true
+Exeggutor  true
+Ditto      true
+Eevee      true
+Vaporeon   true
+Jolteon    true
+Flareon    true
 ```
 
 Previously reviewed flags are preserved unchanged. Unreviewed species remain `unknown` through `not_started` defaults.
 
 Result: **PASS**.
 
-## D-032 mechanism regression check
+## Batch 03 domain regression check
 
-### Caterpie family
+### Farfetch'd
 
 ```text
-ordinary_Caterpie_growth_equals_evolution == false
-Caterpie_to_Metapod == metamorphic_species_transformation
-Metapod_to_Butterfree == metamorphic_species_transformation
-modern_level_threshold_diegetic == false
+stalk_is_species_behavior_dependency == true
+stalk_is_generic_loot == false
+learned_style_is_individual_behavior == true
+generic_held_item_system_created == false
 ```
 
-### Pikachu family
+### Exeggcute / Exeggutor
 
 ```text
-Pikachu_to_Raichu == rare_Thunder_Stone_mediated_transformation
-Thunder_Stone_common_shop_item == false
-Thunder_Stone_generic_upgrade_currency == false
-forced_companion_evolution == false
+multi_part_species_entity_count == 1
+multi_part_companion_slot_count == 1
+internal_head_plurality_can_affect_behavior == true
+universal_soul_or_personhood_rule_created == false
+rare_head_loss_is_farmable_duplication == false
 ```
 
-### Abra family
+### Ditto
 
 ```text
-modern_level_metadata_literalized == false
-modern_trade_metadata_literalized == false
-ancient_trade_ritual_created == false
-human_Psychic_Gift_forces_evolution == false
-exact_reproducible_trigger == unknown
-Alakazam_same_species_aging_can_increase_strength == true
+transformation_equals_evolution == false
+transformed_shape_changes_species_key == false
+transformed_shape_can_change_scene_permissions == true
+permanent_copied_dossier_replacement == false
+```
+
+### Eevee family
+
+```text
+branching_evolution_is_menu_class_change == false
+stone_inventory_forces_evolution == false
+persistent_individual_history_survives == true
+later_generation_branches_expand_GenI_baseline == false
+generic_evolution_stone_economy_created == false
 ```
 
 Result: **PASS**.
 
-The unknown Psychic-family trigger is an intentional knowledge boundary, not a blocking product-design decision.
-
 ## Hazard and permission regression check
 
-Batch 02 preserves the P4 hazard contract:
+Batch 03 preserves the P4 hazard contract:
 
 ```text
-low_stat_species_can_have_material_hazard == true
 hazard_severity_capped_by_axis_rating == false
-group_environment_pressure_is_stat_bonus == false
-teleport_evasion_is_flat_TN_inflation == false
-psychic_space_control_requires_permission_review == true
 high_species_stats_imply_aggression == false
+invalid_approach_review_occurs_before_numeric_check == true
+Vaporeon_submerged_visual_tracking_can_be_invalid == true
+Jolteon_electric_and_fur_exposure_are_distinct == true
+Flareon_heat_changes_environment_state == true
+Ditto_identity_pressure_is_not_only_TN_inflation == true
 ```
 
 Important examples:
 
-- Caterpie defensive odor stays a bounded deterrence/nuisance exposure rather than an invented toxin.
-- Butterfree poison scales use airflow/exposure semantics rather than Potency as a damage ceiling.
-- Pikachu group electrical build changes environmental state instead of adding a swarm stat bonus.
-- Raichu voltage prose does not become a universal damage formula.
-- Abra Teleport can invalidate ordinary restraint/pursuit rather than merely raising TN.
-- Kadabra/Alakazam Psychic control can invalidate unsupported physical approaches before numeric checks.
+- Vaporeon's water concealment changes tracking permission instead of inflating Guard.
+- Jolteon's electrical discharge and needlelike fur use separate exposure records; conductive context matters without altering species stats.
+- Flareon's fire can ignite dry environments and alter escape routes; official heat descriptions do not become a universal temperature-to-Injury equation.
+- Ditto's copied appearance can invalidate appearance-only identification before any numeric check.
 
 Result: **PASS**.
 
@@ -163,7 +169,7 @@ Future P4 PRs must update this manifest atomically with reviewed status changes.
 
 A row may be promoted to `complete` only when the corresponding dossier satisfies all completion domains in `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and has no blocking P4 Human Design Gate.
 
-Do not infer completion from imported source data, raw stats, sprites, or prose existence alone.
+Do not infer completion from imported source data, raw stats, sprites, outline prose or selection into a future batch.
 
 P4 exit remains:
 
@@ -178,11 +184,14 @@ blocking_p4_gate_count == 0
 
 ```text
 manifest_structure == PASS
-Batch_02_status_promotion == PASS
+Batch_03_status_promotion == PASS
 P6_followup_explicitness == PASS
-D032_mechanism_regression == PASS
+species_equipment_regression == PASS
+multi_head_single_entity_regression == PASS
+transformation_not_evolution_regression == PASS
+branching_evolution_regression == PASS
 hazard_permission_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 02 manifest promotion is complete.
+Batch 03 manifest promotion is complete.
