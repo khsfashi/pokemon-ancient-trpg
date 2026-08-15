@@ -86,7 +86,7 @@ capabilities_and_hazards:
   immunities_or_approach_invalidators: [one_head_guard_state_may_reduce_simple_surprise_but_does_not_create_perfect_awareness]
   hazard_records:
     - hazard_key: dodrio-endurance-charge-and-head-control
-      kind: physical_and_coordination
+      kind: other
       delivery_or_exposure: [long_ground_pursuit, heavy_kick, body_impact, multi_direction_peck]
       prerequisite_or_trigger: [panic_or_hostility, blocked_route, direct_attack, territory_or_rest_site_pressure_if_authored]
       warning_signs: [leader_head_focus, coordinated_body_turn, heavy_footbeats, heads_scanning_different_directions]
@@ -205,7 +205,7 @@ mechanical_hooks:
   trouble_spike_complications: [long_flat_corridor_allows_endurance_pressure_to_compound]
 hunting_materials_and_resources:
   killing_treatment: no_generic_loot_and_redundant_organs_are_not_extra_resource_drops
-  hunting_for_food: none_fixed
+  hunting_for_food: none
   shed_or_abandoned_materials: [none_fixed]
   natural_remains: [ordinary_remains_only_if_context_requires]
   dangerous_harvesting: [none_supported]
