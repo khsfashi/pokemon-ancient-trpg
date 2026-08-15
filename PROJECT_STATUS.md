@@ -158,12 +158,42 @@ Batch 06 validates these boundaries:
 
 `docs/P4_BATCH_06_COMPLETION_AUDIT.md` = **PASS**.
 
-Current manifest audit after Batch 06:
+### P4 Batch 07 — COMPLETE
+
+Completed rare-sky / dragon environmental-permission stress roster:
+
+- #144 Articuno
+- #145 Zapdos
+- #146 Moltres
+- #147 Dratini
+- #148 Dragonair
+- #149 Dragonite
+
+Primary outputs:
+
+- `docs/P4_BATCH_07_RARE_SKY_DRAGON_PLAN.md`
+- `docs/P4_BATCH_07_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_07_FULL_SCHEMA_DOSSIERS.md` plus its six indexed species dossier documents
+- `docs/P4_BATCH_07_COMPLETION_AUDIT.md`
+
+Batch 07 validates these boundaries:
+
+1. **Legendary rarity does not imply an unsupported global-singleton rule.** Articuno, Zapdos and Moltres remain exceptionally rare, while global population cardinality stays `unknown` unless a later narrative decision needs to freeze it.
+2. **D-034 direct encounterability does not require routine spawning.** Rare authored event/state chains may lead to a real encounter without forcing these species into the opening locality or ordinary random tables.
+3. **Environmental capability is separate from six-axis combat normalization.** Snow/cold, thundercloud electricity, fire/magma, rapid-water shedding sites and weather change are explicit route/exposure permissions whose consequence severity is not capped by ratings.
+4. **Dragonair does not create a generic global weather-control subsystem.** An authored event must name the actual resulting local weather state and its concrete route/exposure consequences.
+5. **Dragonite's world traversal is a capability, not its normalized Speed rating.** `Speed == 4` can coexist with source-backed extreme long-range flight; `Force == 6` does not imply automatic lethality.
+6. **Dratini-family modern levels remain source metadata only.** Repeated shedding is growth/maturation, while Dratini -> Dragonair -> Dragonite evolution remains persistent species transformation without kill-XP, a visible level meter or a generic `Evolve` command.
+7. **All six companionship classifications are `exceptional_only`, not impossible.** Rare voluntary bonds remain legal while defeat/capture ownership remains forbidden.
+
+`docs/P4_BATCH_07_COMPLETION_AUDIT.md` = **PASS**.
+
+Current manifest audit after Batch 07:
 
 ```text
-dossier_complete_count == 52
+dossier_complete_count == 58
 pilot_reviewed_count == 2
-not_started_count == 97
+not_started_count == 91
 draft_count == 0
 blocking_p4_gate_count == 0
 ```
@@ -172,11 +202,11 @@ The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
 
 ## Exact next work
 
-Select **P4 Batch 07** from the still-uncovered 97 species using coverage pressure rather than arbitrary Pokédex order. Prefer a batch that closes a new high-value design stress boundary (for example multi-stage ecology/evolution, extreme movement or environmental permission, legendary/rare ecology, or another family/social edge) while avoiding duplicate proof of already-settled Batch 01-06 rules.
+Select **P4 Batch 08** from the still-uncovered 91 species using coverage pressure rather than arbitrary Pokédex order. Prefer a bounded 6-8 species batch that closes a still-unproven high-value design boundary while avoiding duplicate proof of Batch 01-07 rules.
 
-Before authoring Batch 07 dossiers:
+Before authoring Batch 08 dossiers:
 
-- inspect the current 52-complete manifest and remaining species families;
+- inspect the current 58-complete manifest and remaining species families;
 - choose a bounded 6-8 species batch with a clear regression purpose;
 - source-review official evidence and pinned structured data first;
 - open a Human Design Gate only if a genuinely product-defining ambiguity cannot be resolved from existing contracts;
