@@ -1,6 +1,6 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 09 promoted**  
+Status: **PASS — Batch 10 promoted**  
 Date: **2026-08-15**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`  
@@ -8,7 +8,7 @@ Evolution authority: `docs/P4_EVOLUTION_AND_MATURATION_CONTRACT.md`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 09 source review, full-schema authoring, mind-state/agency/exposure-route/traversal regressions and promotion.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 10 source review, full-schema authoring, species-local capability regressions and atomic promotion.
 
 The manifest is authoritative; this document matches its current resolved state.
 
@@ -51,12 +51,12 @@ Result: **PASS**.
 
 ## Current status counts
 
-After Batch 09 promotion:
+After Batch 10 promotion:
 
 ```text
-dossier_complete_count == 72
+dossier_complete_count == 80
 pilot_reviewed_count == 2
-not_started_count == 77
+not_started_count == 69
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -69,102 +69,118 @@ The two remaining `pilot_reviewed` species are unchanged:
 
 Result: **PASS**.
 
-## Batch 07 / Batch 08 continuity check
+## Prior-batch continuity check
 
-Earlier promoted rows remain complete. In particular:
+All 72 rows complete through Batch 09 remain complete. No earlier promotion was reverted while applying Batch 10.
+
+Representative continuity anchors remain:
 
 ```text
-144 articuno  complete B07-new
-145 zapdos    complete B07-new
-146 moltres   complete B07-new
-147 dratini   complete B07-new
-148 dragonair complete B07-new
-149 dragonite complete B07-new
-
-104 cubone    complete B08-new
-105 marowak   complete B08-new
-113 chansey   complete B08-new
-114 tangela   complete B08-new
-120 staryu    complete B08-new
-121 starmie   complete B08-new
+013 weedle      complete B01-anchor
+025 pikachu     complete B02-new
+083 farfetchd   complete B03-new
+082 magneton    complete B04-new
+150 mewtwo      complete B05-new
+128 tauros      complete B06-new
+144 articuno    complete B07-new
+120 staryu      complete B08-new
+039 jigglypuff  complete B09-new
+097 hypno       complete B09-new
 ```
-
-No prior promotion was lost while applying Batch 09.
 
 Result: **PASS**.
 
-## Batch 09 promotion check
+## Batch 10 promotion check
 
 Only these eight previously `not_started` rows are newly promoted:
 
 ```text
-039 jigglypuff complete B09-new p6_followup_required=true
-040 wigglytuff complete B09-new p6_followup_required=true
-048 venonat    complete B09-new p6_followup_required=true
-049 venomoth   complete B09-new p6_followup_required=true
-054 psyduck    complete B09-new p6_followup_required=true
-055 golduck    complete B09-new p6_followup_required=true
-096 drowzee    complete B09-new p6_followup_required=true
-097 hypno      complete B09-new p6_followup_required=true
+041 zubat      complete B10-new p6_followup_required=true
+042 golbat     complete B10-new p6_followup_required=true
+072 tentacool  complete B10-new p6_followup_required=true
+073 tentacruel complete B10-new p6_followup_required=true
+077 ponyta     complete B10-new p6_followup_required=true
+078 rapidash   complete B10-new p6_followup_required=true
+111 rhyhorn    complete B10-new p6_followup_required=true
+112 rhydon     complete B10-new p6_followup_required=true
 ```
 
 No unrelated species row changes status.
 
 Result: **PASS**.
 
-## Mind-state / agency regression
+## State / capability regression
 
 ```text
-Jigglypuff_auditory_sleep == species_local
-Wigglytuff_auto_inherits_Jigglypuff_sleep == false
-Drowzee_dream_access_requires_sleeping_dreaming_target == true
-Drowzee_dream_equals_objective_truth == false
-Hypno_hypnosis_equals_arbitrary_command == false
-silent_player_action_rewriting == false
-one_universal_mental_save == false
+Golbat_overfed_flight_loss_mutates_base_stats == false
+Tentacool_dehydration_changes_Water_type == false
+Ponyta_newborn_locomotion_requires_second_species_profile == false
+Rhyhorn_charge_danger_capped_by_Speed_1 == false
+Rhydon_bedrock_or_heat_permission_derived_from_axis_formula == false
 ```
 
 Result: **PASS**.
 
-## Exposure-route regression
+## Type-permission regression
 
 ```text
-Venonat_primary_review_route == body_surface_contact
-Venomoth_primary_review_route == dispersed_toxic_scale_or_powder
-Venonat_airborne_cloud_inferred == false
-all_Poison_type_species_share_powder_rule == false
-exposure_avoidance_equals_post_exposure_consequence == false
+Flying_type_equals_sound_navigation == false
+Water_type_equals_amphibious_safety == false
+Fire_bond_equals_generic_fire_immunity == false
+Ground_or_Rock_type_equals_lava_immunity == false
 ```
 
 Result: **PASS**.
 
-## Psyduck / Golduck regression
+## Hazard-separation regression
 
 ```text
-Psyduck_headache_triggered_manifestation_can_be_involuntary == true
-Psyduck_random_unbounded_psychic_table == false
-Psyduck_target_amnesia_inferred == false
-Golduck_rough_water_route_permission == true
-Golduck_Speed_equals_Swim_formula == false
-Psyduck_headache_trait_auto_inherited_by_Golduck == false
+Golbat_bite_contact_equals_fixed_blood_loss_damage == false
+Tentacruel_restraint_equals_venom_resolution == false
+Tentacruel_80_tentacles_equals_80_actions == false
+Rhyhorn_collision_equals_generic_terrain_HP_system == false
+hazard_severity_capped_by_species_axis == false
+```
+
+Result: **PASS**.
+
+## Traversal regression
+
+```text
+Rapidash_extreme_overland_running == species_local_permission
+Rapidash_150_mph_equals_constant_cruising_speed == false
+Speed_5_equals_map_travel_formula == false
+Rhydon_steep_terrain_access_equals_human_safe_route == false
+```
+
+Result: **PASS**.
+
+## Evolution-family regression
+
+```text
+Zubat_sound_navigation_auto_inherited_by_Golbat == false
+Tentacool_shoreline_dehydration_auto_inherited_by_Tentacruel == false
+Ponyta_safe_mane_contact_auto_inherited_by_Rapidash == false
+Rhyhorn_charge_auto_inherited_by_Rhydon == false
+Crobat_Galarian_Ponyta_Rapidash_Rhyperior_added_to_mandatory_roster == false
 ```
 
 Result: **PASS**.
 
 ## P6 follow-up audit
 
-All eight Batch 09 rows explicitly set `p6_followup_required: true`.
+All eight Batch 10 rows explicitly set `p6_followup_required: true`.
 
 Primary follow-ups include:
 
-- Jigglypuff auditory exposure and sleep readability with a non-audio accessibility path;
-- Wigglytuff inflation/impact telegraphing without inheriting Jigglypuff's sleep affordance;
-- Venonat contact-hazard readability distinct from Venomoth's airborne/dispersed hazard;
-- Venomoth scale-cloud/airflow readability without fixed-radius damage-circle implications;
-- Psyduck distress and involuntary manifestation readability without a player-controllable charge meter;
-- Golduck route-permission readability without a numeric Swim stat;
-- Drowzee subjective dream information labeling without omniscient mind-reading UI;
-- Hypno pendulum/gaze exposure cues while preserving player action agency.
+- Zubat sound-navigation and sunlight-vulnerability readability without perfect-radar implications;
+- Golbat feeding and overfed no-flight state readability without base-stat mutation;
+- Tentacool healthy aquatic versus stranded/dehydrated state readability;
+- Tentacruel tentacle reach, restraint, venom and outbreak readability without one-action-per-tentacle presentation;
+- Ponyta acceptance-gated mane contact and maturation-state readability without generic Fire immunity;
+- Rapidash run-lane, herd-leader and extreme-travel readability without exact speed simulation;
+- Rhyhorn committed charge line, poor turning/stopping and bounded terrain-breach readability;
+- Rhydon horn-boring, steep-terrain and volcanic-heat permission readability without type immunity.
 
 No P4 document chooses final asset provenance, style, bundling or mobile budgets.
 
@@ -176,7 +192,7 @@ Future P4 PRs must update this manifest atomically with reviewed status changes.
 
 A row may be promoted to `complete` only when the corresponding dossier satisfies `docs/P4_SPECIES_DOSSIER_SCHEMA.md` and has no blocking P4 Human Design Gate.
 
-Do not infer completion from imported source data, raw stats, sprites, outline prose, batch selection, encounter availability, modern move/ability tables, family relationship, or type membership alone.
+Do not infer completion from imported source data, raw stats, sprites, outline prose, batch selection, encounter availability, modern move/ability tables, family relationship, type membership, travel claims or environmental feats alone.
 
 P4 exit remains:
 
@@ -192,14 +208,15 @@ blocking_p4_gate_count == 0
 ```text
 manifest_structure == PASS
 prior_batch_continuity == PASS
-Batch_09_status_promotion == PASS
+Batch_10_status_promotion == PASS
 status_count_arithmetic == PASS
 P6_followup_explicitness == PASS
-mind_state_agency_regression == PASS
-exposure_route_regression == PASS
-involuntary_psychic_regression == PASS
-aquatic_route_permission_regression == PASS
+state_capability_regression == PASS
+type_permission_regression == PASS
+hazard_separation_regression == PASS
+traversal_regression == PASS
+evolution_stage_inheritance_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 09 manifest promotion is complete. P4 remains active at `72 complete / 2 pilot_reviewed / 77 not_started`.
+Batch 10 manifest promotion is complete. P4 remains active at `80 complete / 2 pilot_reviewed / 69 not_started`.
