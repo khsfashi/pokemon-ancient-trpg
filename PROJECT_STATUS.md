@@ -28,6 +28,7 @@ Current binding direction:
 - Pokémon evolution is a species-specific persistent transformation distinct from ordinary growth/maturation; no kill-XP, visible level meter or generic `Evolve` command is assumed;
 - multi-origin Magneton evolution uses **D-033**: one active Magneton entity / one visible companion slot with three contributor histories retained; the intended player-facing feel can resemble three parallel minds, while literal brain/soul anatomy remains unresolved;
 - mandatory design roster is National Pokédex **#001-#151**, all 151 species;
+- **mandatory dossier coverage does not imply baseline-era spawn authorization**; unsupported or noncontemporaneous species may have complete dossiers with explicit `unknown` / `not_applicable_baseline` ancient fields;
 - the opening playable scope remains one bounded settlement-centered locality plus surrounding routes/ecologies.
 
 ## Completed phases
@@ -162,51 +163,15 @@ Validated branching evolution, transformation distinct from evolution, multi-hea
 
 ### P4 Batch 04 — COMPLETE
 
-Completed:
+Completed #046 Paras, #047 Parasect, #079 Slowpoke, #080 Slowbro, #081 Magnemite, #082 Magneton, #090 Shellder and #091 Cloyster.
 
-- #046 Paras
-- #047 Parasect
-- #079 Slowpoke
-- #080 Slowbro
-- #081 Magnemite
-- #082 Magneton
-- #090 Shellder
-- #091 Cloyster
-
-Primary outputs:
-
-- `docs/P4_BATCH_04_COMPOSITE_DEPENDENCY_PLAN.md`
-- `docs/P4_BATCH_04_SOURCE_REVIEW.md`
-- `docs/P4_MAGNETON_COMPOSITE_IDENTITY_CONTRACT.md`
-- `docs/P4_BATCH_04_FULL_SCHEMA_DOSSIERS.md`
-- `docs/P4_BATCH_04_COMPLETION_AUDIT.md`
-
-Batch 04 validates four additional boundaries:
-
-1. **host/parasite control** — Paras/Parasect fungal control remains species-local; it does not create a universal mind/soul model or generic harvest loop.
-2. **source-backed reversible evolution** — Slowbro may revert to Slowpoke when its Shellder dependency is lost, without creating a global de-evolution command or erasing persistent history.
-3. **participant species versus own family** — Shellder may participate in Slowbro while retaining its independent Shellder → Cloyster evolution family; Slowbro does not grant a free second companion.
-4. **multi-origin composite evolution** — D-033 preserves one Magneton game entity and one companion slot while retaining the three Magnemite contributors' histories and allowing a bounded three-perspective presentation.
-
-Additional hazard regressions preserve the orthogonal hazard model: spores are not capped by Paras stats, Slowpoke pain delay is timing rather than Guard, Magneton magnetic-field pressure is not merely Potency damage, Shellder closed-shell state changes approach permission, and Cloyster's spike volley/current hazards remain separate from Guard 6.
+Validated host/parasite control, source-backed reversible evolution, participant-species versus own-family semantics and D-033 multi-origin composite persistence.
 
 `docs/P4_BATCH_04_COMPLETION_AUDIT.md` = **PASS**.
 
-Current manifest audit after Batch 04:
+### P4 Batch 05 — COMPLETE
 
-```text
-dossier_complete_count == 36
-pilot_reviewed_count == 2
-not_started_count == 113
-draft_count == 0
-blocking_p4_gate_count == 0
-```
-
-The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
-
-### P4 Batch 05 — SELECTED
-
-Selected chronology/anachronism stress roster:
+Completed chronology/anachronism stress roster:
 
 - #088 Grimer
 - #089 Muk
@@ -217,42 +182,55 @@ Selected chronology/anachronism stress roster:
 - #137 Porygon
 - #150 Mewtwo
 
-Primary planning output: `docs/P4_BATCH_05_HISTORICAL_PRESENCE_ANACHRONISM_PLAN.md`.
+Primary outputs:
 
-Batch 05 deliberately tests the still-unproven distinction between **mandatory 151-species dossier coverage** and **baseline-era contemporaneous presence**:
+- `docs/P4_BATCH_05_HISTORICAL_PRESENCE_ANACHRONISM_PLAN.md`
+- `docs/P4_BATCH_05_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_05_FULL_SCHEMA_DOSSIERS.md`
+- `docs/P4_BATCH_05_COMPLETION_AUDIT.md`
 
-1. Grimer/Muk and Koffing/Weezing test polluted/refuse/toxic ecologies without silently backfilling factories, sewers, modern waste systems or a generic poison-harvest economy.
-2. Original Voltorb/Electrode test modern power-plant/Poké Ball association versus distinct historical Hisuian-form evidence; regional-form history must not be substituted for the mandatory original Gen-I form or used to invent baseline Poké Balls.
-3. Porygon tests explicit artificial advanced-science/cyberspace origin against the iron-age baseline.
-4. Mewtwo tests explicit human genetic-manipulation origin at Legendary scale.
-5. The source review must allow `unsupported`, `noncontemporaneous`, or `not applicable` ancient-era fields when evidence requires them rather than inventing time travel, lost laboratories, or advanced infrastructure.
+Batch 05 validates the distinction between mandatory dossier coverage and baseline-era contemporaneous presence:
 
-Selection itself exposes no blocking Human Design Gate. Any durable chronology exception such as routine time travel or ancient advanced laboratories remains owner-gated if later source review proves it necessary.
+1. **Grimer/Muk** — `plausible-derived` local toxic/sludge ecology is permitted without factories, sewers or a modern waste economy.
+2. **Koffing/Weezing** — `plausible-derived` toxic-gas/refuse ecology is permitted without industry; Weezing's perfume evidence supports only a rare bounded specialist practice, not generic harvesting or mass manufacture.
+3. **Original Voltorb/Electrode** — `unsupported/unknown` in the project baseline. Historical Hisuian-form evidence does not substitute for the original Gen-I forms, and modern power-plant/Poké Ball association does not create ancient infrastructure.
+4. **Porygon** — `source-conflicted/noncontemporaneous`: advanced-science artificial creation and cyberspace are preserved canon facts, while baseline ecology/encounter/companionship remain explicitly unavailable; historical-observer material does not create a time-travel rule.
+5. **Mewtwo** — `source-conflicted/noncontemporaneous`: human genetic-manipulation origin is preserved and the species is not treated as rare ancient wildlife or evidence for a lost genetics laboratory.
+6. **Hazards remain orthogonal to stats** — Grimer poison, Muk contamination, Voltorb/Electrode explosions, Koffing/Weezing gas and Mewtwo psychic threat do not become flat stat-derived damage formulas.
 
-Manifest rows remain unchanged until the batch passes full source/schema/regression review:
+`docs/P4_BATCH_05_COMPLETION_AUDIT.md` = **PASS**.
+
+Current manifest audit after Batch 05:
 
 ```text
-dossier_complete_count == 36
+dossier_complete_count == 44
 pilot_reviewed_count == 2
-not_started_count == 113
+not_started_count == 105
 draft_count == 0
 blocking_p4_gate_count == 0
 ```
 
+The two remaining `pilot_reviewed` species are #131 Lapras and #151 Mew.
+
 ## Exact next work
 
-Source-review **#088 Grimer, #089 Muk, #100 Voltorb, #101 Electrode, #109 Koffing, #110 Weezing, #137 Porygon, and #150 Mewtwo**.
+Select **P4 Batch 06** from the remaining `105 not_started` species by ecology/evolution-family/domain-pressure coverage.
 
-Before full-schema authoring:
+Selection should prefer a compact set that tests at least one still-underrepresented P4 boundary rather than repeating already-proven stress cases. Candidate pressure classes include:
 
-1. confirm current official identity/forms, raw six stats and evolution metadata;
-2. classify origin/habitat/technology/pollution claims under C1/C2/D1/D2/U;
-3. assign a source-review conclusion for each species' baseline-era presence: `supported`, `plausible-derived`, `unsupported/unknown`, or `source-conflicted/noncontemporaneous`;
-4. prove whether Porygon and Mewtwo can reach complete P4 dossier status while baseline ancient ecology/encounter/companionship fields remain chronology-safe and explicitly non-applicable;
-5. prove whether original Voltorb/Electrode have support independent of Hisuian forms and modern Poké Ball/power-plant context;
-6. expose a Human Design Gate only if a durable owner-level chronology exception is genuinely required.
+1. direct predator/prey or herd/pack ecology where behavior, group size and ordinary late-game triviality need explicit separation from player scaling;
+2. aquatic/amphibious route and drowning/current permissions not already exhausted by Lapras/Cloyster;
+3. mineral/rock/ground burrowing or terrain-changing species that may affect route permissions without inventing general mining technology;
+4. culturally loaded or humanoid-adjacent species where human perception and companionship need strong canon-boundary discipline;
+5. Legendary or rare-natural species that are genuinely contemporaneous candidates, to contrast with Batch 05's artificial noncontemporaneous cases.
 
-If unblocked, continue through all eight `p4-six-axis-v1` profiles, hazard records, full-schema dossiers, family/form/chronology regressions, manifest promotion and the Batch 05 completion audit. Expected clean-close manifest: `44 complete / 2 pilot_reviewed / 105 not_started`.
+For Batch 06 selection:
+
+- keep family/ecology adjacency when it improves regression value;
+- avoid selecting only easy linear evolution families;
+- do not silently resolve a Human Design Gate during selection;
+- leave manifest rows unchanged until source review + full-schema authoring + regressions pass;
+- prefer current official Pokémon sources and the pinned structured normalization input.
 
 Do **not** begin P5 while P4 remains incomplete. Continue reviewed batches until the mandatory final `151/151` audit passes.
 
