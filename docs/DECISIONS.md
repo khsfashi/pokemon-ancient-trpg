@@ -495,4 +495,33 @@ Rare psychic gifts remain separate from ordinary Competence. Generic advancement
 
 The binding contract is `docs/P3_PROGRESSION_AND_COMPETENCE_CONTRACT.md`.
 
-The next P3 work is inventory/resource/economy abstraction, followed by bounded rare-psychic-gift mechanics and a P3 exit audit.
+## D-028 — Hybrid Load plus pooled expedition resources
+
+**Status:** ACTIVE  
+**Date:** 2026-08-15
+**Human Design Gate:** P3-HDG-006  
+**Owner choice:** B
+
+Inventory and economy use a **hybrid Load + pooled expedition resource model**.
+
+Weapons, armor, specialized tools, keepsakes, keys, rare/specific materials and other fictionally important objects are represented individually. Repeated ordinary consumables are compressed into three small integer pools: **Provisions / 보급식량**, **Remedies / 치료물자**, and **Materials / 작업재료**.
+
+Carrying burden uses small authored integer **Load** values rather than kilograms, volume simulation, item-grid packing or slot-by-slot survival bookkeeping. The initial human balance envelope is `Comfortable Load = 4 + Strength`; ordinary item/resource Load is normally `0–3`. Carrying `1–2` above Comfortable Load creates contextual Burdened pressure, while ordinary expedition travel above `Comfortable Load + 2` requires a transport/hauling solution or an explicitly authored hardship situation.
+
+Provisions, Remedies and Materials interact with travel/rest, Fatigue, treatment, repair and preparation through discrete authored transitions. There is no per-minute hunger, hydration or durability polling. Preparation should first change fictional permission/consequence categories and only then use the bounded D-024 Context modifier when uncertainty remains.
+
+Equipment primarily changes fictional eligibility, available approaches, Context, or harm/Injury consequences rather than creating a vertical gear-score treadmill. There is no universal numeric durability bar for every item.
+
+The baseline economy has no mature Kanto-wide standardized currency or universal money wallet. Barter, gifts, household/clan provisioning, labor/service exchange, favors, obligations, remembered debt and locality-specific exchange media are valid. A normalized internal trade-value reference may support deterministic authoring/balance, but it is not literal universal currency and does not override scarcity, trust, culture, ownership or willingness to trade.
+
+Favors, debts and obligations remain explicit scoped social/event state rather than a fungible point currency.
+
+Defeating, incapacitating or killing a Pokémon never automatically produces generic loot, money, Materials or advancement. P4 must decide species-by-species whether hunting, food, shed material, natural remains, dangerous harvesting, negotiated access, technology-island resources, taboo/protection, or no material use applies. Exact Pokémon-derived materials remain notable item IDs whenever their identity matters.
+
+Companion Pokémon are never inventory and do not erase carrying decisions by default. P4 may grant species-appropriate transport/cargo capabilities or burdens explicitly.
+
+For implementation, derived carried Load must be recalculated only when load-relevant inventory state changes and then cached/reused rather than rescanning definitions every frame/render.
+
+The binding contract is `docs/P3_INVENTORY_RESOURCES_AND_ECONOMY_CONTRACT.md`.
+
+The next P3 work is bounded rare-psychic-gift mechanics, followed by deciding whether a separate fate/roll-intervention resource is necessary and then a P3 exit audit.
