@@ -1,0 +1,37 @@
+name: P5 Contract Validation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/P5_*'
+      - 'tools/validate_p5_contract.py'
+      - 'tools/requirements-p5-validation.txt'
+      - '.github/workflows/p5-contract-validation.yml'
+  push:
+    branches:
+      - main
+      - 'agent/**'
+    paths:
+      - 'docs/P5_*'
+      - 'tools/validate_p5_contract.py'
+      - 'tools/requirements-p5-validation.txt'
+      - '.github/workflows/p5-contract-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: tools/requirements-p5-validation.txt
+      - name: Install validator dependencies
+        run: python -m pip install --disable-pip-version-check -r tools/requirements-p5-validation.txt
+      - name: Validate P5 schemas, registries, and fixtures
+        run: python tools/validate_p5_contract.py
