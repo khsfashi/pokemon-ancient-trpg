@@ -1,0 +1,370 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/khsfashi/pokemon-ancient-trpg/blob/main/docs/P6_RESOURCE_MANIFEST_SCHEMA.json",
+  "title": "Pokemon Ancient TRPG Resource Manifest",
+  "description": "P6 provenance and runtime resource manifest schema. Production manifests must pin exact upstream artifacts; this schema does not grant redistribution rights.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "resources"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "p6-resource-manifest-v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/resource"
+      },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resource_id",
+        "asset_class",
+        "requirement",
+        "source_id",
+        "source_kind",
+        "upstream",
+        "rights",
+        "redistribution",
+        "preprocess",
+        "runtime",
+        "fallback"
+      ],
+      "properties": {
+        "resource_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "asset_class": {
+          "enum": [
+            "font",
+            "ui_icon",
+            "ui_mark",
+            "pokemon_encounter_image",
+            "pokemon_icon",
+            "location_background",
+            "event_illustration",
+            "audio_ui",
+            "audio_ambience",
+            "audio_bgm",
+            "pokemon_cry",
+            "type_icon",
+            "status_icon",
+            "item_icon",
+            "other"
+          ]
+        },
+        "requirement": {
+          "enum": [
+            "required",
+            "optional",
+            "deferred"
+          ]
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_kind": {
+          "enum": [
+            "third_party",
+            "project_owned",
+            "generated",
+            "user_supplied"
+          ]
+        },
+        "upstream": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "canonical_url",
+            "pin_type",
+            "pin",
+            "sha256"
+          ],
+          "properties": {
+            "canonical_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "asset_locator": {
+              "type": "string"
+            },
+            "pin_type": {
+              "enum": [
+                "git_commit",
+                "release_tag",
+                "archive_version",
+                "content_hash",
+                "project_revision",
+                "none"
+              ]
+            },
+            "pin": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retrieved_at": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            }
+          }
+        },
+        "rights": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rights_holder",
+            "license_spdx_or_label",
+            "pokemon_ip_boundary",
+            "attribution_required"
+          ],
+          "properties": {
+            "rights_holder": {
+              "type": "string",
+              "minLength": 1
+            },
+            "author_or_uploader": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "license_spdx_or_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pokemon_ip_boundary": {
+              "enum": [
+                "none",
+                "depicts_or_contains_pokemon_ip",
+                "unknown"
+              ]
+            },
+            "attribution_required": {
+              "type": "boolean"
+            },
+            "notice_text_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "redistribution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "repo_mode",
+            "build_mode",
+            "public_distribution"
+          ],
+          "properties": {
+            "repo_mode": {
+              "enum": [
+                "commit_allowed",
+                "metadata_only",
+                "forbidden"
+              ]
+            },
+            "build_mode": {
+              "enum": [
+                "bundled",
+                "build_time_fetch",
+                "user_supplied",
+                "generated",
+                "omitted"
+              ]
+            },
+            "public_distribution": {
+              "enum": [
+                "allowed",
+                "not_cleared",
+                "forbidden",
+                "unknown"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "preprocess": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "recipe_version",
+            "operations",
+            "output_format",
+            "output_dimensions"
+          ],
+          "properties": {
+            "recipe_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "output_format": {
+              "type": "string",
+              "minLength": 1
+            },
+            "output_dimensions": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "properties": {
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                },
+                {
+                  "const": "intrinsic"
+                }
+              ]
+            },
+            "quality_or_palette": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "runtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "preload_scope",
+            "cache_key",
+            "duplicate_instance_policy"
+          ],
+          "properties": {
+            "preload_scope": {
+              "enum": [
+                "initial",
+                "region",
+                "event",
+                "on_demand",
+                "never"
+              ]
+            },
+            "cache_key": {
+              "const": "resource_id"
+            },
+            "duplicate_instance_policy": {
+              "const": "reuse_single_cached_instance"
+            },
+            "eviction_class": {
+              "enum": [
+                "resident",
+                "region_lru",
+                "event_lru",
+                "discard_after_use"
+              ]
+            },
+            "encoded_bytes": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "decoded_bytes_estimate": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          }
+        },
+        "fallback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "text_only",
+                "css_svg_mark",
+                "generic_placeholder",
+                "omit_feature",
+                "alternate_resource"
+              ]
+            },
+            "alternate_resource_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "player_visible_failure": {
+              "type": "boolean"
+            }
+          }
+        },
+        "provenance_notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}
