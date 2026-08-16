@@ -2,7 +2,7 @@
 
 Last explanatory handoff update: **2026-08-16**
 
-This file is the concise operational handoff. Durable product authority remains in `docs/DECISIONS.md` and phase contracts; live GitHub state wins if this file is stale.
+This file is the concise operational handoff. Durable product authority remains in `docs/DECISIONS.md`, separate later decision files and phase contracts; live GitHub state wins if this file is stale.
 
 ## Binding direction
 
@@ -17,6 +17,7 @@ This file is the concise operational handoff. Durable product authority remains 
 - The world is Pokémon-shaped society, not Pokémon-only events: human/social, survival/environment, faction/relationship and mixed-world content share the same event system.
 - `p5-event-contract-v1` is frozen: transition-driven evaluation, data-driven content, keyed deterministic RNG, reload-safe pending events and typed upstream mutations.
 - Resource planning is now P6-owned: stable resource IDs, provenance/redistribution classification, build-time normalization, cached runtime reuse and measured mobile budgets must be frozen before P7 architecture.
+- D-036 resolves Pokémon presentation as a hybrid: **PokéSprite-style compact identity + animated encounter sprites + non-destructive conceal/reveal/shading/masking/environment layers**. Exact files remain provenance-gated P6 work.
 
 World/faction contract: `docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md`
 
@@ -86,6 +87,8 @@ Primary P6 artifacts:
 - strategy: `docs/RESOURCE_STRATEGY.md`
 - Batch 01 audit: `docs/P6_BATCH_01_AUDIT.md`
 - manifest schema: `docs/P6_RESOURCE_MANIFEST_SCHEMA.json`
+- D-036 presentation decision: `docs/DECISION_D036_HYBRID_POKEMON_PRESENTATION.md`
+- hybrid presentation contract: `docs/P6_HYBRID_POKEMON_PRESENTATION_CONTRACT.md`
 - P1 source recon: `docs/P1_RESOURCE_ECOSYSTEM_RECON.md`
 - source registry: `docs/SOURCE_REGISTRY.md`
 
@@ -110,17 +113,59 @@ runtime_format_conversion == false
 duplicate_download_for_same_resource_id == false
 all_151_pokemon_media_preloaded == false
 final_numeric_budget_invented_without_measurement == false
-blocking_p6_human_design_gate_count == 1
-blocking_p6_human_design_gate == P6-HDG-001
+batch01_blocking_p6_human_design_gate_count == 1
+batch01_blocking_p6_human_design_gate == P6-HDG-001
 p6_complete == false
 p7_may_begin == false
+```
+
+### P6-HDG-001 — RESOLVED by D-036
+
+The owner selected a refined hybrid direction after Batch 01:
+
+```text
+compact_pokemon_identity_candidate == PokeSprite
+encounter_pokemon_presentation == animated_sprite
+unknown_encounter_conceal_reveal == true
+non_destructive_silhouette == allowed
+non_destructive_shading == allowed
+crop_mask_partial_reveal == allowed
+environment_foreground_overlay == allowed
+per_reveal_state_duplicate_sprite_assets == false
+all_151_encounter_animations_preloaded == false
+presentation_animation_mutates_authoritative_game_state == false
+current_blocking_p6_human_design_gate_count == 0
+```
+
+Binding authority: `docs/DECISION_D036_HYBRID_POKEMON_PRESENTATION.md`. The unresolved A–D menu retained in the Batch 01 strategy/audit is historical Batch 01 state and is superseded by D-036.
+
+### Hybrid Pokémon presentation contract
+
+Compact UI identity and direct encounter presence are intentionally separate resource roles.
+
+- **Compact identity:** audit one coherent PokéSprite family for companion/list/status surfaces.
+- **Encounter:** audit the B/W-style animated sprite-atlas lineage currently exposed by `pagefaultgames/pokerogue-assets` as a candidate, not as blanket license authority.
+- **Unknown-creature presentation:** the same cached encounter resource may be silhouette-shaded, masked/cropped, partially occluded, fogged/darkened or progressively revealed without multiplying source resources.
+- **Player-safe reveal modes:** `concealed`, `silhouette`, `partial_reveal`, `revealed`, `identified`.
+- **Environment:** project-owned/generated backgrounds, masks and overlays are valid with retained provenance.
+- **Rights:** Pokémon media remains metadata-only / not-cleared by default until exact files are classified.
+
+Observed P6 refresh for the encounter candidate:
+
+```text
+pokerogue_assets_candidate_revision == 909b43612324622608023b3beb2f24f4ef159c1d
+observed_species_asset_layout == images/pokemon/{id}.png + images/pokemon/{id}.json
+observed_001_uses_png_texture_plus_frame_metadata == true
+technical_candidate_suitability == PASS
+rights_clearance_from_repository_presence == false
 ```
 
 ### Refreshed source decisions
 
 ```text
-PokéAPI sprites      ADAPT   optional Pokémon visual candidate; metadata-only public default
-PokéSprite           ADAPT   compact visual candidate; metadata-only public default
+PokéAPI sprites      ADAPT   alternate Pokémon visual/source-reference candidate
+PokéSprite           ADAPT   selected compact-identity family candidate; exact files B02-gated
+PokéRogue assets     ADAPT   selected animated encounter candidate path; per-file provenance required
 PokéAPI cries        DEFER   not needed for baseline text-first loop
 Pretendard           ADOPT   primary Korean/Latin font candidate; exact artifact measured in B02
 Noto Sans CJK/KR     ADAPT   fallback/coverage reference; avoid redundant full bundle
@@ -130,7 +175,7 @@ project-owned SVG    ADOPT   default for game-domain UI marks
 Kenney               DEFER   exact pack only after a concrete gap exists
 Freesound            DEFER   individually classified assets only
 OpenGameArt          DEFER   individually classified assets only
-project/generated    ADOPT   production method for world-specific presentation
+project/generated    ADOPT   environment/background/overlay production method
 ```
 
 Pokémon media remains optional presentation until an exact artifact is separately rights-classified:
@@ -143,32 +188,22 @@ public_safe_build_requires_pokemon_cries == false
 missing_optional_media_changes_authoritative_gameplay == false
 ```
 
-### P6-HDG-001 — Pokémon visual density/family
-
-This is the one material Batch 01 choice that evidence cannot resolve for the owner.
-
-- **A — encounter sprite + compact companion icon (recommended):** one static Pokémon image for meaningful direct encounters plus compact three-slot/list identity; no default animation/back/shiny set.
-- **B — compact icon only:** encounters remain primarily prose; icons only for compact identity.
-- **C — no Pokémon-derived visual media in v1:** intended presentation itself is text/CSS/project marks.
-- **D — project-created/generated encounter illustrations:** strongest bespoke direction but highest authoring/provenance/style-consistency cost.
-
-Do not freeze exact Pokémon visual family/files/dimensions until this gate is answered and written to `docs/DECISIONS.md`.
-
 ## Exact next work
 
-After the owner resolves **P6-HDG-001**, run **P6 Batch 02 — exact artifact selection + measurement**:
+Continue **P6 Batch 02 — exact artifact selection + measurement** using D-036:
 
-1. record the owner decision in `docs/DECISIONS.md`;
-2. freeze the exact Pretendard artifacts/weights/subset recipe and notices;
-3. freeze the exact Lucide release/files and project-owned domain marks;
-4. choose representative Pokémon visual files only if the selected gate option requires them;
-5. create concrete `p6-resource-manifest-v1` records with exact pins, SHA-256, rights/redistribution/preprocessing/fallback fields;
-6. run reproducible build-time normalization;
-7. measure actual initial resource payload and representative decoded working sets;
-8. select output dimensions/formats using those measurements;
-9. freeze numeric initial-payload/image/audio/cache budgets only from measured candidates;
-10. add executable manifest/provenance/duplicate/fallback validation;
-11. keep #12 open and **do not begin P7** until full P6 exit passes.
+1. audit and pin one coherent PokéSprite compact family with exact Gen-I #001-#151 coverage evidence;
+2. audit the PokéRogue/B/W-style animated candidate for #001-#151 coverage, frame-atlas shape and per-file provenance/rights metadata at a frozen revision;
+3. select a small representative species set spanning materially different sprite bounds/frame counts before any whole-roster preload/measurement work;
+4. freeze exact Pretendard artifacts/weights/subset recipe and notices;
+5. freeze exact Lucide release/files and project-owned domain marks;
+6. create concrete `p6-resource-manifest-v1` records with exact pins, SHA-256, rights/redistribution/preprocessing/fallback fields;
+7. run reproducible build-time normalization and validate atlas/frame metadata without creating per-reveal-state image duplicates;
+8. measure actual initial resource payload plus representative compact-icon, animated-encounter and decoded texture working sets;
+9. measure the incremental cost of the normal conceal/reveal mask/overlay presentation path;
+10. select output dimensions/formats and freeze numeric initial-payload/image/audio/cache budgets only from measured candidates;
+11. add executable manifest/provenance/hash/duplicate/fallback/public-bundle validation;
+12. keep #12 open and **do not begin P7** until full P6 exit passes.
 
 ## Later roadmap
 
