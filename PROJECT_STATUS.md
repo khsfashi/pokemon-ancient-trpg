@@ -20,6 +20,7 @@ This file is the concise operational handoff. Durable product authority remains 
 - P9 full content must include substantive ordinary human/social, survival, exploration/mystery, relationship, faction, mixed-world and Pokémon content; several recurring major factions are required, with a current planning target of roughly 4–6 faction lanes.
 - Major factions must arise from Pokémon ecology/capability/sacredness/knowledge/exploitation/protection/coexistence/anomaly or another approved Pokémon-world causal bridge rather than generic medieval organizations with Pokémon decoration.
 - `p5-event-contract-v1` pins the P5 deterministic foundation: discrete trigger evaluation, stable event IDs, keyed deterministic RNG streams, pending-event reload safety and typed upstream state ownership.
+- P5 Batch 02 freezes the normalized production JSON Schema, pending-event semantic schema, semantic read/predicate registry, typed P3/P4 adapter registry and machine-readable `P5V001..P5V018` validation cases without selecting a P7 storage/runtime stack.
 
 World/faction contract: `docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md`
 
@@ -141,17 +142,66 @@ The six fixed foundation fixtures cover:
 5. companion-aware branch with explicit `0/3` parity;
 6. structurally invalid approach with zero RNG consumption.
 
-## Live P5 work
+## P5 Batch 02 — COMPLETE
 
-Draft PR **#93 — P5 Batch 02: freeze normalized event schema and adapter registry** owns the current first-incomplete P5 implementation-neutral contract work.
+Normalized production schema: `docs/P5_NORMALIZED_EVENT_SCHEMA.json`  
+Pending-event semantic schema: `docs/P5_PENDING_EVENT_STATE_SCHEMA.json`  
+Semantic/domain adapter registry: `docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml`  
+Validation fixtures: `docs/P5_BATCH_02_VALIDATION_FIXTURES.yaml`  
+Batch audit: `docs/P5_BATCH_02_AUDIT.md`
 
-This world/faction roadmap mutation does **not** start P8/P9 early and must not bypass #93 or the P5 strict exit audit.
+Frozen Batch 02 results:
+
+```text
+json_schema_draft == 2020-12
+normalized_event_required_shape_frozen == true
+canonical_digest_input_frozen == true
+runtime_storage_layout_frozen_early == false
+semantic_read_registry_uses_storage_paths == false
+pure_predicates_consume_rng == false
+unknown_domain_command_rejected == true
+all_effects_prevalidated_before_first_write == true
+P5V001_through_P5V018_machine_case_count == 18
+new_duplicate_validation_id_count == 0
+pending_schema_version == p5-pending-v1
+silent_mid_event_reroll_after_reload == false
+silent_mid_event_reselection_after_reload == false
+unbounded_chain_cycle_allowed == false
+cooldown_uses_wall_clock == false
+insight_eligibility_consumes_rng == false
+independent_rng_channels_preserved == true
+generic_evolution_command_exists == false
+generic_capture_or_containment_command_exists == false
+generic_loot_command_exists == false
+p4_all_151_direct_encounter_authoring_contract_preserved == true
+blocking_human_design_gate_count == 0
+```
+
+P3/P4 adapter coverage now includes:
+
+- P3 check binding, survival/injury, notable inventory + three pooled resources, progression, rare Gifts and D-030 emergency-item consequence mitigation;
+- P4 species identity/profile/capability/hazard reads, direct/exceptional encounter recording and voluntary physical companionship transitions;
+- explicit rejection of raw upstream setters, generic capture/containment, generic evolution, generic loot and generic stacking companion modifiers.
+
+Boundary fixtures now pin bounded/unbounded chain behavior, transition-sequence cooldowns, bounded recent history, evidence-bounded discoveries, keyed RNG-channel independence and mid-reaction reload behavior.
+
+P5 is **not** closed by this batch. The issue exit condition still requires a strict whole-surface audit before P6 can begin.
 
 ## Exact next work
 
-Finish/validate **PR #93**, then run **P5 Batch 03 — strict exit-readiness audit**.
+Continue **P5 Batch 03 — strict exit-readiness audit**:
 
-In addition to the existing Batch 03 structural/determinism/P3/P4 requirements, the strict exit audit must now prove the shared event surface can represent without bespoke engine paths:
+1. parse/structurally validate both Batch 02 JSON Schemas and all YAML fixture/registry artifacts;
+2. cross-audit every schema semantic ref, predicate and command against the closed registry, including duplicate/unknown-key detection;
+3. instantiate at least one normalized representative event through schema + registry checks for direct, check/reaction and D-034 exceptional paths without creating production lore;
+4. prove every `P5V001..P5V018` negative fixture fails at the intended validator layer and every positive control passes;
+5. cross-check pending-event mid-choice/mid-roll/mid-reaction resume cases against the frozen phase requirements and migration rules;
+6. re-audit chain/cooldown/history complexity and keyed RNG independence for implementation readiness;
+7. run a strict P3/P4 contradiction audit against the full frozen P5 surface, including `0/3` viability and D-034 `151/151` direct-encounter preservation;
+8. produce `docs/P5_EXIT_AUDIT.md`; close issue #6 only if all P5 exit conditions pass with no unresolved schema/adapter gap;
+9. if the strict audit passes, update `PROJECT_STATUS.md` to unblock P6 (#12); otherwise keep P5 active and list only the concrete blockers.
+
+D-035 adds one mandatory exit-readiness proof: the same normalized surface must represent without bespoke engine paths:
 
 1. a human/social event whose immediate cause is not Pokémon;
 2. a survival/environmental event;
@@ -160,7 +210,7 @@ In addition to the existing Batch 03 structural/determinism/P3/P4 requirements, 
 5. a mixed human/Pokémon event;
 6. typed owner-domain mutation for the relationship/faction/world state needed by those fixtures rather than raw upstream writes.
 
-If the normalized registry lacks the P2/world-domain command coverage required for these representative events, that is a **real P5 blocker** and must be fixed before #6 closes.
+If the frozen registry lacks required P2/world-domain mutation commands for these representative events, that is a **real P5 blocker** and must be fixed before issue #6 closes.
 
 Do **not** begin P6/P7 until the strict P5 exit audit passes.
 
