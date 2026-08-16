@@ -117,8 +117,8 @@ species:
   - {national_dex: 53, species_key: persian, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 54, species_key: psyduck, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 55, species_key: golduck, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
-  - {national_dex: 56, species_key: mankey, dossier_status: not_started}
-  - {national_dex: 57, species_key: primeape, dossier_status: not_started}
+  - {national_dex: 56, species_key: mankey, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
+  - {national_dex: 57, species_key: primeape, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
   - {national_dex: 58, species_key: growlithe, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 59, species_key: arcanine, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 60, species_key: poliwag, dossier_status: not_started}
@@ -167,8 +167,8 @@ species:
   - {national_dex: 103, species_key: exeggutor, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 104, species_key: cubone, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 105, species_key: marowak, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
-  - {national_dex: 106, species_key: hitmonlee, dossier_status: not_started}
-  - {national_dex: 107, species_key: hitmonchan, dossier_status: not_started}
+  - {national_dex: 106, species_key: hitmonlee, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
+  - {national_dex: 107, species_key: hitmonchan, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
   - {national_dex: 108, species_key: lickitung, dossier_status: not_started}
   - {national_dex: 109, species_key: koffing, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 110, species_key: weezing, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
@@ -184,11 +184,11 @@ species:
   - {national_dex: 120, species_key: staryu, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 121, species_key: starmie, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 122, species_key: mr-mime, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
-  - {national_dex: 123, species_key: scyther, dossier_status: not_started}
+  - {national_dex: 123, species_key: scyther, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
   - {national_dex: 124, species_key: jynx, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
   - {national_dex: 125, species_key: electabuzz, dossier_status: not_started}
   - {national_dex: 126, species_key: magmar, dossier_status: not_started}
-  - {national_dex: 127, species_key: pinsir, dossier_status: not_started}
+  - {national_dex: 127, species_key: pinsir, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
   - {national_dex: 128, species_key: tauros, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 129, species_key: magikarp, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
   - {national_dex: 130, species_key: gyarados, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
