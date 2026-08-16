@@ -186,8 +186,8 @@ species:
   - {national_dex: 122, species_key: mr-mime, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
   - {national_dex: 123, species_key: scyther, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
   - {national_dex: 124, species_key: jynx, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
-  - {national_dex: 125, species_key: electabuzz, dossier_status: not_started}
-  - {national_dex: 126, species_key: magmar, dossier_status: not_started}
+  - {national_dex: 125, species_key: electabuzz, dossier_status: complete, authoring_batch: B18-new, p6_followup_required: true}
+  - {national_dex: 126, species_key: magmar, dossier_status: complete, authoring_batch: B18-new, p6_followup_required: true}
   - {national_dex: 127, species_key: pinsir, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
   - {national_dex: 128, species_key: tauros, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 129, species_key: magikarp, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
@@ -199,12 +199,12 @@ species:
   - {national_dex: 135, species_key: jolteon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 136, species_key: flareon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 137, species_key: porygon, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
-  - {national_dex: 138, species_key: omanyte, dossier_status: not_started}
-  - {national_dex: 139, species_key: omastar, dossier_status: not_started}
+  - {national_dex: 138, species_key: omanyte, dossier_status: complete, authoring_batch: B18-new, p6_followup_required: true}
+  - {national_dex: 139, species_key: omastar, dossier_status: complete, authoring_batch: B18-new, p6_followup_required: true}
   - {national_dex: 140, species_key: kabuto, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
   - {national_dex: 141, species_key: kabutops, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: true}
-  - {national_dex: 142, species_key: aerodactyl, dossier_status: not_started}
-  - {national_dex: 143, species_key: snorlax, dossier_status: not_started}
+  - {national_dex: 142, species_key: aerodactyl, dossier_status: complete, authoring_batch: B18-new, p6_followup_required: true}
+  - {national_dex: 143, species_key: snorlax, dossier_status: complete, authoring_batch: B18-new, p6_followup_required: true}
   - {national_dex: 144, species_key: articuno, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
   - {national_dex: 145, species_key: zapdos, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
   - {national_dex: 146, species_key: moltres, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
