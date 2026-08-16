@@ -1,0 +1,325 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pokemon-ancient-trpg.invalid/schema/p5-normalized-event-v1.json",
+  "title": "Pokemon Ancient TRPG P5 normalized production event",
+  "description": "Implementation-neutral authoritative event definition for p5-event-contract-v1. Runtime storage layout remains a P7 concern.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "content_revision",
+    "tags",
+    "triggers",
+    "reads",
+    "writes",
+    "domain_commands",
+    "eligibility",
+    "weight",
+    "repeat_policy",
+    "presentation_ref",
+    "choices",
+    "outcomes"
+  ],
+  "properties": {
+    "event_id": { "$ref": "#/$defs/stableId" },
+    "content_revision": { "type": "integer", "minimum": 1 },
+    "tags": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/stableId" },
+      "uniqueItems": true
+    },
+    "triggers": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/triggerId" },
+      "uniqueItems": true
+    },
+    "reads": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/semanticRef" },
+      "uniqueItems": true
+    },
+    "writes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/p5WriteRef" },
+      "uniqueItems": true
+    },
+    "domain_commands": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/domainCommandId" },
+      "uniqueItems": true
+    },
+    "eligibility": { "$ref": "#/$defs/condition" },
+    "weight": { "$ref": "#/$defs/weight" },
+    "repeat_policy": { "$ref": "#/$defs/repeatPolicy" },
+    "chain_membership": { "$ref": "#/$defs/chainMembership" },
+    "presentation_ref": { "$ref": "#/$defs/semanticRef" },
+    "choices": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/choice" }
+    },
+    "outcomes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/outcome" }
+    }
+  },
+  "x-p5-contract-version": "p5-event-contract-v1",
+  "x-p5-canonicalization": {
+    "encoding": "utf-8",
+    "object_key_order": "ascending-bytewise-ascii",
+    "array_order": "preserve-authoritative-order",
+    "integer_format": "base10-no-leading-plus",
+    "whitespace": "none",
+    "record_order": "event_id-ascending-bytewise-ascii",
+    "digest": "sha256",
+    "digest_scope": "entire-normalized-record-after-default-elimination",
+    "forbidden_authoritative_sources": ["wall_clock", "network", "device_state", "unordered_iteration", "floating_weight"]
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "semanticRef": {
+      "type": "string",
+      "pattern": "^(p2|p3|p4|p5|content)\\.[a-z0-9][a-z0-9._:-]{0,126}$"
+    },
+    "p5WriteRef": {
+      "type": "string",
+      "pattern": "^p5\\.(narrative|event)\\.[a-z0-9][a-z0-9._:-]{0,112}$"
+    },
+    "domainCommandId": {
+      "type": "string",
+      "pattern": "^(p2|p3|p4)\\.[a-z0-9][a-z0-9._-]{0,95}$"
+    },
+    "triggerId": {
+      "enum": [
+        "run_started",
+        "location_entered",
+        "travel_step_committed",
+        "rest_completed",
+        "player_action_committed",
+        "check_resolved",
+        "companion_state_changed",
+        "knowledge_changed",
+        "milestone_committed",
+        "event_resolved",
+        "event_chain_advanced"
+      ]
+    },
+    "condition": {
+      "oneOf": [
+        { "type": "boolean" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["all"],
+          "properties": {
+            "all": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/condition" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["any"],
+          "properties": {
+            "any": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/condition" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["not"],
+          "properties": { "not": { "$ref": "#/$defs/condition" } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["predicate_id", "args"],
+          "properties": {
+            "predicate_id": { "$ref": "#/$defs/semanticRef" },
+            "args": {
+              "type": "object",
+              "additionalProperties": { "$ref": "#/$defs/scalar" }
+            }
+          }
+        }
+      ]
+    },
+    "scalar": {
+      "type": ["string", "integer", "boolean", "null"]
+    },
+    "weight": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base_points", "modifiers"],
+      "properties": {
+        "base_points": { "type": "integer", "minimum": 0, "maximum": 9223372036854775807 },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["when", "add_points"],
+            "properties": {
+              "when": { "$ref": "#/$defs/condition" },
+              "add_points": { "type": "integer", "minimum": -9223372036854775807, "maximum": 9223372036854775807 }
+            }
+          }
+        }
+      }
+    },
+    "repeatPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_occurrences": { "type": "integer", "minimum": 1 },
+        "once_per_run": { "type": "boolean" },
+        "cooldown_after_transitions": { "type": "integer", "minimum": 0 },
+        "recent_window_penalty": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "chainMembership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chain_id", "chain_step_id"],
+      "properties": {
+        "chain_id": { "$ref": "#/$defs/stableId" },
+        "chain_step_id": { "$ref": "#/$defs/stableId" }
+      }
+    },
+    "choice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["choice_id", "disclosure", "resolution"],
+      "properties": {
+        "choice_id": { "$ref": "#/$defs/stableId" },
+        "visibility_when": { "$ref": "#/$defs/condition" },
+        "availability_when": { "$ref": "#/$defs/condition" },
+        "unavailable_reason_id": { "$ref": "#/$defs/stableId" },
+        "disclosure": { "enum": ["public", "secret"] },
+        "resolution": { "$ref": "#/$defs/resolution" },
+        "preparation_window": { "$ref": "#/$defs/effectWindow" },
+        "reaction_window": { "$ref": "#/$defs/effectWindow" },
+        "recovery_window": { "$ref": "#/$defs/effectWindow" }
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "outcome_map"],
+      "properties": {
+        "kind": { "enum": ["direct", "check", "opposed", "blocked"] },
+        "check": { "$ref": "#/$defs/check" },
+        "outcome_map": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/stableId" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "enum": ["check", "opposed"] } }, "required": ["kind"] },
+          "then": { "required": ["check"] }
+        }
+      ]
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "governing_attribute_ref", "context_components"],
+      "properties": {
+        "check_id": { "$ref": "#/$defs/stableId" },
+        "governing_attribute_ref": { "$ref": "#/$defs/semanticRef" },
+        "competence_ref": { "$ref": "#/$defs/semanticRef" },
+        "context_components": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/semanticRef" }
+        },
+        "static_difficulty": { "type": "integer" },
+        "opposed_target_ref": { "$ref": "#/$defs/semanticRef" }
+      },
+      "oneOf": [
+        { "required": ["static_difficulty"], "not": { "required": ["opposed_target_ref"] } },
+        { "required": ["opposed_target_ref"], "not": { "required": ["static_difficulty"] } }
+      ]
+    },
+    "effectWindow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["window_id", "legal_operation_ids"],
+      "properties": {
+        "window_id": { "$ref": "#/$defs/stableId" },
+        "legal_operation_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/domainCommandId" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome_id", "p5_effects", "domain_commands", "enqueue_chain_steps", "post_commit_triggers"],
+      "properties": {
+        "outcome_id": { "$ref": "#/$defs/stableId" },
+        "p5_effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/p5Effect" }
+        },
+        "domain_commands": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/domainCommandCall" }
+        },
+        "enqueue_chain_steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["chain_id", "chain_step_id"],
+            "properties": {
+              "chain_id": { "$ref": "#/$defs/stableId" },
+              "chain_step_id": { "$ref": "#/$defs/stableId" }
+            }
+          }
+        },
+        "post_commit_triggers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/triggerId" }
+        }
+      }
+    },
+    "p5Effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "ref"],
+      "properties": {
+        "operation": { "enum": ["narrative.flag.set", "narrative.flag.clear", "narrative.counter.add", "event.chain.enqueue"] },
+        "ref": { "$ref": "#/$defs/p5WriteRef" },
+        "amount": { "type": "integer" },
+        "value": { "$ref": "#/$defs/scalar" }
+      }
+    },
+    "domainCommandCall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command_id", "args"],
+      "properties": {
+        "command_id": { "$ref": "#/$defs/domainCommandId" },
+        "args": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/scalar" }
+        }
+      }
+    }
+  }
+}
