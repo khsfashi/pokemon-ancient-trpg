@@ -31,7 +31,7 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 18:
+Current authoritative manifest state after Batch 18 and unchanged by Batch 19 selection:
 
 ```text
 dossier_complete_count == 135
@@ -142,7 +142,60 @@ manifest_pilot_reviewed_count == 2
 manifest_not_started_count == 14
 ```
 
+### P4 Batch 19 — SELECTED — source review next
+
+Roster:
+
+- #086 Seel / #087 Dewgong
+- #116 Horsea / #117 Seadra
+- #118 Goldeen / #119 Seaking
+
+Selection output:
+
+- `docs/P4_BATCH_19_AQUATIC_LOCOMOTION_COLD_WATER_MORPHOLOGY_PLAN.md`
+
+Selection conclusions:
+
+- the six-species cluster targets aquatic locomotion, cold-water ecology, explicit swimming-speed claims, ink/spines/horns, parental care, medicinal-resource wording, seasonal nesting and localized terrain interaction without creating global water, temperature, poison, breeding, mining or resource-economy systems;
+- D-034 direct encounterability remains separate from commonness, ordinary companionship and baseline-era natural abundance;
+- strong swimming evidence does not imply guaranteed escape/pursuit, indefinite underwater breathing, safe passenger traversal, current immunity, automatic drowning, or direct conversion of knots into turn/travel formulas;
+- Seel/Dewgong cold and ice interactions remain species-local authored capabilities rather than continuous thermodynamics or universal cold immunity;
+- Horsea ink and Seadra poison remain discrete warning/eligibility/counterplay hazards under ordinary action economy rather than automatic blindness/poison or player-input removal;
+- Seadra medicinal-resource wording does not establish automatic loot, live harvesting, standardized medicine recipes or a biological-resource market;
+- Goldeen/Seaking swim speed, horn use, mating and nesting remain authored ecology; they do not create universal terrain deletion, mining, continuous breeding simulation or guaranteed nest hostility;
+- all six remain one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot;
+- later runtime should prefer cached/coarse water, cold, nest, concealment and hazard state with event-triggered consequences rather than continuous fluid, pathfinding, temperature or breeding simulation;
+- no new blocking Human Design Gate is required at selection time.
+
+Deterministic profiles from pinned `SRC-DATA-001`:
+
+```text
+Seel     3/2/2/2/3/2
+Dewgong  4/3/4/3/4/3
+Horsea   1/2/3/3/1/3
+Seadra   2/3/4/4/2/4
+Goldeen  2/3/3/1/2/3
+Seaking  4/4/3/3/4/3
+```
+
+Selection validation:
+
+```text
+selected_species_count == 6
+selected_species_all_not_started_on_main == true
+current_official_species_pages_verified == 6
+pinned_species_records_reviewed == 6
+rating_profile_reproducible_count == 6
+manual_rating_exception_count == 0
+coverage_manifest_changed == false
+blocking_human_design_gate_count == 0
+continuous_simulation_requirement_count == 0
+next_step == batch19_claim_level_source_review
+```
+
 ### Remaining P4 not-started roster
+
+Selection does not promote coverage, so the authoritative manifest still lists all 14 rows as `not_started` until later completion audit:
 
 ```text
 #023 Ekans       #024 Arbok
@@ -154,19 +207,23 @@ manifest_not_started_count == 14
 #118 Goldeen     #119 Seaking
 ```
 
+If Batch 19 later completes and promotes exactly its six selected rows, the remaining `not_started` pool will be #023-#024, #060-#062, #098-#099 and #108.
+
 ## Exact next work
 
-Select **P4 Batch 19** as a coherent subset of the 14 remaining `not_started` Generation-I species, then perform the same claim-level source-review → frozen-schema authoring → completion-audit → atomic-manifest-promotion sequence.
+Create **`docs/P4_BATCH_19_SOURCE_REVIEW.md`** for #086 Seel, #087 Dewgong, #116 Horsea, #117 Seadra, #118 Goldeen and #119 Seaking.
 
-The next selection pass must:
+The source-review pass must:
 
-1. keep D-034 direct encounterability separate from commonness, ordinary companionship and baseline-era natural abundance;
-2. prefer a coherent pressure cluster that exercises still-unresolved aquatic morphology, body-plan, venom/constriction or feeding/locomotion boundaries without inventing global systems;
-3. verify current official evidence plus pinned `SRC-DATA-001` before binding source claims or six-axis profiles;
-4. preserve one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot regardless of heads, coils, fins, claws or other repeated anatomy;
-5. preserve player agency and event-scoped hazards rather than automatic restraint, drowning, poison, grapple or traversal outcomes;
-6. leave the coverage manifest unchanged during selection/source review and promote only after all selected dossiers pass the completion audit;
-7. do not begin P5 until the mandatory `151/151` P4 exit audit passes.
+1. inventory current official and historical/version-tagged claims at their actual epistemic strength;
+2. preserve the pinned deterministic profiles and inspect type/ability/evolution context without importing modern battle mechanics as ancient rules;
+3. audit aquatic locomotion, water/land exposure, cold/ice interaction, numeric speed wording, ink, poison, biological-resource use, parental care, seasonal nesting and terrain interaction;
+4. keep D-034 direct encounterability separate from abundance and ordinary companionship;
+5. preserve warning, eligibility, counterplay, escape/avoidance and player input for drowning, poison, concealment, contact and terrain hazards;
+6. require no continuous fluid, temperature, pathfinding, feeding or breeding simulation unless later architecture proves a concrete need;
+7. leave `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml` unchanged during source review;
+8. hand off to six frozen-schema dossiers only if contradiction/gate checks pass;
+9. do not begin P5 until the mandatory `151/151` P4 exit audit passes.
 
 ## Later roadmap
 
