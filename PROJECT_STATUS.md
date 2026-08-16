@@ -31,18 +31,18 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 19 and unchanged by Batch 20 selection/source review:
+Current authoritative manifest state after Batch 20:
 
 ```text
-dossier_complete_count == 141
+dossier_complete_count == 146
 pilot_reviewed_count == 2
-not_started_count == 8
+not_started_count == 3
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
 ```
 
-The two `pilot_reviewed` species remain #131 Lapras and #151 Mew.
+The two `pilot_reviewed` species remain #131 Lapras and #151 Mew. The final `not_started` species are #098 Krabby, #099 Kingler and #108 Lickitung.
 
 ### P4 foundation
 
@@ -75,35 +75,44 @@ Batch 16   PASS
 Batch 17   PASS
 Batch 18   PASS
 Batch 19   PASS
+Batch 20   PASS
 ```
 
-### P4 Batch 20 — SOURCE REVIEW COMPLETE — full-schema authoring next
+### P4 Batch 20 — COMPLETE
 
 Roster:
 
 - #023 Ekans / #024 Arbok
 - #060 Poliwag / #061 Poliwhirl / #062 Poliwrath
 
-Primary outputs so far:
+Primary outputs:
 
 - `docs/P4_BATCH_20_CONSTRICTION_AMPHIBIOUS_LOCOMOTION_PLAN.md`
 - `docs/P4_BATCH_20_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_20_DOSSIER_023_EKANS.md`
+- `docs/P4_BATCH_20_DOSSIER_024_ARBOK.md`
+- `docs/P4_BATCH_20_DOSSIER_060_POLIWAG.md`
+- `docs/P4_BATCH_20_DOSSIER_061_POLIWHIRL.md`
+- `docs/P4_BATCH_20_DOSSIER_062_POLIWRATH.md`
+- `docs/P4_BATCH_20_FULL_SCHEMA_DOSSIERS.md`
+- `docs/P4_BATCH_20_COMPLETION_AUDIT.md`
 
-Source-review conclusions:
+Completion conclusions:
 
-- current official pages and pinned `SRC-DATA-001` evidence were reviewed claim-by-claim rather than flattening observation, historical/version-scoped wording, reputation, contextual biology and modern mechanics into universal rules;
-- Ekans stealth, tongue sensing, large-prey swallowing and age/venom evidence remain species-local encounter facts without invisibility, omniscient scanning, instant-kill swallowing or a continuous maturation simulator;
-- Arbok intimidation, persistent pursuit, constriction and venom can produce severe pressure while preserving explicit eligibility, positioning, counterplay, escape and player input; historical no-escape/steel-drum wording does not become universal restraint or generic structural deletion;
-- Poliwag's newly grown legs and thin/flexible skin preserve meaningful water/land asymmetry without automatic land immobilization, universal puncture immunity or continuous growth/body simulation;
-- Poliwhirl is genuinely amphibious and has moist/slippery skin plus spiral-linked drowsiness evidence, but this creates no hydration meter, guaranteed restraint escape, passive hypnosis, automatic sleep or continuous gaze polling;
-- Poliwrath's whole-body swimming, extreme endurance and brief water-surface running remain bounded capability evidence rather than infinite stamina, literal ocean-travel formulas, permanent water walking or passenger fast travel;
-- Politoed plus modern Water Stone / King's Rock / trade metadata remain chronology/mechanic provenance under D-032 rather than mandatory ancient progression law;
+- all five dossiers populate the 20 frozen-schema top-level sections with `dossier_status: complete`, zero TODO placeholders and zero blocking Human Design Gates;
+- deterministic `p4-six-axis-v1` profiles reproduce with zero manual exceptions;
+- Ekans stealth and tongue sensing remain contextual rather than invisibility or omniscient scanning; swallowing and venom require eligible event resolution rather than instant-kill or automatic-poison logic;
+- Arbok intimidation, pursuit, constriction and venom remain severe but agency-safe; no forced Fear, permanent restraint, infinite pursuit, perfect tracking or generic structural deletion is introduced;
+- Poliwag preserves meaningful water/land asymmetry without automatic land immobilization, universal puncture immunity or continuous maturation/body simulation;
+- Poliwhirl remains genuinely amphibious with slippery-skin and visual-drowsiness pressure, but no hydration meter, guaranteed escape, passive hypnosis, automatic sleep or continuous gaze polling is introduced;
+- Poliwrath remains a powerful amphibious swimmer with exceptional but bounded endurance and momentary water-surface movement, without infinite stamina, literal travel formulas, permanent water walking or passenger fast travel;
 - all five remain one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot;
+- ordinary weak species may become routine as human capability advances, while rare exceptional individuals remain history-backed and non-player-scaled;
+- high species stats do not imply automatic aggression;
 - D-034 direct encounterability remains separate from commonness, baseline abundance and ordinary companionship;
-- later runtime should prefer cached/coarse encounter state plus event-triggered venom, constriction, pursuit, gaze and land/water consequences rather than continuous stealth, poison, grapple, hydration, gaze, swimming or stamina simulation;
-- no new blocking Human Design Gate is required.
+- later runtime guidance remains cached/coarse authored encounter state plus event-triggered consequences rather than continuous species simulation.
 
-Deterministic profiles from pinned `SRC-DATA-001`:
+Deterministic profiles:
 
 ```text
 Ekans      1/3/2/2/2/2
@@ -113,70 +122,55 @@ Poliwhirl  3/3/3/2/2/4
 Poliwrath  4/4/4/3/4/3
 ```
 
-Source-review validation:
+Completion validation:
 
 ```text
-reviewed_species_count == 5
-current_official_species_pages_verified == 5
-pinned_species_records_reviewed == 5
+full_schema_dossier_count == 5
+dossier_status_complete_count == 5
+required_section_count_per_dossier == 20
+placeholder_TODO_count == 0
 rating_profile_reproducible_count == 5
 manual_rating_exception_count == 0
-source_claims_epistemically_scoped == true
-automatic_poison_rule_added == false
-forced_Fear_or_input_loss_rule_added == false
-generic_grapple_or_pursuit_simulator_added == false
-continuous_hydration_or_gaze_polling_added == false
-numeric_swim_or_stamina_runtime_formula_added == false
-water_walking_global_rule_added == false
-continuous_simulation_requirement_count == 0
 p2_contradiction_count == 0
 p3_contradiction_count == 0
 p4_contract_contradiction_count == 0
 blocking_human_design_gate_count == 0
-coverage_manifest_changed == false
-ready_for_full_schema_authoring == true
+manifest_promoted_species_count == 5
+manifest_complete_count == 146
+manifest_pilot_reviewed_count == 2
+manifest_not_started_count == 3
 ```
 
-### Remaining P4 not-started roster
-
-Source review does not promote coverage, so the authoritative manifest still lists all eight rows as `not_started` until the later Batch 20 completion audit:
+### Remaining P4 roster work
 
 ```text
-#023 Ekans       #024 Arbok
-#060 Poliwag     #061 Poliwhirl    #062 Poliwrath
-#098 Krabby      #099 Kingler
+#098 Krabby
+#099 Kingler
 #108 Lickitung
 ```
 
-If Batch 20 later completes and promotes exactly its five reviewed rows, the final `not_started` pool will be #098 Krabby, #099 Kingler and #108 Lickitung, with expected coverage `146 complete / 2 pilot_reviewed / 3 not_started`.
+These are the final three `not_started` rows. After they are completed, #131 Lapras and #151 Mew still require whatever final completion promotion/audit is necessary to satisfy the strict `151 complete` P4 exit invariant; `pilot_reviewed` is not silently treated as `complete`.
 
 ## Exact next work
 
-Author the five **P4 Batch 20 frozen full-schema dossiers**:
+Begin **P4 Batch 21** with the final three `not_started` species:
 
-- `docs/P4_BATCH_20_DOSSIER_023_EKANS.md`
-- `docs/P4_BATCH_20_DOSSIER_024_ARBOK.md`
-- `docs/P4_BATCH_20_DOSSIER_060_POLIWAG.md`
-- `docs/P4_BATCH_20_DOSSIER_061_POLIWHIRL.md`
-- `docs/P4_BATCH_20_DOSSIER_062_POLIWRATH.md`
+- #098 Krabby
+- #099 Kingler
+- #108 Lickitung
 
-Then create:
+The next pass should:
 
-- `docs/P4_BATCH_20_FULL_SCHEMA_DOSSIERS.md`
-- `docs/P4_BATCH_20_COMPLETION_AUDIT.md`
-
-The authoring/completion pass must:
-
-1. populate all 20 frozen-schema top-level sections for each species with `dossier_status: complete` and no placeholder TODOs;
-2. preserve the claim-level provenance and boundaries established by `docs/P4_BATCH_20_SOURCE_REVIEW.md`;
-3. preserve one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot;
-4. keep stealth, sensing, venom, constriction, intimidation, pursuit, drowsiness and amphibious locomotion species-local and event-scoped;
-5. preserve warning, eligibility, counterplay, escape/avoidance and player input for severe hazards;
-6. keep D-034 direct encounterability separate from baseline abundance and ordinary companionship;
-7. require no continuous stealth, poison, grapple, pursuit, hydration, gaze, swimming or stamina simulation;
-8. atomically promote exactly #023/#024/#060/#061/#062 only if dossier validation and Batch 20 completion audit pass;
-9. leave #098/#099/#108 as the final `not_started` roster after successful promotion;
-10. keep P5 blocked until the final mandatory `151/151` P4 exit audit passes.
+1. create a concise Batch 21 pressure-selection/source-review document for shell/claw force, asymmetric claw morphology, water/land behavior and tongue/contact anatomy;
+2. review current primary official evidence plus pinned `SRC-DATA-001` claim-by-claim before any manifest promotion;
+3. prevent claw force from becoming generic mining, universal material destruction, extra appendage actions or detachable weapon entities;
+4. prevent Lickitung tongue reach/contact/saliva evidence from becoming omniscient sensing, unrestricted grappling, automatic status application, generic tool use or continuous contact simulation;
+5. preserve one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot;
+6. preserve ordinary-species progression and rare persistent-history exceptional individuals without player-level scaling;
+7. preserve warning, eligibility, counterplay, escape/avoidance and player input for severe hazards;
+8. prefer cached/coarse authored state and event-triggered consequences over continuous species simulation;
+9. promote rows only after frozen-schema dossiers and completion audit pass atomically;
+10. do not begin P5 until the mandatory final `151/151` P4 exit audit passes.
 
 ## Later roadmap
 
