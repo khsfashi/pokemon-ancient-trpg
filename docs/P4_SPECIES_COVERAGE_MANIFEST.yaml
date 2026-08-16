@@ -84,8 +84,8 @@ species:
   - {national_dex: 20, species_key: raticate, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
   - {national_dex: 21, species_key: spearow, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
   - {national_dex: 22, species_key: fearow, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
-  - {national_dex: 23, species_key: ekans, dossier_status: not_started}
-  - {national_dex: 24, species_key: arbok, dossier_status: not_started}
+  - {national_dex: 23, species_key: ekans, dossier_status: complete, authoring_batch: B20-new, p6_followup_required: true}
+  - {national_dex: 24, species_key: arbok, dossier_status: complete, authoring_batch: B20-new, p6_followup_required: true}
   - {national_dex: 25, species_key: pikachu, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 26, species_key: raichu, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 27, species_key: sandshrew, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
@@ -121,9 +121,9 @@ species:
   - {national_dex: 57, species_key: primeape, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
   - {national_dex: 58, species_key: growlithe, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
   - {national_dex: 59, species_key: arcanine, dossier_status: complete, authoring_batch: B11-new, p6_followup_required: true}
-  - {national_dex: 60, species_key: poliwag, dossier_status: not_started}
-  - {national_dex: 61, species_key: poliwhirl, dossier_status: not_started}
-  - {national_dex: 62, species_key: poliwrath, dossier_status: not_started}
+  - {national_dex: 60, species_key: poliwag, dossier_status: complete, authoring_batch: B20-new, p6_followup_required: true}
+  - {national_dex: 61, species_key: poliwhirl, dossier_status: complete, authoring_batch: B20-new, p6_followup_required: true}
+  - {national_dex: 62, species_key: poliwrath, dossier_status: complete, authoring_batch: B20-new, p6_followup_required: true}
   - {national_dex: 63, species_key: abra, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 64, species_key: kadabra, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
   - {national_dex: 65, species_key: alakazam, dossier_status: complete, authoring_batch: B02-new, p6_followup_required: true}
