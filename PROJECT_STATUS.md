@@ -31,7 +31,7 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 20:
+Current authoritative manifest state remains unchanged during Batch 21 source review:
 
 ```text
 dossier_complete_count == 146
@@ -42,13 +42,13 @@ blocking_p4_gate_count == 0
 status_total == 151
 ```
 
-The two `pilot_reviewed` species remain #131 Lapras and #151 Mew. The final `not_started` species are #098 Krabby, #099 Kingler and #108 Lickitung.
+The two `pilot_reviewed` species remain #131 Lapras and #151 Mew. The final `not_started` rows remain #098 Krabby, #099 Kingler and #108 Lickitung until the Batch 21 frozen-schema dossiers and completion audit pass.
 
 ### P4 foundation
 
 - D-031: fixed species baselines plus explicit individual variation; no player-level enemy scaling.
 - `p4-six-axis-v1`: raw `<40 => 1`, `40..59 => 2`, `60..79 => 3`, `80..99 => 4`, `100..119 => 5`, `>=120 => 6`.
-- D-032: modern level/trade evolution metadata is source context, not ancient progression law.
+- D-032: modern level/trade/move evolution metadata is source context, not ancient progression law.
 - D-033: Magneton remains one active entity / one visible companion slot.
 - D-034: all #001-#151 require direct encounterability somewhere in total content, separate from baseline natural presence.
 
@@ -97,51 +97,64 @@ Primary outputs:
 - `docs/P4_BATCH_20_FULL_SCHEMA_DOSSIERS.md`
 - `docs/P4_BATCH_20_COMPLETION_AUDIT.md`
 
-Completion conclusions:
+Batch 20 completed at `146 complete / 2 pilot_reviewed / 3 not_started` with all five deterministic profiles reproducible, zero manual rating exceptions, zero blocking Human Design Gates and no P2/P3/P4 contradiction. Its agency, one-entity/action-economy, D-034, non-player-scaling and event-scoped runtime boundaries remain binding.
 
-- all five dossiers populate the 20 frozen-schema top-level sections with `dossier_status: complete`, zero TODO placeholders and zero blocking Human Design Gates;
-- deterministic `p4-six-axis-v1` profiles reproduce with zero manual exceptions;
-- Ekans stealth and tongue sensing remain contextual rather than invisibility or omniscient scanning; swallowing and venom require eligible event resolution rather than instant-kill or automatic-poison logic;
-- Arbok intimidation, pursuit, constriction and venom remain severe but agency-safe; no forced Fear, permanent restraint, infinite pursuit, perfect tracking or generic structural deletion is introduced;
-- Poliwag preserves meaningful water/land asymmetry without automatic land immobilization, universal puncture immunity or continuous maturation/body simulation;
-- Poliwhirl remains genuinely amphibious with slippery-skin and visual-drowsiness pressure, but no hydration meter, guaranteed escape, passive hypnosis, automatic sleep or continuous gaze polling is introduced;
-- Poliwrath remains a powerful amphibious swimmer with exceptional but bounded endurance and momentary water-surface movement, without infinite stamina, literal travel formulas, permanent water walking or passenger fast travel;
-- all five remain one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot;
-- ordinary weak species may become routine as human capability advances, while rare exceptional individuals remain history-backed and non-player-scaled;
-- high species stats do not imply automatic aggression;
-- D-034 direct encounterability remains separate from commonness, baseline abundance and ordinary companionship;
-- later runtime guidance remains cached/coarse authored encounter state plus event-triggered consequences rather than continuous species simulation.
+### P4 Batch 21 — SOURCE REVIEW COMPLETE
 
-Deterministic profiles:
+Roster:
 
-```text
-Ekans      1/3/2/2/2/2
-Arbok      3/4/3/3/3/4
-Poliwag    2/2/2/2/2/4
-Poliwhirl  3/3/3/2/2/4
-Poliwrath  4/4/4/3/4/3
-```
+- #098 Krabby
+- #099 Kingler
+- #108 Lickitung
 
-Completion validation:
+Primary source-review outputs:
+
+- `docs/P4_BATCH_21_CLAW_TONGUE_CONTACT_PLAN.md`
+- `docs/P4_BATCH_21_SOURCE_REVIEW.md`
+
+Source-review conclusion:
 
 ```text
-full_schema_dossier_count == 5
-dossier_status_complete_count == 5
-required_section_count_per_dossier == 20
-placeholder_TODO_count == 0
-rating_profile_reproducible_count == 5
+reviewed_species_count == 3
+current_official_species_pages_verified == 3
+pinned_species_records_reviewed == 3
+rating_profile_reproducible_count == 3
 manual_rating_exception_count == 0
 p2_contradiction_count == 0
 p3_contradiction_count == 0
 p4_contract_contradiction_count == 0
 blocking_human_design_gate_count == 0
-manifest_promoted_species_count == 5
-manifest_complete_count == 146
-manifest_pilot_reviewed_count == 2
-manifest_not_started_count == 3
+continuous_simulation_requirement_count == 0
+coverage_manifest_changed == false
+ready_for_full_schema_authoring == true
 ```
 
-### Remaining P4 roster work
+Deterministic profiles:
+
+```text
+Krabby     30/105/90/25/25/50 -> 1/5/4/1/1/2
+Kingler    55/130/115/50/50/75 -> 2/6/5/2/2/3
+Lickitung  90/55/75/60/75/30 -> 4/2/3/3/3/1
+```
+
+Binding Batch 21 conclusions:
+
+- Krabby's pincers are natural weapons and lateral-balance anatomy; pincer loss/regrowth can change discrete authored encounter options but does not create detachable loot, instant regeneration, per-frame limb health or extra pincer actions.
+- Krabby beach-burrow/territorial evidence remains contextual ecology, not permanent aggression; its bubble display does not force Fear or grant a free defensive action.
+- Kingler's `10,000-horsepower` pincer wording remains severe source-scale capability evidence, not literal damage/physics math, generic mining, armor deletion or arbitrary structural destruction.
+- Kingler's oversized claw keeps explicit unwieldiness, aim, balance and fatigue counterweights without a continuous stamina/torque/load simulator; one large claw never becomes an extra entity/action/health pool.
+- Lickitung's long tongue can manipulate and obtain texture/taste information through actual contact, but does not become generic hands, unrestricted tools/grappling, omniscient identification or remote sensing.
+- Lickitung sticky saliva and tingling/rash/itch/paralysis wording remain contact/exposure-scoped hazards with eligibility, counterplay and player input; no automatic status on proximity or every lick.
+- Hisui-era processed-saliva adhesive evidence remains later-era provenance. It does not silently create a proto-Kanto recipe, industry, market or routine live-harvest resource loop.
+- Hyper Cutter, Shell Armor, Sheer Force, Own Tempo, Oblivious and Cloud Nine remain modern battle-system metadata rather than literal ancient formulas.
+- Lickilicky/Rollout evolution and Gigantamax Kingler remain post-Generation-I context; D-032 prevents silent baseline import.
+- all three preserve one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot.
+- ordinary species remain fixed-baseline and non-player-scaled; rare boss-grade exceptional individuals require explicit persistent history/traits.
+- later runtime guidance remains cached/coarse authored state plus event-triggered consequences rather than continuous appendage/contact/contamination simulation.
+
+## Remaining P4 roster work
+
+The final three `not_started` species are now source-reviewed and ready for frozen-schema authoring:
 
 ```text
 #098 Krabby
@@ -149,28 +162,49 @@ manifest_not_started_count == 3
 #108 Lickitung
 ```
 
-These are the final three `not_started` rows. After they are completed, #131 Lapras and #151 Mew still require whatever final completion promotion/audit is necessary to satisfy the strict `151 complete` P4 exit invariant; `pilot_reviewed` is not silently treated as `complete`.
+After successful Batch 21 dossier completion, expected manifest state is:
+
+```text
+dossier_complete_count == 149
+pilot_reviewed_count == 2
+not_started_count == 0
+draft_count == 0
+blocking_p4_gate_count == 0
+status_total == 151
+```
+
+That state still blocks P5. #131 Lapras and #151 Mew must then receive the final schema/completion audit and promotion necessary to satisfy the strict `151 complete / 0 pilot_reviewed` P4 exit invariant.
 
 ## Exact next work
 
-Begin **P4 Batch 21** with the final three `not_started` species:
+Author the **P4 Batch 21 frozen-schema dossiers** for exactly:
 
 - #098 Krabby
 - #099 Kingler
 - #108 Lickitung
 
-The next pass should:
+Create:
 
-1. create a concise Batch 21 pressure-selection/source-review document for shell/claw force, asymmetric claw morphology, water/land behavior and tongue/contact anatomy;
-2. review current primary official evidence plus pinned `SRC-DATA-001` claim-by-claim before any manifest promotion;
-3. prevent claw force from becoming generic mining, universal material destruction, extra appendage actions or detachable weapon entities;
-4. prevent Lickitung tongue reach/contact/saliva evidence from becoming omniscient sensing, unrestricted grappling, automatic status application, generic tool use or continuous contact simulation;
-5. preserve one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot;
-6. preserve ordinary-species progression and rare persistent-history exceptional individuals without player-level scaling;
-7. preserve warning, eligibility, counterplay, escape/avoidance and player input for severe hazards;
-8. prefer cached/coarse authored state and event-triggered consequences over continuous species simulation;
-9. promote rows only after frozen-schema dossiers and completion audit pass atomically;
-10. do not begin P5 until the mandatory final `151/151` P4 exit audit passes.
+- `docs/P4_BATCH_21_DOSSIER_098_KRABBY.md`
+- `docs/P4_BATCH_21_DOSSIER_099_KINGLER.md`
+- `docs/P4_BATCH_21_DOSSIER_108_LICKITUNG.md`
+- `docs/P4_BATCH_21_FULL_SCHEMA_DOSSIERS.md`
+- `docs/P4_BATCH_21_COMPLETION_AUDIT.md`
+
+The next pass must:
+
+1. populate all 20 frozen-schema top-level sections for each dossier;
+2. reproduce `1/5/4/1/1/2`, `2/6/5/2/2/3`, and `4/2/3/3/3/1` with zero manual exceptions;
+3. preserve pincer loss/regrowth as discrete authored state without limb simulation or renewable weapon loot;
+4. preserve Kingler's extreme pincer force while keeping target/position/eligibility, aim/balance/fatigue counterweights and no generic material deletion;
+5. preserve Lickitung contact sensing as actual-contact, contact-accessible information only;
+6. preserve sticky saliva and irritation/paralysis evidence as exposure-scoped, warning/counterplay-safe consequences rather than automatic status;
+7. keep Hisui adhesive processing as later-era provenance, not a baseline industry or live-harvest economy;
+8. preserve one Pokémon = one ordinary turn / health state / initiative presence / visible companion slot;
+9. preserve ordinary-species progression and persistent-history exceptional individuals without player-level scaling;
+10. prefer cached/coarse authored state and event-triggered consequences over continuous appendage/contact simulation;
+11. promote exactly #098/#099/#108 only after the Batch 21 completion audit passes atomically;
+12. do not begin P5 afterward: first audit/promote #131 Lapras and #151 Mew and run the mandatory final `151/151` P4 exit audit.
 
 ## Later roadmap
 
