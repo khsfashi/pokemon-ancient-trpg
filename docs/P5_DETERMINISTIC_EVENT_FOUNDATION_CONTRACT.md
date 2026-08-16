@@ -551,7 +551,8 @@ Fixture IDs prefixed `fixture.` are **test-only**. They do not establish product
 P5_contract_version == p5-event-contract-v1
 run_seed_serialized_bytes == 16
 weighted_selection_uses_integer_points == true
-weighted_selection_bias_uses_rejection_sampling == false
+unbiased_bounded_draw_uses_rejection_sampling == true
+weighted_selection_bias_allowed == false
 eligibility_rng_draw_count == 0
 one_global_mutable_rng_cursor == false
 pending_roll_can_reroll_after_reload == false
@@ -561,8 +562,6 @@ unbounded_history_scan_required == false
 routine_chronology_anomaly_spawn_allowed == false
 zero_companion_run_supported == true
 ```
-
-The line `weighted_selection_bias_uses_rejection_sampling == false` means **no selection bias remains because rejection sampling is used**; implementations should expose the clearer positive assertion `unbiased_bounded_draw_uses_rejection_sampling == true` in tests.
 
 ## 19. Downstream work after this foundation
 
