@@ -1,13 +1,13 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 17 promoted**  
+Status: **PASS — Batch 18 promoted**  
 Date: **2026-08-16**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 17 source review, six-species full-schema authoring, regression review, completion audit and atomic promotion.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 18 source review, six-species full-schema authoring, regression review, completion audit and atomic promotion.
 
 ## Structural checks
 
@@ -25,9 +25,9 @@ Result: **PASS**.
 ## Current status counts
 
 ```text
-dossier_complete_count == 129
+dossier_complete_count == 135
 pilot_reviewed_count == 2
-not_started_count == 20
+not_started_count == 14
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -39,117 +39,110 @@ Result: **PASS**.
 
 ## Prior-batch continuity check
 
-All 123 rows complete through Batch 16 remain complete. No earlier promotion was reverted.
+All 129 rows complete through Batch 17 remain complete. No earlier promotion was reverted.
 
 Result: **PASS**.
 
-## Batch 17 promotion check
+## Batch 18 promotion check
 
 Only these six previously `not_started` rows are newly promoted:
 
 ```text
-056 mankey     complete B17-new p6_followup_required=true
-057 primeape   complete B17-new p6_followup_required=true
-106 hitmonlee  complete B17-new p6_followup_required=true
-107 hitmonchan complete B17-new p6_followup_required=true
-123 scyther    complete B17-new p6_followup_required=true
-127 pinsir     complete B17-new p6_followup_required=true
+125 electabuzz complete B18-new p6_followup_required=true
+126 magmar     complete B18-new p6_followup_required=true
+138 omanyte    complete B18-new p6_followup_required=true
+139 omastar    complete B18-new p6_followup_required=true
+142 aerodactyl complete B18-new p6_followup_required=true
+143 snorlax    complete B18-new p6_followup_required=true
 ```
 
 Result: **PASS**.
 
-## Batch 17 aggression / agency regression
+## Batch 18 elemental physiology regression
 
 ```text
-Mankey_quick_temper_equals_numeric_rage_meter == false
-Mankey_extreme_escape_wording_equals_global_no_flee == false
-Primeape_pursuit_equals_infinite_pathfinding == false
-Primeape_gaze_trigger_equals_omniscient_detection == false
-source_severity_requires_explicit_warning_state_and_counterplay == true
+Electabuzz_constant_discharge_equals_continuous_damage_field == false
+Electabuzz_proximity_static_equals_automatic_paralysis == false
+Electabuzz_modern_grid_or_storage_research_equals_ancient_energy_institution == false
+Magmar_temperature_equals_continuous_heat_radius_or_damage_formula == false
+Magmar_body_flames_equal_automatic_ignition == false
+Magmar_lava_recovery_equals_total_lava_immunity_or_unlimited_regeneration == false
+Magmar_crater_birth_equals_confirmed_generic_elemental_cosmology == false
 ```
 
 Result: **PASS**.
 
-## Batch 17 morphology / action-economy regression
+## Batch 18 fossil / chronology / D-034 regression
 
 ```text
-Hitmonlee_extended_legs_equal_discrete_species_capability == true
-Hitmonlee_successive_kicks_equal_extra_turns == false
-Hitmonchan_combinations_equal_one_action_effect_when_authored == true
-Hitmonchan_two_fists_equal_two_action_slots == false
-Scyther_two_scythes_equal_two_actions_or_entities == false
-Pinsir_two_pincer_horns_equal_extra_actions == false
+Omanyte_Omastar_modern_restoration_equals_proto_kanto_technology == false
+Omanyte_Omastar_direct_encounterability == one_exceptionally_isolated_marine_relict_locality
+Omanyte_Omastar_ordinary_regional_abundance == false
+Aerodactyl_direct_encounterability == one_exceptionally_isolated_aerial_relict_locality_or_lineage
+Aerodactyl_single_individual_prehistoric_lifespan_required == false
+relict_presence_equals_time_travel_or_restoration == false
+project_authored_relict_localities_equal_franchise_canon == false
 ```
 
 Result: **PASS**.
 
-## Batch 17 numeric / physics regression
+## Batch 18 agency / action-economy regression
 
 ```text
-Hitmonchan_300_mph_equals_initiative_travel_or_kinetic_energy_formula == false
-Hitmonchan_three_minute_recovery_equals_real_time_global_timer == false
-Hitmonlee_Force_6_equals_joules_or_universal_armor_penetration == false
-Pinsir_twice_body_weight_claim_equals_generic_carry_capacity_formula == false
-material_feats_equal_generic_destructible_world == false
+Omanyte_ten_tentacles_equal_extra_actions == false
+Omanyte_shell_withdrawal_equals_invulnerability == false
+Omastar_tentacle_capture_equals_automatic_immobilization == false
+Omastar_restraint_preserves_warning_eligibility_counterplay_escape_and_player_input == true
+Omastar_multiple_tentacles_equal_extra_entities_turns_or_health_pools == false
+Aerodactyl_airborne_state_equals_extra_turn == false
+all_six_one_Pokemon_one_ordinary_turn_one_health_state_one_initiative_presence == true
 ```
 
 Result: **PASS**.
 
-## Batch 17 natural-weapon / resource regression
+## Batch 18 flight / resource / immunity regression
 
 ```text
-Hitmonlee_legs_and_feet_are_living_anatomy == true
-Hitmonchan_fists_are_living_anatomy == true
-Scyther_scythes_are_living_anatomy == true
-Pinsir_pincers_are_living_anatomy == true
-body_parts_equal_automatic_loot_or_equipment == false
-live_harvest_loop_created == false
-generic_material_conversion_allowed == false
+Aerodactyl_airborne_and_grounded_authored_states == true
+Aerodactyl_Speed_6_equals_auto_initiative_or_unrestricted_fast_travel == false
+Aerodactyl_flight_equals_safe_passenger_transport == false
+Snorlax_food_mass_equals_continuous_calorie_inventory_or_economy_ledger == false
+Snorlax_digestive_resilience_equals_universal_toxin_disease_or_status_immunity == false
+Snorlax_Hisui_granary_disaster_equals_automatic_proto_kanto_settlement_targeting == false
+Snorlax_sleep_equals_invulnerability_or_forced_time_skip == false
 ```
 
 Result: **PASS**.
 
-## Batch 17 perception / temperature / runtime regression
+## Runtime boundary regression
 
 ```text
-Scyther_blur_equals_extra_entities_or_teleportation == false
-Scyther_grass_camouflage_equals_permanent_invisibility == false
-Pinsir_cold_intolerance_equals_exact_global_temperature_threshold == false
-continuous_rage_pursuit_limb_kinetic_material_or_temperature_simulation_created == false
+continuous_electrical_field_simulation_created == false
+continuous_heat_or_thermodynamic_simulation_created == false
+continuous_buoyancy_tentacle_or_shell_physics_created == false
+continuous_flight_physics_created == false
+continuous_calorie_economy_or_hunger_pathfinding_created == false
 per_frame_species_rule_scanning_created == false
 cached_authored_or_discrete_state_lookup_preferred_for_later_runtime == true
 ```
 
 Result: **PASS**.
 
-## Evolution / chronology checks
+## Evolution / provenance checks
 
 ```text
-Annihilape_expands_mandatory_Gen1_roster == false
-Tyrogue_or_Hitmontop_expand_mandatory_Gen1_roster == false
-Scizor_or_Kleavor_expand_mandatory_Gen1_roster == false
-Mega_Pinsir_implies_Mega_Evolution_or_ordinary_flight == false
-later_region_relationships_equal_proto_kanto_ecology == false
+Elekid_Electivire_Magby_Magmortar_Munchlax_expand_mandatory_Gen1_roster == false
+Mega_Aerodactyl_implies_Mega_Evolution_access == false
+Octillery_ancestry_context_expands_mandatory_roster == false
 modern_ability_names_equal_ancient_rules_or_vocabulary == false
-boxer_Kick_Master_ninja_bullet_train_or_concrete_language_equals_required_ancient_institution == false
-```
-
-Result: **PASS**.
-
-## D-034 encounterability check
-
-```text
-all_six_Batch_17_species_directly_encounterable_somewhere == true
-direct_encounterable_equals_common_everywhere == false
-direct_encounterable_equals_ordinary_companionship == false
-baseline_natural_presence_remains_separate == true
+modern_power_research_fossil_DNA_restoration_or_Hisui_examples_equal_proto_kanto_institutions == false
 ```
 
 Result: **PASS**.
 
 ## P6 follow-up audit
 
-All six Batch 17 rows explicitly set `p6_followup_required: true` for anger/pursuit warning states, extended-reach readability, combo/recovery cadence, Scyther blur/camouflage/single-entity presentation and Pinsir grip/cold-state counterplay.
+All six Batch 18 rows explicitly set `p6_followup_required: true` for charge/static readability, heat/fire exposure, fossil/relict rarity, shell/restraint counterplay, airborne/grounded flight-state readability, and sleep/feeding/resource-event presentation.
 
 Result: **PASS**.
 
@@ -171,17 +164,16 @@ blocking_p4_gate_count == 0
 ```text
 manifest_structure == PASS
 prior_batch_continuity == PASS
-Batch_17_status_promotion == PASS
+Batch_18_status_promotion == PASS
 status_count_arithmetic == PASS
 P6_followup_explicitness == PASS
-aggression_agency_regression == PASS
-morphology_action_economy_regression == PASS
-numeric_physics_regression == PASS
-natural_weapon_resource_regression == PASS
-perception_temperature_runtime_regression == PASS
-evolution_chronology_regression == PASS
-D034_encounterability_regression == PASS
+elemental_physiology_regression == PASS
+fossil_chronology_D034_regression == PASS
+agency_action_economy_regression == PASS
+flight_resource_immunity_regression == PASS
+runtime_boundary_regression == PASS
+evolution_provenance_regression == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 17 manifest promotion is complete. P4 remains active at `129 complete / 2 pilot_reviewed / 20 not_started`.
+Batch 18 manifest promotion is complete. P4 remains active at `135 complete / 2 pilot_reviewed / 14 not_started`.
