@@ -147,8 +147,8 @@ species:
   - {national_dex: 83, species_key: farfetchd, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 84, species_key: doduo, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
   - {national_dex: 85, species_key: dodrio, dossier_status: complete, authoring_batch: B13-new, p6_followup_required: true}
-  - {national_dex: 86, species_key: seel, dossier_status: not_started}
-  - {national_dex: 87, species_key: dewgong, dossier_status: not_started}
+  - {national_dex: 86, species_key: seel, dossier_status: complete, authoring_batch: B19-new, p6_followup_required: true}
+  - {national_dex: 87, species_key: dewgong, dossier_status: complete, authoring_batch: B19-new, p6_followup_required: true}
   - {national_dex: 88, species_key: grimer, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 89, species_key: muk, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 90, species_key: shellder, dossier_status: complete, authoring_batch: B04-new, p6_followup_required: true}
@@ -177,10 +177,10 @@ species:
   - {national_dex: 113, species_key: chansey, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 114, species_key: tangela, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 115, species_key: kangaskhan, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
-  - {national_dex: 116, species_key: horsea, dossier_status: not_started}
-  - {national_dex: 117, species_key: seadra, dossier_status: not_started}
-  - {national_dex: 118, species_key: goldeen, dossier_status: not_started}
-  - {national_dex: 119, species_key: seaking, dossier_status: not_started}
+  - {national_dex: 116, species_key: horsea, dossier_status: complete, authoring_batch: B19-new, p6_followup_required: true}
+  - {national_dex: 117, species_key: seadra, dossier_status: complete, authoring_batch: B19-new, p6_followup_required: true}
+  - {national_dex: 118, species_key: goldeen, dossier_status: complete, authoring_batch: B19-new, p6_followup_required: true}
+  - {national_dex: 119, species_key: seaking, dossier_status: complete, authoring_batch: B19-new, p6_followup_required: true}
   - {national_dex: 120, species_key: staryu, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 121, species_key: starmie, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 122, species_key: mr-mime, dossier_status: complete, authoring_batch: B16-new, p6_followup_required: true}
