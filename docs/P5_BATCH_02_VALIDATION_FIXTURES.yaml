@@ -1,6 +1,7 @@
 fixture_format_version: p5-validation-fixture-v1
 contract_version: p5-event-contract-v1
 schema_ref: docs/P5_NORMALIZED_EVENT_SCHEMA.json
+pending_schema_ref: docs/P5_PENDING_EVENT_STATE_SCHEMA.json
 registry_ref: docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml
 
 rules:
@@ -282,9 +283,29 @@ boundary_fixtures:
       trigger_id: travel_step_committed
       evaluation_ordinal: 0
       phase: awaiting_reaction
+      resolved_choice_view:
+        - { choice_id: observe_and_withdraw, visible: true, enabled: true }
       selected_choice_id: observe_and_withdraw
-      completed_rng_draw_records: [hazardous-check-die-001, hazardous-check-die-002]
-      completed_check_result: { dice: [2, 3], total: 8, margin: -3, band: setback }
+      completed_rng_draw_records:
+        - channel: check.d6
+          subject_id: fixture.risk.beedrill_corridor/observe_and_withdraw/read_escape_gap
+          draw_index: 0
+          raw_u64: '4463312059452329917'
+          accepted: true
+          bounded_result: 1
+        - channel: check.d6
+          subject_id: fixture.risk.beedrill_corridor/observe_and_withdraw/read_escape_gap
+          draw_index: 1
+          raw_u64: '8154684722988415358'
+          accepted: true
+          bounded_result: 2
+      completed_check_result:
+        check_id: read_escape_gap
+        dice: [2, 3]
+        total: 8
+        margin: -3
+        outcome_band: setback
+        doubles_overlay: none
       pending_consequence: fixture.sting_setback
       pending_reaction_window: fixture.escape_smoke_reaction
       precommit_state_digest: fixture.digest.before
