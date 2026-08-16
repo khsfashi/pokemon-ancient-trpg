@@ -5,6 +5,7 @@ from pathlib import Path
 
 import yaml
 
+# Exit validation intentionally uses only stdlib hashing plus the already-pinned YAML parser.
 root = Path(__file__).resolve().parents[1]
 foundation_path = root / "docs" / "P5_FOUNDATION_SEMANTIC_FIXTURES.yaml"
 batch02_path = root / "docs" / "P5_BATCH_02_VALIDATION_FIXTURES.yaml"
