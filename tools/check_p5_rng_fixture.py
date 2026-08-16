@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""Verify the frozen p5-rng-v1 gameplay determinism vectors. Not a security/crypto feature."""
+import hashlib
+from pathlib import Path
+
+import yaml
+
+fixture_path = Path(__file__).resolve().parents[1] / "docs" / "P5_FOUNDATION_SEMANTIC_FIXTURES.yaml"
+with fixture_path.open("r", encoding="utf-8") as handle:
+    fixture = yaml.safe_load(handle)
+
+pack = fixture["content_pack"]
+vectors = fixture["rng_vectors"]
+assert len(vectors) == 4, f"expected 4 RNG vectors, found {len(vectors)}"
+
+for vector in vectors:
+    seed = bytes.fromhex(vector["run_seed"])
+    assert len(seed) == 16
+    parts = [
+        b"pokemon-ancient-trpg/p5-rng-v1", b"\x00",
+        seed, b"\x00",
+        pack["id"].encode("ascii"), b"\x00",
+        pack["version"].encode("ascii"), b"\x00",
+        int(vector["origin_transition_seq"]).to_bytes(8, "big"), b"\x00",
+        vector["trigger_id"].encode("ascii"), b"\x00",
+        vector["channel"].encode("ascii"), b"\x00",
+        vector["subject_id"].encode("ascii"), b"\x00",
+        int(vector["draw_index"]).to_bytes(8, "big"),
+    ]
+    digest = hashlib.sha256(b"".join(parts)).digest()
+    digest_hex = digest.hex()
+    raw = int.from_bytes(digest[:8], "big")
+    assert digest_hex == vector["sha256"], f"{vector['id']}: sha256 mismatch"
+    assert raw == vector["raw_u64_be"], f"{vector['id']}: raw_u64 mismatch"
+
+    bound = int(vector["bound"])
+    limit = (1 << 64) - ((1 << 64) % bound)
+    assert raw < limit, f"{vector['id']}: frozen draw unexpectedly requires rejection"
+    expected = vector.get("bounded_result", vector.get("bounded_result_zero_based"))
+    assert raw % bound == expected, f"{vector['id']}: bounded result mismatch"
+    if "die_result" in vector:
+        assert vector["die_result"] == expected + 1, f"{vector['id']}: die result mismatch"
+
+print(f"P5 RNG fixture PASS: vectors={len(vectors)} algorithm=p5-rng-v1")
