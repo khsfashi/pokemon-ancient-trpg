@@ -2,24 +2,21 @@
 
 Last explanatory handoff update: **2026-08-16**
 
-This file is the concise operational handoff. Durable product authority remains in `docs/DECISIONS.md` and the phase contracts; live GitHub state wins if this file is stale.
+This file is the concise operational handoff. Durable product authority remains in `docs/DECISIONS.md` and phase contracts; live GitHub state wins if this file is stale.
 
 ## Binding direction
 
 - Unofficial, non-commercial Pokémon fan-made mobile text RPG/TRPG for primarily personal play and limited sharing.
 - Setting is earlier than Hisui, in future-Kanto territory before mature regional civilization.
-- Iron-age / medieval-fantasy-like material baseline; Pokémon-dependent technology/culture remains narrow and evidence-backed.
+- Iron-age / medieval-fantasy-like ordinary material baseline with narrow Pokémon-dependent technology/culture islands.
 - No normalized trainer culture, routine ownership, portable containment, Poké Balls or PC storage.
-- Exactly three visible companion slots; `0/3` remains a valid full run.
+- Exactly three visible companion slots; `0/3` remains a valid complete run.
 - Pokémon use fixed six-axis species baselines plus capability/hazard tags. Ordinary Pokémon do not scale with the player; exceptional individuals require explicit persistent history/traits.
-- `p4-six-axis-v1` is pinned. Hazard severity is not capped by species-axis ratings.
-- Evolution is distinct from ordinary maturation; no kill-XP, visible character levels or generic evolution command.
 - Mandatory Generation-I roster is National Pokédex #001-#151.
-- D-034 requires all 151 to be directly encounterable somewhere in total content while baseline-era natural presence, commonness, companionship and one-run availability remain separate questions.
-- The world-content direction is **Pokémon-shaped society, not Pokémon-only events**: every major world structure must be materially shaped by Pokémon existence, while individual events may have genuinely human or environmental immediate causes.
-- P9 full content must include substantive ordinary human/social, survival, exploration/mystery, relationship, faction, mixed-world and Pokémon content; several recurring major factions are required, with a current planning target of roughly 4–6 faction lanes.
-- Major factions must arise from Pokémon ecology/capability/sacredness/knowledge/exploitation/protection/coexistence/anomaly or another approved Pokémon-world causal bridge rather than generic medieval organizations with Pokémon decoration.
-- `p5-event-contract-v1` is frozen: event evaluation is transition-driven, content is data-driven, authoritative RNG is keyed/deterministic, pending events reload without reroll/reselection, upstream mutations use typed commands, and ordinary/faction/mixed/Pokémon content uses one engine surface.
+- D-034 requires all 151 to have a living direct-interaction path somewhere in total content while natural presence/commonness/companionship/one-run availability remain separate.
+- The world is Pokémon-shaped society, not Pokémon-only events: human/social, survival/environment, faction/relationship and mixed-world content share the same event system.
+- `p5-event-contract-v1` is frozen: transition-driven evaluation, data-driven content, keyed deterministic RNG, reload-safe pending events and typed upstream mutations.
+- Resource planning is now P6-owned: stable resource IDs, provenance/redistribution classification, build-time normalization, cached runtime reuse and measured mobile budgets must be frozen before P7 architecture.
 
 World/faction contract: `docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md`
 
@@ -50,50 +47,27 @@ blocking_p4_gate_count == 0
 
 Result: **PASS**.
 
-P5/P9 must continue preserving:
-
-- D-034 authoring coverage is `151/151`; P9 owns implementation-level final coverage proof.
-- direct encounterability does not imply natural baseline presence, commonness, capture, companionship or one-run availability.
-- Lapras supports living noncoercive direct interaction; success never implies ownership.
-- Mew remains mythical/singular and may appear only through a rare authored stateful direct-interaction chain, not routine spawn/capture/companion/boss logic.
-- Porygon/other chronology anomalies never rewrite canonical origin or create reusable generic time travel.
-- no portable containment, player-level enemy scaling, generic Pokémon loot/material economy, generic evolution command, continuous species simulation or per-frame all-species rule scanning.
+P5/P9 continue preserving D-034 direct encounterability without implying baseline natural presence, capture, companionship or routine one-run availability. Lapras remains noncoercive; Mew remains mythical/singular and only reachable through a rare authored stateful living interaction. No player-level Pokémon scaling, portable containment, generic evolution/loot, continuous species simulation or per-frame all-species scanning.
 
 ## P5 final state
 
 P5 issue: **#6**  
 Strict exit audit: `docs/P5_EXIT_AUDIT.md`  
-Foundation contract: `docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md`  
+Foundation: `docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md`  
 Normalized schema: `docs/P5_NORMALIZED_EVENT_SCHEMA.json`  
 Pending schema: `docs/P5_PENDING_EVENT_STATE_SCHEMA.json`  
 Adapter registry: `docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml`  
-Validation fixtures: `docs/P5_BATCH_02_VALIDATION_FIXTURES.yaml`  
-Shared-surface fixtures: `docs/P5_BATCH_03_REPRESENTATIVE_EVENTS.yaml`  
-Executable validator: `tools/validate_p5_contract.py`  
-Determinism fixture check: `tools/check_p5_rng_fixture.py`  
-CI: `.github/workflows/p5-contract-validation.yml`
-
-Strict exit results:
+Representative events: `docs/P5_BATCH_03_REPRESENTATIVE_EVENTS.yaml`  
+Validator: `tools/validate_p5_contract.py`
 
 ```text
 contract_version == p5-event-contract-v1
-json_schema_count == 2
-json_schema_draft == 2020-12
-p5_yaml_parse_count == 4
 P5V001_through_P5V018_positive_control_count == 18
 P5V001_through_P5V018_negative_failure_count == 18
 representative_normalized_event_count == 7
-frozen_rng_vector_count == 4
-frozen_rng_vector_recompute_match_count == 4
 pending_mid_choice_resume_valid == true
 pending_mid_roll_resume_valid == true
 pending_mid_reaction_resume_valid == true
-unknown_pending_schema_version_fails_closed == true
-discovery_entries_require_evidence == true
-insight_eligibility_rng_draw_count == 0
-unbounded_history_scan_required == false
-event_count_lookup_complexity == O(1)
-per_render_or_per_frame_event_scanning == false
 p2_world_typed_mutation_gap_count == 0
 p3_contradiction_count == 0
 p4_contradiction_count == 0
@@ -101,108 +75,105 @@ zero_companion_run_blocker_count == 0
 blocking_p5_human_design_gate_count == 0
 ```
 
-D-035 shared-world proof on one schema/registry surface:
-
-```text
-human_social_non_pokemon_immediate_cause_event_count == 1
-survival_environment_event_count == 1
-persistent_faction_chain_step_count == 2
-pokemon_ecology_direct_event_count == 1
-mixed_human_pokemon_event_count == 1
-d034_exceptional_path_event_count == 1
-check_reaction_event_count == 1
-bespoke_engine_path_count == 0
-p2_raw_write_count == 0
-```
-
-Typed P2 world transitions frozen for downstream event implementation:
-
-```text
-p2.world.commit_route_state
-p2.world.record_local_knowledge
-p2.world.grant_permission
-p2.world.revoke_permission
-p2.world.commit_relationship_state
-p2.world.commit_setting_flag_state
-```
-
-Strict Batch 03 also found and resolved three real contract defects before closure:
-
-1. the Batch 02 mid-reaction pending fixture did not conform to the frozen pending schema;
-2. D-035 exposed a missing typed P2/world mutation surface;
-3. the YAML semantic-ref regex was over-escaped and rejected valid semantic refs.
-
-The final P5 CI reruns the schemas/registry/fixtures plus fixed `p5-rng-v1` vectors and discovery evidence boundary. Result: **PASS**.
+Result: **PASS**.
 
 ## Current phase
 
 **P6 — Resource and asset strategy, sourcing, provenance, and mobile budget (#12) is active.**
 
-P6 goal: convert the finished P2-P5 design into an exact production resource contract **before** P7 chooses the runtime/application architecture.
+Primary P6 artifacts:
 
-P6 must freeze:
+- strategy: `docs/RESOURCE_STRATEGY.md`
+- Batch 01 audit: `docs/P6_BATCH_01_AUDIT.md`
+- manifest schema: `docs/P6_RESOURCE_MANIFEST_SCHEMA.json`
+- P1 source recon: `docs/P1_RESOURCE_ECOSYSTEM_RECON.md`
+- source registry: `docs/SOURCE_REGISTRY.md`
 
-- required / optional / deferred asset inventory;
-- selected source or production method per asset class;
-- provenance, license, Pokémon-IP and redistribution classification;
-- public-repository inclusion vs build-time fetch/generation policy;
-- stable resource IDs and manifest design;
-- preprocessing/normalization/validation rules;
-- fallback behavior;
-- mobile payload, decoded-memory, audio, preload/cache/eviction budgets;
-- explicit constraints handed to P7.
+### P6 Batch 01 — PASS
 
-P6 must **not**:
+Batch 01 derived resource needs from P2-P5/P8 before choosing exact files, refreshed only the P1 source shortlist, separated public-safe resources from uncleared Pokémon media, and froze the versioned resource/provenance/cache contract.
 
-- assume fan-project/public-repository status grants redistribution rights;
-- commit large Pokémon/third-party asset corpora before rights/provenance classification;
-- choose the application framework or save/runtime architecture;
-- default to runtime resize/reconversion/reparsing when build-time normalization can remove it;
-- duplicate loaded/downloaded resources when stable IDs + caching can reuse them;
-- invent material art direction or illustration-density choices when several valid product directions remain — raise a Human Design Gate instead.
+```text
+resource_strategy_version == p6-resource-strategy-v1
+resource_manifest_schema_version == p6-resource-manifest-v1
+json_schema_draft == 2020-12
+product_derived_asset_inventory_frozen == true
+required_optional_deferred_classes_defined == true
+public_safe_baseline_defined == true
+optional_local_enrichment_boundary_defined == true
+stable_resource_id_contract_defined == true
+runtime_cache_key == resource_id
+duplicate_instance_policy == reuse_single_cached_instance
+build_time_normalization_preferred == true
+runtime_resize_as_default == false
+runtime_format_conversion == false
+duplicate_download_for_same_resource_id == false
+all_151_pokemon_media_preloaded == false
+final_numeric_budget_invented_without_measurement == false
+blocking_p6_human_design_gate_count == 1
+blocking_p6_human_design_gate == P6-HDG-001
+p6_complete == false
+p7_may_begin == false
+```
+
+### Refreshed source decisions
+
+```text
+PokéAPI sprites      ADAPT   optional Pokémon visual candidate; metadata-only public default
+PokéSprite           ADAPT   compact visual candidate; metadata-only public default
+PokéAPI cries        DEFER   not needed for baseline text-first loop
+Pretendard           ADOPT   primary Korean/Latin font candidate; exact artifact measured in B02
+Noto Sans CJK/KR     ADAPT   fallback/coverage reference; avoid redundant full bundle
+Lucide               ADOPT   tiny per-icon SVG subset only; exact current files pinned in B02
+Material Symbols     DEFER   breadth/reference fallback
+project-owned SVG    ADOPT   default for game-domain UI marks
+Kenney               DEFER   exact pack only after a concrete gap exists
+Freesound            DEFER   individually classified assets only
+OpenGameArt          DEFER   individually classified assets only
+project/generated    ADOPT   production method for world-specific presentation
+```
+
+Pokémon media remains optional presentation until an exact artifact is separately rights-classified:
+
+```text
+pokemon_media_repo_mode_default == metadata_only
+pokemon_media_public_distribution_default == not_cleared
+public_safe_build_requires_pokemon_images == false
+public_safe_build_requires_pokemon_cries == false
+missing_optional_media_changes_authoritative_gameplay == false
+```
+
+### P6-HDG-001 — Pokémon visual density/family
+
+This is the one material Batch 01 choice that evidence cannot resolve for the owner.
+
+- **A — encounter sprite + compact companion icon (recommended):** one static Pokémon image for meaningful direct encounters plus compact three-slot/list identity; no default animation/back/shiny set.
+- **B — compact icon only:** encounters remain primarily prose; icons only for compact identity.
+- **C — no Pokémon-derived visual media in v1:** intended presentation itself is text/CSS/project marks.
+- **D — project-created/generated encounter illustrations:** strongest bespoke direction but highest authoring/provenance/style-consistency cost.
+
+Do not freeze exact Pokémon visual family/files/dimensions until this gate is answered and written to `docs/DECISIONS.md`.
 
 ## Exact next work
 
-Start **P6 Batch 01 — resource requirements matrix + source refresh**:
+After the owner resolves **P6-HDG-001**, run **P6 Batch 02 — exact artifact selection + measurement**:
 
-1. derive a required/optional/deferred asset-class inventory directly from P2-P5 presentation/gameplay needs before choosing sources;
-2. reopen `docs/P1_RESOURCE_ECOSYSTEM_RECON.md` and `docs/SOURCE_REGISTRY.md`, then refresh only the explicit P6 candidates against current primary sources rather than doing another broad discovery sweep;
-3. evaluate Pokémon visuals first (`PokéAPI sprites` vs `PokéSprite` vs deliberate omission/project-created presentation), separating technical convenience from redistribution rights;
-4. separately classify Pokémon cries, fonts (`Pretendard`, `Noto Sans CJK/Korean`), generic UI icons (`Lucide`, `Material Symbols`, project-owned SVG/CSS), Kenney packs, individually classified Freesound/OpenGameArt candidates, and project-created/generated resources;
-5. create `docs/RESOURCE_STRATEGY.md` with a versioned provenance/resource-manifest schema that records stable resource ID, source, rights holder/author, license/IP boundary, exact version/hash, redistribution mode, preprocessing recipe and fallback policy;
-6. establish an evidence-backed budget methodology for initial payload, decoded image memory, audio memory/streaming, per-region preload and cache lifetime; do not invent final numeric targets without measured candidate assets;
-7. prefer source pinning + build-time normalization + cached runtime lookup; avoid runtime resize/reparse and duplicate resource instances/downloads;
-8. if exact art style, sprite family, background illustration density or comparable presentation choice cannot be resolved objectively from the frozen product needs, stop only at the smallest P6 Human Design Gate and present 2–4 concrete options with a recommendation;
-9. leave P7 (#7) blocked until P6 exit passes.
-
-Primary P1 revisit list:
-
-```text
-Pokemon visuals: PokéAPI sprites, PokéSprite
-Pokemon cries:   PokéAPI cries
-Fonts:            Pretendard, Noto Sans CJK/Korean
-Generic UI:       Lucide, Material Symbols, project-owned SVG/CSS
-Generic packs:    Kenney individual packs
-Ambience/SFX:     Freesound individual classified assets only
-General art/audio: OpenGameArt individual classified assets only
-Alternative:      project-created/generated resources with retained provenance
-```
-
-Do **not** begin P7 before P6 closes.
+1. record the owner decision in `docs/DECISIONS.md`;
+2. freeze the exact Pretendard artifacts/weights/subset recipe and notices;
+3. freeze the exact Lucide release/files and project-owned domain marks;
+4. choose representative Pokémon visual files only if the selected gate option requires them;
+5. create concrete `p6-resource-manifest-v1` records with exact pins, SHA-256, rights/redistribution/preprocessing/fallback fields;
+6. run reproducible build-time normalization;
+7. measure actual initial resource payload and representative decoded working sets;
+8. select output dimensions/formats using those measurements;
+9. freeze numeric initial-payload/image/audio/cache budgets only from measured candidates;
+10. add executable manifest/provenance/duplicate/fallback validation;
+11. keep #12 open and **do not begin P7** until full P6 exit passes.
 
 ## Later roadmap
 
 `#1 P0 → #2 P1 → #3 P2 → #4 P3 → #5 P4 → #6 P5 → #12 P6 → #7 P7 → #8 P8 → #9 P9 → #10 P10`
 
-P8 must prove a mixed world loop: settlement/social pressure + travel/survival + persistent faction/relationship thread + Pokémon ecology/direct interaction, while preserving a complete `0/3` path.
+P8 must prove a phone-sized mixed-world loop with settlement/social pressure, travel/survival, a persistent faction/relationship thread, Pokémon ecology/direct interaction and a complete `0/3` path.
 
-P9 exit still requires both:
-
-```text
-world_content_breadth_audit == PASS
-recurring_major_factions_realized == true
-major_faction_planning_target_range == 4..6
-major_factions_are_pokemon_shaped == true
-all_151_living_direct_interaction_paths == true
-indirect_presence_alone_satisfies_D034 == false
-```
+P9 must realize substantive world-content breadth, several recurring Pokémon-shaped major factions (current planning target roughly 4–6 lanes), and all 151 living direct-interaction paths.
