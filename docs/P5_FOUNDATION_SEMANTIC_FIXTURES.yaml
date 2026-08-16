@@ -289,13 +289,16 @@ fixtures:
           companion_count: 0
       choices:
         - choice_id: use_narrow_shelter
-          visibility_when: public
+          presentation_mode: visible_disabled_when_unavailable
+          visibility_when: true
           availability_predicate: companion_count_equals_0
+          disclosure: public
           unavailable_reason_id: fixture.reason.not_enough_safe_space
         - choice_id: seek_wider_shelter
+          presentation_mode: hidden_until_available
           visibility_when: companion_count_gte_1
           availability_predicate: true
-          disclosure: hidden_until_available
+          disclosure: secret
     when:
       render_player_safe_view_for_each_variant: true
     expected:
@@ -320,15 +323,16 @@ fixtures:
     given:
       run_seed: "00000000000000000000000000000006"
       transition_seq: 6
-      trigger:
-        id: player_action_committed
+      origin_trigger:
+        id: location_entered
         evaluation_ordinal: 0
       pending_event_id: fixture.route.unbridged_chasm
       choice:
         choice_id: cross_without_route_or_equipment
-        presentation_mode: visible_disabled
+        presentation_mode: visible_disabled_when_unavailable
         availability_when: fixture.has_crossing_permission_or_tool
         resolved_available: false
+        disclosure: public
         unavailable_reason_id: fixture.reason.no_viable_crossing_method
         resolution_kind: blocked
     when:
