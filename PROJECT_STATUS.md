@@ -31,12 +31,12 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 16 and deliberately unchanged by the Batch 17 selection/source review:
+Current authoritative manifest state after Batch 17:
 
 ```text
-dossier_complete_count == 123
+dossier_complete_count == 129
 pilot_reviewed_count == 2
-not_started_count == 26
+not_started_count == 20
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -72,29 +72,10 @@ Batch 13   PASS
 Batch 14   PASS
 Batch 15   PASS
 Batch 16   PASS
+Batch 17   PASS
 ```
 
-### P4 Batch 16 — COMPLETE
-
-Roster:
-
-- #035 Clefairy / #036 Clefable
-- #037 Vulpix / #038 Ninetales
-- #122 Mr. Mime
-- #124 Jynx
-
-Primary outputs:
-
-- `docs/P4_BATCH_16_FOLKLORE_SUPERNATURAL_HUMANOID_PLAN.md`
-- `docs/P4_BATCH_16_SOURCE_REVIEW.md`
-- `docs/P4_BATCH_16_FULL_SCHEMA_DOSSIERS.md` plus six indexed dossier files
-- `docs/P4_BATCH_16_COMPLETION_AUDIT.md`
-- updated `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
-- updated `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
-
-`docs/P4_BATCH_16_COMPLETION_AUDIT.md` = **PASS**.
-
-### P4 Batch 17 — SOURCE REVIEW COMPLETE
+### P4 Batch 17 — COMPLETE
 
 Roster:
 
@@ -103,70 +84,72 @@ Roster:
 - #123 Scyther
 - #127 Pinsir
 
-Primary outputs so far:
+Primary outputs:
 
 - `docs/P4_BATCH_17_COMBAT_MORPHOLOGY_AGGRESSION_PLAN.md`
 - `docs/P4_BATCH_17_SOURCE_REVIEW.md`
+- `docs/P4_BATCH_17_FULL_SCHEMA_DOSSIERS.md` plus six indexed dossier files
+- `docs/P4_BATCH_17_COMPLETION_AUDIT.md`
+- updated `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
+- updated `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`
 
-The Batch 17 source review classifies direct observation, measurements/numeric wording, researcher interpretation, analogy/reputation and version-scoped extraordinary claims separately. The reviewed evidence fits existing P2/P3/P4 contracts with **no blocking Human Design Gate**.
+`docs/P4_BATCH_17_COMPLETION_AUDIT.md` = **PASS**.
 
 Key conclusions:
 
-- Mankey's volatile anger, colony behavior and strong historical no-escape wording support severe authored escalation pressure, not a universal rage meter, permanent hostility or global no-flee rule.
-- Primeape's gaze-linked fury and tenacious pursuit remain bounded encounter behavior. Poké Ball persistence is current researcher-theory/modern-containment context, and historical “end of the world” pursuit wording is not a literal distance rule.
-- Hitmonlee's controlled leg extension, impact hardening and repeated kicks are physiology, not detachable equipment, arbitrary traversal, extra turns or force/armor-penetration formulas.
-- Hitmonchan's combinations, 300+ mph current punch wording, concrete/bullet-train historical wording and roughly three-minute recovery cadence do not create boxing institutions, combo action inflation, kinetic-energy simulation or a real-time global cooldown.
-- Scyther's forearm scythes, visual-relative speed, camouflage, hard-object cutting/sharpening and rare flight remain species-local capabilities rather than detachable weapon loot, permanent invisibility, universal material destruction or guaranteed first action/escape denial.
-- Pinsir's pincers, lifting/crushing claims, cold sensitivity and sleeping/burrowing behavior remain contextual capability/ecology rather than universal grapple/carry formulas, mining/traversal or exact temperature simulation.
-- Annihilape, Tyrogue/Hitmontop, Scizor, Kleavor, Mega Pinsir, later abilities and later-region observations remain chronology/provenance context only.
-- all six `p4-six-axis-v1` profiles reproduce with zero manual exceptions.
-- D-034 direct encounterability remains separate from baseline-era abundance, human proximity and ordinary companionship.
+- Mankey's volatile anger and group escalation use explicit warning/state transitions, not a numeric rage meter or global no-flee rule.
+- Primeape's gaze-linked fury and severe pursuit remain authored and bounded by terrain, visibility, injury, competing goals and exit states; no infinite pathfinding or automatic escape failure is created.
+- Hitmonlee's controlled leg extension and impact hardening are discrete species-local capabilities; no continuous skeletal physics, arbitrary traversal, extra turns or real-world force formula is created.
+- Hitmonchan's combinations remain one ordinary action/effect, 300+ mph wording does not become initiative/kinetic-energy math, and the roughly three-minute recovery cadence does not become a real-time global timer.
+- Scyther's scythes remain living anatomy; blur/camouflage does not create extra entities, teleportation or permanent invisibility, and hard-object cutting does not create universal destructible terrain.
+- Pinsir's pincer grip resolves through authored position/leverage state; body-weight and material feats do not create generic carry/crush formulas, and cold response does not create continuous temperature simulation.
+- natural weapons/body parts are never automatic equipment, loot or live-harvest resources.
+- one Pokémon remains one ordinary turn, one health state, one initiative presence and one visible companion slot regardless of bilateral limbs or combo wording.
+- Annihilape, Tyrogue/Hitmontop, Scizor, Kleavor, Mega Pinsir and later-region evidence remain chronology/provenance context only.
+- D-034 remains unchanged: all six are directly encounterable somewhere without implying commonness, region-wide natural presence or ordinary companionship.
+- all six dossiers require P6 readability follow-up; later runtime should prefer cached authored/discrete state over per-frame species simulation.
 
-Deterministic profiles:
-
-```text
-Mankey     2/4/1/1/2/3
-Primeape   3/5/3/3/3/4
-Hitmonlee  2/6/2/1/5/4
-Hitmonchan 2/5/3/1/5/3
-Scyther    3/5/4/2/4/5
-Pinsir     3/6/5/2/3/4
-```
-
-Source-review validation:
+Batch 17 validation:
 
 ```text
-reviewed_species_count == 6
-current_official_species_pages_verified == 6
-pinned_species_records_reviewed == 6
+full_schema_dossier_count == 6
+dossier_status_complete_count == 6
+required_section_count_per_dossier == 20
 rating_profile_reproducible_count == 6
 manual_rating_exception_count == 0
 p2_contradiction_count == 0
 p3_contradiction_count == 0
 p4_contract_contradiction_count == 0
 blocking_human_design_gate_count == 0
-coverage_manifest_changed == false
-ready_for_full_schema_authoring == true
+manifest_promotion_authorized == true
+```
+
+### Remaining P4 not-started roster
+
+```text
+#023 Ekans       #024 Arbok
+#060 Poliwag     #061 Poliwhirl    #062 Poliwrath
+#086 Seel        #087 Dewgong
+#098 Krabby      #099 Kingler
+#108 Lickitung
+#116 Horsea      #117 Seadra
+#118 Goldeen     #119 Seaking
+#125 Electabuzz  #126 Magmar
+#138 Omanyte     #139 Omastar
+#142 Aerodactyl  #143 Snorlax
 ```
 
 ## Exact next work
 
-Author the six **P4 Batch 17 frozen full-schema dossiers** for #056, #057, #106, #107, #123 and #127.
+Select **P4 Batch 18** from the remaining 20 species and create a focused batch plan before source review.
 
-The authoring pass must:
+The selection pass must:
 
-1. consume the reviewed claim-level evidence without upgrading analogy, researcher theory, measurements or version-scoped extraordinary wording into universal rules;
-2. use the reviewed deterministic `p4-six-axis-v1` profiles with zero hidden manual exceptions;
-3. preserve player-agency-safe warning, escalation, de-escalation and bounded pursuit handling for Mankey/Primeape;
-4. preserve one entity / one ordinary turn / one health state / one visible companion slot despite bilateral limbs, combinations or natural weapons;
-5. keep Hitmonlee/Hitmonchan martial-looking physiology separate from human fighting institutions, equipment and physics formulas;
-6. keep Scyther/Pinsir body-integrated weapons separate from automatic equipment, live harvesting, generic destructible terrain and universal material checks;
-7. keep post-Generation-I family/form/region evidence as provenance context rather than mandatory baseline realization;
-8. create the Batch 17 dossier index/regression summary and completion audit;
-9. rerun P2/P3/P4 contradiction, provenance, schema, action-economy, agency, chronology and D-034 separation checks;
-10. only after every check passes, atomically promote exactly the six Batch 17 manifest rows.
-
-If all six pass, expected coverage becomes `129 complete / 2 pilot_reviewed / 20 not_started`.
+1. group species by the next highest-value contract pressure rather than simply by Pokédex order;
+2. preserve D-034 direct encounterability while keeping abundance/locality separate;
+3. identify any new pressure around constriction/venom, amphibious movement, aquatic combat, ancient/fossil chronology, extreme body morphology, elemental physiology, dormancy or appetite before authoring;
+4. avoid reopening already settled contracts unless the remaining evidence actually requires a new durable owner decision;
+5. leave the manifest unchanged during selection/source review and promote only after a full six-or-appropriate-size dossier batch and completion audit pass.
 
 Do not begin P5 until the mandatory `151/151` P4 exit audit passes.
 
