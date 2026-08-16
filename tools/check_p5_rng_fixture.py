@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Verify the frozen p5-rng-v1 gameplay determinism vectors. Not a security/crypto feature."""
+"""Verify frozen gameplay determinism vectors and discovery evidence boundaries."""
 import hashlib
 from pathlib import Path
 
 import yaml
 
-fixture_path = Path(__file__).resolve().parents[1] / "docs" / "P5_FOUNDATION_SEMANTIC_FIXTURES.yaml"
-with fixture_path.open("r", encoding="utf-8") as handle:
+root = Path(__file__).resolve().parents[1]
+foundation_path = root / "docs" / "P5_FOUNDATION_SEMANTIC_FIXTURES.yaml"
+batch02_path = root / "docs" / "P5_BATCH_02_VALIDATION_FIXTURES.yaml"
+
+with foundation_path.open("r", encoding="utf-8") as handle:
     fixture = yaml.safe_load(handle)
 
 pack = fixture["content_pack"]
@@ -41,4 +44,19 @@ for vector in vectors:
     if "die_result" in vector:
         assert vector["die_result"] == expected + 1, f"{vector['id']}: die result mismatch"
 
-print(f"P5 RNG fixture PASS: vectors={len(vectors)} algorithm=p5-rng-v1")
+with batch02_path.open("r", encoding="utf-8") as handle:
+    batch02 = yaml.safe_load(handle)
+
+boundaries = {item["fixture_id"]: item for item in batch02["boundary_fixtures"]}
+insight = boundaries["B02-insight-evidence-boundary"]
+pool = insight["given"]["discovery_pool"]
+eligible_ids = [entry["insight_id"] for entry in pool if entry["eligible"]]
+assert all(entry.get("evidence_ref") for entry in pool), "discovery entries require evidence refs"
+assert eligible_ids == insight["expected"]["eligible_ids"], "discovery eligibility set mismatch"
+assert insight["expected"]["hidden_origin_selectable"] is False, "hidden origin became selectable"
+assert insight["expected"]["eligibility_rng_draw_count"] == 0, "discovery eligibility consumed RNG"
+
+print(
+    f"P5 determinism fixture PASS: vectors={len(vectors)} "
+    f"algorithm=p5-rng-v1 insight_boundary=PASS"
+)
