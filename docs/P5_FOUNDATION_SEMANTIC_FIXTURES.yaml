@@ -1,0 +1,349 @@
+fixture_format_version: p5-fixture-v1
+contract_version: p5-event-contract-v1
+content_pack:
+  id: p5-foundation-fixtures
+  version: 1.0.0
+  digest: fixture-only-not-production
+  recent_history_capacity: 16
+
+notes:
+  - All fixture.* identities are test-only and do not authorize production lore.
+  - Numeric weights are integer points.
+  - Hidden/debug-only fields in expected_trace are not player-facing payloads.
+  - A single positive eligible event is selected without consuming event.select RNG.
+
+rng_vectors:
+  - id: weighted-selection-vector-001
+    run_seed: "00000000000000000000000000000001"
+    origin_transition_seq: 1
+    trigger_id: location_entered
+    channel: event.select
+    subject_id: "eval:0"
+    draw_index: 0
+    sha256: 8fa123d41a83eee27404d409e3c1931ab5c97f95fb1b84bae33788307759cc05
+    raw_u64_be: 10349592812559003362
+    bound: 100
+    bounded_result: 62
+
+  - id: d034-rare-selection-vector-001
+    run_seed: "00000000000000000000000000000031"
+    origin_transition_seq: 3
+    trigger_id: event_chain_advanced
+    channel: event.select
+    subject_id: "eval:0"
+    draw_index: 0
+    sha256: 937fdfabd7edbce9eedc177a5e71e6f3bc32a4d4d8763ef50094672e0810b1f9
+    raw_u64_be: 10628459574772743401
+    bound: 100
+    bounded_result: 1
+
+  - id: hazardous-check-die-001
+    run_seed: "00000000000000000000000000000002"
+    origin_transition_seq: 2
+    trigger_id: travel_step_committed
+    channel: check.d6
+    subject_id: fixture.risk.beedrill_corridor/observe_and_withdraw/read_escape_gap
+    draw_index: 0
+    sha256: 3df0deaba15f8fbd942b1b29f6632c42ef0a51ed7ff4ba0c5a040bcd9124a531
+    raw_u64_be: 4463312059452329917
+    bound: 6
+    bounded_result_zero_based: 1
+    die_result: 2
+
+  - id: hazardous-check-die-002
+    run_seed: "00000000000000000000000000000002"
+    origin_transition_seq: 2
+    trigger_id: travel_step_committed
+    channel: check.d6
+    subject_id: fixture.risk.beedrill_corridor/observe_and_withdraw/read_escape_gap
+    draw_index: 1
+    sha256: 712b428cd907797eebd3eff5a6183f8d66945dfc4515934ec0bca2e691c8f9e6
+    raw_u64_be: 8154684722988415358
+    bound: 6
+    bounded_result_zero_based: 2
+    die_result: 3
+
+fixtures:
+  - id: F01-ordinary-peaceful-weighted-selection
+    purpose:
+      - deterministic integer-weight selection
+      - peaceful living Pokemon interaction does not imply ownership
+      - stable event-id ordering is authoritative
+    given:
+      run_seed: "00000000000000000000000000000001"
+      transition_seq: 1
+      trigger:
+        id: location_entered
+        evaluation_ordinal: 0
+      public_state:
+        location_ref: fixture.riverside
+        companion_count: 0
+      candidates:
+        - event_id: fixture.peaceful.riverside_lapras
+          eligible: true
+          effective_weight: 70
+          d034_direct_living_encounter: true
+        - event_id: fixture.risk.beedrill_corridor
+          eligible: true
+          effective_weight: 30
+    when:
+      action_id: fixture.enter_riverside
+      evaluate_events: true
+    expected:
+      sorted_eligible_event_ids:
+        - fixture.peaceful.riverside_lapras
+        - fixture.risk.beedrill_corridor
+      total_weight: 100
+      selection_target: 62
+      selected_event_id: fixture.peaceful.riverside_lapras
+      event_select_raw_draw_count: 1
+      eligibility_rng_draw_count: 0
+      companion_acquired: false
+      containment_state_created: false
+      player_safe_view_exposes_candidate_weights: false
+
+  - id: F02-hazardous-check-and-reaction
+    purpose:
+      - P3 2d6 integration
+      - setback consequence remains causal
+      - reaction item changes consequence, never dice
+      - exact reaction ordering survives reload
+    given:
+      run_seed: "00000000000000000000000000000002"
+      transition_seq: 2
+      trigger:
+        id: travel_step_committed
+        evaluation_ordinal: 0
+      selected_event_id: fixture.risk.beedrill_corridor
+      selected_event_is_only_positive_candidate: true
+      character:
+        sense: 2
+        competence:
+          id: fixture.tracking
+          modifier: 1
+        context: 0
+      inventory:
+        notable_items:
+          - item_id: fixture.emergency.escape_smoke
+            count: 1
+      check:
+        choice_id: observe_and_withdraw
+        check_id: read_escape_gap
+        subject_id: fixture.risk.beedrill_corridor/observe_and_withdraw/read_escape_gap
+        difficulty: 11
+        provisional_setback_effects:
+          - domain_command: p3.fear.advance
+            amount: 1
+          - domain_command: p3.injury.apply
+            severity: light
+            tags: [sting]
+        reaction_window:
+          offered_item_id: fixture.emergency.escape_smoke
+          trigger_tags: [pursuit, swarm]
+          authored_effect:
+            - domain_command: p3.inventory.consume_notable_item
+              item_id: fixture.emergency.escape_smoke
+              amount: 1
+            - domain_command: p3.consequence.prevent_injury
+              max_severity: light
+              matching_tags: [sting]
+    when:
+      choice_id: observe_and_withdraw
+      reaction_choice_id: use_escape_smoke
+    expected:
+      event_select_raw_draw_count: 0
+      dice: [2, 3]
+      dice_sum: 5
+      check_total: 8
+      margin: -3
+      outcome_band: setback
+      doubles_overlay: none
+      reaction_offered_after_roll: true
+      reaction_changes_dice: false
+      reaction_changes_outcome_band: false
+      final_effect_order:
+        - p3.inventory.consume_notable_item
+        - p3.fear.advance
+        - p3.consequence.prevent_injury
+      final_state:
+        fixture_escape_smoke_count: 0
+        fear_advanced_by: 1
+        new_injury_count: 0
+      persisted_before_reaction_prompt:
+        dice: [2, 3]
+        margin: -3
+        outcome_band: setback
+      reload_reroll_allowed: false
+
+  - id: F03-d034-rare-mew-direct-encounter
+    purpose:
+      - D-034 direct living encounter
+      - rare authored chain plus deterministic weighted gate
+      - mythical treatment remains non-routine and noncoercive
+    given:
+      run_seed: "00000000000000000000000000000031"
+      transition_seq: 3
+      trigger:
+        id: event_chain_advanced
+        evaluation_ordinal: 0
+      narrative_state:
+        fixture.mew_evidence_chain_step: 3
+        fixture.mew_direct_encounter_unlocked: true
+        fixture.mew_direct_encounter_count: 0
+      candidates:
+        - event_id: fixture.d034.mew_presence
+          eligible: true
+          effective_weight: 2
+          tags: [d034_direct, mythical, rare_authored_chain]
+        - event_id: fixture.fallback.river_silence
+          eligible: true
+          effective_weight: 98
+    when:
+      action_id: fixture.advance_mew_evidence_chain
+      evaluate_events: true
+    expected:
+      sorted_eligible_event_ids:
+        - fixture.d034.mew_presence
+        - fixture.fallback.river_silence
+      total_weight: 100
+      selection_target: 1
+      selected_event_id: fixture.d034.mew_presence
+      direct_encounter_has_actual_living_species_id: 151
+      meaningful_direct_choice_present: true
+      meaningful_direct_choice_example_id: remain_still_and_observe
+      routine_spawn_created: false
+      capture_path_created: false
+      companion_path_created: false
+      combat_boss_requirement_created: false
+      reusable_time_travel_command_created: false
+      max_occurrences: 1
+
+  - id: F04-porygon-chronology-anomaly
+    purpose:
+      - direct encounter with explicitly noncontemporaneous artificial species
+      - anomaly remains exceptional, authored and stateful
+      - canonical artificial origin is not rewritten
+    given:
+      run_seed: "00000000000000000000000000000004"
+      transition_seq: 4
+      trigger:
+        id: event_chain_advanced
+        evaluation_ordinal: 0
+      narrative_state:
+        fixture.chronology_anomaly_armed: true
+        fixture.porygon_anomaly_count: 0
+      candidates:
+        - event_id: fixture.chronology.porygon_displacement
+          eligible: true
+          effective_weight: 1
+          tags: [chronology_anomaly, d034_direct, noncontemporaneous]
+    when:
+      action_id: fixture.advance_anomaly_chain
+      choice_id: observe_without_claiming_origin
+    expected:
+      selected_event_id: fixture.chronology.porygon_displacement
+      event_select_raw_draw_count: 0
+      direct_encounter_has_actual_living_species_id: 137
+      world_recognizes_abnormality: true
+      writes:
+        - narrative.flag.set: fixture.porygon_anomaly_seen
+        - narrative.counter.add: fixture.porygon_anomaly_count
+      forbidden_writes_absent:
+        - p4.species.set_native_origin
+        - p2.world.create_ancient_computer_industry
+        - p2.world.create_reusable_time_travel
+      ancient_native_presence_inferred: false
+      stable_breeding_population_inferred: false
+      max_occurrences: 1
+
+  - id: F05-companion-aware-branch-and-zero-companion-parity
+    purpose:
+      - companion state changes branch availability, not a generic numeric bonus
+      - one-companion and zero-companion variants are both valid
+      - hidden choice rules do not leak unavailable branch internals
+    given:
+      run_seed: "00000000000000000000000000000005"
+      transition_seq: 5
+      trigger:
+        id: location_entered
+        evaluation_ordinal: 0
+      event_id: fixture.shelter.narrow_overhang
+      variants:
+        - variant_id: with_companion
+          companion_slots:
+            - slot: 0
+              species_id: 25
+            - slot: 1
+              empty: true
+            - slot: 2
+              empty: true
+          companion_count: 1
+        - variant_id: zero_companion
+          companion_slots:
+            - slot: 0
+              empty: true
+            - slot: 1
+              empty: true
+            - slot: 2
+              empty: true
+          companion_count: 0
+      choices:
+        - choice_id: use_narrow_shelter
+          presentation_mode: visible_disabled_when_unavailable
+          visibility_when: true
+          availability_predicate: companion_count_equals_0
+          disclosure: public
+          unavailable_reason_id: fixture.reason.not_enough_safe_space
+        - choice_id: seek_wider_shelter
+          presentation_mode: hidden_until_available
+          visibility_when: companion_count_gte_1
+          availability_predicate: true
+          disclosure: secret
+    when:
+      render_player_safe_view_for_each_variant: true
+    expected:
+      with_companion:
+        use_narrow_shelter_visible: true
+        use_narrow_shelter_enabled: false
+        seek_wider_shelter_visible: true
+        generic_companion_check_bonus: 0
+      zero_companion:
+        use_narrow_shelter_visible: true
+        use_narrow_shelter_enabled: true
+        seek_wider_shelter_visible: false
+        run_remains_valid: true
+      secret_predicate_values_exposed: false
+      containment_assumption_created: false
+
+  - id: F06-structurally-invalid-approach-consumes-no-rng
+    purpose:
+      - impossible action is not converted into a very high target number
+      - stale/invalid choice commit is rejected authoritatively
+      - rejection consumes no RNG and commits no event result
+    given:
+      run_seed: "00000000000000000000000000000006"
+      transition_seq: 6
+      origin_trigger:
+        id: location_entered
+        evaluation_ordinal: 0
+      pending_event_id: fixture.route.unbridged_chasm
+      choice:
+        choice_id: cross_without_route_or_equipment
+        presentation_mode: visible_disabled_when_unavailable
+        availability_when: fixture.has_crossing_permission_or_tool
+        resolved_available: false
+        disclosure: public
+        unavailable_reason_id: fixture.reason.no_viable_crossing_method
+        resolution_kind: blocked
+    when:
+      attempted_choice_commit: cross_without_route_or_equipment
+    expected:
+      accepted: false
+      error_code: P5E_CHOICE_UNAVAILABLE
+      check_created: false
+      check_d6_raw_draw_count: 0
+      event_select_raw_draw_count: 0
+      transition_seq_after: 6
+      resolved_event_history_appended: false
+      state_write_count: 0
+      difficulty_inflated_to_fake_impossibility: false
