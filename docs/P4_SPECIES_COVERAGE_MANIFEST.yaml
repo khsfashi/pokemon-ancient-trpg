@@ -159,8 +159,8 @@ species:
   - {national_dex: 95, species_key: onix, dossier_status: complete, authoring_batch: B14-new, p6_followup_required: true}
   - {national_dex: 96, species_key: drowzee, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
   - {national_dex: 97, species_key: hypno, dossier_status: complete, authoring_batch: B09-new, p6_followup_required: true}
-  - {national_dex: 98, species_key: krabby, dossier_status: not_started}
-  - {national_dex: 99, species_key: kingler, dossier_status: not_started}
+  - {national_dex: 98, species_key: krabby, dossier_status: complete, authoring_batch: B21-new, p6_followup_required: true}
+  - {national_dex: 99, species_key: kingler, dossier_status: complete, authoring_batch: B21-new, p6_followup_required: true}
   - {national_dex: 100, species_key: voltorb, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 101, species_key: electrode, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 102, species_key: exeggcute, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
@@ -169,7 +169,7 @@ species:
   - {national_dex: 105, species_key: marowak, dossier_status: complete, authoring_batch: B08-new, p6_followup_required: true}
   - {national_dex: 106, species_key: hitmonlee, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
   - {national_dex: 107, species_key: hitmonchan, dossier_status: complete, authoring_batch: B17-new, p6_followup_required: true}
-  - {national_dex: 108, species_key: lickitung, dossier_status: not_started}
+  - {national_dex: 108, species_key: lickitung, dossier_status: complete, authoring_batch: B21-new, p6_followup_required: true}
   - {national_dex: 109, species_key: koffing, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 110, species_key: weezing, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
   - {national_dex: 111, species_key: rhyhorn, dossier_status: complete, authoring_batch: B10-new, p6_followup_required: true}
