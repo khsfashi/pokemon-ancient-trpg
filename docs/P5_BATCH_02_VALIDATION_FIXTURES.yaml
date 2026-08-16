@@ -1,0 +1,327 @@
+fixture_format_version: p5-validation-fixture-v1
+contract_version: p5-event-contract-v1
+schema_ref: docs/P5_NORMALIZED_EVENT_SCHEMA.json
+pending_schema_ref: docs/P5_PENDING_EVENT_STATE_SCHEMA.json
+registry_ref: docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml
+
+rules:
+  every_failure_has_exactly_one_primary_validation_id: true
+  passing_control_must_validate_before_failing_variant: true
+  validation_may_mutate_authoritative_state: false
+  validation_may_consume_rng: false
+  fixture_ids_are_test_only: true
+
+validation_cases:
+  - case_id: V001-stable-id
+    validation_id: P5V001
+    layer: schema_and_pack_index
+    passing: { event_id: fixture.valid-event }
+    failing: { event_id: 'Fixture Invalid Event' }
+    expected: reject_malformed_stable_id
+
+  - case_id: V002-dangling-reference
+    validation_id: P5V002
+    layer: registry_and_pack_index
+    passing: { predicate_id: p3.inventory.has_notable_item, item_id: fixture.rope }
+    failing: { predicate_id: p3.inventory.missing_predicate, item_id: fixture.rope }
+    expected: reject_unknown_or_dangling_reference
+
+  - case_id: V003-unknown-trigger
+    validation_id: P5V003
+    layer: schema
+    passing: { trigger_id: location_entered }
+    failing: { trigger_id: frame_updated }
+    expected: reject_trigger_without_deterministic_owner
+
+  - case_id: V004-authoritative-weight
+    validation_id: P5V004
+    layer: schema_and_semantic
+    passing: { base_points: 30, modifier_add_points: -5 }
+    failing: { base_points: 30.5, modifier_add_points: 0 }
+    expected: reject_floating_authoritative_weight
+
+  - case_id: V005-rng-in-condition
+    validation_id: P5V005
+    layer: semantic_ast
+    passing: { predicate_id: p4.encounter.route_is_eligible, consumes_rng: false }
+    failing: { predicate_id: fixture.random_gate, consumes_rng: true }
+    expected: reject_rng_in_eligibility_visibility_or_availability
+
+  - case_id: V006-undeclared-read
+    validation_id: P5V006
+    layer: declared_dependency
+    passing:
+      reads: [p3.inventory.notable_item]
+      predicate: { id: p3.inventory.has_notable_item, resolves_reads: [p3.inventory.notable_item] }
+    failing:
+      reads: []
+      predicate: { id: p3.inventory.has_notable_item, resolves_reads: [p3.inventory.notable_item] }
+    expected: reject_undeclared_semantic_read
+
+  - case_id: V007-upstream-raw-write
+    validation_id: P5V007
+    layer: ownership
+    passing:
+      p5_effect: { operation: narrative.flag.set, ref: p5.narrative.flag.fixture_seen }
+    failing:
+      p5_effect: { operation: raw.set, ref: p3.survival.vitality }
+    expected: reject_direct_write_to_upstream_owned_state
+
+  - case_id: V008-domain-command
+    validation_id: P5V008
+    layer: domain_registry
+    passing:
+      command_id: p3.inventory.remove_notable_item
+      args: { item_id: fixture.rope, amount: 1, reason_id: fixture.used }
+    failing:
+      command_id: p3.inventory.set_any_raw_field
+      args: { field: vitality, value: 999 }
+    expected: reject_unknown_command_or_invalid_arguments
+
+  - case_id: V009-p3-check-shape
+    validation_id: P5V009
+    layer: check_adapter
+    passing:
+      governing_attribute_ref: p3.character.attribute
+      competence_refs: [p3.character.competence]
+      context_components: [p3.survival.fatigue_stage]
+      static_difficulty: 9
+    failing:
+      governing_attribute_ref: p3.character.attribute
+      competence_refs: [p3.character.competence, p3.character.competence]
+      static_difficulty: 9
+    expected: reject_multiple_competence_contributions
+
+  - case_id: V010-emergency-window-order
+    validation_id: P5V010
+    layer: emergency_adapter
+    passing:
+      phase: reaction
+      command_id: p3.emergency.consume_and_mitigate
+      window_id: reaction
+      dice_already_recorded: true
+    failing:
+      phase: before_roll
+      command_id: p3.emergency.consume_and_mitigate
+      window_id: reaction
+      dice_already_recorded: false
+    expected: reject_operation_in_illegal_timing_window
+
+  - case_id: V011-unreachable-outcome
+    validation_id: P5V011
+    layer: semantic_graph
+    passing:
+      resolution_kind: direct
+      reachable_outcomes: [fixture.accepted]
+      referenced_outcomes: [fixture.accepted]
+    failing:
+      resolution_kind: blocked
+      reachable_outcomes: [fixture.blocked]
+      referenced_outcomes: [fixture.exceptional]
+    expected: reject_contradictory_or_unreachable_resolution
+
+  - case_id: V012-chain-cycle
+    validation_id: P5V012
+    layer: chain_graph
+    passing:
+      edges: [fixture.chain.a->fixture.chain.b, fixture.chain.b->fixture.chain.a]
+      max_occurrences: 2
+      explicit_exit_condition: true
+    failing:
+      edges: [fixture.chain.a->fixture.chain.b, fixture.chain.b->fixture.chain.a]
+      max_occurrences: null
+      cooldown_after_transitions: null
+      explicit_exit_condition: false
+    expected: reject_unbounded_cycle
+
+  - case_id: V013-secret-diagnostic-leak
+    validation_id: P5V013
+    layer: player_safe_projection
+    passing:
+      disclosure: secret
+      player_payload: { visible: false }
+    failing:
+      disclosure: secret
+      player_payload: { visible: false, predicate_value: fixture.secret_clan_state }
+    expected: reject_secret_state_in_player_visible_payload
+
+  - case_id: V014-nondeterministic-source
+    validation_id: P5V014
+    layer: semantic_source
+    passing: { source: saved_transition_seq }
+    failing: { source: wall_clock_now }
+    expected: reject_nondeterministic_authoritative_source
+
+  - case_id: V015-atomic-prevalidation
+    validation_id: P5V015
+    layer: transaction_plan
+    passing:
+      commands:
+        - { command_id: p3.inventory.remove_notable_item, validates: true }
+        - { command_id: p3.survival.advance_fear, validates: true }
+      state_write_count_before_all_validation_passes: 0
+    failing:
+      commands:
+        - { command_id: p3.inventory.remove_notable_item, validates: true, applied_early: true }
+        - { command_id: p3.survival.advance_fear, validates: false }
+      state_write_count_before_all_validation_passes: 1
+    expected: reject_plan_capable_of_partial_commit
+
+  - case_id: V016-chronology-misuse
+    validation_id: P5V016
+    layer: p4_chronology_semantic
+    passing:
+      command_id: p4.encounter.record_exceptional_chronology_interaction
+      routine_spawn_created: false
+      native_origin_rewritten: false
+      reusable_time_travel_created: false
+    failing:
+      command_id: p4.encounter.record_exceptional_chronology_interaction
+      routine_spawn_created: true
+      native_origin_rewritten: true
+    expected: reject_chronology_anomaly_as_routine_ecology_or_origin_rewrite
+
+  - case_id: V017-direct-encounter-coverage
+    validation_id: P5V017
+    layer: p4_encounter_semantic
+    passing:
+      claims_direct_coverage: true
+      living_playable_interaction: true
+      species_id: 151
+    failing:
+      claims_direct_coverage: true
+      living_playable_interaction: false
+      only_representation: myth_record
+      species_id: 151
+    expected: reject_indirect_only_representation_claiming_direct_coverage
+
+  - case_id: V018-companion-boundary
+    validation_id: P5V018
+    layer: p4_companion_semantic
+    passing:
+      companion_count: 0
+      run_valid: true
+      containment_created: false
+      generic_numeric_bonus: 0
+    failing:
+      companion_count: 1
+      forced_ownership: true
+      containment_created: true
+      generic_numeric_bonus: 1
+    expected: reject_containment_forced_ownership_or_generic_companion_modifier
+
+boundary_fixtures:
+  - fixture_id: B02-chain-bounded-cycle
+    purpose: bounded chain cycle is accepted while identical unbounded graph fails P5V012
+    graph:
+      nodes: [fixture.chain.a, fixture.chain.b]
+      edges: [fixture.chain.a->fixture.chain.b, fixture.chain.b->fixture.chain.a]
+      max_occurrences: 2
+    expected:
+      accepted: true
+      maximum_enqueue_count: 4
+
+  - fixture_id: B02-cooldown-boundary
+    purpose: cooldown uses saved transition sequence rather than wall clock
+    given:
+      last_resolved_transition: 10
+      cooldown_after_transitions: 3
+    assertions:
+      transition_12_eligible: false
+      transition_13_eligible: true
+      wall_clock_read_count: 0
+
+  - fixture_id: B02-recent-history-boundary
+    purpose: anti-repeat uses bounded ring and O(1) indexes
+    given:
+      recent_history_capacity: 16
+      appended_event_count: 18
+    expected:
+      retained_recent_id_count: 16
+      unbounded_history_scan_required: false
+      event_count_lookup_complexity: O(1)
+
+  - fixture_id: B02-insight-evidence-boundary
+    purpose: discovery cannot manufacture omniscient species knowledge
+    given:
+      discovery_pool:
+        - { insight_id: fixture.observed_tracks, evidence_ref: fixture.tracks_seen, eligible: true, weight: 5 }
+        - { insight_id: fixture.hidden_origin, evidence_ref: fixture.not_observed, eligible: false, weight: 100 }
+    expected:
+      eligible_ids: [fixture.observed_tracks]
+      hidden_origin_selectable: false
+      eligibility_rng_draw_count: 0
+
+  - fixture_id: B02-rng-channel-independence
+    purpose: unrelated insight draws cannot perturb event selection or checks
+    stream_key_common:
+      run_seed: '0000000000000000000000000000000a'
+      origin_transition_seq: 20
+      trigger_id: knowledge_changed
+    variant_a:
+      draws: [event.select:0, check.d6:0, check.d6:1]
+    variant_b:
+      draws: [insight.select:0, insight.select:1, event.select:0, check.d6:0, check.d6:1]
+    expected:
+      event_select_draw_equal_between_variants: true
+      check_d6_draws_equal_between_variants: true
+      opaque_global_cursor_required: false
+
+  - fixture_id: B02-pending-mid-reaction-reload
+    purpose: save after roll restores exact check and reaction state
+    persisted:
+      pending_schema_version: p5-pending-v1
+      p5_contract_version: p5-event-contract-v1
+      content_pack_id: fixture.pack
+      content_pack_version: 1.0.0
+      content_digest_sha256: '0000000000000000000000000000000000000000000000000000000000000000'
+      run_seed: '00000000000000000000000000000002'
+      instance_id: fixture.pending.001
+      event_id: fixture.risk.beedrill_corridor
+      content_revision: 1
+      origin_transition_seq: 2
+      trigger_id: travel_step_committed
+      evaluation_ordinal: 0
+      phase: awaiting_reaction
+      resolved_choice_view:
+        - { choice_id: observe_and_withdraw, visible: true, enabled: true }
+      selected_choice_id: observe_and_withdraw
+      completed_rng_draw_records:
+        - channel: check.d6
+          subject_id: fixture.risk.beedrill_corridor/observe_and_withdraw/read_escape_gap
+          draw_index: 0
+          raw_u64: '4463312059452329917'
+          accepted: true
+          bounded_result: 1
+        - channel: check.d6
+          subject_id: fixture.risk.beedrill_corridor/observe_and_withdraw/read_escape_gap
+          draw_index: 1
+          raw_u64: '8154684722988415358'
+          accepted: true
+          bounded_result: 2
+      completed_check_result:
+        check_id: read_escape_gap
+        dice: [2, 3]
+        total: 8
+        margin: -3
+        outcome_band: setback
+        doubles_overlay: none
+      pending_consequence: fixture.sting_setback
+      pending_reaction_window: fixture.escape_smoke_reaction
+      precommit_state_digest: fixture.digest.before
+    expected:
+      reroll_count_after_reload: 0
+      reselect_count_after_reload: 0
+      restored_dice: [2, 3]
+      restored_phase: awaiting_reaction
+
+  - fixture_id: B02-pending-version-fail-closed
+    purpose: unknown pending schema version never silently migrates by rerolling
+    given:
+      pending_schema_version: p5-pending-v999
+      pinned_content_available: false
+    expected:
+      resume_allowed: false
+      reroll_allowed: false
+      reselect_allowed: false
+      explicit_migration_required: true

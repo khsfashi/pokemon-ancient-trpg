@@ -1,0 +1,394 @@
+registry_format_version: p5-adapter-registry-v1
+contract_version: p5-event-contract-v1
+status: frozen-for-batch-02
+
+rules:
+  runtime_storage_paths_are_semantic_refs: false
+  undeclared_read_is_error: P5V006
+  direct_upstream_write_is_error: P5V007
+  unknown_domain_command_is_error: P5V008
+  unknown_predicate_is_error: P5V002
+  command_args_are_prevalidated_before_first_write: true
+  effect_plan_commit_is_atomic: true
+  eligibility_predicates_are_pure: true
+  eligibility_predicates_consume_rng: false
+  command_registry_is_closed_by_default: true
+  generic_evolution_command_exists: false
+  generic_capture_or_containment_command_exists: false
+  generic_loot_command_exists: false
+  generic_companion_bonus_command_exists: false
+
+semantic_reads:
+  # P2 concepts: semantic keys only. P7 may map these to any storage layout.
+  - ref: p2.world.current_locality
+    owner: P2
+    value_kind: stable_ref
+  - ref: p2.world.route_state
+    owner: P2
+    value_kind: keyed_state
+  - ref: p2.world.local_knowledge
+    owner: P2
+    value_kind: keyed_state
+  - ref: p2.world.permission
+    owner: P2
+    value_kind: keyed_state
+  - ref: p2.world.relationship
+    owner: P2
+    value_kind: keyed_state
+  - ref: p2.world.setting_flag
+    owner: P2
+    value_kind: keyed_state
+
+  # P3 character/check/survival/inventory/progression/Gift/emergency concepts.
+  - ref: p3.character.attribute
+    owner: P3
+    value_kind: keyed_integer
+  - ref: p3.character.competence
+    owner: P3
+    value_kind: keyed_integer
+  - ref: p3.survival.vitality
+    owner: P3
+    value_kind: integer
+  - ref: p3.survival.fatigue_stage
+    owner: P3
+    value_kind: enum
+  - ref: p3.survival.fear_stage
+    owner: P3
+    value_kind: enum
+  - ref: p3.survival.injury
+    owner: P3
+    value_kind: keyed_record
+  - ref: p3.inventory.notable_item
+    owner: P3
+    value_kind: keyed_record
+  - ref: p3.inventory.resource_pool
+    owner: P3
+    value_kind: keyed_integer
+  - ref: p3.inventory.carried_load
+    owner: P3
+    value_kind: cached_integer
+  - ref: p3.progression.advancement_points
+    owner: P3
+    value_kind: integer
+  - ref: p3.progression.milestone
+    owner: P3
+    value_kind: keyed_boolean
+  - ref: p3.progression.growth_eligibility
+    owner: P3
+    value_kind: keyed_boolean
+  - ref: p3.gift.state
+    owner: P3
+    value_kind: enum
+  - ref: p3.gift.foreshadowing
+    owner: P3
+    value_kind: keyed_state
+  - ref: p3.gift.facet
+    owner: P3
+    value_kind: keyed_state
+  - ref: p3.emergency.legal_window
+    owner: P3
+    value_kind: enum
+
+  # P4 species/encounter/companion concepts.
+  - ref: p4.species.identity
+    owner: P4
+    value_kind: stable_ref
+  - ref: p4.species.profile
+    owner: P4
+    value_kind: keyed_record
+  - ref: p4.species.capability_tag
+    owner: P4
+    value_kind: keyed_boolean
+  - ref: p4.species.hazard_tag
+    owner: P4
+    value_kind: keyed_boolean
+  - ref: p4.species.evolution_ref
+    owner: P4
+    value_kind: keyed_ref
+  - ref: p4.encounter.hook
+    owner: P4
+    value_kind: keyed_record
+  - ref: p4.encounter.classification
+    owner: P4
+    value_kind: enum
+  - ref: p4.encounter.direct_route_eligibility
+    owner: P4
+    value_kind: keyed_boolean
+  - ref: p4.companion.slot
+    owner: P4
+    value_kind: keyed_record
+  - ref: p4.companion.willingness
+    owner: P4
+    value_kind: keyed_state
+  - ref: p4.companion.capability
+    owner: P4
+    value_kind: keyed_state
+  - ref: p4.companion.logistics
+    owner: P4
+    value_kind: keyed_state
+  - ref: p4.chronology.anomaly_flag
+    owner: P4
+    value_kind: keyed_boolean
+
+  # P5-owned compact indexes are readable by P5 conditions.
+  - ref: p5.event.count
+    owner: P5
+    value_kind: keyed_integer
+  - ref: p5.event.last_resolved_transition
+    owner: P5
+    value_kind: keyed_integer
+  - ref: p5.event.recent_history
+    owner: P5
+    value_kind: bounded_ring
+  - ref: p5.narrative.flag
+    owner: P5
+    value_kind: keyed_boolean
+  - ref: p5.narrative.counter
+    owner: P5
+    value_kind: keyed_integer
+
+pure_predicates:
+  - id: p2.world.locality_is
+    reads: [p2.world.current_locality]
+    args: { locality_ref: stable_ref }
+  - id: p2.world.route_state_is
+    reads: [p2.world.route_state]
+    args: { route_ref: stable_ref, state_id: stable_ref }
+  - id: p2.world.has_permission
+    reads: [p2.world.permission]
+    args: { permission_ref: stable_ref }
+  - id: p2.world.has_local_knowledge
+    reads: [p2.world.local_knowledge]
+    args: { knowledge_ref: stable_ref }
+  - id: p3.inventory.has_notable_item
+    reads: [p3.inventory.notable_item]
+    args: { item_id: stable_ref, minimum_count: nonnegative_integer }
+  - id: p3.inventory.resource_at_least
+    reads: [p3.inventory.resource_pool]
+    args: { pool_id: enum:provisions|remedies|materials, amount: nonnegative_integer }
+  - id: p3.survival.injury_matches
+    reads: [p3.survival.injury]
+    args: { severity: stable_ref, tag: stable_ref }
+  - id: p3.progression.has_milestone
+    reads: [p3.progression.milestone]
+    args: { milestone_id: stable_ref }
+  - id: p3.progression.has_growth_eligibility
+    reads: [p3.progression.growth_eligibility]
+    args: { eligibility_id: stable_ref }
+  - id: p3.gift.state_is
+    reads: [p3.gift.state]
+    args: { state_id: stable_ref }
+  - id: p3.emergency.window_is_legal
+    reads: [p3.emergency.legal_window]
+    args: { window_id: enum:preparation|reaction|recovery }
+  - id: p4.species.has_capability
+    reads: [p4.species.capability_tag]
+    args: { species_id: positive_integer, capability_id: stable_ref }
+  - id: p4.species.has_hazard
+    reads: [p4.species.hazard_tag]
+    args: { species_id: positive_integer, hazard_id: stable_ref }
+  - id: p4.encounter.route_is_eligible
+    reads: [p4.encounter.direct_route_eligibility]
+    args: { species_id: positive_integer, route_ref: stable_ref }
+  - id: p4.companion.count_equals
+    reads: [p4.companion.slot]
+    args: { count: integer_0_to_3 }
+  - id: p4.companion.slot_is_empty
+    reads: [p4.companion.slot]
+    args: { slot: integer_0_to_2 }
+  - id: p4.chronology.anomaly_flag_is
+    reads: [p4.chronology.anomaly_flag]
+    args: { flag_id: stable_ref, value: boolean }
+  - id: p5.event.count_at_most
+    reads: [p5.event.count]
+    args: { event_id: stable_ref, count: nonnegative_integer }
+  - id: p5.narrative.flag_is
+    reads: [p5.narrative.flag]
+    args: { flag_id: stable_ref, value: boolean }
+  - id: p5.narrative.counter_at_least
+    reads: [p5.narrative.counter]
+    args: { counter_id: stable_ref, value: integer }
+
+check_adapter:
+  id: p3.check.resolve
+  owner: P3
+  mutation: none
+  authoritative_rng_owner: P5
+  rng_channel: check.d6
+  required_args:
+    check_id: stable_ref
+    governing_attribute_ref: semantic_ref
+    context_components: semantic_ref_array
+    outcome_map: stable_ref_map
+  optional_args:
+    competence_ref: semantic_ref
+    static_difficulty: integer
+    opposed_target_ref: semantic_ref
+  invariants:
+    - exactly_one_of_static_difficulty_or_opposed_target_ref
+    - at_most_one_competence
+    - two_d6_are_immutable_after_draw
+    - context_collapses_to_p3_bounded_result
+    - outcome_band_and_doubles_overlay_follow_p3_contract
+    - blocked_action_never_calls_check_adapter
+
+commands:
+  # P3 survival / injury.
+  - id: p3.survival.apply_vitality_loss
+    owner: P3
+    args: { amount: positive_integer, cause_id: stable_ref }
+  - id: p3.survival.advance_fatigue
+    owner: P3
+    args: { steps: positive_integer, cause_id: stable_ref }
+  - id: p3.survival.advance_fear
+    owner: P3
+    args: { steps: positive_integer, cause_id: stable_ref }
+  - id: p3.survival.apply_injury
+    owner: P3
+    args: { severity: stable_ref, cause_id: stable_ref, tags: stable_ref_array }
+  - id: p3.survival.stabilize_injury
+    owner: P3
+    args: { injury_ref: stable_ref, method_id: stable_ref }
+  - id: p3.survival.commit_recovery
+    owner: P3
+    args: { recovery_id: stable_ref, amount: nonnegative_integer }
+
+  # P3 inventory / resources. Load is recomputed/cached by the owning adapter on mutation.
+  - id: p3.inventory.add_notable_item
+    owner: P3
+    args: { item_id: stable_ref, amount: positive_integer, provenance_ref: stable_ref }
+  - id: p3.inventory.remove_notable_item
+    owner: P3
+    args: { item_id: stable_ref, amount: positive_integer, reason_id: stable_ref }
+  - id: p3.inventory.adjust_resource_pool
+    owner: P3
+    args: { pool_id: enum:provisions|remedies|materials, delta: nonzero_integer, reason_id: stable_ref }
+  - id: p3.inventory.set_item_condition
+    owner: P3
+    args: { item_id: stable_ref, condition_id: stable_ref, cause_id: stable_ref }
+
+  # P3 progression. No kill-XP, use-count XP, visible level or generic evolution command.
+  - id: p3.progression.grant_advancement
+    owner: P3
+    args: { milestone_id: stable_ref, amount: positive_integer }
+  - id: p3.progression.grant_growth_eligibility
+    owner: P3
+    args: { eligibility_id: stable_ref, source_id: stable_ref }
+  - id: p3.progression.spend_at_checkpoint
+    owner: P3
+    args: { growth_id: stable_ref, cost: positive_integer, checkpoint_id: stable_ref }
+
+  # P3 rare Gift. These transitions cannot create a generic psychic class/stat/mana/spell system.
+  - id: p3.gift.record_foreshadowing
+    owner: P3
+    args: { signal_id: stable_ref, source_id: stable_ref }
+  - id: p3.gift.awaken
+    owner: P3
+    args: { authored_awakening_id: stable_ref, family_id: stable_ref }
+  - id: p3.gift.advance_facet
+    owner: P3
+    args: { facet_id: stable_ref, transition_id: stable_ref }
+
+  # P3 D-030 emergency items. Dice/result edits are not command arguments.
+  - id: p3.emergency.consume_and_mitigate
+    owner: P3
+    args:
+      item_id: stable_ref
+      window_id: enum:preparation|reaction|recovery
+      consequence_id: stable_ref
+      mitigation_id: stable_ref
+    invariants:
+      - window_must_be_currently_legal
+      - carried_item_must_exist
+      - consumption_and_mitigation_are_one_prevalidated_plan
+      - recorded_dice_unchanged
+      - recorded_margin_band_unchanged
+      - doubles_overlay_unchanged
+
+  # P4 companionship. Join is explicitly voluntary and physical; no containment path exists.
+  - id: p4.companion.commit_voluntary_join
+    owner: P4
+    args: { species_id: positive_integer, slot: integer_0_to_2, willingness_ref: stable_ref, event_id: stable_ref }
+    invariants: [slot_empty, species_path_allows_companionship, voluntary_association]
+  - id: p4.companion.commit_separation
+    owner: P4
+    args: { slot: integer_0_to_2, reason_id: stable_ref }
+  - id: p4.companion.commit_logistical_state
+    owner: P4
+    args: { slot: integer_0_to_2, state_id: stable_ref, reason_id: stable_ref }
+
+  # P4 species / encounter transitions. Recording a direct encounter never implies capture, companionship or native ecology.
+  - id: p4.encounter.record_direct_interaction
+    owner: P4
+    args: { species_id: positive_integer, encounter_ref: stable_ref, route_ref: stable_ref }
+    invariants: [living_playable_interaction, no_capture_implication, no_companion_implication]
+  - id: p4.encounter.record_exceptional_chronology_interaction
+    owner: P4
+    args: { species_id: positive_integer, encounter_ref: stable_ref, anomaly_ref: stable_ref }
+    invariants: [not_routine_spawn, no_native_origin_rewrite, no_reusable_time_travel]
+  - id: p4.species.record_identification_evidence
+    owner: P4
+    args: { species_id: positive_integer, evidence_ref: stable_ref, knowledge_scope: stable_ref }
+    invariants: [evidence_bounded, no_omniscient_pokedex_write]
+
+argument_types:
+  stable_ref: { type: string, pattern: '^[a-z0-9][a-z0-9._-]{0,63}$' }
+  semantic_ref: { type: string, pattern: '^(p2|p3|p4|p5|content)\\.[a-z0-9][a-z0-9._:-]{0,126}$' }
+  stable_ref_array: { type: array, item_type: stable_ref, max_items: 32 }
+  semantic_ref_array: { type: array, item_type: semantic_ref, max_items: 32 }
+  stable_ref_map: { type: map, key_type: stable_ref, value_type: stable_ref, max_items: 16 }
+  boolean: { type: boolean }
+  integer: { type: integer }
+  nonnegative_integer: { type: integer, minimum: 0 }
+  positive_integer: { type: integer, minimum: 1 }
+  nonzero_integer: { type: integer, excluded: 0 }
+  integer_0_to_2: { type: integer, minimum: 0, maximum: 2 }
+  integer_0_to_3: { type: integer, minimum: 0, maximum: 3 }
+
+atomic_prevalidation:
+  order:
+    - validate_normalized_event_schema
+    - resolve_all_semantic_refs
+    - validate_all_predicates_and_declared_reads
+    - validate_all_command_ids
+    - validate_all_command_arguments
+    - ask_each_owner_adapter_to_validate_invariants_against_same_precommit_state
+    - validate_all_p5_owned_writes
+    - validate_chain_enqueue_and_repeat_bounds
+    - freeze_ordered_effect_plan
+    - apply_owner_commands_in_authored_order
+    - apply_p5_writes_in_authored_order
+    - update_compact_indexes
+    - append_resolved_history_last
+  failure_rule: no_authoritative_state_write_before_entire_plan_passes
+  failure_validation_id: P5V015
+
+pending_event_adapter_boundary:
+  storage_owner: P7-later
+  semantic_fields_required:
+    - pending_schema_version
+    - p5_contract_version
+    - content_pack_id
+    - content_pack_version
+    - content_digest_sha256
+    - run_seed
+    - instance_id
+    - event_id
+    - content_revision
+    - origin_transition_seq
+    - trigger_id
+    - evaluation_ordinal
+    - phase
+    - resolved_choice_view
+    - selected_choice_id
+    - completed_rng_draw_records
+    - completed_check_result
+    - pending_consequence
+    - pending_reaction_window
+    - precommit_state_digest
+  migration_rules:
+    same_contract_and_same_content_digest: exact_resume_required
+    same_contract_and_different_content_digest: pinned_pack_or_explicit_migration_required
+    unknown_pending_schema_version: fail_closed_no_reroll
+    migration_may_silently_reroll: false
+    migration_may_silently_reselect: false

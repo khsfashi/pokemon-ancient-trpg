@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pokemon-ancient-trpg.invalid/schema/p5-pending-event-v1.json",
+  "title": "Pokemon Ancient TRPG P5 pending event semantic state",
+  "description": "Implementation-neutral state that must survive a mid-event save/reload. P7 owns physical persistence and migration plumbing.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "pending_schema_version",
+    "p5_contract_version",
+    "content_pack_id",
+    "content_pack_version",
+    "content_digest_sha256",
+    "run_seed",
+    "instance_id",
+    "event_id",
+    "content_revision",
+    "origin_transition_seq",
+    "trigger_id",
+    "evaluation_ordinal",
+    "phase",
+    "resolved_choice_view",
+    "completed_rng_draw_records",
+    "precommit_state_digest"
+  ],
+  "properties": {
+    "pending_schema_version": { "const": "p5-pending-v1" },
+    "p5_contract_version": { "const": "p5-event-contract-v1" },
+    "content_pack_id": { "$ref": "#/$defs/stableId" },
+    "content_pack_version": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "content_digest_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "run_seed": { "type": "string", "pattern": "^[0-9a-f]{32}$" },
+    "instance_id": { "$ref": "#/$defs/stableId" },
+    "event_id": { "$ref": "#/$defs/stableId" },
+    "content_revision": { "type": "integer", "minimum": 1 },
+    "origin_transition_seq": { "type": "integer", "minimum": 0 },
+    "trigger_id": { "$ref": "#/$defs/triggerId" },
+    "evaluation_ordinal": { "type": "integer", "minimum": 0 },
+    "phase": {
+      "enum": [
+        "awaiting_choice",
+        "awaiting_preparation",
+        "awaiting_roll",
+        "awaiting_reaction",
+        "awaiting_recovery",
+        "ready_to_commit"
+      ]
+    },
+    "resolved_choice_view": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["choice_id", "visible", "enabled"],
+        "properties": {
+          "choice_id": { "$ref": "#/$defs/stableId" },
+          "visible": { "type": "boolean" },
+          "enabled": { "type": "boolean" },
+          "public_reason_id": { "$ref": "#/$defs/stableId" }
+        }
+      }
+    },
+    "selected_choice_id": { "$ref": "#/$defs/stableId" },
+    "completed_rng_draw_records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rngDraw" }
+    },
+    "completed_check_result": { "$ref": "#/$defs/checkResult" },
+    "pending_consequence": { "$ref": "#/$defs/stableId" },
+    "pending_reaction_window": { "$ref": "#/$defs/stableId" },
+    "precommit_state_digest": { "type": "string", "minLength": 1, "maxLength": 128 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "phase": { "const": "awaiting_reaction" } }, "required": ["phase"] },
+      "then": { "required": ["selected_choice_id", "completed_check_result", "pending_consequence", "pending_reaction_window"] }
+    }
+  ],
+  "x-p5-migration": {
+    "same_version_same_content_digest": "exact-resume",
+    "different_content_digest": "pinned-pack-or-explicit-migration",
+    "unknown_pending_schema_version": "fail-closed",
+    "silent_reroll_allowed": false,
+    "silent_reselection_allowed": false
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "triggerId": {
+      "enum": [
+        "run_started",
+        "location_entered",
+        "travel_step_committed",
+        "rest_completed",
+        "player_action_committed",
+        "check_resolved",
+        "companion_state_changed",
+        "knowledge_changed",
+        "milestone_committed",
+        "event_resolved",
+        "event_chain_advanced"
+      ]
+    },
+    "rngDraw": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "subject_id", "draw_index", "raw_u64", "accepted"],
+      "properties": {
+        "channel": { "enum": ["event.select", "check.d6", "insight.select", "content.roll"] },
+        "subject_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "draw_index": { "type": "integer", "minimum": 0 },
+        "raw_u64": { "type": "string", "pattern": "^[0-9]{1,20}$" },
+        "accepted": { "type": "boolean" },
+        "bounded_result": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "checkResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "dice", "total", "margin", "outcome_band", "doubles_overlay"],
+      "properties": {
+        "check_id": { "$ref": "#/$defs/stableId" },
+        "dice": {
+          "type": "array",
+          "prefixItems": [
+            { "type": "integer", "minimum": 1, "maximum": 6 },
+            { "type": "integer", "minimum": 1, "maximum": 6 }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "total": { "type": "integer" },
+        "margin": { "type": "integer" },
+        "outcome_band": { "enum": ["setback", "costly_partial", "full", "exceptional"] },
+        "doubles_overlay": { "enum": ["none", "fortune", "trouble"] }
+      }
+    }
+  }
+}

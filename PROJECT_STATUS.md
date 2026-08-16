@@ -16,7 +16,8 @@ This file is the concise operational handoff. Durable product authority remains 
 - Evolution is distinct from ordinary maturation; no kill-XP, visible character levels or generic evolution command.
 - Mandatory Generation-I roster is National Pokédex #001-#151.
 - D-034 requires all 151 to be directly encounterable somewhere in total content while baseline-era natural presence, commonness, companionship and one-run availability remain separate questions.
-- `p5-event-contract-v1` now pins the P5 deterministic foundation: discrete trigger evaluation, stable event IDs, keyed deterministic RNG streams, pending-event reload safety and typed upstream state ownership.
+- `p5-event-contract-v1` pins the P5 deterministic foundation: discrete trigger evaluation, stable event IDs, keyed deterministic RNG streams, pending-event reload safety and typed upstream state ownership.
+- P5 Batch 02 freezes the normalized production JSON Schema, pending-event semantic schema, semantic read/predicate registry, typed P3/P4 adapter registry and machine-readable `P5V001..P5V018` validation cases without selecting a P7 storage/runtime stack.
 
 ## Completed phases
 
@@ -85,7 +86,7 @@ per_render_or_per_frame_event_scanning == false
 evaluate_on_discrete_game_state_transitions == true
 ```
 
-## P5 foundation — COMPLETE on current scoped PR
+## P5 foundation — COMPLETE
 
 Foundation contract: `docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md`  
 Semantic fixtures: `docs/P5_FOUNDATION_SEMANTIC_FIXTURES.yaml`  
@@ -129,22 +130,66 @@ The six fixed fixtures cover:
 5. companion-aware branch with explicit `0/3` parity;
 6. structurally invalid approach with zero RNG consumption.
 
+## P5 Batch 02 — COMPLETE on current scoped PR
+
+Normalized production schema: `docs/P5_NORMALIZED_EVENT_SCHEMA.json`  
+Pending-event semantic schema: `docs/P5_PENDING_EVENT_STATE_SCHEMA.json`  
+Semantic/domain adapter registry: `docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml`  
+Validation fixtures: `docs/P5_BATCH_02_VALIDATION_FIXTURES.yaml`  
+Batch audit: `docs/P5_BATCH_02_AUDIT.md`
+
+Frozen Batch 02 results:
+
+```text
+json_schema_draft == 2020-12
+normalized_event_required_shape_frozen == true
+canonical_digest_input_frozen == true
+runtime_storage_layout_frozen_early == false
+semantic_read_registry_uses_storage_paths == false
+pure_predicates_consume_rng == false
+unknown_domain_command_rejected == true
+all_effects_prevalidated_before_first_write == true
+P5V001_through_P5V018_machine_case_count == 18
+new_duplicate_validation_id_count == 0
+pending_schema_version == p5-pending-v1
+silent_mid_event_reroll_after_reload == false
+silent_mid_event_reselection_after_reload == false
+unbounded_chain_cycle_allowed == false
+cooldown_uses_wall_clock == false
+insight_eligibility_consumes_rng == false
+independent_rng_channels_preserved == true
+generic_evolution_command_exists == false
+generic_capture_or_containment_command_exists == false
+generic_loot_command_exists == false
+p4_all_151_direct_encounter_authoring_contract_preserved == true
+blocking_human_design_gate_count == 0
+```
+
+P3/P4 adapter coverage now includes:
+
+- P3 check binding, survival/injury, notable inventory + three pooled resources, progression, rare Gifts and D-030 emergency-item consequence mitigation;
+- P4 species identity/profile/capability/hazard reads, direct/exceptional encounter recording and voluntary physical companionship transitions;
+- explicit rejection of raw upstream setters, generic capture/containment, generic evolution, generic loot and generic stacking companion modifiers.
+
+Boundary fixtures now pin bounded/unbounded chain behavior, transition-sequence cooldowns, bounded recent history, evidence-bounded discoveries, keyed RNG-channel independence and mid-reaction reload behavior.
+
+P5 is **not** closed by this batch. The issue exit condition still requires a strict whole-surface audit before P6 can begin.
+
 ## Exact next work
 
-Continue **P5 Batch 02 — normalized schema + domain adapter registry** before authoring large production event content:
+Continue **P5 Batch 03 — strict exit-readiness audit**:
 
-1. define the exact normalized production event schema with field types, required/optional rules and canonical digest input;
-2. bind the semantic `reads[]` and pure predicate registry to concrete P2/P3/P4 concepts without exposing eventual P7 storage layout;
-3. bind typed domain command IDs for P3 checks/survival/inventory/progression/Gifts/emergency items plus P4 companion/species/encounter transitions;
-4. define command argument validation and atomic prevalidation behavior;
-5. turn `P5V001..P5V018` into machine-checkable schema/semantic validation cases with fixed passing/failing fixtures;
-6. specify pending-event save/version/migration fields strongly enough for P7 implementation and mid-event reload tests;
-7. add chain/cooldown/anti-repeat boundary fixtures, including bounded-cycle acceptance/rejection;
-8. add discovery/insight pool fixtures proving evidence-bounded knowledge and independent RNG-channel behavior;
-9. audit the registry against every P3/P4 downstream obligation before freezing it;
-10. keep P5 active until a later strict P5 exit audit proves the complete schema/adapter/validation surface implementation-ready.
+1. parse/structurally validate both Batch 02 JSON Schemas and all YAML fixture/registry artifacts;
+2. cross-audit every schema semantic ref, predicate and command against the closed registry, including duplicate/unknown-key detection;
+3. instantiate at least one normalized representative event through schema + registry checks for direct, check/reaction and D-034 exceptional paths without creating production lore;
+4. prove every `P5V001..P5V018` negative fixture fails at the intended validator layer and every positive control passes;
+5. cross-check pending-event mid-choice/mid-roll/mid-reaction resume cases against the frozen phase requirements and migration rules;
+6. re-audit chain/cooldown/history complexity and keyed RNG independence for implementation readiness;
+7. run a strict P3/P4 contradiction audit against the full frozen P5 surface, including `0/3` viability and D-034 `151/151` direct-encounter preservation;
+8. produce `docs/P5_EXIT_AUDIT.md`; close issue #6 only if all P5 exit conditions pass with no unresolved schema/adapter gap;
+9. if the strict audit passes, update `PROJECT_STATUS.md` to unblock P6 (#12); otherwise keep P5 active and list only the concrete blockers.
 
-Do **not** begin P6/P7 while P5 event semantics and adapter validation remain incomplete.
+Do **not** begin P6/P7 until the strict P5 exit audit passes.
 
 ## Later roadmap
 
