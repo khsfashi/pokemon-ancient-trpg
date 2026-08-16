@@ -19,8 +19,7 @@ This file is the concise operational handoff. Durable product authority remains 
 - The world-content direction is **Pokémon-shaped society, not Pokémon-only events**: every major world structure must be materially shaped by Pokémon existence, while individual events may have genuinely human or environmental immediate causes.
 - P9 full content must include substantive ordinary human/social, survival, exploration/mystery, relationship, faction, mixed-world and Pokémon content; several recurring major factions are required, with a current planning target of roughly 4–6 faction lanes.
 - Major factions must arise from Pokémon ecology/capability/sacredness/knowledge/exploitation/protection/coexistence/anomaly or another approved Pokémon-world causal bridge rather than generic medieval organizations with Pokémon decoration.
-- `p5-event-contract-v1` pins the P5 deterministic foundation: discrete trigger evaluation, stable event IDs, keyed deterministic RNG streams, pending-event reload safety and typed upstream state ownership.
-- P5 Batch 02 freezes the normalized production JSON Schema, pending-event semantic schema, semantic read/predicate registry, typed P3/P4 adapter registry and machine-readable `P5V001..P5V018` validation cases without selecting a P7 storage/runtime stack.
+- `p5-event-contract-v1` is frozen: event evaluation is transition-driven, content is data-driven, authoritative RNG is keyed/deterministic, pending events reload without reroll/reselection, upstream mutations use typed commands, and ordinary/faction/mixed/Pokémon content uses one engine surface.
 
 World/faction contract: `docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md`
 
@@ -32,6 +31,7 @@ P1 Reference/API/data/resource/IP     COMPLETE
 P2 World bible and setting contract   COMPLETE
 P3 Core TRPG rules/character model    COMPLETE
 P4 Pokémon adaptation + Gen-I 151     COMPLETE
+P5 Narrative world-event engine       COMPLETE
 ```
 
 ## P4 final state
@@ -41,178 +41,154 @@ Strict exit audit: `docs/P4_EXIT_AUDIT.md`
 Coverage audit: `docs/P4_SPECIES_COVERAGE_MANIFEST_AUDIT.md`  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 
-Final invariant:
-
 ```text
 mandatory_species_ids == {1..151}
 dossier_complete_count == 151
 source_review_complete_count == 151
-pilot_reviewed_count == 0
-not_started_count == 0
-draft_count == 0
 blocking_p4_gate_count == 0
-status_total == 151
 ```
 
 Result: **PASS**.
 
-Binding final P4 conclusions that P5 must preserve:
+P5/P9 must continue preserving:
 
-- Lapras' D-034 direct encounter is a living water-route interaction using communication, refusal and voluntary cooperation; success never implies ownership.
-- Mew remains mythical/singular; a rare authored chain may culminate in an actual living Mew voluntarily remaining visible for a meaningful noncoercive interaction.
-- Mew's direct encounter does not create a routine spawn, common ancient population, capture path, companionship path, combat-boss obligation or unlimited Psychic capability.
-- D-034 authoring coverage is `151/151`; P9 still owns implementation-level final coverage proof.
-- no portable containment, player-level enemy scaling, generic Pokémon loot/material economy, continuous species simulation or per-frame all-species rule scanning was introduced.
+- D-034 authoring coverage is `151/151`; P9 owns implementation-level final coverage proof.
+- direct encounterability does not imply natural baseline presence, commonness, capture, companionship or one-run availability.
+- Lapras supports living noncoercive direct interaction; success never implies ownership.
+- Mew remains mythical/singular and may appear only through a rare authored stateful direct-interaction chain, not routine spawn/capture/companion/boss logic.
+- Porygon/other chronology anomalies never rewrite canonical origin or create reusable generic time travel.
+- no portable containment, player-level enemy scaling, generic Pokémon loot/material economy, generic evolution command, continuous species simulation or per-frame all-species rule scanning.
 
-## Current phase
+## P5 final state
 
-**P5 — Narrative event engine and seeded run model (#6) is active.**
-
-P5 goal: specify the deterministic data-driven **world-event engine** that turns state, conditions, choices, checks and consequences into a replayable text-RPG run.
-
-Binding P5 issue scope now includes:
-
-- event definitions and weighted eligibility;
-- conditions and hidden/visible choices;
-- P3 dice/check integration;
-- outcomes, flags, chains and cooldowns;
-- random insight/discovery mechanics;
-- seeded RNG plus replay/debug trace;
-- event-history and anti-repeat policies;
-- content validation rules;
-- ordinary human/social and survival/environmental events;
-- persistent relationship/faction-linked chains;
-- Pokémon ecological/direct-interaction events;
-- mixed events where human motives and Pokémon ecology affect one another;
-- one shared event engine rather than separate faction/Pokémon/ordinary-event implementations.
-
-P5 constraints:
-
-```text
-same_saved_run_state_plus_same_action_is_reproducible_when_randomness_is_authoritative == true
-event_content_is_data_driven == true
-individual_story_events_hardcoded_in_engine == false
-separate_faction_event_engine_required == false
-separate_pokemon_event_engine_required == false
-per_render_or_per_frame_event_scanning == false
-evaluate_on_discrete_game_state_transitions == true
-```
-
-## P5 foundation — COMPLETE
-
+P5 issue: **#6**  
+Strict exit audit: `docs/P5_EXIT_AUDIT.md`  
 Foundation contract: `docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md`  
-Semantic fixtures: `docs/P5_FOUNDATION_SEMANTIC_FIXTURES.yaml`  
-Foundation audit: `docs/P5_FOUNDATION_CONTRACT_AUDIT.md`
+Normalized schema: `docs/P5_NORMALIZED_EVENT_SCHEMA.json`  
+Pending schema: `docs/P5_PENDING_EVENT_STATE_SCHEMA.json`  
+Adapter registry: `docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml`  
+Validation fixtures: `docs/P5_BATCH_02_VALIDATION_FIXTURES.yaml`  
+Shared-surface fixtures: `docs/P5_BATCH_03_REPRESENTATIVE_EVENTS.yaml`  
+Executable validator: `tools/validate_p5_contract.py`  
+Determinism fixture check: `tools/check_p5_rng_fixture.py`  
+CI: `.github/workflows/p5-contract-validation.yml`
 
-Frozen foundation results:
+Strict exit results:
 
 ```text
 contract_version == p5-event-contract-v1
-semantic_fixture_count == 6
-run_seed_bytes == 16
-eligibility_rng_draw_count == 0
-unbiased_bounded_draw_uses_rejection_sampling == true
-one_global_mutable_rng_cursor == false
-pending_roll_can_reroll_after_reload == false
-direct_upstream_raw_state_write_allowed == false
+json_schema_count == 2
+json_schema_draft == 2020-12
+p5_yaml_parse_count == 4
+P5V001_through_P5V018_positive_control_count == 18
+P5V001_through_P5V018_negative_failure_count == 18
+representative_normalized_event_count == 7
+frozen_rng_vector_count == 4
+frozen_rng_vector_recompute_match_count == 4
+pending_mid_choice_resume_valid == true
+pending_mid_roll_resume_valid == true
+pending_mid_reaction_resume_valid == true
+unknown_pending_schema_version_fails_closed == true
+discovery_entries_require_evidence == true
+insight_eligibility_rng_draw_count == 0
 unbounded_history_scan_required == false
+event_count_lookup_complexity == O(1)
 per_render_or_per_frame_event_scanning == false
+p2_world_typed_mutation_gap_count == 0
 p3_contradiction_count == 0
 p4_contradiction_count == 0
-blocking_human_design_gate_count == 0
+zero_companion_run_blocker_count == 0
+blocking_p5_human_design_gate_count == 0
 ```
 
-Foundation decisions:
-
-- authoritative randomness uses stable keyed `SHA-256` counter-derived streams rather than one opaque mutable global cursor;
-- event selection uses RNG-free eligibility, stable `event_id` ordering, integer weight points and rejection-sampled bounded draws;
-- already-selected/rolled events persist as `PendingEventInstance`, preventing reload/reopen from rerolling or reselecting;
-- P5 content may directly write only P5-owned narrative/event state; P2/P3/P4 mutations go through typed registered domain commands;
-- event eligibility is trigger-indexed and evaluated only on explicit committed transitions/chain continuation;
-- event counts + last-transition indexes are O(1), while recent anti-repeat history is a bounded ring (`<=64`);
-- debug traces and player-safe traces are separate so hidden conditions/weights/state are not leaked through presentation;
-- D-034 chronology anomalies are exceptional stateful authored events, never routine ecology or a reusable time-travel system.
-
-The six fixed foundation fixtures cover:
-
-1. ordinary peaceful weighted interaction;
-2. hazardous P3 check + legal emergency reaction;
-3. rare D-034 Mew living direct encounter;
-4. Porygon chronology anomaly without origin rewrite;
-5. companion-aware branch with explicit `0/3` parity;
-6. structurally invalid approach with zero RNG consumption.
-
-## P5 Batch 02 — COMPLETE
-
-Normalized production schema: `docs/P5_NORMALIZED_EVENT_SCHEMA.json`  
-Pending-event semantic schema: `docs/P5_PENDING_EVENT_STATE_SCHEMA.json`  
-Semantic/domain adapter registry: `docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml`  
-Validation fixtures: `docs/P5_BATCH_02_VALIDATION_FIXTURES.yaml`  
-Batch audit: `docs/P5_BATCH_02_AUDIT.md`
-
-Frozen Batch 02 results:
+D-035 shared-world proof on one schema/registry surface:
 
 ```text
-json_schema_draft == 2020-12
-normalized_event_required_shape_frozen == true
-canonical_digest_input_frozen == true
-runtime_storage_layout_frozen_early == false
-semantic_read_registry_uses_storage_paths == false
-pure_predicates_consume_rng == false
-unknown_domain_command_rejected == true
-all_effects_prevalidated_before_first_write == true
-P5V001_through_P5V018_machine_case_count == 18
-new_duplicate_validation_id_count == 0
-pending_schema_version == p5-pending-v1
-silent_mid_event_reroll_after_reload == false
-silent_mid_event_reselection_after_reload == false
-unbounded_chain_cycle_allowed == false
-cooldown_uses_wall_clock == false
-insight_eligibility_consumes_rng == false
-independent_rng_channels_preserved == true
-generic_evolution_command_exists == false
-generic_capture_or_containment_command_exists == false
-generic_loot_command_exists == false
-p4_all_151_direct_encounter_authoring_contract_preserved == true
-blocking_human_design_gate_count == 0
+human_social_non_pokemon_immediate_cause_event_count == 1
+survival_environment_event_count == 1
+persistent_faction_chain_step_count == 2
+pokemon_ecology_direct_event_count == 1
+mixed_human_pokemon_event_count == 1
+d034_exceptional_path_event_count == 1
+check_reaction_event_count == 1
+bespoke_engine_path_count == 0
+p2_raw_write_count == 0
 ```
 
-P3/P4 adapter coverage now includes:
+Typed P2 world transitions frozen for downstream event implementation:
 
-- P3 check binding, survival/injury, notable inventory + three pooled resources, progression, rare Gifts and D-030 emergency-item consequence mitigation;
-- P4 species identity/profile/capability/hazard reads, direct/exceptional encounter recording and voluntary physical companionship transitions;
-- explicit rejection of raw upstream setters, generic capture/containment, generic evolution, generic loot and generic stacking companion modifiers.
+```text
+p2.world.commit_route_state
+p2.world.record_local_knowledge
+p2.world.grant_permission
+p2.world.revoke_permission
+p2.world.commit_relationship_state
+p2.world.commit_setting_flag_state
+```
 
-Boundary fixtures now pin bounded/unbounded chain behavior, transition-sequence cooldowns, bounded recent history, evidence-bounded discoveries, keyed RNG-channel independence and mid-reaction reload behavior.
+Strict Batch 03 also found and resolved three real contract defects before closure:
 
-P5 is **not** closed by this batch. The issue exit condition still requires a strict whole-surface audit before P6 can begin.
+1. the Batch 02 mid-reaction pending fixture did not conform to the frozen pending schema;
+2. D-035 exposed a missing typed P2/world mutation surface;
+3. the YAML semantic-ref regex was over-escaped and rejected valid semantic refs.
+
+The final P5 CI reruns the schemas/registry/fixtures plus fixed `p5-rng-v1` vectors and discovery evidence boundary. Result: **PASS**.
+
+## Current phase
+
+**P6 — Resource and asset strategy, sourcing, provenance, and mobile budget (#12) is active.**
+
+P6 goal: convert the finished P2-P5 design into an exact production resource contract **before** P7 chooses the runtime/application architecture.
+
+P6 must freeze:
+
+- required / optional / deferred asset inventory;
+- selected source or production method per asset class;
+- provenance, license, Pokémon-IP and redistribution classification;
+- public-repository inclusion vs build-time fetch/generation policy;
+- stable resource IDs and manifest design;
+- preprocessing/normalization/validation rules;
+- fallback behavior;
+- mobile payload, decoded-memory, audio, preload/cache/eviction budgets;
+- explicit constraints handed to P7.
+
+P6 must **not**:
+
+- assume fan-project/public-repository status grants redistribution rights;
+- commit large Pokémon/third-party asset corpora before rights/provenance classification;
+- choose the application framework or save/runtime architecture;
+- default to runtime resize/reconversion/reparsing when build-time normalization can remove it;
+- duplicate loaded/downloaded resources when stable IDs + caching can reuse them;
+- invent material art direction or illustration-density choices when several valid product directions remain — raise a Human Design Gate instead.
 
 ## Exact next work
 
-Continue **P5 Batch 03 — strict exit-readiness audit**:
+Start **P6 Batch 01 — resource requirements matrix + source refresh**:
 
-1. parse/structurally validate both Batch 02 JSON Schemas and all YAML fixture/registry artifacts;
-2. cross-audit every schema semantic ref, predicate and command against the closed registry, including duplicate/unknown-key detection;
-3. instantiate at least one normalized representative event through schema + registry checks for direct, check/reaction and D-034 exceptional paths without creating production lore;
-4. prove every `P5V001..P5V018` negative fixture fails at the intended validator layer and every positive control passes;
-5. cross-check pending-event mid-choice/mid-roll/mid-reaction resume cases against the frozen phase requirements and migration rules;
-6. re-audit chain/cooldown/history complexity and keyed RNG independence for implementation readiness;
-7. run a strict P3/P4 contradiction audit against the full frozen P5 surface, including `0/3` viability and D-034 `151/151` direct-encounter preservation;
-8. produce `docs/P5_EXIT_AUDIT.md`; close issue #6 only if all P5 exit conditions pass with no unresolved schema/adapter gap;
-9. if the strict audit passes, update `PROJECT_STATUS.md` to unblock P6 (#12); otherwise keep P5 active and list only the concrete blockers.
+1. derive a required/optional/deferred asset-class inventory directly from P2-P5 presentation/gameplay needs before choosing sources;
+2. reopen `docs/P1_RESOURCE_ECOSYSTEM_RECON.md` and `docs/SOURCE_REGISTRY.md`, then refresh only the explicit P6 candidates against current primary sources rather than doing another broad discovery sweep;
+3. evaluate Pokémon visuals first (`PokéAPI sprites` vs `PokéSprite` vs deliberate omission/project-created presentation), separating technical convenience from redistribution rights;
+4. separately classify Pokémon cries, fonts (`Pretendard`, `Noto Sans CJK/Korean`), generic UI icons (`Lucide`, `Material Symbols`, project-owned SVG/CSS), Kenney packs, individually classified Freesound/OpenGameArt candidates, and project-created/generated resources;
+5. create `docs/RESOURCE_STRATEGY.md` with a versioned provenance/resource-manifest schema that records stable resource ID, source, rights holder/author, license/IP boundary, exact version/hash, redistribution mode, preprocessing recipe and fallback policy;
+6. establish an evidence-backed budget methodology for initial payload, decoded image memory, audio memory/streaming, per-region preload and cache lifetime; do not invent final numeric targets without measured candidate assets;
+7. prefer source pinning + build-time normalization + cached runtime lookup; avoid runtime resize/reparse and duplicate resource instances/downloads;
+8. if exact art style, sprite family, background illustration density or comparable presentation choice cannot be resolved objectively from the frozen product needs, stop only at the smallest P6 Human Design Gate and present 2–4 concrete options with a recommendation;
+9. leave P7 (#7) blocked until P6 exit passes.
 
-D-035 adds one mandatory exit-readiness proof: the same normalized surface must represent without bespoke engine paths:
+Primary P1 revisit list:
 
-1. a human/social event whose immediate cause is not Pokémon;
-2. a survival/environmental event;
-3. a multi-step relationship or faction-linked chain;
-4. a Pokémon ecological/direct-interaction event;
-5. a mixed human/Pokémon event;
-6. typed owner-domain mutation for the relationship/faction/world state needed by those fixtures rather than raw upstream writes.
+```text
+Pokemon visuals: PokéAPI sprites, PokéSprite
+Pokemon cries:   PokéAPI cries
+Fonts:            Pretendard, Noto Sans CJK/Korean
+Generic UI:       Lucide, Material Symbols, project-owned SVG/CSS
+Generic packs:    Kenney individual packs
+Ambience/SFX:     Freesound individual classified assets only
+General art/audio: OpenGameArt individual classified assets only
+Alternative:      project-created/generated resources with retained provenance
+```
 
-If the frozen registry lacks required P2/world-domain mutation commands for these representative events, that is a **real P5 blocker** and must be fixed before issue #6 closes.
-
-Do **not** begin P6/P7 until the strict P5 exit audit passes.
+Do **not** begin P7 before P6 closes.
 
 ## Later roadmap
 
@@ -220,7 +196,7 @@ Do **not** begin P6/P7 until the strict P5 exit audit passes.
 
 P8 must prove a mixed world loop: settlement/social pressure + travel/survival + persistent faction/relationship thread + Pokémon ecology/direct interaction, while preserving a complete `0/3` path.
 
-P9 is **Full World Content + Factions + complete Gen-I realization**. Its exit requires both:
+P9 exit still requires both:
 
 ```text
 world_content_breadth_audit == PASS

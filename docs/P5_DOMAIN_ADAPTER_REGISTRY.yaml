@@ -1,6 +1,6 @@
 registry_format_version: p5-adapter-registry-v1
 contract_version: p5-event-contract-v1
-status: frozen-for-batch-02
+status: frozen-for-batch-03-exit
 
 rules:
   runtime_storage_paths_are_semantic_refs: false
@@ -160,6 +160,12 @@ pure_predicates:
   - id: p2.world.has_local_knowledge
     reads: [p2.world.local_knowledge]
     args: { knowledge_ref: stable_ref }
+  - id: p2.world.relationship_state_is
+    reads: [p2.world.relationship]
+    args: { relationship_ref: stable_ref, state_id: stable_ref }
+  - id: p2.world.setting_flag_state_is
+    reads: [p2.world.setting_flag]
+    args: { flag_id: stable_ref, state_id: stable_ref }
   - id: p3.inventory.has_notable_item
     reads: [p3.inventory.notable_item]
     args: { item_id: stable_ref, minimum_count: nonnegative_integer }
@@ -233,6 +239,34 @@ check_adapter:
     - blocked_action_never_calls_check_adapter
 
 commands:
+  # P2 world state. These are authored semantic transitions, never raw storage setters.
+  # P2 explicitly delegates route/event state schema details to P5 while requiring locality-sensitive
+  # knowledge, reputation/relationships, permissions and route accessibility to drive content.
+  - id: p2.world.commit_route_state
+    owner: P2
+    args: { route_ref: stable_ref, state_id: stable_ref, cause_id: stable_ref }
+    invariants: [authored_transition_only, event_driven_not_per_frame, no_raw_storage_path]
+  - id: p2.world.record_local_knowledge
+    owner: P2
+    args: { knowledge_ref: stable_ref, source_id: stable_ref }
+    invariants: [evidence_or_authored_source_required, no_omniscient_region_knowledge, no_raw_storage_path]
+  - id: p2.world.grant_permission
+    owner: P2
+    args: { permission_ref: stable_ref, source_id: stable_ref }
+    invariants: [authored_transition_only, no_regionwide_authority_inference, no_raw_storage_path]
+  - id: p2.world.revoke_permission
+    owner: P2
+    args: { permission_ref: stable_ref, reason_id: stable_ref }
+    invariants: [authored_transition_only, no_regionwide_authority_inference, no_raw_storage_path]
+  - id: p2.world.commit_relationship_state
+    owner: P2
+    args: { relationship_ref: stable_ref, state_id: stable_ref, cause_id: stable_ref }
+    invariants: [authored_transition_only, no_universal_morality_meter, no_raw_storage_path]
+  - id: p2.world.commit_setting_flag_state
+    owner: P2
+    args: { flag_id: stable_ref, state_id: stable_ref, cause_id: stable_ref }
+    invariants: [authored_transition_only, setting_contract_must_allow_state, no_raw_storage_path]
+
   # P3 survival / injury.
   - id: p3.survival.apply_vitality_loss
     owner: P3
@@ -333,7 +367,7 @@ commands:
 
 argument_types:
   stable_ref: { type: string, pattern: '^[a-z0-9][a-z0-9._-]{0,63}$' }
-  semantic_ref: { type: string, pattern: '^(p2|p3|p4|p5|content)\\.[a-z0-9][a-z0-9._:-]{0,126}$' }
+  semantic_ref: { type: string, pattern: '^(p2|p3|p4|p5|content)\.[a-z0-9][a-z0-9._:-]{0,126}$' }
   stable_ref_array: { type: array, item_type: stable_ref, max_items: 32 }
   semantic_ref_array: { type: array, item_type: semantic_ref, max_items: 32 }
   stable_ref_map: { type: map, key_type: stable_ref, value_type: stable_ref, max_items: 16 }

@@ -1,0 +1,270 @@
+fixture_format_version: p5-batch03-representative-events-v1
+contract_version: p5-event-contract-v1
+schema_ref: docs/P5_NORMALIZED_EVENT_SCHEMA.json
+registry_ref: docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml
+production_lore: false
+
+# These are schema/semantic fixtures only. They prove that one P5 surface can represent
+# D-035 world-content categories and the pre-existing direct/check/reaction/D-034 paths.
+events:
+  - event_id: fixture.human.social.obligation
+    content_revision: 1
+    tags: [fixture, human_social, non_pokemon_immediate_cause]
+    triggers: [location_entered]
+    reads: [p2.world.relationship]
+    writes: []
+    domain_commands: [p2.world.commit_relationship_state]
+    eligibility:
+      predicate_id: p2.world.relationship_state_is
+      args: { relationship_ref: fixture.relationship.household, state_id: fixture.state.obligation_open }
+    weight: { base_points: 10, modifiers: [] }
+    repeat_policy: { max_occurrences: 1 }
+    presentation_ref: content.presentation.fixture_human_social
+    choices:
+      - choice_id: accept_obligation
+        disclosure: public
+        resolution:
+          kind: direct
+          outcome_map: { direct: fixture.human.social.accepted }
+    outcomes:
+      - outcome_id: fixture.human.social.accepted
+        p5_effects: []
+        domain_commands:
+          - command_id: p2.world.commit_relationship_state
+            args:
+              relationship_ref: fixture.relationship.household
+              state_id: fixture.state.obligation_accepted
+              cause_id: fixture.cause.accepted_request
+        enqueue_chain_steps: []
+        post_commit_triggers: [event_resolved]
+
+  - event_id: fixture.survival.route_failure
+    content_revision: 1
+    tags: [fixture, survival_environment, check_reaction]
+    triggers: [travel_step_committed]
+    reads: [p2.world.route_state, p3.character.attribute, p3.character.competence, p3.survival.fatigue_stage]
+    writes: []
+    domain_commands: [p2.world.commit_route_state, p3.survival.advance_fatigue, p3.emergency.consume_and_mitigate]
+    eligibility:
+      predicate_id: p2.world.route_state_is
+      args: { route_ref: fixture.route.crossing, state_id: fixture.state.weather_damaged }
+    weight: { base_points: 10, modifiers: [] }
+    repeat_policy: { cooldown_after_transitions: 4 }
+    presentation_ref: content.presentation.fixture_survival
+    choices:
+      - choice_id: attempt_crossing
+        disclosure: public
+        reaction_window:
+          window_id: fixture.window.crossing_reaction
+          legal_operation_ids: [p3.emergency.consume_and_mitigate]
+        resolution:
+          kind: check
+          check:
+            check_id: fixture.check.crossing
+            governing_attribute_ref: p3.character.attribute
+            competence_ref: p3.character.competence
+            context_components: [p3.survival.fatigue_stage]
+            static_difficulty: 9
+          outcome_map:
+            setback: fixture.survival.setback
+            costly_partial: fixture.survival.costly_partial
+            full: fixture.survival.full
+            exceptional: fixture.survival.exceptional
+    outcomes:
+      - outcome_id: fixture.survival.setback
+        p5_effects: []
+        domain_commands:
+          - command_id: p3.survival.advance_fatigue
+            args: { steps: 1, cause_id: fixture.cause.failed_crossing }
+          - command_id: p2.world.commit_route_state
+            args: { route_ref: fixture.route.crossing, state_id: fixture.state.impassable, cause_id: fixture.cause.failed_crossing }
+        enqueue_chain_steps: []
+        post_commit_triggers: [event_resolved]
+      - outcome_id: fixture.survival.costly_partial
+        p5_effects: []
+        domain_commands:
+          - command_id: p3.survival.advance_fatigue
+            args: { steps: 1, cause_id: fixture.cause.difficult_crossing }
+        enqueue_chain_steps: []
+        post_commit_triggers: [event_resolved]
+      - outcome_id: fixture.survival.full
+        p5_effects: []
+        domain_commands:
+          - command_id: p2.world.commit_route_state
+            args: { route_ref: fixture.route.crossing, state_id: fixture.state.passable, cause_id: fixture.cause.safe_crossing }
+        enqueue_chain_steps: []
+        post_commit_triggers: [event_resolved]
+      - outcome_id: fixture.survival.exceptional
+        p5_effects: []
+        domain_commands:
+          - command_id: p2.world.commit_route_state
+            args: { route_ref: fixture.route.crossing, state_id: fixture.state.passable, cause_id: fixture.cause.safe_crossing }
+        enqueue_chain_steps: []
+        post_commit_triggers: [event_resolved]
+
+  - event_id: fixture.faction.chain.entry
+    content_revision: 1
+    tags: [fixture, faction, relationship_chain]
+    triggers: [event_chain_advanced]
+    reads: [p2.world.relationship, p2.world.permission]
+    writes: []
+    domain_commands: [p2.world.commit_relationship_state, p2.world.grant_permission]
+    eligibility:
+      predicate_id: p2.world.relationship_state_is
+      args: { relationship_ref: fixture.relationship.network, state_id: fixture.state.neutral }
+    weight: { base_points: 10, modifiers: [] }
+    repeat_policy: { max_occurrences: 1 }
+    chain_membership: { chain_id: fixture.chain.network, chain_step_id: fixture.step.entry }
+    presentation_ref: content.presentation.fixture_faction_entry
+    choices:
+      - choice_id: honor_local_request
+        disclosure: public
+        resolution:
+          kind: direct
+          outcome_map: { direct: fixture.faction.entry.resolved }
+    outcomes:
+      - outcome_id: fixture.faction.entry.resolved
+        p5_effects: []
+        domain_commands:
+          - command_id: p2.world.commit_relationship_state
+            args: { relationship_ref: fixture.relationship.network, state_id: fixture.state.trusted, cause_id: fixture.cause.honored_request }
+          - command_id: p2.world.grant_permission
+            args: { permission_ref: fixture.permission.network_route, source_id: fixture.source.network_trust }
+        enqueue_chain_steps:
+          - { chain_id: fixture.chain.network, chain_step_id: fixture.step.followup }
+        post_commit_triggers: [event_chain_advanced]
+
+  - event_id: fixture.faction.chain.followup
+    content_revision: 1
+    tags: [fixture, faction, relationship_chain]
+    triggers: [event_chain_advanced]
+    reads: [p2.world.relationship, p2.world.permission, p2.world.local_knowledge]
+    writes: []
+    domain_commands: [p2.world.record_local_knowledge]
+    eligibility:
+      all:
+        - predicate_id: p2.world.relationship_state_is
+          args: { relationship_ref: fixture.relationship.network, state_id: fixture.state.trusted }
+        - predicate_id: p2.world.has_permission
+          args: { permission_ref: fixture.permission.network_route }
+    weight: { base_points: 10, modifiers: [] }
+    repeat_policy: { max_occurrences: 1 }
+    chain_membership: { chain_id: fixture.chain.network, chain_step_id: fixture.step.followup }
+    presentation_ref: content.presentation.fixture_faction_followup
+    choices:
+      - choice_id: receive_route_warning
+        disclosure: public
+        resolution:
+          kind: direct
+          outcome_map: { direct: fixture.faction.followup.resolved }
+    outcomes:
+      - outcome_id: fixture.faction.followup.resolved
+        p5_effects: []
+        domain_commands:
+          - command_id: p2.world.record_local_knowledge
+            args: { knowledge_ref: fixture.knowledge.route_warning, source_id: fixture.source.network_warning }
+        enqueue_chain_steps: []
+        post_commit_triggers: [knowledge_changed, event_resolved]
+
+  - event_id: fixture.pokemon.direct.interaction
+    content_revision: 1
+    tags: [fixture, pokemon_ecology, direct_interaction]
+    triggers: [location_entered]
+    reads: [p4.encounter.direct_route_eligibility]
+    writes: []
+    domain_commands: [p4.encounter.record_direct_interaction]
+    eligibility:
+      predicate_id: p4.encounter.route_is_eligible
+      args: { species_id: 15, route_ref: fixture.route.habitat }
+    weight: { base_points: 10, modifiers: [] }
+    repeat_policy: { max_occurrences: 1 }
+    presentation_ref: content.presentation.fixture_pokemon_direct
+    choices:
+      - choice_id: observe_without_claiming
+        disclosure: public
+        resolution:
+          kind: direct
+          outcome_map: { direct: fixture.pokemon.direct.resolved }
+    outcomes:
+      - outcome_id: fixture.pokemon.direct.resolved
+        p5_effects: []
+        domain_commands:
+          - command_id: p4.encounter.record_direct_interaction
+            args: { species_id: 15, encounter_ref: fixture.encounter.direct, route_ref: fixture.route.habitat }
+        enqueue_chain_steps: []
+        post_commit_triggers: [event_resolved]
+
+  - event_id: fixture.mixed.route_dispute
+    content_revision: 1
+    tags: [fixture, mixed_world, human_pokemon]
+    triggers: [player_action_committed]
+    reads: [p2.world.relationship, p2.world.route_state, p4.species.capability_tag]
+    writes: []
+    domain_commands: [p2.world.commit_relationship_state, p2.world.commit_route_state, p4.species.record_identification_evidence]
+    eligibility:
+      all:
+        - predicate_id: p2.world.relationship_state_is
+          args: { relationship_ref: fixture.relationship.route_users, state_id: fixture.state.disputed }
+        - predicate_id: p4.species.has_capability
+          args: { species_id: 15, capability_id: fixture.capability.territorial_pressure }
+    weight: { base_points: 10, modifiers: [] }
+    repeat_policy: { max_occurrences: 1 }
+    presentation_ref: content.presentation.fixture_mixed
+    choices:
+      - choice_id: present_ecology_evidence
+        disclosure: public
+        resolution:
+          kind: direct
+          outcome_map: { direct: fixture.mixed.resolved }
+    outcomes:
+      - outcome_id: fixture.mixed.resolved
+        p5_effects: []
+        domain_commands:
+          - command_id: p4.species.record_identification_evidence
+            args: { species_id: 15, evidence_ref: fixture.evidence.route_signs, knowledge_scope: fixture.scope.local }
+          - command_id: p2.world.commit_relationship_state
+            args: { relationship_ref: fixture.relationship.route_users, state_id: fixture.state.cooperating, cause_id: fixture.cause.shared_evidence }
+          - command_id: p2.world.commit_route_state
+            args: { route_ref: fixture.route.habitat, state_id: fixture.state.detour_agreed, cause_id: fixture.cause.shared_evidence }
+        enqueue_chain_steps: []
+        post_commit_triggers: [knowledge_changed, event_resolved]
+
+  - event_id: fixture.d034.exceptional.chronology
+    content_revision: 1
+    tags: [fixture, d034_direct, chronology_anomaly]
+    triggers: [event_chain_advanced]
+    reads: [p4.chronology.anomaly_flag]
+    writes: []
+    domain_commands: [p4.encounter.record_exceptional_chronology_interaction]
+    eligibility:
+      predicate_id: p4.chronology.anomaly_flag_is
+      args: { flag_id: fixture.flag.anomaly_armed, value: true }
+    weight: { base_points: 1, modifiers: [] }
+    repeat_policy: { max_occurrences: 1 }
+    presentation_ref: content.presentation.fixture_d034_exceptional
+    choices:
+      - choice_id: observe_anomaly_without_origin_claim
+        disclosure: public
+        resolution:
+          kind: direct
+          outcome_map: { direct: fixture.d034.exceptional.resolved }
+    outcomes:
+      - outcome_id: fixture.d034.exceptional.resolved
+        p5_effects: []
+        domain_commands:
+          - command_id: p4.encounter.record_exceptional_chronology_interaction
+            args: { species_id: 137, encounter_ref: fixture.encounter.chronology, anomaly_ref: fixture.anomaly.displacement }
+        enqueue_chain_steps: []
+        post_commit_triggers: [event_resolved]
+
+acceptance:
+  human_social_non_pokemon_immediate_cause_event_count: 1
+  survival_environment_event_count: 1
+  persistent_faction_chain_step_count: 2
+  pokemon_ecology_direct_event_count: 1
+  mixed_human_pokemon_event_count: 1
+  d034_exceptional_path_event_count: 1
+  check_reaction_event_count: 1
+  bespoke_engine_path_count: 0
+  p2_raw_write_count: 0
+  zero_companion_required_by_any_fixture: false
