@@ -1,13 +1,13 @@
 # P4 Species Coverage Manifest Audit
 
-Status: **PASS — Batch 18 promoted**  
+Status: **PASS — Batch 19 promoted**  
 Date: **2026-08-16**  
 Tracks: **#5**  
 Manifest: `docs/P4_SPECIES_COVERAGE_MANIFEST.yaml`
 
 ## Purpose
 
-This audit verifies the machine-readable #001-#151 coverage state after Batch 18 source review, six-species full-schema authoring, regression review, completion audit and atomic promotion.
+This audit verifies the machine-readable #001-#151 coverage state after Batch 19 source review, six-species full-schema authoring, regression review, completion audit and atomic promotion.
 
 ## Structural checks
 
@@ -25,9 +25,9 @@ Result: **PASS**.
 ## Current status counts
 
 ```text
-dossier_complete_count == 135
+dossier_complete_count == 141
 pilot_reviewed_count == 2
-not_started_count == 14
+not_started_count == 8
 draft_count == 0
 blocking_p4_gate_count == 0
 status_total == 151
@@ -39,77 +39,77 @@ Result: **PASS**.
 
 ## Prior-batch continuity check
 
-All 129 rows complete through Batch 17 remain complete. No earlier promotion was reverted.
+All 135 rows complete through Batch 18 remain complete. No earlier promotion was reverted.
 
 Result: **PASS**.
 
-## Batch 18 promotion check
+## Batch 19 promotion check
 
 Only these six previously `not_started` rows are newly promoted:
 
 ```text
-125 electabuzz complete B18-new p6_followup_required=true
-126 magmar     complete B18-new p6_followup_required=true
-138 omanyte    complete B18-new p6_followup_required=true
-139 omastar    complete B18-new p6_followup_required=true
-142 aerodactyl complete B18-new p6_followup_required=true
-143 snorlax    complete B18-new p6_followup_required=true
+086 seel     complete B19-new p6_followup_required=true
+087 dewgong  complete B19-new p6_followup_required=true
+116 horsea   complete B19-new p6_followup_required=true
+117 seadra   complete B19-new p6_followup_required=true
+118 goldeen  complete B19-new p6_followup_required=true
+119 seaking  complete B19-new p6_followup_required=true
 ```
 
 Result: **PASS**.
 
-## Batch 18 elemental physiology regression
+## Batch 19 water / cold / breathing regression
 
 ```text
-Electabuzz_constant_discharge_equals_continuous_damage_field == false
-Electabuzz_proximity_static_equals_automatic_paralysis == false
-Electabuzz_modern_grid_or_storage_research_equals_ancient_energy_institution == false
-Magmar_temperature_equals_continuous_heat_radius_or_damage_formula == false
-Magmar_body_flames_equal_automatic_ignition == false
-Magmar_lava_recovery_equals_total_lava_immunity_or_unlimited_regeneration == false
-Magmar_crater_birth_equals_confirmed_generic_elemental_cosmology == false
+Seel_ice_bashing_equals_universal_ice_destruction_or_mining == false
+Seel_cold_numeric_wording_equals_continuous_temperature_formula == false
+Seel_water_competence_equals_indefinite_underwater_breathing == false
+Dewgong_eight_knots_equals_turn_distance_fast_travel_or_auto_pursuit == false
+Dewgong_cold_adaptation_equals_universal_cold_or_Ice_immunity == false
+Dewgong_day_night_pattern_equals_real_time_scheduler == false
+Dewgong_snow_concealment_equals_permanent_invisibility == false
 ```
 
 Result: **PASS**.
 
-## Batch 18 fossil / chronology / D-034 regression
+## Batch 19 ink / poison / player-agency regression
 
 ```text
-Omanyte_Omastar_modern_restoration_equals_proto_kanto_technology == false
-Omanyte_Omastar_direct_encounterability == one_exceptionally_isolated_marine_relict_locality
-Omanyte_Omastar_ordinary_regional_abundance == false
-Aerodactyl_direct_encounterability == one_exceptionally_isolated_aerial_relict_locality_or_lineage
-Aerodactyl_single_individual_prehistoric_lifespan_required == false
-relict_presence_equals_time_travel_or_restoration == false
-project_authored_relict_localities_equal_franchise_canon == false
+Horsea_rapid_escape_equals_guaranteed_flee_or_free_reaction == false
+Horsea_ink_equals_automatic_blindness_input_loss_or_permanent_concealment == false
+Horsea_tail_anchoring_equals_generic_grapple_or_extra_action == false
+Seadra_poisonous_spines_equal_automatic_poison_on_touch_or_proximity == false
+Seadra_contact_fainting_wording_equals_forced_fainting_without_resolution == false
+Seadra_whirlpool_equals_automatic_forced_movement_boat_destruction_or_input_removal == false
+water_poison_ink_contact_hazards_preserve_warning_eligibility_counterplay_escape_and_player_input == true
 ```
 
 Result: **PASS**.
 
-## Batch 18 agency / action-economy regression
+## Batch 19 resource / ecology / terrain regression
 
 ```text
-Omanyte_ten_tentacles_equal_extra_actions == false
-Omanyte_shell_withdrawal_equals_invulnerability == false
-Omastar_tentacle_capture_equals_automatic_immobilization == false
-Omastar_restraint_preserves_warning_eligibility_counterplay_escape_and_player_input == true
-Omastar_multiple_tentacles_equal_extra_entities_turns_or_health_pools == false
-Aerodactyl_airborne_state_equals_extra_turn == false
+Seadra_medicinal_value_equals_guaranteed_cure_recipe_price_market_or_live_harvest == false
+Seadra_parental_care_equals_permanent_hostility == false
+Goldeen_five_knots_equals_turn_distance_initiative_or_world_travel_formula == false
+Goldeen_nonstop_wording_equals_infinite_stamina == false
+Goldeen_waterfall_ascent_equals_universal_traversal_permission == false
+Goldeen_glass_breaking_equals_universal_material_destruction == false
+Seaking_horn_boring_equals_generic_mining_or_arbitrary_terrain_deletion == false
+Seaking_seasonal_ecology_equals_continuous_breeding_population_or_fertility_simulation == false
+Seaking_nest_defense_equals_automatic_combat_or_access_denial == false
+```
+
+Result: **PASS**.
+
+## Action-economy / entity regression
+
+```text
 all_six_one_Pokemon_one_ordinary_turn_one_health_state_one_initiative_presence == true
-```
-
-Result: **PASS**.
-
-## Batch 18 flight / resource / immunity regression
-
-```text
-Aerodactyl_airborne_and_grounded_authored_states == true
-Aerodactyl_Speed_6_equals_auto_initiative_or_unrestricted_fast_travel == false
-Aerodactyl_flight_equals_safe_passenger_transport == false
-Snorlax_food_mass_equals_continuous_calorie_inventory_or_economy_ledger == false
-Snorlax_digestive_resilience_equals_universal_toxin_disease_or_status_immunity == false
-Snorlax_Hisui_granary_disaster_equals_automatic_proto_kanto_settlement_targeting == false
-Snorlax_sleep_equals_invulnerability_or_forced_time_skip == false
+all_six_one_visible_companion_slot_per_individual == true
+Horsea_fins_or_tail_equal_extra_actions == false
+Seadra_multiple_spines_equal_extra_actions_entities_or_health_pools == false
+Goldeen_or_Seaking_horns_equal_detachable_weapon_entities == false
 ```
 
 Result: **PASS**.
@@ -117,11 +117,14 @@ Result: **PASS**.
 ## Runtime boundary regression
 
 ```text
-continuous_electrical_field_simulation_created == false
-continuous_heat_or_thermodynamic_simulation_created == false
-continuous_buoyancy_tentacle_or_shell_physics_created == false
-continuous_flight_physics_created == false
-continuous_calorie_economy_or_hunger_pathfinding_created == false
+continuous_fluid_or_current_simulation_created == false
+continuous_temperature_simulation_created == false
+continuous_oxygen_simulation_created == false
+continuous_ink_field_simulation_created == false
+continuous_poison_proximity_scanning_created == false
+continuous_breeding_or_population_simulation_created == false
+continuous_resource_market_simulation_created == false
+per_appendage_entity_or_turn_created == false
 per_frame_species_rule_scanning_created == false
 cached_authored_or_discrete_state_lookup_preferred_for_later_runtime == true
 ```
@@ -131,20 +134,40 @@ Result: **PASS**.
 ## Evolution / provenance checks
 
 ```text
-Elekid_Electivire_Magby_Magmortar_Munchlax_expand_mandatory_Gen1_roster == false
-Mega_Aerodactyl_implies_Mega_Evolution_access == false
-Octillery_ancestry_context_expands_mandatory_roster == false
+Kingdra_expands_mandatory_Gen1_roster == false
+Dragon_Scale_context_equals_ancient_item_availability_or_trade_evolution_institution == false
 modern_ability_names_equal_ancient_rules_or_vocabulary == false
-modern_power_research_fossil_DNA_restoration_or_Hisui_examples_equal_proto_kanto_institutions == false
+Water_Dancer_or_Water_Queen_equals_human_profession_or_institution == false
+historical_cell_gene_wording_equals_ancient_genetics_technology == false
 ```
 
 Result: **PASS**.
 
-## P6 follow-up audit
+## D-034 / P6 follow-up audit
 
-All six Batch 18 rows explicitly set `p6_followup_required: true` for charge/static readability, heat/fire exposure, fossil/relict rarity, shell/restraint counterplay, airborne/grounded flight-state readability, and sleep/feeding/resource-event presentation.
+```text
+all_six_directly_encounterable_somewhere == true
+direct_encounterable_equals_common_everywhere == false
+direct_encounterable_equals_ordinary_companionship == false
+aquatic_habitat_fit_equals_guaranteed_presence_in_every_water_zone == false
+seasonal_ecology_equals_real_world_calendar_lockout == false
+all_six_p6_followup_required == true
+```
 
 Result: **PASS**.
+
+## Remaining not-started rows
+
+```text
+023 ekans
+024 arbok
+060 poliwag
+061 poliwhirl
+062 poliwrath
+098 krabby
+099 kingler
+108 lickitung
+```
 
 ## Mutation rules preserved
 
@@ -164,16 +187,17 @@ blocking_p4_gate_count == 0
 ```text
 manifest_structure == PASS
 prior_batch_continuity == PASS
-Batch_18_status_promotion == PASS
+Batch_19_status_promotion == PASS
 status_count_arithmetic == PASS
-P6_followup_explicitness == PASS
-elemental_physiology_regression == PASS
-fossil_chronology_D034_regression == PASS
-agency_action_economy_regression == PASS
-flight_resource_immunity_regression == PASS
+water_cold_breathing_regression == PASS
+ink_poison_player_agency_regression == PASS
+resource_ecology_terrain_regression == PASS
+action_economy_entity_regression == PASS
 runtime_boundary_regression == PASS
 evolution_provenance_regression == PASS
+D034_encounterability_regression == PASS
+P6_followup_explicitness == PASS
 blocking_p4_gate_count == 0
 ```
 
-Batch 18 manifest promotion is complete. P4 remains active at `135 complete / 2 pilot_reviewed / 14 not_started`.
+Batch 19 manifest promotion is complete. P4 remains active at `141 complete / 2 pilot_reviewed / 8 not_started`.
