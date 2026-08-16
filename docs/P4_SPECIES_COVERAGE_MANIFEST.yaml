@@ -192,7 +192,7 @@ species:
   - {national_dex: 128, species_key: tauros, dossier_status: complete, authoring_batch: B06-new, p6_followup_required: true}
   - {national_dex: 129, species_key: magikarp, dossier_status: complete, authoring_batch: B01-new, p6_followup_required: false}
   - {national_dex: 130, species_key: gyarados, dossier_status: complete, authoring_batch: B01-anchor, p6_followup_required: true}
-  - {national_dex: 131, species_key: lapras, dossier_status: pilot_reviewed, authoring_batch: pilot, p6_followup_required: true}
+  - {national_dex: 131, species_key: lapras, dossier_status: complete, authoring_batch: FINAL-pilot-promotion, p6_followup_required: true}
   - {national_dex: 132, species_key: ditto, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 133, species_key: eevee, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
   - {national_dex: 134, species_key: vaporeon, dossier_status: complete, authoring_batch: B03-new, p6_followup_required: true}
@@ -212,4 +212,4 @@ species:
   - {national_dex: 148, species_key: dragonair, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
   - {national_dex: 149, species_key: dragonite, dossier_status: complete, authoring_batch: B07-new, p6_followup_required: true}
   - {national_dex: 150, species_key: mewtwo, dossier_status: complete, authoring_batch: B05-new, p6_followup_required: true}
-  - {national_dex: 151, species_key: mew, dossier_status: pilot_reviewed, authoring_batch: pilot, p6_followup_required: true}
+  - {national_dex: 151, species_key: mew, dossier_status: complete, authoring_batch: FINAL-pilot-promotion, p6_followup_required: true}
