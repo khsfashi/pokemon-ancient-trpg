@@ -16,8 +16,13 @@ This file is the concise operational handoff. Durable product authority remains 
 - Evolution is distinct from ordinary maturation; no kill-XP, visible character levels or generic evolution command.
 - Mandatory Generation-I roster is National Pokédex #001-#151.
 - D-034 requires all 151 to be directly encounterable somewhere in total content while baseline-era natural presence, commonness, companionship and one-run availability remain separate questions.
+- The world-content direction is **Pokémon-shaped society, not Pokémon-only events**: every major world structure must be materially shaped by Pokémon existence, while individual events may have genuinely human or environmental immediate causes.
+- P9 full content must include substantive ordinary human/social, survival, exploration/mystery, relationship, faction, mixed-world and Pokémon content; several recurring major factions are required, with a current planning target of roughly 4–6 faction lanes.
+- Major factions must arise from Pokémon ecology/capability/sacredness/knowledge/exploitation/protection/coexistence/anomaly or another approved Pokémon-world causal bridge rather than generic medieval organizations with Pokémon decoration.
 - `p5-event-contract-v1` pins the P5 deterministic foundation: discrete trigger evaluation, stable event IDs, keyed deterministic RNG streams, pending-event reload safety and typed upstream state ownership.
 - P5 Batch 02 freezes the normalized production JSON Schema, pending-event semantic schema, semantic read/predicate registry, typed P3/P4 adapter registry and machine-readable `P5V001..P5V018` validation cases without selecting a P7 storage/runtime stack.
+
+World/faction contract: `docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md`
 
 ## Completed phases
 
@@ -63,9 +68,9 @@ Binding final P4 conclusions that P5 must preserve:
 
 **P5 — Narrative event engine and seeded run model (#6) is active.**
 
-P5 goal: specify the deterministic data-driven content engine that turns state, conditions, choices, checks and consequences into a replayable text-RPG run.
+P5 goal: specify the deterministic data-driven **world-event engine** that turns state, conditions, choices, checks and consequences into a replayable text-RPG run.
 
-Binding P5 issue scope:
+Binding P5 issue scope now includes:
 
 - event definitions and weighted eligibility;
 - conditions and hidden/visible choices;
@@ -74,7 +79,12 @@ Binding P5 issue scope:
 - random insight/discovery mechanics;
 - seeded RNG plus replay/debug trace;
 - event-history and anti-repeat policies;
-- content validation rules.
+- content validation rules;
+- ordinary human/social and survival/environmental events;
+- persistent relationship/faction-linked chains;
+- Pokémon ecological/direct-interaction events;
+- mixed events where human motives and Pokémon ecology affect one another;
+- one shared event engine rather than separate faction/Pokémon/ordinary-event implementations.
 
 P5 constraints:
 
@@ -82,6 +92,8 @@ P5 constraints:
 same_saved_run_state_plus_same_action_is_reproducible_when_randomness_is_authoritative == true
 event_content_is_data_driven == true
 individual_story_events_hardcoded_in_engine == false
+separate_faction_event_engine_required == false
+separate_pokemon_event_engine_required == false
 per_render_or_per_frame_event_scanning == false
 evaluate_on_discrete_game_state_transitions == true
 ```
@@ -121,7 +133,7 @@ Foundation decisions:
 - debug traces and player-safe traces are separate so hidden conditions/weights/state are not leaked through presentation;
 - D-034 chronology anomalies are exceptional stateful authored events, never routine ecology or a reusable time-travel system.
 
-The six fixed fixtures cover:
+The six fixed foundation fixtures cover:
 
 1. ordinary peaceful weighted interaction;
 2. hazardous P3 check + legal emergency reaction;
@@ -130,7 +142,7 @@ The six fixed fixtures cover:
 5. companion-aware branch with explicit `0/3` parity;
 6. structurally invalid approach with zero RNG consumption.
 
-## P5 Batch 02 — COMPLETE on current scoped PR
+## P5 Batch 02 — COMPLETE
 
 Normalized production schema: `docs/P5_NORMALIZED_EVENT_SCHEMA.json`  
 Pending-event semantic schema: `docs/P5_PENDING_EVENT_STATE_SCHEMA.json`  
@@ -189,8 +201,32 @@ Continue **P5 Batch 03 — strict exit-readiness audit**:
 8. produce `docs/P5_EXIT_AUDIT.md`; close issue #6 only if all P5 exit conditions pass with no unresolved schema/adapter gap;
 9. if the strict audit passes, update `PROJECT_STATUS.md` to unblock P6 (#12); otherwise keep P5 active and list only the concrete blockers.
 
+D-035 adds one mandatory exit-readiness proof: the same normalized surface must represent without bespoke engine paths:
+
+1. a human/social event whose immediate cause is not Pokémon;
+2. a survival/environmental event;
+3. a multi-step relationship or faction-linked chain;
+4. a Pokémon ecological/direct-interaction event;
+5. a mixed human/Pokémon event;
+6. typed owner-domain mutation for the relationship/faction/world state needed by those fixtures rather than raw upstream writes.
+
+If the frozen registry lacks required P2/world-domain mutation commands for these representative events, that is a **real P5 blocker** and must be fixed before issue #6 closes.
+
 Do **not** begin P6/P7 until the strict P5 exit audit passes.
 
 ## Later roadmap
 
 `#1 P0 → #2 P1 → #3 P2 → #4 P3 → #5 P4 → #6 P5 → #12 P6 → #7 P7 → #8 P8 → #9 P9 → #10 P10`
+
+P8 must prove a mixed world loop: settlement/social pressure + travel/survival + persistent faction/relationship thread + Pokémon ecology/direct interaction, while preserving a complete `0/3` path.
+
+P9 is **Full World Content + Factions + complete Gen-I realization**. Its exit requires both:
+
+```text
+world_content_breadth_audit == PASS
+recurring_major_factions_realized == true
+major_faction_planning_target_range == 4..6
+major_factions_are_pokemon_shaped == true
+all_151_living_direct_interaction_paths == true
+indirect_presence_alone_satisfies_D034 == false
+```
