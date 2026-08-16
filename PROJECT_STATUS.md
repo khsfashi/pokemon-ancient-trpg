@@ -31,7 +31,7 @@ P3 Core TRPG rules/character model    COMPLETE
 
 P4 exit requires 151/151 substantive reviewed dossiers. Do not begin P5 before that audit passes.
 
-Current authoritative manifest state after Batch 17:
+Current authoritative manifest state after Batch 17, unchanged by the Batch 18 selection/source-review passes:
 
 ```text
 dossier_complete_count == 129
@@ -75,7 +75,7 @@ Batch 16   PASS
 Batch 17   PASS
 ```
 
-### P4 Batch 18 — SELECTED
+### P4 Batch 18 — SOURCE REVIEW COMPLETE
 
 Roster:
 
@@ -85,32 +85,50 @@ Roster:
 - #142 Aerodactyl
 - #143 Snorlax
 
-Primary selection output:
+Primary outputs:
 
 - `docs/P4_BATCH_18_ANCIENT_CHRONOLOGY_ELEMENTAL_PHYSIOLOGY_PLAN.md`
+- `docs/P4_BATCH_18_SOURCE_REVIEW.md`
 
-Why this batch now:
+Source-review conclusions:
 
-- Electabuzz stresses continuous-looking electrical physiology, lightning feeding and modern energy-storage research without creating a permanent electrical aura, automatic paralysis, power-grid assumptions or ancient batteries.
-- Magmar stresses extreme temperature wording, body flames, lava recovery and crater-birth legend without continuous heat propagation, universal ignition/lava immunity or a generic supernatural-origin rule.
-- Omanyte/Omastar stress deep-time fossil evidence, extinction/restoration wording and species-local predation/restraint without treating modern fossil revival as ancient technology or assuming ordinary living populations.
-- Aerodactyl stresses amber-DNA restoration, severe restoration-casualty evidence, ancient aerial ecology and grounded locomotion weakness without genetic resurrection infrastructure, permanent berserk behavior or unrestricted aerial traversal.
-- Snorlax stresses enormous food demand, unusual digestion, sleep/appetite state and village-granary disaster evidence without continuous calorie/economy simulation, universal poison immunity or automatic settlement destruction.
-- D-034 remains binding for the fossil species, but direct encounterability stays separate from commonness, stable breeding populations and baseline-era natural abundance.
-- fossil encounter interpretation should first seek the narrowest dossier-local exceptional locality/event/survival explanation; no time travel or resurrection institution is selected by this batch.
-- all six should remain representable through discrete authored encounter states, cached eligibility/state and event-triggered consequences; no continuous per-frame species simulation is required.
+- Electabuzz electrical discharge, static signs and storm/lightning feeding remain species-local physiology/ecology; modern power plants, blackout statistics, lightning-rod use and lightning-storage research do not establish proto-Kanto grids, batteries or energy markets.
+- Magmar's extreme temperature, body flames, vegetation ignition and lava recovery remain authored species-local hazard/recovery evidence; they do not require continuous heat propagation, real-world thermodynamics, universal ignition or total lava immunity. Current volcanic-birth wording is treated as legend despite stronger historical direct wording.
+- Omanyte/Omastar remain strongly ancient/extinct/restoration-scoped in later evidence. Modern fossil resurrection stays outside the ancient technology baseline, and Omastar restraint preserves ordinary player agency/action economy.
+- D-034 for Omanyte/Omastar is satisfied by one project-authored, exceptionally isolated marine relict locality with a tiny self-sustaining lineage; this does not imply ordinary coastal abundance, human restoration or time travel.
+- Aerodactyl restoration casualties establish severe threat without making every individual permanently berserk. D-034 is satisfied by one exceptionally isolated aerial relict locality/lineage, not ancient genetic technology or an unsupported single prehistoric individual's extreme lifespan.
+- Aerodactyl can use discrete authored `airborne` / `grounded` encounter states; aerial competence and weak/slow ground locomotion do not create unrestricted traversal, guaranteed initiative/pursuit or general flight physics.
+- Snorlax's nearly 900-pound daily food claim, digestive resilience and Hisui granary-disaster evidence support severe authored local resource pressure without a continuous calorie/economy ledger, universal poison immunity or automatic settlement targeting.
+- all six remain representable through cached/coarse state and event-triggered consequences; no continuous per-frame species simulation is required.
 
-Selection validation target:
+Deterministic `p4-six-axis-v1` profiles reproduce with zero manual exceptions:
 
 ```text
-selected_species_count == 6
-selected_species_all_not_started_on_main == true
-coverage_manifest_changed == false
-blocking_human_design_gate_count == 0
-next_step == batch18_claim_level_source_review
+Electabuzz 3/4/2/4/4/5
+Magmar     3/4/2/5/4/4
+Omanyte    1/2/5/4/2/1
+Omastar    3/3/6/5/3/2
+Aerodactyl 4/5/3/3/3/6
+Snorlax    6/5/3/3/5/1
 ```
 
-If all six later pass source review, full-schema authoring and completion audit, the expected manifest state becomes:
+Source-review validation:
+
+```text
+reviewed_species_count == 6
+current_official_species_pages_verified == 6
+pinned_species_records_reviewed == 6
+rating_profile_reproducible_count == 6
+manual_rating_exception_count == 0
+p2_contradiction_count == 0
+p3_contradiction_count == 0
+p4_contract_contradiction_count == 0
+blocking_human_design_gate_count == 0
+continuous_simulation_requirement_count == 0
+ready_for_full_schema_authoring == true
+```
+
+If all six now pass frozen-schema dossier authoring and the completion audit, the expected manifest state becomes:
 
 ```text
 dossier_complete_count == 135
@@ -118,11 +136,11 @@ pilot_reviewed_count == 2
 not_started_count == 14
 ```
 
-No manifest promotion is authorized by the selection pass itself.
+No manifest promotion is authorized by the source-review pass itself.
 
 ### Remaining P4 not-started roster
 
-The authoritative manifest remains unchanged during Batch 18 selection, so all 20 rows below are still `not_started` until a passing completion audit promotes the selected six:
+The authoritative manifest remains unchanged during Batch 18 source review, so all 20 rows below remain `not_started` until a passing Batch 18 completion audit promotes the selected six:
 
 ```text
 #023 Ekans       #024 Arbok
@@ -139,18 +157,18 @@ The authoritative manifest remains unchanged during Batch 18 selection, so all 2
 
 ## Exact next work
 
-Create the **P4 Batch 18 claim-level source review** for #125 Electabuzz, #126 Magmar, #138 Omanyte, #139 Omastar, #142 Aerodactyl and #143 Snorlax.
+Author the six **P4 Batch 18 frozen full-schema dossiers** for #125 Electabuzz, #126 Magmar, #138 Omanyte, #139 Omastar, #142 Aerodactyl and #143 Snorlax.
 
-The source review must:
+The authoring/completion pass must:
 
-1. inventory current and historically relevant version-tagged official evidence for electrical discharge/feeding, volcano/heat/lava claims, fossil/deep-time provenance, restoration, extinction wording, restraint/predation, flight/ground locomotion, appetite, sleep, digestion and settlement-resource consequences;
-2. classify observation, numerical claim, researcher interpretation, legend/hearsay, restoration-scoped behavior, historical/version-scoped wording, inference and project extrapolation separately;
-3. reproduce all six `p4-six-axis-v1` profiles from pinned `SRC-DATA-001` with zero hidden manual exceptions;
-4. preserve modern research, fossil/DNA restoration, Hisui settlement evidence and later-generation families/forms as provenance context rather than ancient institutions;
-5. resolve the narrowest chronology-safe D-034 encounterability interpretation for Omanyte, Omastar and Aerodactyl without promoting commonness or creating a generic resurrection/time-travel system;
-6. keep Electabuzz/Magmar/Snorlax extreme quantitative claims as species-local evidence and authored pressure rather than continuous electricity/heat/metabolism/economy formulas;
-7. run P2/P3/P4 contradiction, player-agency, one-entity/action-economy, chronology, D-034 separation and continuous-simulation requirement checks;
-8. leave the coverage manifest unchanged until all six full-schema dossiers and the Batch 18 completion audit pass.
+1. consume the claim-level provenance and reviewed deterministic profiles from `docs/P4_BATCH_18_SOURCE_REVIEW.md` without inventing stronger canon claims;
+2. preserve modern power/research, fossil/DNA restoration, Hisui settlement evidence and later-generation families/forms as provenance context rather than proto-Kanto institutions;
+3. encode Omanyte/Omastar direct encounterability as one exceptionally isolated marine relict locality/lineage and Aerodactyl as one exceptionally isolated aerial relict locality/lineage, keeping all exact geography/content details as project-authored rather than canon;
+4. preserve Electabuzz discharge/storm feeding, Magmar heat/lava behavior, Omastar restraint, Aerodactyl airborne/grounded locomotion and Snorlax appetite/sleep through discrete authored states/hooks rather than continuous simulation;
+5. preserve player agency, one Pokémon = one ordinary turn/health state/initiative presence/visible companion slot, D-034 encounterability-vs-abundance separation and no hidden player-relative scaling;
+6. create the Batch 18 dossier index/regression summary and completion audit;
+7. run frozen-schema completeness, deterministic-stat reproduction, provenance, P2/P3/P4 contradiction, chronology, D-034, player-agency and runtime-representation checks;
+8. promote exactly #125, #126, #138, #139, #142 and #143 from `not_started` to `complete` only if every completion-audit check passes.
 
 Do not begin P5 until the mandatory `151/151` P4 exit audit passes.
 
