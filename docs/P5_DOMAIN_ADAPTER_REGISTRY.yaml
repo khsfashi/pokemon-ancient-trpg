@@ -367,7 +367,7 @@ commands:
 
 argument_types:
   stable_ref: { type: string, pattern: '^[a-z0-9][a-z0-9._-]{0,63}$' }
-  semantic_ref: { type: string, pattern: '^(p2|p3|p4|p5|content)\\.[a-z0-9][a-z0-9._:-]{0,126}$' }
+  semantic_ref: { type: string, pattern: '^(p2|p3|p4|p5|content)\.[a-z0-9][a-z0-9._:-]{0,126}$' }
   stable_ref_array: { type: array, item_type: stable_ref, max_items: 32 }
   semantic_ref_array: { type: array, item_type: semantic_ref, max_items: 32 }
   stable_ref_map: { type: map, key_type: stable_ref, value_type: stable_ref, max_items: 16 }
