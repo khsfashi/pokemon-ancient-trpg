@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type { SaveEnvelopeV1Wire } from '../src/saves/saveEnvelope';
-import { importSaveJson, loadRuntimeEnvelope, saveRuntimeEnvelope, type SaveStore } from '../src/saves/saveStore';
+import {
+  exportSaveJson,
+  importSaveJson,
+  loadRuntimeEnvelope,
+  saveRuntimeEnvelope,
+  type SaveStore,
+} from '../src/saves/saveStore';
 import { saveEnvelopeV1ToWire } from '../src/saves/saveEnvelope';
 import { contentIdentity, envelopeWithPending, pendingAtChoice, pendingAtReaction, pendingAtRoll } from './saves.fixtures';
 
@@ -38,6 +44,29 @@ describe('atomic save/import and exact pending resume foundation', () => {
       expect(loaded?.pendingEventInstance?.completedRngDrawRecords).toEqual(pending.completedRngDrawRecords);
     });
   }
+
+  it('exports canonical wire JSON and imports it into another slot without precision loss', async () => {
+    const store = new MemorySaveStore();
+    const runtime = envelopeWithPending(pendingAtReaction());
+    await saveRuntimeEnvelope(store, 'slot-1', runtime);
+
+    const backup = await exportSaveJson(store, 'slot-1', contentIdentity);
+    expect(backup).not.toBeNull();
+    expect(backup?.endsWith('\n')).toBe(true);
+    expect(JSON.parse(backup ?? 'null')).toEqual(saveEnvelopeV1ToWire(runtime));
+
+    const imported = await importSaveJson(store, 'slot-2', backup ?? '', contentIdentity);
+    expect(imported).toEqual(runtime);
+    expect(await loadRuntimeEnvelope(store, 'slot-2', contentIdentity)).toEqual(runtime);
+    expect(imported.transitionSeq).toBe(18446744073709551614n);
+    expect(imported.pendingEventInstance?.originTransitionSeq).toBe(9007199254740993n);
+  });
+
+  it('returns null when exporting an empty slot', async () => {
+    const store = new MemorySaveStore();
+    await expect(exportSaveJson(store, 'missing-slot', contentIdentity)).resolves.toBeNull();
+    expect(store.replacementCount).toBe(0);
+  });
 
   it('validates import completely before one replacement and leaves prior slot intact on failure', async () => {
     const store = new MemorySaveStore();
