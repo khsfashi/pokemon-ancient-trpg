@@ -1,0 +1,38 @@
+name: P7 Architecture Validation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md'
+      - 'docs/P6_RESOURCE_BUDGET_AND_PIPELINE_CONTRACT.md'
+      - 'docs/P7_ARCHITECTURE_MANIFEST.json'
+      - 'docs/P7_TECHNICAL_ARCHITECTURE_CONTRACT.md'
+      - 'docs/P7_IMPLEMENTATION_SKELETON_PLAN.md'
+      - 'tools/validate_p7_architecture.py'
+      - '.github/workflows/p7-architecture-validation.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md'
+      - 'docs/P6_RESOURCE_BUDGET_AND_PIPELINE_CONTRACT.md'
+      - 'docs/P7_ARCHITECTURE_MANIFEST.json'
+      - 'docs/P7_TECHNICAL_ARCHITECTURE_CONTRACT.md'
+      - 'docs/P7_IMPLEMENTATION_SKELETON_PLAN.md'
+      - 'tools/validate_p7_architecture.py'
+      - '.github/workflows/p7-architecture-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate P7 architecture contract
+        run: python tools/validate_p7_architecture.py
