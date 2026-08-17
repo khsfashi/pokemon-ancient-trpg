@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
-  testMatch: 'p8-exit.spec.ts',
+  testMatch: ['p8-exit.spec.ts', 'p8-localization.spec.ts'],
   fullyParallel: false,
   workers: 1,
   reporter: 'line',
