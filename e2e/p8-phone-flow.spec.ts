@@ -1,5 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 
+const LOCALE_KEY = 'pokemon-ancient-trpg.locale.v1';
+const PLAYER_SURFACE_JARGON = /(?:P7|P8|IndexedDB|결정론|권위 상태|리소스 캐시|계약)/i;
+
 async function chooseFirstFormativeAnswer(page: Page): Promise<void> {
   await page.locator('button.choice').first().click();
 }
@@ -12,6 +15,73 @@ async function resolveCurrentScene(page: Page): Promise<void> {
 async function continueAfterConsequence(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
 }
+
+async function assertNoPlayerFacingEngineeringJargon(page: Page): Promise<void> {
+  const text = await page.locator('main').innerText();
+  expect(text).not.toMatch(PLAYER_SURFACE_JARGON);
+}
+
+async function assertGameSurfaceGeometry(page: Page): Promise<void> {
+  const geometry = await page.evaluate(() => {
+    const panel = document.querySelector<HTMLElement>('.panel');
+    const choices = [...document.querySelectorAll<HTMLButtonElement>('.choice-stack button.choice')]
+      .filter((button) => {
+        const rect = button.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      })
+      .map((button) => button.getBoundingClientRect());
+    return {
+      viewportWidth: window.innerWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      panelHeight: panel?.getBoundingClientRect().height ?? 0,
+      minChoiceHeight: choices.length === 0 ? 0 : Math.min(...choices.map((rect) => rect.height)),
+    };
+  });
+  expect(geometry.viewportWidth).toBe(390);
+  expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.viewportWidth);
+  expect(geometry.panelHeight).toBeGreaterThan(500);
+  expect(geometry.minChoiceHeight).toBeGreaterThanOrEqual(44);
+}
+
+test('presents the Korean landing and first event as a game-first phone surface', async ({ page, browserName }) => {
+  test.skip(browserName !== 'chromium', 'Batch 03 presentation acceptance adds one stable Chromium phone assertion; Batch 05 retains cross-engine proof.');
+  await page.addInitScript(({ key }) => window.localStorage.setItem(key, 'ko-KR'), { key: LOCALE_KEY });
+  await page.goto('/');
+
+  await expect(page.locator('.panel.hero-panel')).toBeVisible();
+  await expect(page.locator('.language-switcher')).toBeVisible();
+  await expect(page.getByRole('heading', { name: '고대 포켓몬 TRPG' })).toBeVisible();
+  await expect(page.getByRole('button', { name: '새 여정' })).toBeVisible();
+  await assertNoPlayerFacingEngineeringJargon(page);
+
+  await page.getByRole('button', { name: '새 여정' }).click();
+  for (let index = 1; index <= 3; index += 1) {
+    await expect(page.getByText(`지난날의 기억 · ${index}/3`)).toBeVisible();
+    await chooseFirstFormativeAnswer(page);
+  }
+  await page.getByRole('button', { name: '강점 고르기' }).click();
+  await page.getByRole('button', { name: '확인하기' }).click();
+  await page.getByRole('button', { name: '길을 나선다' }).click();
+
+  await expect(page.getByRole('heading', { name: '창고 앞에서 터진 고함' })).toBeVisible();
+  await expect(page.locator('.run-status')).toBeVisible();
+  await expect(page.locator('.panel > .eyebrow')).toContainText('갈대둑');
+  await expect(page.locator('.panel > .lead')).toBeVisible();
+  const choices = page.locator('.choice-stack button.choice:not([disabled])');
+  await expect(choices).toHaveCount(2);
+  await expect(choices.nth(0)).toContainText('사이에 끼어 사정을 듣는다');
+  await expect(choices.nth(1)).toContainText('한발 물러서');
+  await assertGameSurfaceGeometry(page);
+  await assertNoPlayerFacingEngineeringJargon(page);
+
+  console.log(`P8_BATCH03_PRESENTATION_ACCEPTANCE ${JSON.stringify({
+    browserName,
+    locale: 'ko-KR',
+    viewport: '390x844',
+    firstEventChoices: 2,
+    playerFacingEngineeringJargon: false,
+  })}`);
+});
 
 test('completes the phone zero-companion slice and resumes pending/committed saves exactly', async ({ page, browserName }) => {
   test.skip(browserName !== 'chromium', 'Batch 04 uses one Chromium phone smoke; Batch 05 owns Chromium + WebKit exit proof.');
