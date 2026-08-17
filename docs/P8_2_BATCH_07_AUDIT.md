@@ -18,6 +18,7 @@ Remove the remaining translated-questionnaire feel from character creation and r
 - Shortened several scene choices while preserving their existing authoritative choice IDs and declared costs/checks.
 - Removed remaining explanation-heavy shell phrases such as `정답은 없습니다` and `방금 선택의 결과가 기록되었습니다` in favor of player-facing prose.
 - Kept official Korean species labels and approved attribute terminology unchanged.
+- Updated the inherited P8 phone presentation assertion to follow the intentionally revised Korean labels instead of pinning obsolete copy.
 
 ## Authority / compatibility boundary
 
@@ -55,6 +56,16 @@ The dedicated workflow also re-runs bilingual save-preservation acceptance and i
 
 ## Validation
 
-Dedicated workflow: **`P8.2 Batch 07 Validation`**.
+Dedicated workflow **`P8.2 Batch 07 Validation`** run **`32032044967`**: **PASS**.
 
-Final run ID and result are recorded in `PROJECT_STATUS.md` after CI completes.
+Passed in that run:
+
+- `npm ci`;
+- strict TypeScript integration check;
+- full deterministic unit suite;
+- production PWA build and static-deployment validation;
+- Batch 07 Korean narrative creation acceptance on Chromium and WebKit phone projects;
+- bilingual presentation/save-preservation acceptance on Chromium and WebKit;
+- inherited P8 phone smoke including zero-companion completion/save-resume proof.
+
+The preceding run `32031728997` exposed one stale Batch 03 Korean string assertion (`지난 기억` plus old choice text); authority, new Batch 07 browser acceptance and bilingual save-preservation had already passed. The inherited assertion was updated to the new authored copy and the complete dedicated workflow then passed as run `32032044967`.

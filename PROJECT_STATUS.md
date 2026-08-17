@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-17 21:55 KST**
+Last operational handoff update: **2026-08-17 22:05 KST**
 
 This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts, owner-playtest contracts, and live GitHub state. If this file and live state disagree, reconcile this file before advancing.
 
@@ -37,7 +37,7 @@ P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
 P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
-P8.2 second owner remediation         BATCHES 04-06 COMPLETE / BATCH 07 IN PROGRESS / #118 / BLOCKING P9
+P8.2 second owner remediation         BATCHES 04-07 COMPLETE / BATCH 08 NEXT / #118 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
@@ -53,34 +53,30 @@ Completed work — do not repeat:
 - **PR #120 / Batch 04** — progressive narrative reveal, tap-to-complete/advance isolation, rapid-submit guard, scene/travel transitions, reduced-motion parity.
 - **PR #121 / Batch 05** — portrait selection, persistent expedition/profile HUD, Vitality/Fatigue/Fear/Injuries/resources/Load/locality/companions, danger semantics.
 - **PR #122 / Batch 06** — stable on-demand scene illustrations, existing P6 loader/cache reuse, missing-media fallback, first-run visual identities.
+- **PR #123 / Batch 07** — three formative memory scenes, concise action choices, second native-Korean pass, stable-ID/lifepath preservation, questionnaire/proof-language regression guards.
 
 Audits:
 
 - `docs/P8_2_BATCH_04_AUDIT.md`
 - `docs/P8_2_BATCH_05_AUDIT.md`
 - `docs/P8_2_BATCH_06_AUDIT.md`
+- `docs/P8_2_BATCH_07_AUDIT.md`
 
-## Current work — Batch 07
+### Batch 07 validation
 
-Branch: **`agent/p8-2-batch07-korean-narrative`**
+Dedicated workflow **`P8.2 Batch 07 Validation`** run **`32032044967`**: **PASS**.
 
-Goal: remove the remaining questionnaire/translation feel without changing gameplay authority.
+Verified:
 
-Implemented on the active branch:
+- strict TypeScript + full unit suite + production PWA build;
+- Chromium/WebKit 390px Korean creation memories and touch/overflow acceptance;
+- bilingual locale switching with authoritative save JSON unchanged;
+- inherited P8 phone smoke, zero-companion full completion and exact save/resume behavior;
+- existing event/choice/lifepath/RNG authority remains unchanged.
 
-- three formative prompts rewritten as short remembered scenes with concrete sensory/action setup;
-- concise action-like formative answers while preserving every hidden answer ID and lifepath mapping;
-- second native-Korean pass over current specialization, scene, choice, outcome and shell copy;
-- explicit regression guards against questionnaire phrasing, translation-proof language and implementation vocabulary;
-- Chromium/WebKit phone acceptance for the three creation memories, touch targets and horizontal overflow;
-- dedicated `P8.2 Batch 07 Validation` workflow;
-- audit: `docs/P8_2_BATCH_07_AUDIT.md`.
+## Exact next work
 
-**Validation is pending on the active Batch 07 PR. Do not start Batch 08 until the Batch 07 PR is green and merged.**
-
-## Exact next work after Batch 07 merges
-
-### Batch 08 — equipment slots + combat-readiness summary
+### Batch 08 — equipment slots + combat-readiness summary — NEXT
 
 - authoritative stable item/equipment IDs;
 - visible weapon/body armor/accessory or protective wearable/utility/Pokémon-field gear surfaces;
