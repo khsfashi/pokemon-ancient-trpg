@@ -33,35 +33,7 @@ P4 strict exit evidence: `docs/P4_EXIT_AUDIT.md`.
 P5 strict exit evidence: `docs/P5_EXIT_AUDIT.md`.  
 P6 strict exit evidence: `docs/P6_EXIT_AUDIT.md`.
 
-## P6 final handoff
-
-P6 Batch 03 replaced representative-resource assumptions with full pinned Gen-I production-import validation.
-
-Validated candidate evidence:
-
-```text
-candidate_head == 95787eda4c1c04aeb27c4acb0c4256c12206e85b
-P6 Resource Validation run == #30 / success
-PokéSprite compact default PNG == 151/151
-PokéRogue animated PNG+JSON == 151/151
-all frame/source bounds valid == true
-SHA-256 materialized for every fetched artifact == true
-CI evidence == metadata-only JSON
-Pokémon source media written to evidence == false
-```
-
-Full animated-source measurement:
-
-```text
-metadata_layout.texture-array-v1 == 150
-metadata_layout.root-frames-meta-v1 == 1
-metadata_format.RGBA8888 == 150
-metadata_format.I8 == 1
-old provisional 512 KiB cap exceeded by == 25 species
-max source atlas == #085 Dodrio == 673x673 == 1,811,716 conservative RGBA8 bytes
-```
-
-Frozen P6 resource budgets:
+## Frozen P6 handoff
 
 ```text
 p6_owned_required_initial_resource_payload <= 3 MiB
@@ -71,46 +43,92 @@ per_encounter_atlas_guardrail <= 2 MiB
 max_resident_encounter_atlases == 2
 encounter_atlas_decoded_cache <= 4 MiB
 combined_optional_pokemon_decoded_image_working_set <= 4.375 MiB
-```
-
-Runtime/resource invariants inherited by P7:
-
-```text
 cache_key == resource_id
-duplicate_instance_policy == reuse_single_cached_instance
 all_151_pokemon_media_preloaded == false
 runtime_default_image_resize == false
 runtime_atlas_repack == false
-per_render_full_manifest_scan == false
-per_render_full_species_asset_scan == false
 missing_optional_media_changes_authoritative_gameplay == false
 ```
+
+Full pinned P6 production import validated compact `151/151`, animated PNG+JSON `151/151`, every frame bound and SHA-256 evidence without writing Pokémon source media into CI evidence. Maximum measured conservative animated atlas decode remains #085 Dodrio at `673x673 / 1,811,716 B`, below the frozen 2 MiB guardrail.
 
 ## Current phase
 
 **P7 — Technical architecture, web/PWA target, save/data/resource pipeline, and tests (#7) is active.**
 
-P7 goal: freeze an implementation-ready architecture only after P1-P6 product/data/resource contracts are stable.
+### P7 Batch 01 candidate
 
-Hard constraints from #7:
+Branch: `agent/p7-batch01-architecture-contract`
 
-- prefer a lightweight mobile-first web runtime unless evidence shows it is insufficient;
-- do not require a backend without a concrete gameplay/product need;
-- avoid unnecessary runtime allocation/work;
-- generate/cache derived indexes instead of repeated scans/recomputation;
-- preserve P6 provenance, redistribution, preprocessing, loading and memory budgets;
-- base technical choices on current primary documentation and proven tooling.
+Architecture candidate: `p7-architecture-v1`.
 
-## Exact next work — P7 Batch 01
+Frozen baseline after the Batch 01 PR merges green:
 
-1. evaluate current lightweight mobile-first web/PWA runtime candidates against primary documentation;
-2. choose the minimum framework/build-tooling boundary that satisfies deterministic P2-P6 contracts;
-3. freeze runtime/content/resource separation and indexed `resource_id` loading/caching architecture;
-4. freeze local save schema/versioning/migration plus backup/export/import behavior;
-5. freeze imported Pokémon data → generated/hash-indexed artifact pipeline;
-6. define deterministic fixtures/tests for rules, events, saves, data and resource loading;
-7. define offline/PWA/deployment behavior and only retain an Android packaging path if evidence justifies it;
-8. produce a versioned architecture contract and implementation-ready skeleton plan for P7 exit.
+```text
+primary target        = web/PWA
+backend               = none
+build runtime         = Node 24.x LTS
+package manager       = npm + committed lockfile
+build tool            = Vite 8.x
+language              = strict TypeScript
+presentation          = Preact 10.x only
+state/router library  = none in baseline
+authoritative runtime = framework-independent pure TypeScript
+save storage          = IndexedDB
+PWA cache tooling      = workbox-build
+unit tests             = Vitest
+browser tests          = Playwright
+deployment             = static Vercel-compatible output
+Android                = deferred Capacitor wrapper candidate only
+```
+
+Important correctness boundary discovered/frozen in Batch 01:
+
+```text
+P5 origin_transition_seq/draw_index = u64
+P5 total_weight                      = unsigned 63-bit bounded
+runtime authoritative u64/u63        = bigint
+save/content wire u64/u63            = validated unsigned decimal string
+run_seed                             = 32 lowercase hex
+SHA-256                              = Web Crypto HashProvider
+```
+
+Do not serialize authoritative u64/u63 values through JavaScript `number` or implicit BigInt JSON conversion.
+
+Runtime/content/resource separation:
+
+- Preact is presentation only; UI is never authoritative.
+- event eligibility remains committed-transition-driven with generated trigger indexes, never per frame/render.
+- remote Pokémon APIs remain build/import-only; runtime consumes generated normalized packs.
+- IndexedDB owns versioned content-pinned saves and fail-closed migrations/imports.
+- generated `resource_id` indexes provide O(1)-equivalent lookup.
+- duplicate resource loads coalesce and decoded cache instances are reused under the frozen P6 byte caps.
+- service-worker precache contains only public-safe app shell/required core resources; current Pokémon media is never public-preloaded.
+
+Batch 01 evidence:
+
+- `docs/P7_ARCHITECTURE_MANIFEST.json`
+- `docs/P7_TECHNICAL_ARCHITECTURE_CONTRACT.md`
+- `docs/P7_IMPLEMENTATION_SKELETON_PLAN.md`
+- `docs/P7_BATCH_01_AUDIT.md`
+- `tools/validate_p7_architecture.py`
+- `.github/workflows/p7-architecture-validation.yml`
+
+Batch 01 is accepted only after the final PR head reports `P7 Architecture Validation` green.
+
+## Exact next work — P7 Batch 02
+
+After Batch 01 merges:
+
+1. create the Node 24/npm/Vite 8/strict-TypeScript/Preact 10 executable skeleton and committed lockfile;
+2. create the frozen `src/app`, `runtime`, `domain`, `events`, `content`, `saves`, `resources`, `platform`, `ui`, `generated` ownership boundaries;
+3. add the first Vitest deterministic integer/RNG/save/resource fixtures;
+4. add a valid web app manifest and `workbox-build` public-safe service-worker build;
+5. prove `npm ci`, typecheck, unit tests and production static build in CI;
+6. prove the output contains no Pokémon source media and requires no backend;
+7. keep P8 blocked until later P7 batches prove IndexedDB reload/migration, P5 RNG vectors, generated indexes, resource cache behavior and phone-sized offline browser E2E.
+
+Implementation sequence for the rest of P7 is frozen in `docs/P7_IMPLEMENTATION_SKELETON_PLAN.md`.
 
 ## Later roadmap
 
