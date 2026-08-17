@@ -3,7 +3,23 @@ import { expect, test } from '@playwright/test';
 const COMPACT_CAP = 384 * 1024;
 const ENCOUNTER_CAP = 4 * 1024 * 1024;
 
+const TEST_IMAGES = new Map<string, string>([
+  ['/test-assets/compact-probe.svg', '<svg xmlns="http://www.w3.org/2000/svg" width="68" height="56" viewBox="0 0 68 56"><rect width="68" height="56" rx="8" fill="#d9e7d4"/><circle cx="22" cy="28" r="12" fill="#61755c"/><path d="M36 18h20v20H36z" fill="#f4f1de"/></svg>'],
+  ['/test-assets/encounter-a.svg', '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" fill="#e8e2cf"/><circle cx="256" cy="256" r="176" fill="#657166"/><circle cx="208" cy="220" r="24" fill="#f5f2e8"/><circle cx="304" cy="220" r="24" fill="#f5f2e8"/></svg>'],
+  ['/test-assets/encounter-b.svg', '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640"><rect width="640" height="640" fill="#ded6bf"/><path d="M96 544L320 72l224 472z" fill="#6c7767"/><circle cx="320" cy="340" r="72" fill="#f5f2e8"/></svg>'],
+  ['/test-assets/encounter-c.svg', '<svg xmlns="http://www.w3.org/2000/svg" width="768" height="512" viewBox="0 0 768 512"><rect width="768" height="512" fill="#e7dfca"/><rect x="112" y="96" width="544" height="320" rx="120" fill="#657166"/><path d="M288 160h192v192H288z" fill="#f5f2e8"/></svg>'],
+]);
+
 test('measures decoded resource behavior inside the phone-sized browser', async ({ page, browserName }) => {
+  await page.route('**/test-assets/**', async (route) => {
+    const pathname = new URL(route.request().url()).pathname;
+    const body = TEST_IMAGES.get(pathname);
+    if (body === undefined) {
+      await route.abort('failed');
+      return;
+    }
+    await route.fulfill({ status: 200, contentType: 'image/svg+xml', body });
+  });
   await page.goto('/');
 
   const measurement = await page.evaluate(async () => {
