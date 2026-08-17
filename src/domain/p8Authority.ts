@@ -49,6 +49,7 @@ export interface P8AuthorityState {
 // Closed subset of the frozen P5 adapter registry needed by the first slice.
 export type P8DomainCommand =
   | { readonly commandId: 'p2.world.commit_relationship_state'; readonly relationshipRef: string; readonly stateId: string; readonly causeId: string }
+  | { readonly commandId: 'p2.world.commit_locality_transition'; readonly fromLocality: string; readonly toLocality: string; readonly routeRef: string }
   | { readonly commandId: 'p3.inventory.adjust_resource_pool'; readonly poolId: P8ResourcePoolId; readonly delta: number; readonly reasonId: string }
   | { readonly commandId: 'p4.companion.commit_voluntary_join'; readonly speciesId: number; readonly slot: 0 | 1 | 2; readonly willingnessRef: string; readonly eventId: string }
   | { readonly commandId: 'p4.companion.commit_separation'; readonly slot: 0 | 1 | 2; readonly reasonId: string }
@@ -170,6 +171,11 @@ function validateCommand(state: P8AuthorityState, command: P8DomainCommand): voi
   switch (command.commandId) {
     case 'p2.world.commit_relationship_state':
       stableId(command.relationshipRef, 'relationshipRef'); stableId(command.stateId, 'stateId'); stableId(command.causeId, 'causeId'); return;
+    case 'p2.world.commit_locality_transition':
+      stableId(command.fromLocality, 'fromLocality'); stableId(command.toLocality, 'toLocality'); stableId(command.routeRef, 'routeRef');
+      if (command.fromLocality === command.toLocality) throw new RangeError('locality transition must change locality');
+      if (state.world.currentLocality !== command.fromLocality) throw new RangeError(`locality transition origin mismatch: ${command.fromLocality}`);
+      return;
     case 'p3.inventory.adjust_resource_pool': {
       stableId(command.reasonId, 'reasonId'); safeInt(command.delta, 'delta');
       if (command.delta === 0 || state.survival.resourcePools[command.poolId] + command.delta < 0) throw new RangeError('resource adjustment is invalid');
@@ -194,6 +200,8 @@ function applyCommand(state: P8AuthorityState, command: P8DomainCommand): P8Auth
   switch (command.commandId) {
     case 'p2.world.commit_relationship_state':
       return { ...state, world: { ...state.world, relationships: { ...state.world.relationships, [command.relationshipRef]: command.stateId } } };
+    case 'p2.world.commit_locality_transition':
+      return { ...state, world: { ...state.world, currentLocality: command.toLocality } };
     case 'p3.inventory.adjust_resource_pool':
       return { ...state, survival: { resourcePools: { ...state.survival.resourcePools, [command.poolId]: state.survival.resourcePools[command.poolId] + command.delta } } };
     case 'p4.companion.commit_voluntary_join': {
