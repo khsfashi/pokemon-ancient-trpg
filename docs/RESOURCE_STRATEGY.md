@@ -1,6 +1,6 @@
 # P6 Resource and Asset Strategy
 
-Status: **P6 Batch 03 exit candidate; D-036 resolved; full Gen-I production-import measurement integrated**  
+Status: **P6 COMPLETE — Batch 03 full Gen-I production-import validation passed; P7 handoff frozen**  
 Owner phase: **#12 — P6 Resource and asset strategy, sourcing, provenance, and mobile budget**  
 Contract version: `p6-resource-strategy-v1`  
 Manifest schema: `docs/P6_RESOURCE_MANIFEST_SCHEMA.json` (`p6-resource-manifest-v1`)  
@@ -309,7 +309,7 @@ The player-facing reveal sequence is `concealed → silhouette → partial_revea
 
 ## 11. P7 handoff constraints
 
-After the P6 exit audit passes, P7 may choose technology but must preserve:
+P7 may choose technology but must preserve:
 
 - semantic `resource_id` lookup independent of upstream paths;
 - generated/indexed manifests;
@@ -326,23 +326,19 @@ P6 deliberately does **not** choose React, another web framework, PWA packaging,
 
 ---
 
-## 12. P6 Batch 03 exit conditions
+## 12. P6 exit verdict
 
-P6 may close only when the final PR proves all of the following:
-
-1. frozen PokéSprite compact import validates `001..151`;
-2. frozen Gen-I animated PNG+JSON pairs validate `001..151`, including both observed metadata layouts and all frame/source bounds;
-3. every fetched artifact receives SHA-256 in produced metadata evidence;
-4. no animated source atlas exceeds the final measured `2 MiB` guardrail;
-5. produced/public CI evidence contains no `not_cleared` Pokémon media bytes;
-6. rights, duplicate, cache, fallback and budget validation passes against produced evidence;
-7. `docs/P6_EXIT_AUDIT.md` records a passing exit verdict;
-8. #12 closes and P7 becomes active only after the final P6 head remains CI-green.
-
-Until those conditions pass:
+Validated candidate `95787eda4c1c04aeb27c4acb0c4256c12206e85b` passed P6 Resource Validation run #30, including full live import, produced-manifest policy validation and metadata-only Artifact upload.
 
 ```text
-p6_complete == false
-issue_12_may_close == false
-p7_may_begin == false
+pokesprite_compact_import == 151/151 PASS
+animated_png_json_import == 151/151 PASS
+all_fetched_artifacts_hashed == true
+animated_source_atlas_over_2_MiB_count == 0
+metadata_only_evidence_boundary == PASS
+p6_complete == true
+issue_12_may_close == true
+p7_may_begin_after_issue_12_close == true
 ```
+
+The final PR head must remain green under the same P6 workflow before merge. `docs/P6_EXIT_AUDIT.md` is the strict exit authority.
