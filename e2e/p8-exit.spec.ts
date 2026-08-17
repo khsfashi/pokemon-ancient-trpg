@@ -55,17 +55,17 @@ async function chooseFirstFormativeAnswer(page: Page): Promise<void> {
 }
 
 async function startNewRunToFirstPending(page: Page): Promise<void> {
-  await page.getByRole('button', { name: 'Start new run' }).click();
-  await expect(page.getByText('Formative memory · 1/3')).toBeVisible();
+  await page.getByRole('button', { name: 'New journey' }).click();
+  await expect(page.getByText('A memory from before · 1/3')).toBeVisible();
   await chooseFirstFormativeAnswer(page);
-  await expect(page.getByText('Formative memory · 2/3')).toBeVisible();
+  await expect(page.getByText('A memory from before · 2/3')).toBeVisible();
   await chooseFirstFormativeAnswer(page);
-  await expect(page.getByText('Formative memory · 3/3')).toBeVisible();
+  await expect(page.getByText('A memory from before · 3/3')).toBeVisible();
   await chooseFirstFormativeAnswer(page);
-  await expect(page.getByText('Background reveal')).toBeVisible();
-  await page.getByRole('button', { name: 'Choose a specialization' }).click();
-  await page.getByRole('button', { name: 'Review character' }).click();
-  await page.getByRole('button', { name: 'Begin the run' }).click();
+  await expect(page.getByText('Your past')).toBeVisible();
+  await page.getByRole('button', { name: 'Choose a strength' }).click();
+  await page.getByRole('button', { name: 'Review' }).click();
+  await page.getByRole('button', { name: 'Set out' }).click();
   await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
 }
 
@@ -73,7 +73,7 @@ async function resolveCurrentScene(page: Page, choiceIndex = 0): Promise<void> {
   const choices = page.locator('button.choice:not([disabled])');
   await expect(choices.nth(choiceIndex)).toBeVisible();
   await choices.nth(choiceIndex).click();
-  await expect(page.getByText('Committed consequence', { exact: false })).toBeVisible();
+  await expect(page.getByText('Afterward', { exact: false })).toBeVisible();
 }
 
 async function continueAfterConsequence(page: Page): Promise<void> {
@@ -108,17 +108,17 @@ test('production Chromium/WebKit completes the deterministic zero-companion slic
 
   const pendingBeforeReload = await readP8SaveJson(page);
   await page.reload();
-  await page.getByRole('button', { name: 'Continue saved run' }).click();
+  await page.getByRole('button', { name: 'Continue journey' }).click();
   await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
   expect(await readP8SaveJson(page)).toBe(pendingBeforeReload);
 
   await resolveCurrentScene(page);
-  await expect(page.getByText('transition 1', { exact: false })).toBeVisible();
+  await expect(page.getByText('record 1', { exact: false })).toBeVisible();
   const committedBeforeReload = await readP8SaveJson(page);
 
   await page.reload();
-  await page.getByRole('button', { name: 'Continue saved run' }).click();
-  await expect(page.getByRole('heading', { name: 'Continue from the committed state' })).toBeVisible();
+  await page.getByRole('button', { name: 'Continue journey' }).click();
+  await expect(page.getByRole('heading', { name: 'Go to the next scene' })).toBeVisible();
   expect(await readP8SaveJson(page)).toBe(committedBeforeReload);
   await page.getByRole('button', { name: 'Continue journey' }).click();
 
@@ -132,7 +132,7 @@ test('production Chromium/WebKit completes the deterministic zero-companion slic
   for (const sceneTitle of remainingSceneTitles) {
     await expect(page.getByRole('heading', { name: sceneTitle })).toBeVisible();
     if (sceneTitle === 'Weedle at the Crossing') {
-      await expect(page.getByText('No redistributable media is configured for this slice', { exact: false })).toBeVisible();
+      await expect(page.getByText('No clear likeness has been recorded here yet.', { exact: false })).toBeVisible();
       await assertPhoneUsability(page);
     }
     await resolveCurrentScene(page);
@@ -141,10 +141,10 @@ test('production Chromium/WebKit completes the deterministic zero-companion slic
 
   await expect(page.getByRole('heading', { name: 'Return to Reedbank' })).toBeVisible();
   await resolveCurrentScene(page);
-  await page.getByRole('button', { name: 'View run summary' }).click();
+  await page.getByRole('button', { name: 'See journey summary' }).click();
 
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
-  await expect(page.getByText('Zero-companion completion: proven')).toBeVisible();
+  await expect(page.getByText('Returned without a companion: complete', { exact: false })).toBeVisible();
   await expect(page.getByText('Companions 0/3', { exact: false }).first()).toBeVisible();
   await assertPhoneUsability(page);
 
@@ -190,12 +190,12 @@ test('production browser reloads an exactly committed checked choice before late
   await expect(page.getByRole('heading', { name: 'Weedle at the Crossing' })).toBeVisible();
   await resolveCurrentScene(page, 1);
   const checkBand = await page.locator('.check-band').innerText();
-  expect(checkBand.toLowerCase().startsWith('check result:')).toBe(true);
+  expect(checkBand.toLowerCase().startsWith('check:')).toBe(true);
   const checkedBeforeReload = await readP8SaveJson(page);
 
   await page.reload();
-  await page.getByRole('button', { name: 'Continue saved run' }).click();
-  await expect(page.getByRole('heading', { name: 'Continue from the committed state' })).toBeVisible();
+  await page.getByRole('button', { name: 'Continue journey' }).click();
+  await expect(page.getByRole('heading', { name: 'Go to the next scene' })).toBeVisible();
   expect(await readP8SaveJson(page)).toBe(checkedBeforeReload);
   expect((await readP8SaveWire(page)).transition_seq_u64).toBe('5');
 
