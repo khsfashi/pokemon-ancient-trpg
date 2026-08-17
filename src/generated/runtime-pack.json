@@ -1,0 +1,4273 @@
+{
+  "architecture_contract_version": "p7-architecture-v1",
+  "content_digest_sha256": "9c830e0b58d41089470594d263c16ba7e92377f6998b3f07785eb7708a059b2c",
+  "content_pack_id": "p7.contract-fixtures",
+  "content_pack_version": "1",
+  "content_scope": "contract_fixture_not_production_lore",
+  "digest_algorithm": "sha256",
+  "digest_scope": "canonical_json_without_content_digest_sha256",
+  "event_index": {
+    "fixture.d034.exceptional.chronology": {
+      "choices": [
+        {
+          "choice_id": "observe_anomaly_without_origin_claim",
+          "disclosure": "public",
+          "resolution": {
+            "kind": "direct",
+            "outcome_map": {
+              "direct": "fixture.d034.exceptional.resolved"
+            }
+          }
+        }
+      ],
+      "content_revision": 1,
+      "domain_commands": [
+        "p4.encounter.record_exceptional_chronology_interaction"
+      ],
+      "eligibility": {
+        "args": {
+          "flag_id": "fixture.flag.anomaly_armed",
+          "value": true
+        },
+        "predicate_id": "p4.chronology.anomaly_flag_is"
+      },
+      "event_id": "fixture.d034.exceptional.chronology",
+      "outcomes": [
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "anomaly_ref": "fixture.anomaly.displacement",
+                "encounter_ref": "fixture.encounter.chronology",
+                "species_id": 137
+              },
+              "command_id": "p4.encounter.record_exceptional_chronology_interaction"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.d034.exceptional.resolved",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "event_resolved"
+          ]
+        }
+      ],
+      "presentation_ref": "content.presentation.fixture_d034_exceptional",
+      "reads": [
+        "p4.chronology.anomaly_flag"
+      ],
+      "repeat_policy": {
+        "max_occurrences": 1
+      },
+      "tags": [
+        "fixture",
+        "d034_direct",
+        "chronology_anomaly"
+      ],
+      "triggers": [
+        "event_chain_advanced"
+      ],
+      "weight": {
+        "base_points": 1,
+        "modifiers": []
+      },
+      "writes": []
+    },
+    "fixture.faction.chain.entry": {
+      "chain_membership": {
+        "chain_id": "fixture.chain.network",
+        "chain_step_id": "fixture.step.entry"
+      },
+      "choices": [
+        {
+          "choice_id": "honor_local_request",
+          "disclosure": "public",
+          "resolution": {
+            "kind": "direct",
+            "outcome_map": {
+              "direct": "fixture.faction.entry.resolved"
+            }
+          }
+        }
+      ],
+      "content_revision": 1,
+      "domain_commands": [
+        "p2.world.commit_relationship_state",
+        "p2.world.grant_permission"
+      ],
+      "eligibility": {
+        "args": {
+          "relationship_ref": "fixture.relationship.network",
+          "state_id": "fixture.state.neutral"
+        },
+        "predicate_id": "p2.world.relationship_state_is"
+      },
+      "event_id": "fixture.faction.chain.entry",
+      "outcomes": [
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "cause_id": "fixture.cause.honored_request",
+                "relationship_ref": "fixture.relationship.network",
+                "state_id": "fixture.state.trusted"
+              },
+              "command_id": "p2.world.commit_relationship_state"
+            },
+            {
+              "args": {
+                "permission_ref": "fixture.permission.network_route",
+                "source_id": "fixture.source.network_trust"
+              },
+              "command_id": "p2.world.grant_permission"
+            }
+          ],
+          "enqueue_chain_steps": [
+            {
+              "chain_id": "fixture.chain.network",
+              "chain_step_id": "fixture.step.followup"
+            }
+          ],
+          "outcome_id": "fixture.faction.entry.resolved",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "event_chain_advanced"
+          ]
+        }
+      ],
+      "presentation_ref": "content.presentation.fixture_faction_entry",
+      "reads": [
+        "p2.world.relationship",
+        "p2.world.permission"
+      ],
+      "repeat_policy": {
+        "max_occurrences": 1
+      },
+      "tags": [
+        "fixture",
+        "faction",
+        "relationship_chain"
+      ],
+      "triggers": [
+        "event_chain_advanced"
+      ],
+      "weight": {
+        "base_points": 10,
+        "modifiers": []
+      },
+      "writes": []
+    },
+    "fixture.faction.chain.followup": {
+      "chain_membership": {
+        "chain_id": "fixture.chain.network",
+        "chain_step_id": "fixture.step.followup"
+      },
+      "choices": [
+        {
+          "choice_id": "receive_route_warning",
+          "disclosure": "public",
+          "resolution": {
+            "kind": "direct",
+            "outcome_map": {
+              "direct": "fixture.faction.followup.resolved"
+            }
+          }
+        }
+      ],
+      "content_revision": 1,
+      "domain_commands": [
+        "p2.world.record_local_knowledge"
+      ],
+      "eligibility": {
+        "all": [
+          {
+            "args": {
+              "relationship_ref": "fixture.relationship.network",
+              "state_id": "fixture.state.trusted"
+            },
+            "predicate_id": "p2.world.relationship_state_is"
+          },
+          {
+            "args": {
+              "permission_ref": "fixture.permission.network_route"
+            },
+            "predicate_id": "p2.world.has_permission"
+          }
+        ]
+      },
+      "event_id": "fixture.faction.chain.followup",
+      "outcomes": [
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "knowledge_ref": "fixture.knowledge.route_warning",
+                "source_id": "fixture.source.network_warning"
+              },
+              "command_id": "p2.world.record_local_knowledge"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.faction.followup.resolved",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "knowledge_changed",
+            "event_resolved"
+          ]
+        }
+      ],
+      "presentation_ref": "content.presentation.fixture_faction_followup",
+      "reads": [
+        "p2.world.relationship",
+        "p2.world.permission",
+        "p2.world.local_knowledge"
+      ],
+      "repeat_policy": {
+        "max_occurrences": 1
+      },
+      "tags": [
+        "fixture",
+        "faction",
+        "relationship_chain"
+      ],
+      "triggers": [
+        "event_chain_advanced"
+      ],
+      "weight": {
+        "base_points": 10,
+        "modifiers": []
+      },
+      "writes": []
+    },
+    "fixture.human.social.obligation": {
+      "choices": [
+        {
+          "choice_id": "accept_obligation",
+          "disclosure": "public",
+          "resolution": {
+            "kind": "direct",
+            "outcome_map": {
+              "direct": "fixture.human.social.accepted"
+            }
+          }
+        }
+      ],
+      "content_revision": 1,
+      "domain_commands": [
+        "p2.world.commit_relationship_state"
+      ],
+      "eligibility": {
+        "args": {
+          "relationship_ref": "fixture.relationship.household",
+          "state_id": "fixture.state.obligation_open"
+        },
+        "predicate_id": "p2.world.relationship_state_is"
+      },
+      "event_id": "fixture.human.social.obligation",
+      "outcomes": [
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "cause_id": "fixture.cause.accepted_request",
+                "relationship_ref": "fixture.relationship.household",
+                "state_id": "fixture.state.obligation_accepted"
+              },
+              "command_id": "p2.world.commit_relationship_state"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.human.social.accepted",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "event_resolved"
+          ]
+        }
+      ],
+      "presentation_ref": "content.presentation.fixture_human_social",
+      "reads": [
+        "p2.world.relationship"
+      ],
+      "repeat_policy": {
+        "max_occurrences": 1
+      },
+      "tags": [
+        "fixture",
+        "human_social",
+        "non_pokemon_immediate_cause"
+      ],
+      "triggers": [
+        "location_entered"
+      ],
+      "weight": {
+        "base_points": 10,
+        "modifiers": []
+      },
+      "writes": []
+    },
+    "fixture.mixed.route_dispute": {
+      "choices": [
+        {
+          "choice_id": "present_ecology_evidence",
+          "disclosure": "public",
+          "resolution": {
+            "kind": "direct",
+            "outcome_map": {
+              "direct": "fixture.mixed.resolved"
+            }
+          }
+        }
+      ],
+      "content_revision": 1,
+      "domain_commands": [
+        "p2.world.commit_relationship_state",
+        "p2.world.commit_route_state",
+        "p4.species.record_identification_evidence"
+      ],
+      "eligibility": {
+        "all": [
+          {
+            "args": {
+              "relationship_ref": "fixture.relationship.route_users",
+              "state_id": "fixture.state.disputed"
+            },
+            "predicate_id": "p2.world.relationship_state_is"
+          },
+          {
+            "args": {
+              "capability_id": "fixture.capability.territorial_pressure",
+              "species_id": 15
+            },
+            "predicate_id": "p4.species.has_capability"
+          }
+        ]
+      },
+      "event_id": "fixture.mixed.route_dispute",
+      "outcomes": [
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "evidence_ref": "fixture.evidence.route_signs",
+                "knowledge_scope": "fixture.scope.local",
+                "species_id": 15
+              },
+              "command_id": "p4.species.record_identification_evidence"
+            },
+            {
+              "args": {
+                "cause_id": "fixture.cause.shared_evidence",
+                "relationship_ref": "fixture.relationship.route_users",
+                "state_id": "fixture.state.cooperating"
+              },
+              "command_id": "p2.world.commit_relationship_state"
+            },
+            {
+              "args": {
+                "cause_id": "fixture.cause.shared_evidence",
+                "route_ref": "fixture.route.habitat",
+                "state_id": "fixture.state.detour_agreed"
+              },
+              "command_id": "p2.world.commit_route_state"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.mixed.resolved",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "knowledge_changed",
+            "event_resolved"
+          ]
+        }
+      ],
+      "presentation_ref": "content.presentation.fixture_mixed",
+      "reads": [
+        "p2.world.relationship",
+        "p2.world.route_state",
+        "p4.species.capability_tag"
+      ],
+      "repeat_policy": {
+        "max_occurrences": 1
+      },
+      "tags": [
+        "fixture",
+        "mixed_world",
+        "human_pokemon"
+      ],
+      "triggers": [
+        "player_action_committed"
+      ],
+      "weight": {
+        "base_points": 10,
+        "modifiers": []
+      },
+      "writes": []
+    },
+    "fixture.pokemon.direct.interaction": {
+      "choices": [
+        {
+          "choice_id": "observe_without_claiming",
+          "disclosure": "public",
+          "resolution": {
+            "kind": "direct",
+            "outcome_map": {
+              "direct": "fixture.pokemon.direct.resolved"
+            }
+          }
+        }
+      ],
+      "content_revision": 1,
+      "domain_commands": [
+        "p4.encounter.record_direct_interaction"
+      ],
+      "eligibility": {
+        "args": {
+          "route_ref": "fixture.route.habitat",
+          "species_id": 15
+        },
+        "predicate_id": "p4.encounter.route_is_eligible"
+      },
+      "event_id": "fixture.pokemon.direct.interaction",
+      "outcomes": [
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "encounter_ref": "fixture.encounter.direct",
+                "route_ref": "fixture.route.habitat",
+                "species_id": 15
+              },
+              "command_id": "p4.encounter.record_direct_interaction"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.pokemon.direct.resolved",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "event_resolved"
+          ]
+        }
+      ],
+      "presentation_ref": "content.presentation.fixture_pokemon_direct",
+      "reads": [
+        "p4.encounter.direct_route_eligibility"
+      ],
+      "repeat_policy": {
+        "max_occurrences": 1
+      },
+      "tags": [
+        "fixture",
+        "pokemon_ecology",
+        "direct_interaction"
+      ],
+      "triggers": [
+        "location_entered"
+      ],
+      "weight": {
+        "base_points": 10,
+        "modifiers": []
+      },
+      "writes": []
+    },
+    "fixture.survival.route_failure": {
+      "choices": [
+        {
+          "choice_id": "attempt_crossing",
+          "disclosure": "public",
+          "reaction_window": {
+            "legal_operation_ids": [
+              "p3.emergency.consume_and_mitigate"
+            ],
+            "window_id": "fixture.window.crossing_reaction"
+          },
+          "resolution": {
+            "check": {
+              "check_id": "fixture.check.crossing",
+              "competence_ref": "p3.character.competence",
+              "context_components": [
+                "p3.survival.fatigue_stage"
+              ],
+              "governing_attribute_ref": "p3.character.attribute",
+              "static_difficulty": 9
+            },
+            "kind": "check",
+            "outcome_map": {
+              "costly_partial": "fixture.survival.costly_partial",
+              "exceptional": "fixture.survival.exceptional",
+              "full": "fixture.survival.full",
+              "setback": "fixture.survival.setback"
+            }
+          }
+        }
+      ],
+      "content_revision": 1,
+      "domain_commands": [
+        "p2.world.commit_route_state",
+        "p3.survival.advance_fatigue",
+        "p3.emergency.consume_and_mitigate"
+      ],
+      "eligibility": {
+        "args": {
+          "route_ref": "fixture.route.crossing",
+          "state_id": "fixture.state.weather_damaged"
+        },
+        "predicate_id": "p2.world.route_state_is"
+      },
+      "event_id": "fixture.survival.route_failure",
+      "outcomes": [
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "cause_id": "fixture.cause.failed_crossing",
+                "steps": 1
+              },
+              "command_id": "p3.survival.advance_fatigue"
+            },
+            {
+              "args": {
+                "cause_id": "fixture.cause.failed_crossing",
+                "route_ref": "fixture.route.crossing",
+                "state_id": "fixture.state.impassable"
+              },
+              "command_id": "p2.world.commit_route_state"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.survival.setback",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "event_resolved"
+          ]
+        },
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "cause_id": "fixture.cause.difficult_crossing",
+                "steps": 1
+              },
+              "command_id": "p3.survival.advance_fatigue"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.survival.costly_partial",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "event_resolved"
+          ]
+        },
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "cause_id": "fixture.cause.safe_crossing",
+                "route_ref": "fixture.route.crossing",
+                "state_id": "fixture.state.passable"
+              },
+              "command_id": "p2.world.commit_route_state"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.survival.full",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "event_resolved"
+          ]
+        },
+        {
+          "domain_commands": [
+            {
+              "args": {
+                "cause_id": "fixture.cause.safe_crossing",
+                "route_ref": "fixture.route.crossing",
+                "state_id": "fixture.state.passable"
+              },
+              "command_id": "p2.world.commit_route_state"
+            }
+          ],
+          "enqueue_chain_steps": [],
+          "outcome_id": "fixture.survival.exceptional",
+          "p5_effects": [],
+          "post_commit_triggers": [
+            "event_resolved"
+          ]
+        }
+      ],
+      "presentation_ref": "content.presentation.fixture_survival",
+      "reads": [
+        "p2.world.route_state",
+        "p3.character.attribute",
+        "p3.character.competence",
+        "p3.survival.fatigue_stage"
+      ],
+      "repeat_policy": {
+        "cooldown_after_transitions": 4
+      },
+      "tags": [
+        "fixture",
+        "survival_environment",
+        "check_reaction"
+      ],
+      "triggers": [
+        "travel_step_committed"
+      ],
+      "weight": {
+        "base_points": 10,
+        "modifiers": []
+      },
+      "writes": []
+    }
+  },
+  "p5_contract_version": "p5-event-contract-v1",
+  "pack_format_version": "p7-runtime-pack-v1",
+  "resource_index": {
+    "font.ui.primary.ko-latn": {
+      "asset_class": "font",
+      "availability": "public_build_time_import",
+      "cache_key": "font.ui.primary.ko-latn",
+      "decoded_bytes_estimate": null,
+      "duplicate_instance_policy": "reuse_single_cached_instance",
+      "encoded_bytes": 2057688,
+      "eviction_class": "resident",
+      "fallback_mode": "text_only",
+      "fallback_resource_id": null,
+      "output_dimensions": "intrinsic",
+      "output_format": "woff2",
+      "player_visible_failure": false,
+      "preload_scope": "initial",
+      "public_distribution": "allowed",
+      "requirement": "required",
+      "resource_id": "font.ui.primary.ko-latn"
+    },
+    "pokemon.001.companion.icon.default": {
+      "asset_class": "pokemon_icon",
+      "availability": "optional_local_only",
+      "cache_key": "pokemon.001.companion.icon.default",
+      "decoded_bytes_estimate": 15232,
+      "duplicate_instance_policy": "reuse_single_cached_instance",
+      "encoded_bytes": 335,
+      "eviction_class": "region_lru",
+      "fallback_mode": "generic_placeholder",
+      "fallback_resource_id": null,
+      "output_dimensions": {
+        "height": 56,
+        "width": 68
+      },
+      "output_format": "png",
+      "player_visible_failure": false,
+      "preload_scope": "on_demand",
+      "public_distribution": "not_cleared",
+      "requirement": "optional",
+      "resource_id": "pokemon.001.companion.icon.default"
+    },
+    "pokemon.001.encounter.animated.default": {
+      "asset_class": "pokemon_encounter_image",
+      "availability": "optional_local_only",
+      "cache_key": "pokemon.001.encounter.animated.default",
+      "decoded_bytes_estimate": 131044,
+      "duplicate_instance_policy": "reuse_single_cached_instance",
+      "encoded_bytes": 3157,
+      "eviction_class": "event_lru",
+      "fallback_mode": "text_only",
+      "fallback_resource_id": null,
+      "output_dimensions": {
+        "height": 181,
+        "width": 181
+      },
+      "output_format": "png+compiled-atlas-metadata",
+      "player_visible_failure": false,
+      "preload_scope": "on_demand",
+      "public_distribution": "not_cleared",
+      "requirement": "optional",
+      "resource_id": "pokemon.001.encounter.animated.default"
+    },
+    "ui.icon.action.back": {
+      "asset_class": "ui_icon",
+      "availability": "public_build_time_import",
+      "cache_key": "ui.icon.action.back",
+      "decoded_bytes_estimate": null,
+      "duplicate_instance_policy": "reuse_single_cached_instance",
+      "encoded_bytes": 262,
+      "eviction_class": "resident",
+      "fallback_mode": "text_only",
+      "fallback_resource_id": null,
+      "output_dimensions": {
+        "height": 24,
+        "width": 24
+      },
+      "output_format": "svg",
+      "player_visible_failure": false,
+      "preload_scope": "initial",
+      "public_distribution": "allowed",
+      "requirement": "required",
+      "resource_id": "ui.icon.action.back"
+    },
+    "ui.icon.action.close": {
+      "asset_class": "ui_icon",
+      "availability": "public_build_time_import",
+      "cache_key": "ui.icon.action.close",
+      "decoded_bytes_estimate": null,
+      "duplicate_instance_policy": "reuse_single_cached_instance",
+      "encoded_bytes": 260,
+      "eviction_class": "resident",
+      "fallback_mode": "text_only",
+      "fallback_resource_id": null,
+      "output_dimensions": {
+        "height": 24,
+        "width": 24
+      },
+      "output_format": "svg",
+      "player_visible_failure": false,
+      "preload_scope": "initial",
+      "public_distribution": "allowed",
+      "requirement": "required",
+      "resource_id": "ui.icon.action.close"
+    },
+    "ui.icon.action.confirm": {
+      "asset_class": "ui_icon",
+      "availability": "public_build_time_import",
+      "cache_key": "ui.icon.action.confirm",
+      "decoded_bytes_estimate": null,
+      "duplicate_instance_policy": "reuse_single_cached_instance",
+      "encoded_bytes": 239,
+      "eviction_class": "resident",
+      "fallback_mode": "text_only",
+      "fallback_resource_id": null,
+      "output_dimensions": {
+        "height": 24,
+        "width": 24
+      },
+      "output_format": "svg",
+      "player_visible_failure": false,
+      "preload_scope": "initial",
+      "public_distribution": "allowed",
+      "requirement": "required",
+      "resource_id": "ui.icon.action.confirm"
+    },
+    "ui.icon.action.settings": {
+      "asset_class": "ui_icon",
+      "availability": "public_build_time_import",
+      "cache_key": "ui.icon.action.settings",
+      "decoded_bytes_estimate": null,
+      "duplicate_instance_policy": "reuse_single_cached_instance",
+      "encoded_bytes": 586,
+      "eviction_class": "resident",
+      "fallback_mode": "text_only",
+      "fallback_resource_id": null,
+      "output_dimensions": {
+        "height": 24,
+        "width": 24
+      },
+      "output_format": "svg",
+      "player_visible_failure": false,
+      "preload_scope": "initial",
+      "public_distribution": "allowed",
+      "requirement": "required",
+      "resource_id": "ui.icon.action.settings"
+    }
+  },
+  "semantic_adapter_index": {
+    "p2.world.commit_relationship_state": {
+      "adapter_id": "p2.world.commit_relationship_state",
+      "args": {
+        "cause_id": "stable_ref",
+        "relationship_ref": "stable_ref",
+        "state_id": "stable_ref"
+      },
+      "invariants": [
+        "authored_transition_only",
+        "no_universal_morality_meter",
+        "no_raw_storage_path"
+      ],
+      "kind": "command",
+      "owner": "P2"
+    },
+    "p2.world.commit_route_state": {
+      "adapter_id": "p2.world.commit_route_state",
+      "args": {
+        "cause_id": "stable_ref",
+        "route_ref": "stable_ref",
+        "state_id": "stable_ref"
+      },
+      "invariants": [
+        "authored_transition_only",
+        "event_driven_not_per_frame",
+        "no_raw_storage_path"
+      ],
+      "kind": "command",
+      "owner": "P2"
+    },
+    "p2.world.commit_setting_flag_state": {
+      "adapter_id": "p2.world.commit_setting_flag_state",
+      "args": {
+        "cause_id": "stable_ref",
+        "flag_id": "stable_ref",
+        "state_id": "stable_ref"
+      },
+      "invariants": [
+        "authored_transition_only",
+        "setting_contract_must_allow_state",
+        "no_raw_storage_path"
+      ],
+      "kind": "command",
+      "owner": "P2"
+    },
+    "p2.world.current_locality": {
+      "adapter_id": "p2.world.current_locality",
+      "kind": "semantic_read",
+      "owner": "P2",
+      "value_kind": "stable_ref"
+    },
+    "p2.world.grant_permission": {
+      "adapter_id": "p2.world.grant_permission",
+      "args": {
+        "permission_ref": "stable_ref",
+        "source_id": "stable_ref"
+      },
+      "invariants": [
+        "authored_transition_only",
+        "no_regionwide_authority_inference",
+        "no_raw_storage_path"
+      ],
+      "kind": "command",
+      "owner": "P2"
+    },
+    "p2.world.has_local_knowledge": {
+      "adapter_id": "p2.world.has_local_knowledge",
+      "args": {
+        "knowledge_ref": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p2.world.local_knowledge"
+      ]
+    },
+    "p2.world.has_permission": {
+      "adapter_id": "p2.world.has_permission",
+      "args": {
+        "permission_ref": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p2.world.permission"
+      ]
+    },
+    "p2.world.local_knowledge": {
+      "adapter_id": "p2.world.local_knowledge",
+      "kind": "semantic_read",
+      "owner": "P2",
+      "value_kind": "keyed_state"
+    },
+    "p2.world.locality_is": {
+      "adapter_id": "p2.world.locality_is",
+      "args": {
+        "locality_ref": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p2.world.current_locality"
+      ]
+    },
+    "p2.world.permission": {
+      "adapter_id": "p2.world.permission",
+      "kind": "semantic_read",
+      "owner": "P2",
+      "value_kind": "keyed_state"
+    },
+    "p2.world.record_local_knowledge": {
+      "adapter_id": "p2.world.record_local_knowledge",
+      "args": {
+        "knowledge_ref": "stable_ref",
+        "source_id": "stable_ref"
+      },
+      "invariants": [
+        "evidence_or_authored_source_required",
+        "no_omniscient_region_knowledge",
+        "no_raw_storage_path"
+      ],
+      "kind": "command",
+      "owner": "P2"
+    },
+    "p2.world.relationship": {
+      "adapter_id": "p2.world.relationship",
+      "kind": "semantic_read",
+      "owner": "P2",
+      "value_kind": "keyed_state"
+    },
+    "p2.world.relationship_state_is": {
+      "adapter_id": "p2.world.relationship_state_is",
+      "args": {
+        "relationship_ref": "stable_ref",
+        "state_id": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p2.world.relationship"
+      ]
+    },
+    "p2.world.revoke_permission": {
+      "adapter_id": "p2.world.revoke_permission",
+      "args": {
+        "permission_ref": "stable_ref",
+        "reason_id": "stable_ref"
+      },
+      "invariants": [
+        "authored_transition_only",
+        "no_regionwide_authority_inference",
+        "no_raw_storage_path"
+      ],
+      "kind": "command",
+      "owner": "P2"
+    },
+    "p2.world.route_state": {
+      "adapter_id": "p2.world.route_state",
+      "kind": "semantic_read",
+      "owner": "P2",
+      "value_kind": "keyed_state"
+    },
+    "p2.world.route_state_is": {
+      "adapter_id": "p2.world.route_state_is",
+      "args": {
+        "route_ref": "stable_ref",
+        "state_id": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p2.world.route_state"
+      ]
+    },
+    "p2.world.setting_flag": {
+      "adapter_id": "p2.world.setting_flag",
+      "kind": "semantic_read",
+      "owner": "P2",
+      "value_kind": "keyed_state"
+    },
+    "p2.world.setting_flag_state_is": {
+      "adapter_id": "p2.world.setting_flag_state_is",
+      "args": {
+        "flag_id": "stable_ref",
+        "state_id": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p2.world.setting_flag"
+      ]
+    },
+    "p3.character.attribute": {
+      "adapter_id": "p3.character.attribute",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_integer"
+    },
+    "p3.character.competence": {
+      "adapter_id": "p3.character.competence",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_integer"
+    },
+    "p3.check.resolve": {
+      "adapter_id": "p3.check.resolve",
+      "authoritative_rng_owner": "P5",
+      "invariants": [
+        "exactly_one_of_static_difficulty_or_opposed_target_ref",
+        "at_most_one_competence",
+        "two_d6_are_immutable_after_draw",
+        "context_collapses_to_p3_bounded_result",
+        "outcome_band_and_doubles_overlay_follow_p3_contract",
+        "blocked_action_never_calls_check_adapter"
+      ],
+      "kind": "check_adapter",
+      "mutation": "none",
+      "optional_args": {
+        "competence_ref": "semantic_ref",
+        "opposed_target_ref": "semantic_ref",
+        "static_difficulty": "integer"
+      },
+      "owner": "P3",
+      "required_args": {
+        "check_id": "stable_ref",
+        "context_components": "semantic_ref_array",
+        "governing_attribute_ref": "semantic_ref",
+        "outcome_map": "stable_ref_map"
+      },
+      "rng_channel": "check.d6"
+    },
+    "p3.emergency.consume_and_mitigate": {
+      "adapter_id": "p3.emergency.consume_and_mitigate",
+      "args": {
+        "consequence_id": "stable_ref",
+        "item_id": "stable_ref",
+        "mitigation_id": "stable_ref",
+        "window_id": "enum:preparation|reaction|recovery"
+      },
+      "invariants": [
+        "window_must_be_currently_legal",
+        "carried_item_must_exist",
+        "consumption_and_mitigation_are_one_prevalidated_plan",
+        "recorded_dice_unchanged",
+        "recorded_margin_band_unchanged",
+        "doubles_overlay_unchanged"
+      ],
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.emergency.legal_window": {
+      "adapter_id": "p3.emergency.legal_window",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "enum"
+    },
+    "p3.emergency.window_is_legal": {
+      "adapter_id": "p3.emergency.window_is_legal",
+      "args": {
+        "window_id": "enum:preparation|reaction|recovery"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p3.emergency.legal_window"
+      ]
+    },
+    "p3.gift.advance_facet": {
+      "adapter_id": "p3.gift.advance_facet",
+      "args": {
+        "facet_id": "stable_ref",
+        "transition_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.gift.awaken": {
+      "adapter_id": "p3.gift.awaken",
+      "args": {
+        "authored_awakening_id": "stable_ref",
+        "family_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.gift.facet": {
+      "adapter_id": "p3.gift.facet",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_state"
+    },
+    "p3.gift.foreshadowing": {
+      "adapter_id": "p3.gift.foreshadowing",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_state"
+    },
+    "p3.gift.record_foreshadowing": {
+      "adapter_id": "p3.gift.record_foreshadowing",
+      "args": {
+        "signal_id": "stable_ref",
+        "source_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.gift.state": {
+      "adapter_id": "p3.gift.state",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "enum"
+    },
+    "p3.gift.state_is": {
+      "adapter_id": "p3.gift.state_is",
+      "args": {
+        "state_id": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p3.gift.state"
+      ]
+    },
+    "p3.inventory.add_notable_item": {
+      "adapter_id": "p3.inventory.add_notable_item",
+      "args": {
+        "amount": "positive_integer",
+        "item_id": "stable_ref",
+        "provenance_ref": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.inventory.adjust_resource_pool": {
+      "adapter_id": "p3.inventory.adjust_resource_pool",
+      "args": {
+        "delta": "nonzero_integer",
+        "pool_id": "enum:provisions|remedies|materials",
+        "reason_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.inventory.carried_load": {
+      "adapter_id": "p3.inventory.carried_load",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "cached_integer"
+    },
+    "p3.inventory.has_notable_item": {
+      "adapter_id": "p3.inventory.has_notable_item",
+      "args": {
+        "item_id": "stable_ref",
+        "minimum_count": "nonnegative_integer"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p3.inventory.notable_item"
+      ]
+    },
+    "p3.inventory.notable_item": {
+      "adapter_id": "p3.inventory.notable_item",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_record"
+    },
+    "p3.inventory.remove_notable_item": {
+      "adapter_id": "p3.inventory.remove_notable_item",
+      "args": {
+        "amount": "positive_integer",
+        "item_id": "stable_ref",
+        "reason_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.inventory.resource_at_least": {
+      "adapter_id": "p3.inventory.resource_at_least",
+      "args": {
+        "amount": "nonnegative_integer",
+        "pool_id": "enum:provisions|remedies|materials"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p3.inventory.resource_pool"
+      ]
+    },
+    "p3.inventory.resource_pool": {
+      "adapter_id": "p3.inventory.resource_pool",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_integer"
+    },
+    "p3.inventory.set_item_condition": {
+      "adapter_id": "p3.inventory.set_item_condition",
+      "args": {
+        "cause_id": "stable_ref",
+        "condition_id": "stable_ref",
+        "item_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.progression.advancement_points": {
+      "adapter_id": "p3.progression.advancement_points",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "integer"
+    },
+    "p3.progression.grant_advancement": {
+      "adapter_id": "p3.progression.grant_advancement",
+      "args": {
+        "amount": "positive_integer",
+        "milestone_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.progression.grant_growth_eligibility": {
+      "adapter_id": "p3.progression.grant_growth_eligibility",
+      "args": {
+        "eligibility_id": "stable_ref",
+        "source_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.progression.growth_eligibility": {
+      "adapter_id": "p3.progression.growth_eligibility",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_boolean"
+    },
+    "p3.progression.has_growth_eligibility": {
+      "adapter_id": "p3.progression.has_growth_eligibility",
+      "args": {
+        "eligibility_id": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p3.progression.growth_eligibility"
+      ]
+    },
+    "p3.progression.has_milestone": {
+      "adapter_id": "p3.progression.has_milestone",
+      "args": {
+        "milestone_id": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p3.progression.milestone"
+      ]
+    },
+    "p3.progression.milestone": {
+      "adapter_id": "p3.progression.milestone",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_boolean"
+    },
+    "p3.progression.spend_at_checkpoint": {
+      "adapter_id": "p3.progression.spend_at_checkpoint",
+      "args": {
+        "checkpoint_id": "stable_ref",
+        "cost": "positive_integer",
+        "growth_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.survival.advance_fatigue": {
+      "adapter_id": "p3.survival.advance_fatigue",
+      "args": {
+        "cause_id": "stable_ref",
+        "steps": "positive_integer"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.survival.advance_fear": {
+      "adapter_id": "p3.survival.advance_fear",
+      "args": {
+        "cause_id": "stable_ref",
+        "steps": "positive_integer"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.survival.apply_injury": {
+      "adapter_id": "p3.survival.apply_injury",
+      "args": {
+        "cause_id": "stable_ref",
+        "severity": "stable_ref",
+        "tags": "stable_ref_array"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.survival.apply_vitality_loss": {
+      "adapter_id": "p3.survival.apply_vitality_loss",
+      "args": {
+        "amount": "positive_integer",
+        "cause_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.survival.commit_recovery": {
+      "adapter_id": "p3.survival.commit_recovery",
+      "args": {
+        "amount": "nonnegative_integer",
+        "recovery_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.survival.fatigue_stage": {
+      "adapter_id": "p3.survival.fatigue_stage",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "enum"
+    },
+    "p3.survival.fear_stage": {
+      "adapter_id": "p3.survival.fear_stage",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "enum"
+    },
+    "p3.survival.injury": {
+      "adapter_id": "p3.survival.injury",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "keyed_record"
+    },
+    "p3.survival.injury_matches": {
+      "adapter_id": "p3.survival.injury_matches",
+      "args": {
+        "severity": "stable_ref",
+        "tag": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p3.survival.injury"
+      ]
+    },
+    "p3.survival.stabilize_injury": {
+      "adapter_id": "p3.survival.stabilize_injury",
+      "args": {
+        "injury_ref": "stable_ref",
+        "method_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P3"
+    },
+    "p3.survival.vitality": {
+      "adapter_id": "p3.survival.vitality",
+      "kind": "semantic_read",
+      "owner": "P3",
+      "value_kind": "integer"
+    },
+    "p4.chronology.anomaly_flag": {
+      "adapter_id": "p4.chronology.anomaly_flag",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_boolean"
+    },
+    "p4.chronology.anomaly_flag_is": {
+      "adapter_id": "p4.chronology.anomaly_flag_is",
+      "args": {
+        "flag_id": "stable_ref",
+        "value": "boolean"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p4.chronology.anomaly_flag"
+      ]
+    },
+    "p4.companion.capability": {
+      "adapter_id": "p4.companion.capability",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_state"
+    },
+    "p4.companion.commit_logistical_state": {
+      "adapter_id": "p4.companion.commit_logistical_state",
+      "args": {
+        "reason_id": "stable_ref",
+        "slot": "integer_0_to_2",
+        "state_id": "stable_ref"
+      },
+      "kind": "command",
+      "owner": "P4"
+    },
+    "p4.companion.commit_separation": {
+      "adapter_id": "p4.companion.commit_separation",
+      "args": {
+        "reason_id": "stable_ref",
+        "slot": "integer_0_to_2"
+      },
+      "kind": "command",
+      "owner": "P4"
+    },
+    "p4.companion.commit_voluntary_join": {
+      "adapter_id": "p4.companion.commit_voluntary_join",
+      "args": {
+        "event_id": "stable_ref",
+        "slot": "integer_0_to_2",
+        "species_id": "positive_integer",
+        "willingness_ref": "stable_ref"
+      },
+      "invariants": [
+        "slot_empty",
+        "species_path_allows_companionship",
+        "voluntary_association"
+      ],
+      "kind": "command",
+      "owner": "P4"
+    },
+    "p4.companion.count_equals": {
+      "adapter_id": "p4.companion.count_equals",
+      "args": {
+        "count": "integer_0_to_3"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p4.companion.slot"
+      ]
+    },
+    "p4.companion.logistics": {
+      "adapter_id": "p4.companion.logistics",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_state"
+    },
+    "p4.companion.slot": {
+      "adapter_id": "p4.companion.slot",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_record"
+    },
+    "p4.companion.slot_is_empty": {
+      "adapter_id": "p4.companion.slot_is_empty",
+      "args": {
+        "slot": "integer_0_to_2"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p4.companion.slot"
+      ]
+    },
+    "p4.companion.willingness": {
+      "adapter_id": "p4.companion.willingness",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_state"
+    },
+    "p4.encounter.classification": {
+      "adapter_id": "p4.encounter.classification",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "enum"
+    },
+    "p4.encounter.direct_route_eligibility": {
+      "adapter_id": "p4.encounter.direct_route_eligibility",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_boolean"
+    },
+    "p4.encounter.hook": {
+      "adapter_id": "p4.encounter.hook",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_record"
+    },
+    "p4.encounter.record_direct_interaction": {
+      "adapter_id": "p4.encounter.record_direct_interaction",
+      "args": {
+        "encounter_ref": "stable_ref",
+        "route_ref": "stable_ref",
+        "species_id": "positive_integer"
+      },
+      "invariants": [
+        "living_playable_interaction",
+        "no_capture_implication",
+        "no_companion_implication"
+      ],
+      "kind": "command",
+      "owner": "P4"
+    },
+    "p4.encounter.record_exceptional_chronology_interaction": {
+      "adapter_id": "p4.encounter.record_exceptional_chronology_interaction",
+      "args": {
+        "anomaly_ref": "stable_ref",
+        "encounter_ref": "stable_ref",
+        "species_id": "positive_integer"
+      },
+      "invariants": [
+        "not_routine_spawn",
+        "no_native_origin_rewrite",
+        "no_reusable_time_travel"
+      ],
+      "kind": "command",
+      "owner": "P4"
+    },
+    "p4.encounter.route_is_eligible": {
+      "adapter_id": "p4.encounter.route_is_eligible",
+      "args": {
+        "route_ref": "stable_ref",
+        "species_id": "positive_integer"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p4.encounter.direct_route_eligibility"
+      ]
+    },
+    "p4.species.capability_tag": {
+      "adapter_id": "p4.species.capability_tag",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_boolean"
+    },
+    "p4.species.evolution_ref": {
+      "adapter_id": "p4.species.evolution_ref",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_ref"
+    },
+    "p4.species.has_capability": {
+      "adapter_id": "p4.species.has_capability",
+      "args": {
+        "capability_id": "stable_ref",
+        "species_id": "positive_integer"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p4.species.capability_tag"
+      ]
+    },
+    "p4.species.has_hazard": {
+      "adapter_id": "p4.species.has_hazard",
+      "args": {
+        "hazard_id": "stable_ref",
+        "species_id": "positive_integer"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p4.species.hazard_tag"
+      ]
+    },
+    "p4.species.hazard_tag": {
+      "adapter_id": "p4.species.hazard_tag",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_boolean"
+    },
+    "p4.species.identity": {
+      "adapter_id": "p4.species.identity",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "stable_ref"
+    },
+    "p4.species.profile": {
+      "adapter_id": "p4.species.profile",
+      "kind": "semantic_read",
+      "owner": "P4",
+      "value_kind": "keyed_record"
+    },
+    "p4.species.record_identification_evidence": {
+      "adapter_id": "p4.species.record_identification_evidence",
+      "args": {
+        "evidence_ref": "stable_ref",
+        "knowledge_scope": "stable_ref",
+        "species_id": "positive_integer"
+      },
+      "invariants": [
+        "evidence_bounded",
+        "no_omniscient_pokedex_write"
+      ],
+      "kind": "command",
+      "owner": "P4"
+    },
+    "p5.event.count": {
+      "adapter_id": "p5.event.count",
+      "kind": "semantic_read",
+      "owner": "P5",
+      "value_kind": "keyed_integer"
+    },
+    "p5.event.count_at_most": {
+      "adapter_id": "p5.event.count_at_most",
+      "args": {
+        "count": "nonnegative_integer",
+        "event_id": "stable_ref"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p5.event.count"
+      ]
+    },
+    "p5.event.last_resolved_transition": {
+      "adapter_id": "p5.event.last_resolved_transition",
+      "kind": "semantic_read",
+      "owner": "P5",
+      "value_kind": "keyed_integer"
+    },
+    "p5.event.recent_history": {
+      "adapter_id": "p5.event.recent_history",
+      "kind": "semantic_read",
+      "owner": "P5",
+      "value_kind": "bounded_ring"
+    },
+    "p5.narrative.counter": {
+      "adapter_id": "p5.narrative.counter",
+      "kind": "semantic_read",
+      "owner": "P5",
+      "value_kind": "keyed_integer"
+    },
+    "p5.narrative.counter_at_least": {
+      "adapter_id": "p5.narrative.counter_at_least",
+      "args": {
+        "counter_id": "stable_ref",
+        "value": "integer"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p5.narrative.counter"
+      ]
+    },
+    "p5.narrative.flag": {
+      "adapter_id": "p5.narrative.flag",
+      "kind": "semantic_read",
+      "owner": "P5",
+      "value_kind": "keyed_boolean"
+    },
+    "p5.narrative.flag_is": {
+      "adapter_id": "p5.narrative.flag_is",
+      "args": {
+        "flag_id": "stable_ref",
+        "value": "boolean"
+      },
+      "kind": "pure_predicate",
+      "reads": [
+        "p5.narrative.flag"
+      ]
+    }
+  },
+  "semantic_adapter_registry": {
+    "argument_types": {
+      "boolean": {
+        "type": "boolean"
+      },
+      "integer": {
+        "type": "integer"
+      },
+      "integer_0_to_2": {
+        "maximum": 2,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "integer_0_to_3": {
+        "maximum": 3,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "nonnegative_integer": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "nonzero_integer": {
+        "excluded": 0,
+        "type": "integer"
+      },
+      "positive_integer": {
+        "minimum": 1,
+        "type": "integer"
+      },
+      "semantic_ref": {
+        "pattern": "^(p2|p3|p4|p5|content)\\.[a-z0-9][a-z0-9._:-]{0,126}$",
+        "type": "string"
+      },
+      "semantic_ref_array": {
+        "item_type": "semantic_ref",
+        "max_items": 32,
+        "type": "array"
+      },
+      "stable_ref": {
+        "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$",
+        "type": "string"
+      },
+      "stable_ref_array": {
+        "item_type": "stable_ref",
+        "max_items": 32,
+        "type": "array"
+      },
+      "stable_ref_map": {
+        "key_type": "stable_ref",
+        "max_items": 16,
+        "type": "map",
+        "value_type": "stable_ref"
+      }
+    },
+    "contract_version": "p5-event-contract-v1",
+    "registry_format_version": "p5-adapter-registry-v1",
+    "rules": {
+      "command_args_are_prevalidated_before_first_write": true,
+      "command_registry_is_closed_by_default": true,
+      "direct_upstream_write_is_error": "P5V007",
+      "effect_plan_commit_is_atomic": true,
+      "eligibility_predicates_are_pure": true,
+      "eligibility_predicates_consume_rng": false,
+      "generic_capture_or_containment_command_exists": false,
+      "generic_companion_bonus_command_exists": false,
+      "generic_evolution_command_exists": false,
+      "generic_loot_command_exists": false,
+      "runtime_storage_paths_are_semantic_refs": false,
+      "undeclared_read_is_error": "P5V006",
+      "unknown_domain_command_is_error": "P5V008",
+      "unknown_predicate_is_error": "P5V002"
+    }
+  },
+  "source_contracts": {
+    "p4_species_coverage": "p4-coverage-manifest-v1",
+    "p5_adapter_registry": "p5-adapter-registry-v1",
+    "p5_event_fixture": "p5-batch03-representative-events-v1",
+    "p6_resource_manifest": "p6-resource-manifest-v1"
+  },
+  "species_index": {
+    "001": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.001.bulbasaur",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 1,
+      "species_key": "bulbasaur",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "002": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.002.ivysaur",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 2,
+      "species_key": "ivysaur",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "003": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.003.venusaur",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 3,
+      "species_key": "venusaur",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "004": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.004.charmander",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 4,
+      "species_key": "charmander",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "005": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.005.charmeleon",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 5,
+      "species_key": "charmeleon",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "006": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.006.charizard",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 6,
+      "species_key": "charizard",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "007": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.007.squirtle",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 7,
+      "species_key": "squirtle",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "008": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.008.wartortle",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 8,
+      "species_key": "wartortle",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "009": {
+      "authoring_batch": "B12-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.009.blastoise",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 9,
+      "species_key": "blastoise",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "010": {
+      "authoring_batch": "B02-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.010.caterpie",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 10,
+      "species_key": "caterpie",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "011": {
+      "authoring_batch": "B02-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.011.metapod",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 11,
+      "species_key": "metapod",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "012": {
+      "authoring_batch": "B02-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.012.butterfree",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 12,
+      "species_key": "butterfree",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "013": {
+      "authoring_batch": "B01-anchor",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.013.weedle",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 13,
+      "species_key": "weedle",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "014": {
+      "authoring_batch": "B01-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.014.kakuna",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 14,
+      "species_key": "kakuna",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "015": {
+      "authoring_batch": "B01-anchor",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.015.beedrill",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 15,
+      "species_key": "beedrill",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "016": {
+      "authoring_batch": "B13-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.016.pidgey",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 16,
+      "species_key": "pidgey",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "017": {
+      "authoring_batch": "B13-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.017.pidgeotto",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 17,
+      "species_key": "pidgeotto",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "018": {
+      "authoring_batch": "B13-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.018.pidgeot",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 18,
+      "species_key": "pidgeot",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "019": {
+      "authoring_batch": "B01-anchor",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.019.rattata",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": false,
+      "source_review_status": "complete",
+      "species_id": 19,
+      "species_key": "rattata",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "020": {
+      "authoring_batch": "B01-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.020.raticate",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": false,
+      "source_review_status": "complete",
+      "species_id": 20,
+      "species_key": "raticate",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "021": {
+      "authoring_batch": "B13-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.021.spearow",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 21,
+      "species_key": "spearow",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "022": {
+      "authoring_batch": "B13-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.022.fearow",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 22,
+      "species_key": "fearow",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "023": {
+      "authoring_batch": "B20-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.023.ekans",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 23,
+      "species_key": "ekans",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "024": {
+      "authoring_batch": "B20-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.024.arbok",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 24,
+      "species_key": "arbok",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "025": {
+      "authoring_batch": "B02-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.025.pikachu",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 25,
+      "species_key": "pikachu",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "026": {
+      "authoring_batch": "B02-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.026.raichu",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 26,
+      "species_key": "raichu",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "027": {
+      "authoring_batch": "B14-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.027.sandshrew",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 27,
+      "species_key": "sandshrew",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "028": {
+      "authoring_batch": "B14-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.028.sandslash",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 28,
+      "species_key": "sandslash",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "029": {
+      "authoring_batch": "B06-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.029.nidoran-f",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 29,
+      "species_key": "nidoran-f",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "030": {
+      "authoring_batch": "B06-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.030.nidorina",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 30,
+      "species_key": "nidorina",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "031": {
+      "authoring_batch": "B06-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.031.nidoqueen",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 31,
+      "species_key": "nidoqueen",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "032": {
+      "authoring_batch": "B06-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.032.nidoran-m",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 32,
+      "species_key": "nidoran-m",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "033": {
+      "authoring_batch": "B06-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.033.nidorino",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 33,
+      "species_key": "nidorino",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "034": {
+      "authoring_batch": "B06-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.034.nidoking",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 34,
+      "species_key": "nidoking",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "035": {
+      "authoring_batch": "B16-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.035.clefairy",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 35,
+      "species_key": "clefairy",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "036": {
+      "authoring_batch": "B16-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.036.clefable",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 36,
+      "species_key": "clefable",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "037": {
+      "authoring_batch": "B16-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.037.vulpix",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 37,
+      "species_key": "vulpix",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "038": {
+      "authoring_batch": "B16-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.038.ninetales",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 38,
+      "species_key": "ninetales",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "039": {
+      "authoring_batch": "B09-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.039.jigglypuff",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 39,
+      "species_key": "jigglypuff",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "040": {
+      "authoring_batch": "B09-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.040.wigglytuff",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 40,
+      "species_key": "wigglytuff",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "041": {
+      "authoring_batch": "B10-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.041.zubat",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 41,
+      "species_key": "zubat",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "042": {
+      "authoring_batch": "B10-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.042.golbat",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 42,
+      "species_key": "golbat",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "043": {
+      "authoring_batch": "B15-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.043.oddish",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 43,
+      "species_key": "oddish",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "044": {
+      "authoring_batch": "B15-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.044.gloom",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 44,
+      "species_key": "gloom",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "045": {
+      "authoring_batch": "B15-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.045.vileplume",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 45,
+      "species_key": "vileplume",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "046": {
+      "authoring_batch": "B04-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.046.paras",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 46,
+      "species_key": "paras",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "047": {
+      "authoring_batch": "B04-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.047.parasect",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 47,
+      "species_key": "parasect",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "048": {
+      "authoring_batch": "B09-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.048.venonat",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 48,
+      "species_key": "venonat",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "049": {
+      "authoring_batch": "B09-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.049.venomoth",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 49,
+      "species_key": "venomoth",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "050": {
+      "authoring_batch": "B14-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.050.diglett",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 50,
+      "species_key": "diglett",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "051": {
+      "authoring_batch": "B14-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.051.dugtrio",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 51,
+      "species_key": "dugtrio",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "052": {
+      "authoring_batch": "B11-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.052.meowth",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 52,
+      "species_key": "meowth",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "053": {
+      "authoring_batch": "B11-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.053.persian",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 53,
+      "species_key": "persian",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "054": {
+      "authoring_batch": "B09-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.054.psyduck",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 54,
+      "species_key": "psyduck",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "055": {
+      "authoring_batch": "B09-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.055.golduck",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 55,
+      "species_key": "golduck",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "056": {
+      "authoring_batch": "B17-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.056.mankey",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 56,
+      "species_key": "mankey",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "057": {
+      "authoring_batch": "B17-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.057.primeape",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 57,
+      "species_key": "primeape",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "058": {
+      "authoring_batch": "B11-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.058.growlithe",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 58,
+      "species_key": "growlithe",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "059": {
+      "authoring_batch": "B11-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.059.arcanine",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 59,
+      "species_key": "arcanine",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "060": {
+      "authoring_batch": "B20-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.060.poliwag",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 60,
+      "species_key": "poliwag",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "061": {
+      "authoring_batch": "B20-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.061.poliwhirl",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 61,
+      "species_key": "poliwhirl",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "062": {
+      "authoring_batch": "B20-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.062.poliwrath",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 62,
+      "species_key": "poliwrath",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "063": {
+      "authoring_batch": "B02-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.063.abra",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 63,
+      "species_key": "abra",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "064": {
+      "authoring_batch": "B02-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.064.kadabra",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 64,
+      "species_key": "kadabra",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "065": {
+      "authoring_batch": "B02-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.065.alakazam",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 65,
+      "species_key": "alakazam",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "066": {
+      "authoring_batch": "B11-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.066.machop",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 66,
+      "species_key": "machop",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "067": {
+      "authoring_batch": "B11-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.067.machoke",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 67,
+      "species_key": "machoke",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "068": {
+      "authoring_batch": "B11-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.068.machamp",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 68,
+      "species_key": "machamp",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "069": {
+      "authoring_batch": "B15-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.069.bellsprout",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 69,
+      "species_key": "bellsprout",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "070": {
+      "authoring_batch": "B15-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.070.weepinbell",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 70,
+      "species_key": "weepinbell",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "071": {
+      "authoring_batch": "B15-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.071.victreebel",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 71,
+      "species_key": "victreebel",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "072": {
+      "authoring_batch": "B10-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.072.tentacool",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 72,
+      "species_key": "tentacool",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "073": {
+      "authoring_batch": "B10-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.073.tentacruel",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 73,
+      "species_key": "tentacruel",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "074": {
+      "authoring_batch": "B14-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.074.geodude",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 74,
+      "species_key": "geodude",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "075": {
+      "authoring_batch": "B14-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.075.graveler",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 75,
+      "species_key": "graveler",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "076": {
+      "authoring_batch": "B14-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.076.golem",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 76,
+      "species_key": "golem",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "077": {
+      "authoring_batch": "B10-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.077.ponyta",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 77,
+      "species_key": "ponyta",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "078": {
+      "authoring_batch": "B10-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.078.rapidash",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 78,
+      "species_key": "rapidash",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "079": {
+      "authoring_batch": "B04-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.079.slowpoke",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 79,
+      "species_key": "slowpoke",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "080": {
+      "authoring_batch": "B04-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.080.slowbro",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 80,
+      "species_key": "slowbro",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "081": {
+      "authoring_batch": "B04-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.081.magnemite",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 81,
+      "species_key": "magnemite",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "082": {
+      "authoring_batch": "B04-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.082.magneton",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 82,
+      "species_key": "magneton",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "083": {
+      "authoring_batch": "B03-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.083.farfetchd",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 83,
+      "species_key": "farfetchd",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "084": {
+      "authoring_batch": "B13-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.084.doduo",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 84,
+      "species_key": "doduo",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "085": {
+      "authoring_batch": "B13-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.085.dodrio",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 85,
+      "species_key": "dodrio",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "086": {
+      "authoring_batch": "B19-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.086.seel",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 86,
+      "species_key": "seel",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "087": {
+      "authoring_batch": "B19-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.087.dewgong",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 87,
+      "species_key": "dewgong",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "088": {
+      "authoring_batch": "B05-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.088.grimer",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 88,
+      "species_key": "grimer",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "089": {
+      "authoring_batch": "B05-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.089.muk",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 89,
+      "species_key": "muk",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "090": {
+      "authoring_batch": "B04-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.090.shellder",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 90,
+      "species_key": "shellder",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "091": {
+      "authoring_batch": "B04-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.091.cloyster",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 91,
+      "species_key": "cloyster",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "092": {
+      "authoring_batch": "B01-anchor",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.092.gastly",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 92,
+      "species_key": "gastly",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "093": {
+      "authoring_batch": "B01-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.093.haunter",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 93,
+      "species_key": "haunter",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "094": {
+      "authoring_batch": "B01-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.094.gengar",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 94,
+      "species_key": "gengar",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "095": {
+      "authoring_batch": "B14-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.095.onix",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 95,
+      "species_key": "onix",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "096": {
+      "authoring_batch": "B09-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.096.drowzee",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 96,
+      "species_key": "drowzee",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "097": {
+      "authoring_batch": "B09-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.097.hypno",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 97,
+      "species_key": "hypno",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "098": {
+      "authoring_batch": "B21-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.098.krabby",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 98,
+      "species_key": "krabby",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "099": {
+      "authoring_batch": "B21-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.099.kingler",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 99,
+      "species_key": "kingler",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "100": {
+      "authoring_batch": "B05-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.100.voltorb",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 100,
+      "species_key": "voltorb",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "101": {
+      "authoring_batch": "B05-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.101.electrode",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 101,
+      "species_key": "electrode",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "102": {
+      "authoring_batch": "B03-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.102.exeggcute",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 102,
+      "species_key": "exeggcute",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "103": {
+      "authoring_batch": "B03-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.103.exeggutor",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 103,
+      "species_key": "exeggutor",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "104": {
+      "authoring_batch": "B08-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.104.cubone",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 104,
+      "species_key": "cubone",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "105": {
+      "authoring_batch": "B08-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.105.marowak",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 105,
+      "species_key": "marowak",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "106": {
+      "authoring_batch": "B17-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.106.hitmonlee",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 106,
+      "species_key": "hitmonlee",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "107": {
+      "authoring_batch": "B17-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.107.hitmonchan",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 107,
+      "species_key": "hitmonchan",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "108": {
+      "authoring_batch": "B21-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.108.lickitung",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 108,
+      "species_key": "lickitung",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "109": {
+      "authoring_batch": "B05-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.109.koffing",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 109,
+      "species_key": "koffing",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "110": {
+      "authoring_batch": "B05-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.110.weezing",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 110,
+      "species_key": "weezing",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "111": {
+      "authoring_batch": "B10-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.111.rhyhorn",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 111,
+      "species_key": "rhyhorn",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "112": {
+      "authoring_batch": "B10-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.112.rhydon",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 112,
+      "species_key": "rhydon",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "113": {
+      "authoring_batch": "B08-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.113.chansey",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 113,
+      "species_key": "chansey",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "114": {
+      "authoring_batch": "B08-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.114.tangela",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 114,
+      "species_key": "tangela",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "115": {
+      "authoring_batch": "B06-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.115.kangaskhan",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 115,
+      "species_key": "kangaskhan",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "116": {
+      "authoring_batch": "B19-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.116.horsea",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 116,
+      "species_key": "horsea",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "117": {
+      "authoring_batch": "B19-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.117.seadra",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 117,
+      "species_key": "seadra",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "118": {
+      "authoring_batch": "B19-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.118.goldeen",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 118,
+      "species_key": "goldeen",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "119": {
+      "authoring_batch": "B19-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.119.seaking",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 119,
+      "species_key": "seaking",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "120": {
+      "authoring_batch": "B08-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.120.staryu",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 120,
+      "species_key": "staryu",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "121": {
+      "authoring_batch": "B08-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.121.starmie",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 121,
+      "species_key": "starmie",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "122": {
+      "authoring_batch": "B16-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.122.mr-mime",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 122,
+      "species_key": "mr-mime",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "123": {
+      "authoring_batch": "B17-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.123.scyther",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 123,
+      "species_key": "scyther",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "124": {
+      "authoring_batch": "B16-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.124.jynx",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 124,
+      "species_key": "jynx",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "125": {
+      "authoring_batch": "B18-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.125.electabuzz",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 125,
+      "species_key": "electabuzz",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "126": {
+      "authoring_batch": "B18-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.126.magmar",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 126,
+      "species_key": "magmar",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "127": {
+      "authoring_batch": "B17-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.127.pinsir",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 127,
+      "species_key": "pinsir",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "128": {
+      "authoring_batch": "B06-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.128.tauros",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 128,
+      "species_key": "tauros",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "129": {
+      "authoring_batch": "B01-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.129.magikarp",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": false,
+      "source_review_status": "complete",
+      "species_id": 129,
+      "species_key": "magikarp",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "130": {
+      "authoring_batch": "B01-anchor",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.130.gyarados",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 130,
+      "species_key": "gyarados",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "131": {
+      "authoring_batch": "FINAL-pilot-promotion",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.131.lapras",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 131,
+      "species_key": "lapras",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "132": {
+      "authoring_batch": "B03-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.132.ditto",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 132,
+      "species_key": "ditto",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "133": {
+      "authoring_batch": "B03-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.133.eevee",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 133,
+      "species_key": "eevee",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "134": {
+      "authoring_batch": "B03-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.134.vaporeon",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 134,
+      "species_key": "vaporeon",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "135": {
+      "authoring_batch": "B03-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.135.jolteon",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 135,
+      "species_key": "jolteon",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "136": {
+      "authoring_batch": "B03-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.136.flareon",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 136,
+      "species_key": "flareon",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "137": {
+      "authoring_batch": "B05-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.137.porygon",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 137,
+      "species_key": "porygon",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "138": {
+      "authoring_batch": "B18-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.138.omanyte",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 138,
+      "species_key": "omanyte",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "139": {
+      "authoring_batch": "B18-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.139.omastar",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 139,
+      "species_key": "omastar",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "140": {
+      "authoring_batch": "B01-anchor",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.140.kabuto",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 140,
+      "species_key": "kabuto",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "141": {
+      "authoring_batch": "B01-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.141.kabutops",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 141,
+      "species_key": "kabutops",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "142": {
+      "authoring_batch": "B18-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.142.aerodactyl",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 142,
+      "species_key": "aerodactyl",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "143": {
+      "authoring_batch": "B18-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.143.snorlax",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 143,
+      "species_key": "snorlax",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "144": {
+      "authoring_batch": "B07-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.144.articuno",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 144,
+      "species_key": "articuno",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "145": {
+      "authoring_batch": "B07-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.145.zapdos",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 145,
+      "species_key": "zapdos",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "146": {
+      "authoring_batch": "B07-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.146.moltres",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 146,
+      "species_key": "moltres",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "147": {
+      "authoring_batch": "B07-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.147.dratini",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 147,
+      "species_key": "dratini",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "148": {
+      "authoring_batch": "B07-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.148.dragonair",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 148,
+      "species_key": "dragonair",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "149": {
+      "authoring_batch": "B07-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.149.dragonite",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 149,
+      "species_key": "dragonite",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "150": {
+      "authoring_batch": "B05-new",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.150.mewtwo",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 150,
+      "species_key": "mewtwo",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    },
+    "151": {
+      "authoring_batch": "FINAL-pilot-promotion",
+      "blocking_gate_refs": [],
+      "bond_status": "complete",
+      "capability_hazard_status": "complete",
+      "dossier_descriptor_id": "p4.species.151.mew",
+      "dossier_status": "complete",
+      "ecology_status": "complete",
+      "individual_variation_status": "complete",
+      "narrative_hook_status": "complete",
+      "p6_followup_required": true,
+      "source_review_status": "complete",
+      "species_id": 151,
+      "species_key": "mew",
+      "stat_profile_status": "complete",
+      "threat_encounter_status": "complete"
+    }
+  },
+  "trigger_index": {
+    "event_chain_advanced": [
+      "fixture.d034.exceptional.chronology",
+      "fixture.faction.chain.entry",
+      "fixture.faction.chain.followup"
+    ],
+    "location_entered": [
+      "fixture.human.social.obligation",
+      "fixture.pokemon.direct.interaction"
+    ],
+    "player_action_committed": [
+      "fixture.mixed.route_dispute"
+    ],
+    "travel_step_committed": [
+      "fixture.survival.route_failure"
+    ]
+  }
+}
