@@ -1,7 +1,7 @@
 import { createInitialP8AuthorityState, p8AuthorityStateToJson, type P8AuthorityState, type P8CharacterCreationInput } from '../domain/p8Authority';
 import { p8AuthorityStateFromJson } from '../domain/p8AuthorityJson';
 import { createP8SliceCharacter, P8_SLICE_CONTENT_IDENTITY, P8_SLICE_EVENT_CATALOG } from '../content/p8SliceContent';
-import { P8_SLICE_SCENE_SEQUENCE, type P8ScenePresentation } from '../content/p8SlicePresentation';
+import { getP8SliceScene, P8_SLICE_SCENE_SEQUENCE, type P8ScenePresentation } from '../content/p8SlicePresentation';
 import { digestP8AuthorityState } from '../runtime/p8Canonical';
 import { prepareP8PendingEvent, resolveP8EventChoice, selectP8Event } from '../events/p8EventRuntime';
 import type { HashProvider } from '../runtime/hashProvider';
@@ -75,12 +75,13 @@ export class P8BrowserSession {
   }
 
   public snapshot(): P8BrowserSessionSnapshot {
-    const scene = this.#pending === null ? null : P8_SLICE_SCENE_SEQUENCE.find((candidate) => candidate.eventId === this.#pending!.eventId) ?? null;
+    const pending = this.#pending;
+    const scene = pending === null ? null : getP8SliceScene(pending.eventId) ?? null;
     return Object.freeze({
       status: this.#authority === null ? 'empty' : this.#authority.events.narrativeFlags['slice.ending_ready'] === true ? 'ended' : 'running',
       authority: this.#authority,
       transitionSeq: this.#transitionSeq,
-      pending: this.#pending,
+      pending,
       scene,
       lastResolution: this.#lastResolution,
       canResume: this.#canResume,
@@ -131,10 +132,9 @@ export class P8BrowserSession {
     const authority = this.#requireAuthority();
     if (this.#pending !== null) return this.snapshot();
     if (authority.events.narrativeFlags['slice.ending_ready'] === true) return this.snapshot();
-    if (this.#transitionSeq > BigInt(P8_SLICE_SCENE_SEQUENCE.length)) throw new RangeError('P8 transition sequence exceeded the phone slice scene count');
+    if (this.#transitionSeq >= BigInt(P8_SLICE_SCENE_SEQUENCE.length)) throw new RangeError('P8 transition sequence exceeded the phone slice scene count');
     const sceneIndex = Number(this.#transitionSeq);
-    const scene = P8_SLICE_SCENE_SEQUENCE[sceneIndex];
-    if (scene === undefined) throw new RangeError('no remaining P8 phone scene is available');
+    const scene = P8_SLICE_SCENE_SEQUENCE[sceneIndex]!;
     const context = {
       ...P8_SLICE_CONTENT_IDENTITY,
       runSeedHex: this.#runSeedHex,
@@ -186,12 +186,12 @@ export class P8BrowserSession {
     return this.snapshot();
   }
 
-  private #requireAuthority(): P8AuthorityState {
+  #requireAuthority(): P8AuthorityState {
     if (this.#authority === null) throw new RangeError('P8 run has not started');
     return this.#authority;
   }
 
-  private async #persist(): Promise<void> {
+  async #persist(): Promise<void> {
     const authority = this.#requireAuthority();
     const updatedAtIso = this.#now().toISOString();
     const envelope: SaveEnvelopeV1Runtime = {
