@@ -33,10 +33,18 @@ import {
   type P8BrowserSessionSnapshot,
 } from '../platform/p8BrowserSession';
 import { loadP8PokemonMedia, type P8PokemonMediaResult } from '../resources/p8PokemonPresentation';
+import { NarrativeReveal, usePrefersReducedMotion } from './NarrativeReveal';
 
 const session = new P8BrowserSession();
 
+const SCENE_FADE_OUT_MS = 110;
+const TRAVEL_FADE_OUT_MS = 180;
+const SCENE_FADE_IN_MS = 140;
+const TRAVEL_FADE_IN_MS = 220;
+
 type ViewMode = 'landing' | 'prompts' | 'reveal' | 'specialization' | 'confirm' | 'play';
+type PresentationTransitionPhase = 'idle' | 'out' | 'in';
+type PresentationTransitionKind = 'scene' | 'travel';
 
 function answerTuple(values: readonly string[]): [string, string, string] {
   if (values.length !== 3) throw new RangeError('three formative answers are required');
@@ -52,6 +60,11 @@ function creationInput(
     attributeIncreases: [...specialization.attributeIncreases] as [P8AttributeId, P8AttributeId, P8AttributeId, P8AttributeId],
     personalCompetenceId: specialization.personalCompetenceId,
   };
+}
+
+function waitForPresentation(milliseconds: number): Promise<void> {
+  if (milliseconds <= 0) return Promise.resolve();
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
 }
 
 function LanguageSwitcher({ locale, onChange }: { readonly locale: P8Locale; readonly onChange: (locale: P8Locale) => void }) {
@@ -150,18 +163,27 @@ function PokemonMedia({ speciesId, locale }: { readonly speciesId: number; reado
 export function App() {
   const [locale, setLocale] = useState<P8Locale>(() => resolveInitialP8Locale());
   const [snapshot, setSnapshot] = useState<P8BrowserSessionSnapshot>(() => session.snapshot());
+  const [presentedSnapshot, setPresentedSnapshot] = useState<P8BrowserSessionSnapshot>(() => session.snapshot());
   const [mode, setMode] = useState<ViewMode>('landing');
   const [promptIndex, setPromptIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [specializationId, setSpecializationId] = useState(P8_SLICE_SPECIALIZATIONS[0]!.specializationId);
   const [busy, setBusy] = useState(false);
+  const busyRef = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [resolutionAcknowledged, setResolutionAcknowledged] = useState(false);
+  const [transitionPhase, setTransitionPhase] = useState<PresentationTransitionPhase>('idle');
+  const [transitionKind, setTransitionKind] = useState<PresentationTransitionKind>('scene');
+  const [narrativeGate, setNarrativeGate] = useState<{ readonly key: string; readonly ready: boolean }>({ key: '', ready: false });
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => { applyP8Locale(locale); }, [locale]);
 
   useEffect(() => {
-    void session.refreshResumeAvailability().then(setSnapshot).catch((caught: unknown) => {
+    void session.refreshResumeAvailability().then((next) => {
+      setSnapshot(next);
+      setPresentedSnapshot(next);
+    }).catch((caught: unknown) => {
       setError(caught instanceof Error ? caught.message : String(caught));
     });
   }, []);
@@ -173,20 +195,63 @@ export function App() {
     return createP8SliceCharacter(creationInput(answers, specialization));
   }, [answers, specialization]);
 
-  async function runAction(action: () => Promise<P8BrowserSessionSnapshot>): Promise<P8BrowserSessionSnapshot | null> {
-    if (busy) return null;
+  async function runAction(
+    action: () => Promise<P8BrowserSessionSnapshot>,
+    animatePresentation = false,
+  ): Promise<P8BrowserSessionSnapshot | null> {
+    if (busyRef.current) return null;
+    busyRef.current = true;
     setBusy(true);
     setError(null);
+
+    const previousLocality = snapshot.authority?.world.currentLocality ?? null;
+    const shouldAnimate = animatePresentation && !prefersReducedMotion;
+    const transitionStartedAt = shouldAnimate ? performance.now() : 0;
+    if (shouldAnimate) setTransitionPhase('out');
+
     try {
       const next = await action();
       setSnapshot(next);
+
+      const nextLocality = next.authority?.world.currentLocality ?? null;
+      const kind: PresentationTransitionKind = previousLocality !== null
+        && nextLocality !== null
+        && previousLocality !== nextLocality
+        ? 'travel'
+        : 'scene';
+      setTransitionKind(kind);
+
+      if (shouldAnimate) {
+        const fadeOutMs = kind === 'travel' ? TRAVEL_FADE_OUT_MS : SCENE_FADE_OUT_MS;
+        const remainingFadeOut = Math.max(0, fadeOutMs - (performance.now() - transitionStartedAt));
+        await waitForPresentation(remainingFadeOut);
+        setPresentedSnapshot(next);
+        setTransitionPhase('in');
+        await waitForPresentation(kind === 'travel' ? TRAVEL_FADE_IN_MS : SCENE_FADE_IN_MS);
+        setTransitionPhase('idle');
+      } else {
+        setPresentedSnapshot(next);
+        setTransitionPhase('idle');
+      }
       return next;
     } catch (caught: unknown) {
+      setTransitionPhase('idle');
       setError(caught instanceof Error ? caught.message : String(caught));
       return null;
     } finally {
+      busyRef.current = false;
       setBusy(false);
     }
+  }
+
+  function setNarrativeReady(key: string, ready: boolean): void {
+    setNarrativeGate((current) => (
+      current.key === key && current.ready === ready ? current : { key, ready }
+    ));
+  }
+
+  function isNarrativeReady(key: string): boolean {
+    return prefersReducedMotion || (narrativeGate.key === key && narrativeGate.ready);
   }
 
   function beginCreation(): void {
@@ -224,12 +289,12 @@ export function App() {
   }
 
   async function resolveChoice(choiceId: string): Promise<void> {
-    const resolved = await runAction(() => session.resolveChoice(choiceId));
+    const resolved = await runAction(() => session.resolveChoice(choiceId), true);
     if (resolved !== null) setResolutionAcknowledged(false);
   }
 
   async function continueFromCheckpoint(): Promise<void> {
-    const prepared = await runAction(() => session.prepareNextScene());
+    const prepared = await runAction(() => session.prepareNextScene(), true);
     if (prepared !== null) setResolutionAcknowledged(false);
   }
 
@@ -239,17 +304,17 @@ export function App() {
   }
 
   let body;
-  if (mode === 'landing' || (snapshot.authority === null && mode === 'play')) {
+  if (mode === 'landing' || (presentedSnapshot.authority === null && mode === 'play')) {
     body = (
       <section class="panel hero-panel">
         <p class="eyebrow">{p8Text(locale, 'sliceEyebrow')}</p>
         <h1>{p8Text(locale, 'title')}</h1>
         <p class="lead">{p8Text(locale, 'landingLead')}</p>
         <div class="action-stack">
-          {snapshot.canResume && <button class="primary" disabled={busy} onClick={() => void resumeRun()}>{p8Text(locale, 'resume')}</button>}
-          <button class={snapshot.canResume ? 'secondary' : 'primary'} disabled={busy} onClick={beginCreation}>{p8Text(locale, 'start')}</button>
+          {presentedSnapshot.canResume && <button class="primary" disabled={busy} onClick={() => void resumeRun()}>{p8Text(locale, 'resume')}</button>}
+          <button class={presentedSnapshot.canResume ? 'secondary' : 'primary'} disabled={busy} onClick={beginCreation}>{p8Text(locale, 'start')}</button>
         </div>
-        {snapshot.canResume && <p class="muted">{p8Text(locale, 'replaceSave')}</p>}
+        {presentedSnapshot.canResume && <p class="muted">{p8Text(locale, 'replaceSave')}</p>}
         <div class="contract-note">{p8Text(locale, 'zeroCompanionContract')}</div>
       </section>
     );
@@ -309,35 +374,44 @@ export function App() {
         <button class="primary" disabled={busy} onClick={() => void startRun()}>{busy ? p8Text(locale, 'saving') : p8Text(locale, 'beginRun')}</button>
       </section>
     );
-  } else if (snapshot.authority !== null) {
-    const activeResolution = snapshot.lastResolution !== null && !resolutionAcknowledged ? snapshot.lastResolution : null;
+  } else if (presentedSnapshot.authority !== null) {
+    const activeResolution = presentedSnapshot.lastResolution !== null && !resolutionAcknowledged ? presentedSnapshot.lastResolution : null;
     if (activeResolution !== null) {
       const scene = getLocalizedP8Scene(activeResolution.eventId, locale);
+      const outcomeText = scene?.outcomes[activeResolution.outcomeId] ?? activeResolution.outcomeId;
+      const narrativeKey = `resolution:${presentedSnapshot.transitionSeq.toString()}:${activeResolution.eventId}:${activeResolution.outcomeId}:${locale}`;
+      const narrativeReady = isNarrativeReady(narrativeKey);
       body = (
         <section class="panel">
-          <RunStatus snapshot={snapshot} locale={locale} />
-          <p class="eyebrow">{p8Text(locale, 'committedConsequence')} · {p8Text(locale, 'transition')} {snapshot.transitionSeq.toString()}</p>
+          <RunStatus snapshot={presentedSnapshot} locale={locale} />
+          <p class="eyebrow">{p8Text(locale, 'committedConsequence')} · {p8Text(locale, 'transition')} {presentedSnapshot.transitionSeq.toString()}</p>
           <h1>{scene?.title ?? activeResolution.eventId}</h1>
           {activeResolution.checkOutcomeBand !== undefined && <div class="check-band">{p8Text(locale, 'checkResult')}: {labelP8CheckBandLocalized(activeResolution.checkOutcomeBand, locale)}</div>}
-          <p class="lead">{scene?.outcomes[activeResolution.outcomeId] ?? activeResolution.outcomeId}</p>
+          <NarrativeReveal
+            key={narrativeKey}
+            text={outcomeText}
+            presentationKey={narrativeKey}
+            reducedMotion={prefersReducedMotion}
+            onReadyChange={(ready) => setNarrativeReady(narrativeKey, ready)}
+          />
           <p class="muted">{p8Text(locale, 'committedSave')}</p>
-          <button class="primary" disabled={busy} onClick={() => void continueAfterResolution()}>{snapshot.status === 'ended' ? p8Text(locale, 'viewSummary') : p8Text(locale, 'continue')}</button>
+          <button class="primary" disabled={busy || !narrativeReady} onClick={() => void continueAfterResolution()}>{presentedSnapshot.status === 'ended' ? p8Text(locale, 'viewSummary') : p8Text(locale, 'continue')}</button>
         </section>
       );
-    } else if (snapshot.status === 'ended') {
-      const direct = snapshot.authority.pokemon.directInteractions;
-      const relationships = Object.entries(snapshot.authority.world.relationships);
+    } else if (presentedSnapshot.status === 'ended') {
+      const direct = presentedSnapshot.authority.pokemon.directInteractions;
+      const relationships = Object.entries(presentedSnapshot.authority.world.relationships);
       body = (
         <section class="panel">
-          <RunStatus snapshot={snapshot} locale={locale} />
+          <RunStatus snapshot={presentedSnapshot} locale={locale} />
           <p class="eyebrow">{p8Text(locale, 'runComplete')}</p>
           <h1>{p8Text(locale, 'backAtReedbank')}</h1>
           <p class="lead">{p8Text(locale, 'endingLead')}</p>
           <div class="ending-grid">
-            <div><span>{p8Text(locale, 'companions')}</span><strong>{snapshot.authority.pokemon.companionSlots.filter((slot) => slot !== null).length}/3</strong></div>
+            <div><span>{p8Text(locale, 'companions')}</span><strong>{presentedSnapshot.authority.pokemon.companionSlots.filter((slot) => slot !== null).length}/3</strong></div>
             <div><span>{p8Text(locale, 'directInteractions')}</span><strong>{direct.length}</strong></div>
-            <div><span>{p8Text(locale, 'provisionsLeft')}</span><strong>{snapshot.authority.survival.resourcePools.provisions}</strong></div>
-            <div><span>{p8Text(locale, 'committedEvents')}</span><strong>{Object.keys(snapshot.authority.events.counts).length}</strong></div>
+            <div><span>{p8Text(locale, 'provisionsLeft')}</span><strong>{presentedSnapshot.authority.survival.resourcePools.provisions}</strong></div>
+            <div><span>{p8Text(locale, 'committedEvents')}</span><strong>{Object.keys(presentedSnapshot.authority.events.counts).length}</strong></div>
           </div>
           <div class="summary-block">
             <h2>{p8Text(locale, 'pokemonObserved')}</h2>
@@ -352,25 +426,33 @@ export function App() {
             <h2>{p8Text(locale, 'relationshipsRemembered')}</h2>
             {relationships.map(([id, state]) => <p key={id}><strong>{labelP8RelationshipLocalized(id, locale)}</strong> · {labelP8RelationshipStateLocalized(state, locale)}</p>)}
           </div>
-          <div class="contract-note">{p8Text(locale, 'zeroCompanionCompletion')}: {snapshot.authority.events.narrativeFlags['slice.zero_companion_route_complete'] === true ? p8Text(locale, 'proven') : p8Text(locale, 'notReached')}.</div>
+          <div class="contract-note">{p8Text(locale, 'zeroCompanionCompletion')}: {presentedSnapshot.authority.events.narrativeFlags['slice.zero_companion_route_complete'] === true ? p8Text(locale, 'proven') : p8Text(locale, 'notReached')}.</div>
           <button class="secondary" onClick={beginCreation}>{p8Text(locale, 'startAnother')}</button>
         </section>
       );
-    } else if (snapshot.pending !== null && snapshot.scene !== null) {
-      const scene = getLocalizedP8Scene(snapshot.scene.eventId, locale) ?? snapshot.scene;
+    } else if (presentedSnapshot.pending !== null && presentedSnapshot.scene !== null) {
+      const scene = getLocalizedP8Scene(presentedSnapshot.scene.eventId, locale) ?? presentedSnapshot.scene;
+      const narrativeKey = `scene:${presentedSnapshot.transitionSeq.toString()}:${presentedSnapshot.scene.eventId}:${locale}`;
+      const narrativeReady = isNarrativeReady(narrativeKey);
       body = (
         <section class="panel">
-          <RunStatus snapshot={snapshot} locale={locale} />
+          <RunStatus snapshot={presentedSnapshot} locale={locale} />
           <p class="eyebrow">{scene.eyebrow}</p>
           <h1>{scene.title}</h1>
-          <p class="lead">{scene.body}</p>
+          <NarrativeReveal
+            key={narrativeKey}
+            text={scene.body}
+            presentationKey={narrativeKey}
+            reducedMotion={prefersReducedMotion}
+            onReadyChange={(ready) => setNarrativeReady(narrativeKey, ready)}
+          />
           {scene.speciesId !== undefined && <PokemonMedia speciesId={scene.speciesId} locale={locale} />}
-          <div class="choice-stack">
-            {snapshot.pending.resolvedChoiceView.filter((choice) => choice.visible).map((choice) => (
+          <div class={`choice-stack${narrativeReady ? '' : ' narrative-locked'}`}>
+            {presentedSnapshot.pending.resolvedChoiceView.filter((choice) => choice.visible).map((choice) => (
               <button
                 class="choice"
                 key={choice.choiceId}
-                disabled={busy || !choice.enabled}
+                disabled={busy || !narrativeReady || !choice.enabled}
                 onClick={() => void resolveChoice(choice.choiceId)}
               >
                 {scene.choices[choice.choiceId] ?? choice.choiceId}
@@ -384,8 +466,8 @@ export function App() {
     } else {
       body = (
         <section class="panel">
-          <RunStatus snapshot={snapshot} locale={locale} />
-          <p class="eyebrow">{p8Text(locale, 'savedCheckpoint')} · {p8Text(locale, 'transition')} {snapshot.transitionSeq.toString()}</p>
+          <RunStatus snapshot={presentedSnapshot} locale={locale} />
+          <p class="eyebrow">{p8Text(locale, 'savedCheckpoint')} · {p8Text(locale, 'transition')} {presentedSnapshot.transitionSeq.toString()}</p>
           <h1>{p8Text(locale, 'continueCommitted')}</h1>
           <p class="lead">{p8Text(locale, 'restoredLead')}</p>
           <button class="primary" disabled={busy} onClick={() => void continueFromCheckpoint()}>{p8Text(locale, 'continueJourney')}</button>
@@ -394,11 +476,19 @@ export function App() {
     }
   }
 
+  const transitionClass = transitionPhase === 'idle' ? '' : ` presentation-${transitionPhase}`;
+
   return (
     <main class="shell">
       <LanguageSwitcher locale={locale} onChange={setLocale} />
       {error !== null && <div class="error-banner" role="alert">{error}</div>}
-      {body}
+      <div
+        class={`scene-stage ${transitionKind}${transitionClass}`}
+        data-transition-kind={transitionKind}
+        data-transition-phase={transitionPhase}
+      >
+        {body}
+      </div>
       <footer>{p8Text(locale, 'footer')}</footer>
     </main>
   );
