@@ -1,160 +1,205 @@
-# P8.1 Playtest Remediation Contract
+# P8 Owner Playtest Remediation Contract
 
 Date: **2026-08-17**  
-Owner verdict: **the current build does not yet read as a finished game.**  
 Tracking issue: **#114**
 
-## Why this exists
+This contract exists because automated technical acceptance is necessary but not sufficient for the intended game. P8 technical integration passed; subsequent owner playtests remain the binding player-facing product gate before P9 content multiplication.
 
-P8 passed its technical integration, deterministic-state, save/resume, PWA and mobile-layout gates. The first owner playtest exposed a different class of failure that those gates did not measure:
+## Playtest history
 
-- Korean reads as translated/technical prose rather than native game writing;
-- the presentation reads as a generic mobile web card rather than a game screen;
-- too many main-path scenes have only one effective action;
-- internal implementation and acceptance language leaks into player-facing copy;
-- as a result, the slice proves architecture but does not yet deliver the expected player experience.
+### First owner playtest
 
-This is a **blocking product-quality gate before P9 bulk content expansion**. Scaling content first would multiply the same copy, UI and interaction problems.
+Initial verdict: **the build did not read as a finished game**.
 
-## Owner-approved direction
+Failures included:
 
-### Korean
+- Korean that read like literal/technical translation;
+- generic centered web-card presentation;
+- too many one-action main-path scenes;
+- engineering/proof language leaking into normal play.
 
-All current and future Korean player-facing content must be authored/reviewed through the repo-local `.github/skills/korean-game-copy/SKILL.md` rules.
+P8.1 Batches 01–03 corrected those baseline problems:
 
-The desired process is benchmarked from the open-source `DaleSeo/korean-skills` workflow:
+- PR #115 — Korean game-copy baseline + game-like presentation shell;
+- PR #116 — materially distinct authoritative choices;
+- PR #117 — 390x844 player-facing browser acceptance.
 
-1. humanize large-scale phrasing first;
-2. grammar/spacing review second;
-3. style/terminology consistency last.
+Those batches are complete and must not be repeated by a future `next` request.
 
-We adopt the **workflow principles**, then add project-specific narrative/choice/outcome rules. We do not need to vendor the external skill package into runtime code.
+### Second owner playtest
 
-Reference:
+Second verdict: **clearly improved, but still not the intended game**.
 
-- https://github.com/DaleSeo/korean-skills
-- MIT license as stated by that repository at review time.
+The owner now explicitly requires:
 
-GitHub's current Agent Skills documentation explicitly supports repository skills at `.github/skills/<skill-name>/SKILL.md`, which is why the project-owned skill is stored there.
+- substantially more image/illustration presence for immersion;
+- scene and travel transitions, including fade-like movement presentation;
+- progressive text reveal with tap-to-finish and tap-to-advance semantics;
+- a persistent player profile and initial portrait/avatar selection;
+- visible survival state including health, provisions and stamina/exertion readability;
+- clear game-over / incapacitation / lethal-danger communication;
+- visible equipment and attack/defense-like combat-readiness information;
+- a medieval-fantasy adventurer farming/preparation loop layered under the Pokémon-first setting;
+- Pokémon/ecology-related gear and materials where lore permits;
+- another Korean rewrite pass, especially novel-like formative/background creation rather than questionnaire wording;
+- deeper benchmarking of StudioWheel's `모험가 이야기` screen composition and information hierarchy without copying proprietary assets or layouts.
 
-Reference:
+The binding implementation sequence and detailed acceptance criteria are in:
 
-- https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills
+**`docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`**
 
-### Game UI / interaction benchmark
+## Product identity after the second playtest
 
-Use **StudioWheel's `모험가 이야기`** as a benchmark for *why a compact text game still reads as a game*, not as a pixel-perfect template to copy.
+The target is now explicitly:
 
-Useful observed/product-stated principles:
+> **A Pokémon-first, pre-modern / medieval-fantasy-feeling adventure RPG with text-adventure presentation, visual scene identity, survival state, equipment, gathering/preparation, human progression, and rare meaningful Pokémon companionship.**
 
-- text roguelike / event-driven adventure framing;
-- the player repeatedly faces events and chooses actions;
-- ability, item, wealth and prior-choice conditions can change event choices/results;
-- multiple choices are a headline feature rather than a rare exception;
-- pixel-art situation presentation gives events visual identity;
-- choices feed into different epilogues/results;
-- reviews repeatedly identify the stat/dice/choice presentation as TRPG-like.
+The human-only `0/3` path must be enjoyable as an adventurer game, not merely technically completable.
 
-References reviewed:
+Pokémon still shape world ecology, routes, technology islands, materials, beliefs and danger. The project must not become a generic medieval loot RPG with Pokémon pasted on top.
 
-- Google Play listing: https://play.google.com/store/apps/details?id=com.StudioWheel.Bard&hl=ko
-- StudioWheel site: https://www.studiowheel.net/
-- App Store listing/reviews: https://apps.apple.com/kr/app/id1551617649
+## Korean authoring rule
 
-### What we copy vs do not copy
+All current and future Korean player-facing content must use the repo-local `.github/skills/korean-game-copy/SKILL.md` workflow.
 
-We may adapt general design principles:
+The target process remains:
 
-- scene-first hierarchy;
-- persistent run-state HUD;
-- a visually distinct scene/illustration area;
-- clear narrative body;
-- choice buttons as the primary interaction surface;
-- explicit known cost/check information where appropriate;
-- visible consequence feedback;
-- game-specific typography, borders, texture and spacing.
+1. humanize / rewrite the thought itself in natural Korean;
+2. grammar/spacing review;
+3. terminology/style consistency;
+4. read-aloud review for rhythm and comprehension.
 
-We must **not** copy proprietary artwork, pixel assets, exact layouts, icons, music, text, branding or a pixel-perfect arrangement from `모험가 이야기`.
+For character creation, begin from **fictional memory/scene prose**, not a mechanical questionnaire. Choices remain concise, but their setup should let the player inhabit a person and past life.
 
-## Root cause found in current P8
+Korean is an authoring-quality target in its own right; do not preserve awkward English syntax merely for translation symmetry.
 
-The Korean pass in PR #113 solved localization **coverage and gameplay-identity preservation**, but it did not establish native Korean editorial quality.
+## `모험가 이야기` benchmark rule
 
-More importantly, P8 intentionally exposed technical proof text in the presentation. Examples include player-facing references to:
+Use StudioWheel's `모험가 이야기` as a strong benchmark for why a compact text game reads immediately as a game.
 
-- `P8` / `P7`;
-- `결정론적으로`;
-- `권위 상태`;
-- `IndexedDB`;
-- `전이`;
-- `리소스 캐시`;
-- `계약` / proof-like `0/3` explanations.
+Benchmark principles include:
 
-Several scene bodies also narrate the design requirement rather than the fiction, for example explicitly explaining that a problem is “not a Pokémon's fault,” or that human motives and Pokémon ecology are both important.
+- persistent player/status identity;
+- prominent scene illustration;
+- clear story-text panel;
+- multiple meaningful choices;
+- visible stat/equipment/readiness surfaces;
+- obvious event consequence and risk cues;
+- compact mobile composition.
 
-The visual root cause is similarly structural: `app.css` presents nearly every mode as one centered rounded cream `.panel`, using system UI typography and generic web-card/buttons. It is accessible and measurable, but the information hierarchy is closer to a form/onboarding flow than a game HUD + scene + action surface.
+Do **not** copy proprietary artwork, pixel assets, exact layouts, icons, text, music, branding, or a pixel-perfect screen arrangement.
 
-## New player-surface rules
+## Player-surface rules
 
-### 1. No implementation proof in normal play
+### 1. Scene before implementation
 
-A player should never need to know how save authority, deterministic event identity, IndexedDB, P-phase acceptance or resource fallback works in order to play.
+Player-facing screens prioritize:
 
-If an implementation fact has no player decision attached to it, remove it from the ordinary surface or translate it into a diegetic/player-useful message.
-
-### 2. Scene before system
-
-The visual order for a gameplay event should be:
-
-1. current locality / compact run state;
-2. scene mood/identity;
-3. what is happening;
-4. optional Pokémon/situation visual;
-5. choices;
-6. known check/cost/risk cues;
+1. character / critical expedition state;
+2. current locality and scene identity;
+3. illustration;
+4. narrative beat;
+5. known risk/cost/check cues;
+6. choices;
 7. consequence feedback.
 
-Debug/acceptance information is not part of this hierarchy.
+Implementation proof/debug data is not part of normal play.
 
-### 3. Choices are gameplay
+### 2. Text has performance and interaction rhythm
 
-For ordinary events, `1 choice == no decision`.
+Narrative should support progressive reveal.
 
-A single action is acceptable for a true transition/acknowledgement. Main events should normally provide at least two materially different actions when fiction permits. Differences should affect one or more of:
+- tap during reveal => finish the current beat immediately;
+- tap after reveal => advance to the next authored beat where applicable;
+- skipping animation cannot commit a choice;
+- rapid taps cannot double-submit;
+- reduced-motion users can play without waiting for animation.
 
-- check/risk;
-- resource cost;
-- route/time;
-- relationship/reputation;
-- information/knowledge;
-- Pokémon approach;
-- immediate or delayed consequence.
+Animation completion never evaluates or commits an event by itself.
 
-### 4. UI must identify itself as a game immediately
+### 3. Movement should feel like movement
 
-At the accepted 390x844 viewport, the landing screen and first event must no longer resemble a generic settings/onboarding card.
+Location/travel changes should use a lightweight fade-out/fade-in or equivalent presentation transition.
 
-The first visual pass should use project-owned CSS/components only and preserve the existing P6 performance/resource contract. Heavy decorative assets are not required to establish a game frame.
+Authoritative state transitions remain discrete and deterministic; the animation merely presents a state change that is already governed by the runtime.
 
-## Acceptance for Batch 01
+### 4. The player must understand their condition
 
-- repo-local Korean game-copy skill exists;
-- all current P8 Korean prompt/scene/choice/outcome copy receives a native rewrite;
-- player-facing system strings no longer expose development/proof jargon;
-- base shell is visually reworked into a game-like scene/HUD/choice composition;
-- stable IDs and localization coverage stay unchanged;
-- no runtime dependency or backend is added;
-- existing deterministic/save/resource tests remain green.
+The play surface must provide clear access to:
 
-## Acceptance for Batch 02
+- portrait/avatar and character identity;
+- Vitality/HP readability;
+- fatigue/stamina/exertion readability;
+- food/provisions;
+- injuries and other important pressure;
+- current location;
+- companion occupancy;
+- important attributes/competences through profile detail;
+- understandable failure/game-over danger.
 
-- audit all current scenes by decision count;
-- replace one-button main-event progression with meaningful branches using the existing authoritative engine;
-- preserve reload/replay determinism for every new choice/outcome;
-- keep one-action scenes only where the action is genuinely an acknowledgement or unavoidable transition.
+Existing P3 `Vitality / Fatigue / Fear / Injuries` is authoritative until explicitly revised. Do not create a duplicate numeric stamina system in presentation code.
+
+### 5. Equipment is a first-class RPG surface
+
+The player needs visible weapons, armor/protection, utility gear and Pokémon/ecology-related field equipment.
+
+The UI should expose an understandable **Attack / Defense-like readiness summary**. Exact formulas must stay compatible with the bounded TRPG model rather than creating one universal gear score.
+
+Equipment should meaningfully affect permissions, approaches, context, hazard protection, harm/injury consequences or bounded combat readiness.
+
+### 6. Farming/preparation is a human progression loop
+
+A zero-companion run needs a repeatable loop around:
+
+`prepare -> travel -> explore/gather/risk -> return -> repair/barter/craft/equip -> prepare again`.
+
+Foraging, scavenging, ethical hunting where valid, ordinary materials, repair inputs, barter/service rewards, camping/rest and equipment improvement are desired.
+
+Pokémon-linked materials/equipment are encouraged only where P4 ecology, D-017 technology islands and D-021/D-028 material ethics support them.
+
+No universal kill-XP or automatic Pokémon loot table is permitted.
+
+### 7. Images are now required for product acceptance
+
+Images/illustrations are no longer merely optional polish for the first-impression gate.
+
+The implementation must provide a stable scene illustration system and meaningful visual identity for important early scenes. Resource acquisition remains governed by P6/provenance/IP constraints, and missing optional media must never change gameplay.
+
+## P8.2 sequence
+
+Future autonomous continuation must follow the first incomplete item in `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`:
+
+1. Batch 04 — narrative motion + scene transitions;
+2. Batch 05 — portrait/profile/expedition HUD;
+3. Batch 06 — illustration system;
+4. Batch 07 — native-Korean / novel-like creation rewrite;
+5. Batch 08 — equipment + combat-readiness surface;
+6. Batch 09 — farming/preparation vertical loop;
+7. Batch 10 — integrated browser + owner product gate.
+
+P9 is blocked until this sequence's integrated owner gate passes or the owner explicitly changes direction.
+
+## Architecture/performance rules
+
+- event eligibility remains transition-driven, never frame-driven;
+- UI animations are presentation-only;
+- avoid per-character DOM explosions for text reveal;
+- prefer cached/chunked text segmentation and compositor-friendly opacity/transform transitions;
+- stable resource IDs own image cache identity;
+- no all-151 media preload;
+- derived Load/combat/HUD summaries recalculate only on relevant state changes and are reused;
+- save format changes require version/migration validation;
+- current IndexedDB/PWA/offline/deterministic RNG gates remain mandatory.
 
 ## Exit judgment
 
-Automated tests remain necessary but no longer sufficient for this gate.
+Automated tests remain necessary but are not sufficient.
 
-P8.1 exits only after another owner playtest confirms that the first several minutes read as an actual game and the original first-impression failures are no longer present.
+P8 owner remediation exits only after the integrated owner replay confirms that the first several minutes:
+
+- look and move like an actual game;
+- read naturally in Korean;
+- clearly communicate player identity, health/exertion/resources and danger;
+- provide visual scene immersion;
+- provide satisfying equipment/preparation/progression even at `0/3` companions;
+- retain Pokémon as the defining causal fabric of the world.
