@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { createInitialP8AuthorityState, P8CharacterCreationCatalog } from '../src/domain/p8Authority';
-import { deriveP8ExpeditionProfile, isP8PortraitId, P8_PORTRAIT_IDS } from '../src/app/ProfileHud';
+import {
+  deriveP8ExpeditionProfile,
+  isP8PortraitId,
+  P8_PORTRAIT_IDS,
+  resolveP8SpecializationId,
+} from '../src/app/ProfileHud';
 
 function authority() {
   const catalog = new P8CharacterCreationCatalog({
@@ -48,6 +53,10 @@ describe('P8.2 Batch 05 expedition profile projection', () => {
     expect(profile.currentLoad).toBe(9);
     expect(profile.comfortableLoad).toBe(6);
     expect(profile.burdened).toBe(true);
+  });
+
+  it('recovers specialization identity from the authoritative personal competence', () => {
+    expect(resolveP8SpecializationId(authority().character)).toBe('path_reader');
   });
 
   it('keeps portrait identity a closed cosmetic presentation set', () => {
