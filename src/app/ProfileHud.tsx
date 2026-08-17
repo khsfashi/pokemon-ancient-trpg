@@ -61,7 +61,7 @@ const TEXT = {
     incapacitated: '활력 0 → 행동불능',
     critical: '치명상 → 즉시 치료·구조가 필요한 별도 위기',
     death: '사망 → 명시된 치명 경로에서만 발생',
-    baselineNote: '현재 P8 체험 구간에는 활력·피로·공포·부상을 변화시키는 사건이 아직 없어 시작 상태가 유지됩니다.',
+    baselineNote: '이 짧은 여정에는 아직 활력·피로·공포·부상을 바꾸는 사건이 없어 시작 상태가 유지됩니다.',
   },
   'en-US': {
     portraitChoice: 'Choose your portrait',
@@ -91,7 +91,7 @@ const TEXT = {
     incapacitated: 'Vitality 0 → Incapacitated',
     critical: 'Critical Injury → separate rescue/treatment emergency',
     death: 'Death → only through an explicit lethal path',
-    baselineNote: 'The current P8 slice has no authored event that changes Vitality, Fatigue, Fear, or Injuries, so those values remain at their starting state.',
+    baselineNote: 'Nothing in this short journey currently changes Vitality, Fatigue, Fear, or Injuries, so those values remain at their starting state.',
   },
 } as const;
 
