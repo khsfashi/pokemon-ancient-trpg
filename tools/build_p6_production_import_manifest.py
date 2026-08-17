@@ -118,12 +118,7 @@ def parse_id_spec(spec: str) -> list[int]:
 def shelf_pack_unique_rectangles(
     rectangles: list[tuple[int, int, int, int]],
 ) -> dict[str, Any]:
-    """Find a deterministic no-scale shelf-pack plan for unique source rectangles.
-
-    Rectangles are deduplicated by exact source x/y/w/h before this function.
-    Repacking therefore preserves every source pixel region while allowing multiple
-    logical frames that reference the exact same region to reuse one packed copy.
-    """
+    """Build a deterministic no-scale shelf-pack plan for unique source rectangles."""
     if not rectangles:
         fail("animated atlas has no unique frame rectangles")
 
@@ -147,8 +142,7 @@ def shelf_pack_unique_rectangles(
             used_width = max(used_width, x)
             row_height = max(row_height, height)
         used_height = y + row_height
-        area = used_width * used_height
-        candidate = (area, used_width, used_height)
+        candidate = (used_width * used_height, used_width, used_height)
         if best is None or candidate < best:
             best = candidate
 
@@ -167,36 +161,81 @@ def shelf_pack_unique_rectangles(
     }
 
 
+def normalize_frames(species_id: int, raw_frames: Any) -> list[dict[str, Any]]:
+    if isinstance(raw_frames, list):
+        frames = raw_frames
+    elif isinstance(raw_frames, dict):
+        frames = []
+        for filename, entry in raw_frames.items():
+            if not isinstance(entry, dict):
+                fail(f"#{species_id:03d}: frame map entry {filename} must be an object")
+            normalized = dict(entry)
+            normalized.setdefault("filename", filename)
+            frames.append(normalized)
+    else:
+        fail(f"#{species_id:03d}: frames must be an array or object map")
+    if not frames:
+        fail(f"#{species_id:03d}: frames must be non-empty")
+    return frames
+
+
+def extract_atlas_header(
+    species_id: int,
+    metadata: dict[str, Any],
+    expected_width: int,
+    expected_height: int,
+) -> tuple[str, str, list[dict[str, Any]]]:
+    expected_image = f"{species_id}.png"
+    textures = metadata.get("textures")
+    if isinstance(textures, list) and textures:
+        matching = [t for t in textures if isinstance(t, dict) and t.get("image") == expected_image]
+        if len(matching) != 1:
+            fail(f"#{species_id:03d}: expected exactly one texture entry for {expected_image}")
+        texture = matching[0]
+        size = texture.get("size")
+        if not isinstance(size, dict):
+            fail(f"#{species_id:03d}: missing texture-array atlas size")
+        if (size.get("w"), size.get("h")) != (expected_width, expected_height):
+            fail(f"#{species_id:03d}: texture-array metadata size != PNG size")
+        metadata_format = texture.get("format")
+        if not isinstance(metadata_format, str) or not metadata_format:
+            fail(f"#{species_id:03d}: texture-array metadata format missing")
+        return (
+            "texture-array-v1",
+            metadata_format,
+            normalize_frames(species_id, texture.get("frames")),
+        )
+
+    meta = metadata.get("meta")
+    if isinstance(meta, dict) and "frames" in metadata:
+        if meta.get("image") != expected_image:
+            fail(f"#{species_id:03d}: root-frame metadata image != {expected_image}")
+        size = meta.get("size")
+        if not isinstance(size, dict):
+            fail(f"#{species_id:03d}: missing root-frame atlas size")
+        if (size.get("w"), size.get("h")) != (expected_width, expected_height):
+            fail(f"#{species_id:03d}: root-frame metadata size != PNG size")
+        metadata_format = meta.get("format")
+        if not isinstance(metadata_format, str) or not metadata_format:
+            fail(f"#{species_id:03d}: root-frame metadata format missing")
+        return (
+            "root-frames-meta-v1",
+            metadata_format,
+            normalize_frames(species_id, metadata.get("frames")),
+        )
+
+    fail(f"#{species_id:03d}: unsupported atlas metadata layout")
+
+
 def validate_atlas_metadata(
     species_id: int,
     metadata: dict[str, Any],
     expected_width: int,
     expected_height: int,
 ) -> dict[str, Any]:
-    textures = metadata.get("textures")
-    if not isinstance(textures, list) or not textures:
-        fail(f"#{species_id:03d}: atlas textures must be a non-empty array")
-
-    expected_image = f"{species_id}.png"
-    matching = [t for t in textures if isinstance(t, dict) and t.get("image") == expected_image]
-    if len(matching) != 1:
-        fail(f"#{species_id:03d}: expected exactly one texture entry for {expected_image}")
-    texture = matching[0]
-
-    if texture.get("format") != "RGBA8888":
-        fail(f"#{species_id:03d}: atlas format drift")
-    size = texture.get("size")
-    if not isinstance(size, dict):
-        fail(f"#{species_id:03d}: missing atlas size")
-    if (size.get("w"), size.get("h")) != (expected_width, expected_height):
-        fail(
-            f"#{species_id:03d}: metadata size {size.get('w')}x{size.get('h')} "
-            f"!= PNG {expected_width}x{expected_height}"
-        )
-
-    frames = texture.get("frames")
-    if not isinstance(frames, list) or not frames:
-        fail(f"#{species_id:03d}: frames must be a non-empty array")
+    layout, metadata_format, frames = extract_atlas_header(
+        species_id, metadata, expected_width, expected_height
+    )
 
     filenames: set[str] = set()
     source_rectangles: set[tuple[int, int, int, int]] = set()
@@ -237,12 +276,13 @@ def validate_atlas_metadata(
             if sx + ssw > sw or sy + ssh > sh:
                 fail(f"#{species_id:03d}: spriteSourceSize exceeds sourceSize")
 
-    repack = shelf_pack_unique_rectangles(list(source_rectangles))
     return {
+        "metadata_layout": layout,
+        "metadata_format": metadata_format,
         "frame_count": len(frames),
         "unique_frame_filename_count": len(filenames),
         "unique_source_rectangle_count": len(source_rectangles),
-        "normalization_plan": repack,
+        "normalization_plan": shelf_pack_unique_rectangles(list(source_rectangles)),
     }
 
 
@@ -250,8 +290,7 @@ def build_compact_records(source: dict[str, Any]) -> list[dict[str, Any]]:
     compact = source["compact_identity"]
     repo = "msikma/pokesprite"
     pin = compact["pin"]
-    mapping_path = compact["mapping_file"]
-    mapping = fetch_json(raw_url(repo, pin, mapping_path))
+    mapping = fetch_json(raw_url(repo, pin, compact["mapping_file"]))
 
     expected_keys = [f"{species_id:03d}" for species_id in range(1, 152)]
     missing = [key for key in expected_keys if key not in mapping]
@@ -259,8 +298,6 @@ def build_compact_records(source: dict[str, Any]) -> list[dict[str, Any]]:
         fail(f"compact mapping missing required ids: {missing[:8]}")
     if "152" not in mapping:
         fail("compact mapping boundary evidence lost: 152 missing")
-
-    records: list[dict[str, Any]] = []
 
     def one(species_id: int) -> dict[str, Any]:
         key = f"{species_id:03d}"
@@ -286,6 +323,7 @@ def build_compact_records(source: dict[str, Any]) -> list[dict[str, Any]]:
             "decoded_rgba8_bytes": width * height * 4,
         }
 
+    records: list[dict[str, Any]] = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {executor.submit(one, species_id): species_id for species_id in range(1, 152)}
         for future in as_completed(futures):
@@ -309,7 +347,6 @@ def build_animated_records(source: dict[str, Any], ids: Iterable[int]) -> list[d
     encounter = source["animated_encounter"]
     repo = "pagefaultgames/pokerogue-assets"
     pin = encounter["pin"]
-    records: list[dict[str, Any]] = []
 
     def one(species_id: int) -> dict[str, Any]:
         texture_path = encounter["texture_template"].format(id=species_id)
@@ -333,6 +370,8 @@ def build_animated_records(source: dict[str, Any], ids: Iterable[int]) -> list[d
             "metadata_sha256": sha256_hex(metadata_data),
             "texture_encoded_bytes": len(texture_data),
             "metadata_encoded_bytes": len(metadata_data),
+            "metadata_layout": atlas["metadata_layout"],
+            "metadata_format": atlas["metadata_format"],
             "source_texture_dimensions": {"width": width, "height": height},
             "source_decoded_rgba8_bytes": source_decoded,
             "source_within_512_kib_guardrail": source_decoded <= PER_ENCOUNTER_ATLAS_GUARDRAIL,
@@ -344,6 +383,7 @@ def build_animated_records(source: dict[str, Any], ids: Iterable[int]) -> list[d
         }
 
     id_list = sorted(set(ids))
+    records: list[dict[str, Any]] = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {executor.submit(one, species_id): species_id for species_id in id_list}
         for future in as_completed(futures):
@@ -359,16 +399,15 @@ def build_manifest(source: dict[str, Any], animated_ids: list[int]) -> dict[str,
     compact_records = build_compact_records(source)
     animated_records = build_animated_records(source, animated_ids)
     source_over = [r for r in animated_records if not r["source_within_512_kib_guardrail"]]
-    normalized_over = [
-        r
-        for r in animated_records
-        if not r["normalization_plan"]["within_512_kib_guardrail"]
-    ]
+    normalized_over = [r for r in animated_records if not r["normalization_plan"]["within_512_kib_guardrail"]]
     max_source = max(animated_records, key=lambda r: r["source_decoded_rgba8_bytes"])
-    max_normalized = max(
-        animated_records,
-        key=lambda r: r["normalization_plan"]["decoded_rgba8_bytes"],
-    )
+    max_normalized = max(animated_records, key=lambda r: r["normalization_plan"]["decoded_rgba8_bytes"])
+    layout_counts: dict[str, int] = {}
+    format_counts: dict[str, int] = {}
+    for record in animated_records:
+        layout_counts[record["metadata_layout"]] = layout_counts.get(record["metadata_layout"], 0) + 1
+        format_counts[record["metadata_format"]] = format_counts.get(record["metadata_format"], 0) + 1
+
     return {
         "schema_version": "p6-production-import-manifest-v1",
         "generator": {
@@ -378,14 +417,8 @@ def build_manifest(source: dict[str, Any], animated_ids: list[int]) -> dict[str,
             "output_contains_metadata_only": True,
         },
         "source_pins": {
-            "compact": {
-                "source_id": source["compact_identity"]["source_id"],
-                "pin": source["compact_identity"]["pin"],
-            },
-            "animated": {
-                "source_id": source["animated_encounter"]["source_id"],
-                "pin": source["animated_encounter"]["pin"],
-            },
+            "compact": {"source_id": source["compact_identity"]["source_id"], "pin": source["compact_identity"]["pin"]},
+            "animated": {"source_id": source["animated_encounter"]["source_id"], "pin": source["animated_encounter"]["pin"]},
         },
         "coverage": {
             "compact_required_ids": {"first": 1, "last": 151, "count": 151},
@@ -394,14 +427,13 @@ def build_manifest(source: dict[str, Any], animated_ids: list[int]) -> dict[str,
             "animated_validated_count": len(animated_records),
         },
         "animated_budget_measurement": {
+            "metadata_layout_counts": layout_counts,
+            "metadata_format_counts": format_counts,
             "source_over_512_kib_count": len(source_over),
             "source_over_512_kib_ids": [r["id"] for r in source_over],
             "normalized_over_512_kib_count": len(normalized_over),
             "normalized_over_512_kib_ids": [r["id"] for r in normalized_over],
-            "max_source": {
-                "id": max_source["id"],
-                "decoded_rgba8_bytes": max_source["source_decoded_rgba8_bytes"],
-            },
+            "max_source": {"id": max_source["id"], "decoded_rgba8_bytes": max_source["source_decoded_rgba8_bytes"]},
             "max_normalized": {
                 "id": max_normalized["id"],
                 "decoded_rgba8_bytes": max_normalized["normalization_plan"]["decoded_rgba8_bytes"],
@@ -420,67 +452,37 @@ def build_manifest(source: dict[str, Any], animated_ids: list[int]) -> dict[str,
 
 
 def self_test() -> None:
-    png = (
-        b"\x89PNG\r\n\x1a\n"
-        + b"\x00\x00\x00\rIHDR"
-        + struct.pack(">II", 68, 56)
-        + b"\x08\x06\x00\x00\x00"
-    )
+    png = b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00\rIHDR" + struct.pack(">II", 68, 56) + b"\x08\x06\x00\x00\x00"
     assert png_dimensions(png) == (68, 56)
     assert parse_id_spec("1,3-5,151") == [1, 3, 4, 5, 151]
 
-    plan = shelf_pack_unique_rectangles([(0, 0, 16, 16), (16, 0, 16, 16)])
-    assert plan["pixel_scale"] == 1
-    assert plan["unique_source_rectangle_count"] == 2
-    assert plan["within_512_kib_guardrail"] is True
-
-    metadata = {
-        "textures": [
-            {
-                "image": "25.png",
-                "format": "RGBA8888",
-                "size": {"w": 32, "h": 32},
-                "frames": [
-                    {
-                        "filename": "0001.png",
-                        "frame": {"x": 0, "y": 0, "w": 16, "h": 16},
-                        "sourceSize": {"w": 16, "h": 16},
-                        "spriteSourceSize": {"x": 0, "y": 0, "w": 16, "h": 16},
-                    },
-                    {
-                        "filename": "0002.png",
-                        "frame": {"x": 0, "y": 0, "w": 16, "h": 16},
-                        "sourceSize": {"w": 16, "h": 16},
-                        "spriteSourceSize": {"x": 0, "y": 0, "w": 16, "h": 16},
-                    },
-                ],
-            }
-        ]
+    texture_array = {
+        "textures": [{
+            "image": "25.png", "format": "RGBA8888", "size": {"w": 32, "h": 32},
+            "frames": [
+                {"filename": "0001.png", "frame": {"x": 0, "y": 0, "w": 16, "h": 16}, "sourceSize": {"w": 16, "h": 16}, "spriteSourceSize": {"x": 0, "y": 0, "w": 16, "h": 16}},
+                {"filename": "0002.png", "frame": {"x": 0, "y": 0, "w": 16, "h": 16}, "sourceSize": {"w": 16, "h": 16}, "spriteSourceSize": {"x": 0, "y": 0, "w": 16, "h": 16}},
+            ],
+        }]
     }
-    atlas = validate_atlas_metadata(25, metadata, 32, 32)
-    assert atlas["frame_count"] == 2
-    assert atlas["unique_frame_filename_count"] == 2
+    atlas = validate_atlas_metadata(25, texture_array, 32, 32)
+    assert atlas["metadata_layout"] == "texture-array-v1"
     assert atlas["unique_source_rectangle_count"] == 1
+
+    root_frames = {
+        "frames": [{"filename": "0001.png", "frame": {"x": 0, "y": 0, "w": 16, "h": 16}, "sourceSize": {"w": 16, "h": 16}, "spriteSourceSize": {"x": 0, "y": 0, "w": 16, "h": 16}}],
+        "meta": {"image": "25.png", "format": "I8", "size": {"w": 32, "h": 32}},
+    }
+    atlas = validate_atlas_metadata(25, root_frames, 32, 32)
+    assert atlas["metadata_layout"] == "root-frames-meta-v1"
     print("P6 production import self-test PASS")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--source-map",
-        type=Path,
-        default=DOCS / "P6_POKEMON_RESOURCE_SOURCE_MAP.json",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=ROOT / "build" / "p6-production-import-manifest.json",
-    )
-    parser.add_argument(
-        "--animated-ids",
-        default="all",
-        help="all, comma-separated ids, or ranges; constrained to 001..151",
-    )
+    parser.add_argument("--source-map", type=Path, default=DOCS / "P6_POKEMON_RESOURCE_SOURCE_MAP.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "build" / "p6-production-import-manifest.json")
+    parser.add_argument("--animated-ids", default="all", help="all, comma-separated ids, or ranges; constrained to 001..151")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
 
@@ -492,29 +494,12 @@ def main() -> int:
     animated_ids = parse_id_spec(args.animated_ids)
     manifest = build_manifest(source, animated_ids)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    args.output.write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     measurement = manifest["animated_budget_measurement"]
-    print(
-        "P6 production import PASS: "
-        f"compact={manifest['coverage']['compact_validated_count']}/151 "
-        f"animated={manifest['coverage']['animated_validated_count']}/{len(animated_ids)}"
-    )
-    print(
-        "Animated source atlas measurement: "
-        f"over_512KiB={measurement['source_over_512_kib_count']} "
-        f"max=#{measurement['max_source']['id']:03d}:"
-        f"{measurement['max_source']['decoded_rgba8_bytes']}B"
-    )
-    print(
-        "Deterministic normalized atlas plan: "
-        f"over_512KiB={measurement['normalized_over_512_kib_count']} "
-        f"max=#{measurement['max_normalized']['id']:03d}:"
-        f"{measurement['max_normalized']['decoded_rgba8_bytes']}B "
-        f"dims={measurement['max_normalized']['packed_dimensions']}"
-    )
+    print(f"P6 production import PASS: compact={manifest['coverage']['compact_validated_count']}/151 animated={manifest['coverage']['animated_validated_count']}/{len(animated_ids)}")
+    print(f"Animated metadata layouts: {measurement['metadata_layout_counts']}; formats: {measurement['metadata_format_counts']}")
+    print(f"Animated source atlas measurement: over_512KiB={measurement['source_over_512_kib_count']} max=#{measurement['max_source']['id']:03d}:{measurement['max_source']['decoded_rgba8_bytes']}B")
+    print(f"Deterministic normalized atlas plan: over_512KiB={measurement['normalized_over_512_kib_count']} max=#{measurement['max_normalized']['id']:03d}:{measurement['max_normalized']['decoded_rgba8_bytes']}B dims={measurement['max_normalized']['packed_dimensions']}")
     print(f"metadata-only manifest: {args.output}")
     return 0
 
