@@ -1,349 +1,219 @@
 # P6 Resource and Asset Strategy
 
-Status: **P6 Batch 01 foundation complete; one Human Design Gate remains before exact visual-family selection**  
+Status: **P6 COMPLETE — Batch 03 full Gen-I production-import validation passed; P7 handoff frozen**  
 Owner phase: **#12 — P6 Resource and asset strategy, sourcing, provenance, and mobile budget**  
 Contract version: `p6-resource-strategy-v1`  
 Manifest schema: `docs/P6_RESOURCE_MANIFEST_SCHEMA.json` (`p6-resource-manifest-v1`)  
-Last verified: **2026-08-16**
+Last verified: **2026-08-17**
 
-This document converts the finished P2-P5 product contracts into a production resource contract without choosing the P7 application/runtime architecture.
+This document freezes the resource contract that P7 must implement. It does not select the P7 framework, storage architecture or packaging route.
 
-The game is a mobile-first **text RPG/TRPG**. Resources support readability, state recognition, atmosphere and Pokémon identity; they must not silently turn the product into a sprite-collection interface or make visual/audio media a prerequisite for deterministic gameplay.
+The game remains a mobile-first **text RPG/TRPG**. Presentation resources improve readability, atmosphere and Pokémon identity, but authoritative gameplay remains complete when optional Pokémon media is absent.
 
 ---
 
 ## 1. Binding principles
 
-1. **Gameplay state is authoritative; presentation resources are not.** Missing optional imagery/audio must never change event eligibility, checks, choices, consequences, save state or RNG.
-2. **The public-safe baseline must remain fully playable without uncleared Pokémon image/audio bundles.** Pokémon media may be an optional enrichment layer until redistribution is actually cleared.
-3. **Repository/package licenses and underlying Pokémon IP are separate rights layers.** A permissive repository license is not blanket permission to redistribute Pokémon designs, artwork or cries.
-4. **Every production resource has one stable `resource_id`.** Runtime lookup, cache identity, validation and provenance all use that ID rather than raw paths or URLs.
-5. **Normalize once at build time.** Resize, crop, conversion, subsetting, palette work, indexing and metadata extraction belong in a reproducible build/import step whenever possible.
-6. **Load once, reuse many times.** The runtime must coalesce duplicate requests and reuse a cached decoded/downloaded resource instead of constructing duplicate instances for repeated UI/event use.
-7. **Preload narrowly.** Initial/common UI plus a bounded current-region/event working set is preferred over loading the whole Gen-I corpus.
-8. **No invented mobile budget numbers.** Final payload/memory/cache limits are frozen only after representative selected artifacts are measured.
-9. **Do not atlas by habit.** Atlas/index only if measured request/decode/render overhead justifies it for the selected platform/runtime.
-10. **Creative presentation choices stay behind Human Design Gates.** P6 may prove technical and rights constraints objectively, but it must not pretend those constraints uniquely determine the game's visual identity.
+1. **Gameplay state is authoritative; presentation resources are not.** Missing optional imagery/audio may not change event eligibility, checks, choices, consequences, save state or RNG.
+2. **The public-safe baseline remains playable without uncleared Pokémon media.** Pokémon image/audio enrichment stays optional unless an exact artifact is affirmatively cleared.
+3. **Repository/package licenses and underlying Pokémon IP are separate rights layers.** Repository presence is not blanket redistribution clearance for Pokémon designs, artwork or cries.
+4. **Every production resource has one stable `resource_id`.** Lookup, cache identity, validation and provenance use the semantic ID rather than raw paths or URLs.
+5. **Do build/import work only when it has measured value.** Do not add runtime resizing, format conversion, atlas repacking or repeated source parsing by habit.
+6. **Load once, reuse many times.** Concurrent requests for one uncached `resource_id` are coalesced and repeated consumers reuse the cached instance.
+7. **Preload narrowly.** Initial/common UI plus bounded current-region/event working sets are preferred over whole-corpus preload.
+8. **Budgets are evidence-backed.** Batch 03 supersedes the provisional representative-sample animated cap with a full `001..151` measurement.
+9. **Do not atlas/repack by habit.** The pinned animated source family already fits the final full-coverage budget without a custom repacker.
+10. **Creative presentation choices remain explicit decisions.** D-036 is the binding resolution of the P6 Pokémon visual-family gate.
 
 ---
 
-## 2. Product-derived resource requirements
+## 2. Product-derived resource inventory
 
-The inventory below is derived from the already frozen product contracts: text-first mobile presentation, deterministic event/check flow, visible `0/3..3/3` companion state, character/resource/status visibility, mixed human/environment/faction/Pokémon events, and a phone-sized first playable slice.
+### 2.1 Required baseline
 
-### 2.1 Required for the first production-capable presentation
+| Asset class | Requirement | Minimum fallback |
+|---|---|---|
+| Korean + Latin UI font | **REQUIRED** | system sans stack |
+| Generic action/navigation icons | **REQUIRED** | text labels / project CSS marks |
+| Dice/check/outcome marks | **REQUIRED** | text labels |
+| Human state/resource/status marks | **REQUIRED** | text labels |
+| Three-slot companion presentation | **REQUIRED** | labeled empty/occupied text blocks |
+| Missing-resource/fallback presentation | **REQUIRED** | deterministic text/CSS fallback |
 
-| Asset class | Requirement | Why it exists | Minimum fallback | Notes |
-|---|---|---|---|---|
-| Korean + Latin UI font | **REQUIRED** | Long-form Korean text, choices, sheets and logs must render predictably | system sans stack | Self-hosted deterministic subset preferred once measured |
-| Generic action/navigation icons | **REQUIRED** | Compact phone UI for back/close/confirm/settings/log where text alone is inefficient | text labels / project CSS marks | Include only icons actually used |
-| Dice/check/outcome marks | **REQUIRED** | P3 checks, Fortune/Trouble spikes and result bands need fast recognition | text labels | Prefer project-owned SVG/CSS semantics |
-| Human state/resource/status marks | **REQUIRED** | Fatigue, Injury, pooled resources and notable state need compact recognition | text labels | Domain-specific marks should be project-owned where practical |
-| Companion-slot presentation | **REQUIRED** | D-013 requires exactly three visible slots including normal empty slots | labeled empty/occupied text blocks | Slot UI itself is project-owned; Pokémon art inside it is separately optional |
-| Missing-resource/fallback presentation | **REQUIRED** | Optional resources may be omitted, unavailable or rights-gated | deterministic text/CSS fallback | Failure may not mutate gameplay |
+The required baseline does not depend on Pokémon image/audio files.
 
-### 2.2 Optional presentation enrichment
+### 2.2 Optional enrichment
 
-| Asset class | Requirement | Intended value | Default fallback |
-|---|---|---|---|
-| Pokémon encounter image | **OPTIONAL** | Stronger species identity during a meaningful direct encounter | species name + text description |
-| Pokémon compact companion/list icon | **OPTIONAL** | Faster recognition in the three slots or bestiary/list UI | name/initial + project mark |
-| Location/region background | **OPTIONAL** | Atmosphere and location identity | project color/texture/CSS treatment |
-| Event illustration | **OPTIONAL** | Selected high-value story beats | text-only event card |
-| UI SFX | **OPTIONAL** | Choice/check/transition feedback | silence + visual feedback |
-| Ambient audio | **OPTIONAL** | Settlement/travel/ecology atmosphere | silence |
-| BGM | **OPTIONAL** | Long-session mood | silence |
-| Type/status/item pictograms | **OPTIONAL** | Scanability where repeated textual labels become noisy | text badges |
+| Asset class | Requirement | Default fallback |
+|---|---|---|
+| D-036 animated Pokémon encounter sprite | **OPTIONAL** | species name + encounter prose |
+| PokéSprite compact identity | **OPTIONAL** | name/initial + project mark |
+| Location/region background | **OPTIONAL** | project color/texture/CSS treatment |
+| Selected event illustration | **OPTIONAL** | text-only event card |
+| Type/status/item pictograms | **OPTIONAL** | text badges |
+| UI SFX / ambience / BGM | **OPTIONAL** | silence + visual feedback |
 
-### 2.3 Deferred until a measured product need exists
+### 2.3 Deferred until measured value exists
 
-- animated Pokémon battle sprites;
-- back sprites;
+- back-sprite or battle-only animation families beyond the D-036 encounter presentation;
 - shiny sprite families as a baseline requirement;
 - Pokémon cries;
-- large item-art catalogs;
+- large item-art or background corpora;
 - full Pokédex-style graphical collection grids;
-- whole third-party icon fonts or complete icon packs;
+- whole third-party icon fonts/packs;
 - broad ambience/SFX/music libraries;
-- large background/illustration corpora;
-- per-event unique illustrations as a default authoring requirement.
-
-`DEFERRED` does not mean forbidden. It means P6 currently lacks a gameplay/presentation benefit large enough to justify the rights, payload, memory, maintenance and authoring cost.
+- per-event unique illustration as a default authoring requirement.
 
 ---
 
 ## 3. Public-safe baseline and optional local enrichment
 
-### 3.1 Public repository / public build baseline
-
-The public repository may contain:
-
-- project-authored CSS/SVG/UI marks;
-- project-owned/generated assets with retained provenance and any required model/source metadata;
-- third-party fonts/icons/audio/art only when the exact artifact's license and attribution obligations are explicitly compatible with repository/public distribution;
-- provenance manifests, source locators and hashes for Pokémon media whose public redistribution is not cleared.
-
-The public-safe application must remain complete enough to play through the intended loop when every Pokémon visual/cry resource is absent.
-
-### 3.2 Pokémon media default policy
-
-Until a later P6 record proves otherwise for an exact artifact:
-
 ```text
 pokemon_media_repo_mode == metadata_only
 pokemon_media_public_distribution == not_cleared
 pokemon_media_is_gameplay_required == false
+pokemon_media_initial_payload == 0
 ```
 
-A local developer/owner build may support **explicit optional enrichment** by:
+An explicit local enrichment/import path may fetch or accept user-supplied files at build/import time. It retains the source pin and content SHA-256, does not silently place those bytes in a public distributable artifact, and does not make upstream network access part of the normal render path.
 
-- user-supplied files, or
-- an intentional build-time fetch step for a pinned source.
-
-Such a path must keep the source pin and content hash, must not silently upload those resources into public artifacts, and must not be described as blanket legal clearance. Runtime hotlinking is not the default distribution strategy.
+Batch 03 production validation fetches pinned Pokémon media **in memory**, validates it, hashes it and emits metadata-only evidence. Source Pokémon image bytes are not written to the produced manifest or uploaded as CI evidence.
 
 ---
 
-## 4. P6 source decisions after refresh
+## 4. Frozen source decisions
 
-P6 refreshes only the P1 shortlist. It does not repeat broad ecosystem discovery.
+### 4.1 PokéAPI `sprites`
 
-### 4.1 Pokémon visuals — PokéAPI `sprites`
+**Decision:** `ADAPT` as fallback/reference, not the D-036 primary family.  
+**Frozen reference head:** `c10459b9b0129eaca5c5d9b1cac65336debb1d08`  
+**Public repository:** metadata only  
+**Public distribution:** not cleared
 
-**P6 decision:** `ADAPT`  
-**Role:** optional local encounter/compact-image source candidate, exact family pending `P6-HDG-001`  
-**Refreshed upstream head:** `c10459b9b0129eaca5c5d9b1cac65336debb1d08`  
-**Public repository default:** metadata only  
-**Public distribution default:** not cleared
+### 4.2 PokéSprite compact identity
 
-Why retain it:
+**Decision:** `ADAPT`; selected by D-036 for compact identity.  
+**Frozen pin:** `c5aaa610ff2acdf7fd8e2dccd181bca8be9fcb3e`  
+**Mapping:** `data/pokemon.json`  
+**Default asset:** `pokemon-gen8/regular/{slug}.png`  
+**Source canvas:** `68x56`  
+**Public repository:** metadata only  
+**Public distribution:** not cleared
 
-- broad machine-addressable Pokémon visual coverage;
-- stable species-oriented paths are convenient for deterministic import;
-- exact files can be pinned and normalized at build time.
+Production-import acceptance requires every National Pokédex ID `001..151` to resolve through the pinned mapping to one existing, unique `68x56` default PNG. The importer computes SHA-256 for every fetched file and rechecks the representative Batch 02 hashes.
 
-Why it is not simply `ADOPT` for public bundling:
+### 4.3 PokéRogue animated encounter family
 
-- the repository itself distinguishes its repository licensing from Pokémon image copyrights;
-- sprite families combine different provenance layers and styles;
-- P6 still needs the owner to choose how much Pokémon imagery the product should display.
+**Decision:** `ADAPT`; selected by D-036 for animated direct-encounter presentation.  
+**Frozen pin:** `909b43612324622608023b3beb2f24f4ef159c1d`  
+**Texture:** `images/pokemon/{id}.png`  
+**Atlas metadata:** `images/pokemon/{id}.json`  
+**Public repository:** metadata only  
+**Public distribution:** not cleared
 
-If chosen after the Human Design Gate, import only the minimum #001-#151 family needed by the approved presentation. Do not copy the entire upstream repository.
+Batch 03 proved full Gen-I source coverage:
 
-### 4.2 Pokémon compact visuals — PokéSprite
+```text
+animated_png_json_pairs_validated == 151/151
+metadata_layout.texture_array_v1 == 150
+metadata_layout.root_frames_meta_v1 == 1
+metadata_format.RGBA8888 == 150
+metadata_format.I8 == 1
+```
 
-**P6 decision:** `ADAPT`  
-**Role:** alternative compact companion/list-icon candidate  
-**Refreshed upstream head:** `c5aaa610ff2acdf7fd8e2dccd181bca8be9fcb3e`  
-**Maintenance signal:** current head remains the 2022 documentation state  
-**Public repository default:** metadata only  
-**Public distribution default:** not cleared
+The importer supports only those two **observed pinned layouts**, validates the metadata-declared image/size/format, verifies every frame and source rectangle, and hashes both PNG and JSON. It does not force every upstream JSON into one artificial `RGBA8888` schema.
 
-PokéSprite remains technically attractive for compact fixed-size icon/list presentation and machine-readable mappings. Its Pokémon sprite images, however, have an explicit Nintendo / Creatures / GAME FREAK copyright boundary; the MIT license on project code/non-sprite work does not convert those image rights into MIT assets.
+Full source measurement also proved the Batch 02 representative `512 KiB` hypothesis was too small: 25 source atlases exceed it, while the maximum pinned Gen-I atlas is #085 at `673x673`, conservatively `1,811,716` RGBA8 bytes. The final full-coverage guardrail is therefore `2 MiB` per encounter atlas.
 
-If selected, pin exact files and hashes. Do not depend on future upstream maintenance.
+### 4.4 Pokémon cries
 
-### 4.3 Pokémon cries — PokéAPI `cries`
+**Decision:** `DEFER`.  
+**Reference head:** `ef687b18f0ce17169b4b4c09175819f7ade92f0f`
 
-**P6 decision:** `DEFER`  
-**Refreshed upstream head:** `ef687b18f0ce17169b4b4c09175819f7ade92f0f`
+### 4.5 Pretendard
 
-Cries are technically easy to index by Pokémon ID, but they are not necessary for the text-first deterministic loop and introduce both Pokémon-audio rights complexity and a large recurring audio payload. Revisit only after the visual/mobile slice proves a clear UX value.
+**Decision:** `ADOPT`.  
+**Frozen release:** `v1.3.9`  
+**Frozen source pin:** `5c41199ea0024a9e0b2cb31735265056e5472d76`  
+**Measured `PretendardVariable.woff2` source bytes:** `2,057,688`
 
-### 4.4 Primary UI font — Pretendard
+One self-hosted variable family is the baseline Korean/Latin font. Do not add a second complete CJK family without measured need.
 
-**P6 decision:** `ADOPT` as the primary candidate, **final artifact still measurement-gated**  
-**Observed release family:** `1.3.9`  
-**License:** SIL Open Font License 1.1
+### 4.6 Noto Sans CJK/Korean
 
-Use Pretendard as the first Korean/Latin candidate because the product is Korean-first and text-heavy. P6 Batch 02 must still measure the actual selected WOFF2/subset deployment and verify the exact license/notice packaging before marking concrete font files `commit_allowed`.
+**Decision:** `ADAPT` as a coverage/fallback reference, not a second automatic bundled family.
 
-Default direction:
+### 4.7 Lucide
 
-- self-host rather than runtime CDN dependence;
-- subset only to the actually supported corpus/character policy when reproducible;
-- avoid shipping multiple redundant full font families;
-- select the smallest weight set that preserves hierarchy/readability.
+**Decision:** `ADOPT` for the exact four-file generic SVG subset frozen in Batch 02.  
+**Frozen release:** `1.27.0`  
+**Frozen source pin:** `4aec3f892fd6c23063bc2fead83c899b5d412b1c`  
+**Selected count:** `4`  
+**Measured selected source bytes:** `1,347`
 
-### 4.5 Font fallback / coverage baseline — Noto Sans CJK/Korean
-
-**P6 decision:** `ADAPT`  
-**License:** SIL Open Font License 1.1
-
-Use Noto Sans CJK/Korean as the coverage and rendering fallback/reference, not as an automatic second full bundled family. If system fallback or Pretendard coverage is sufficient, avoid the duplicate payload.
-
-### 4.6 Generic UI icons — Lucide
-
-**P6 decision:** `ADOPT` for a **small per-icon SVG subset**, subject to exact file pinning  
-**Current refresh note:** P1's observed `1.16.0` release is no longer current; P6 observed the `1.27.0` release line.  
-**License:** ISC for Lucide work with retained MIT notices for listed Feather-derived work.
-
-Use Lucide only for truly generic interface actions where a familiar icon improves phone usability. Do not use it to define Pokémon/world-specific visual language.
-
-Rules:
-
-- no complete icon-font bundle;
-- select only used SVGs;
-- normalize SVGs at build time;
-- retain required notices;
-- pin exact release/files/content hashes in the manifest.
-
-### 4.7 Material Symbols
-
-**P6 decision:** `DEFER` as breadth/reference alternative  
-**License:** Apache-2.0
-
-It offers broad coverage and subsetting options, but a second generic icon ecosystem provides little value if a tiny Lucide subset plus project-owned marks satisfies the first playable UI. Reopen only if an actual missing semantic icon justifies it.
+Do not ship the complete icon corpus or icon font.
 
 ### 4.8 Project-owned CSS/SVG
 
-**P6 decision:** `ADOPT` as the default for domain-specific UI marks
+**Decision:** `ADOPT` for domain-specific check, resource, status and companion-slot semantics.
 
-Use project-owned marks for dice/check semantics, companion slots, game-specific resources and other concepts where a generic modern icon library would weaken the ancient-world presentation or create needless dependency/provenance surface.
+### 4.9 Other discovery sources
 
-### 4.9 Kenney individual packs
+Material Symbols, Kenney packs, Freesound and OpenGameArt remain `DEFER` unless an exact production requirement justifies an individually reviewed artifact.
 
-**P6 decision:** `DEFER` pending a concrete asset gap
+### 4.10 Project-created/generated presentation
 
-Kenney remains a low-friction CC0 ecosystem, but importing a pack merely because it is permissively licensed would create unused visual payload and could determine art direction accidentally. Adopt only an exact pack/file after a concrete missing requirement is identified and hash the source archive/extracted files.
-
-### 4.10 Freesound
-
-**P6 decision:** `DEFER` as an individual-sound discovery source only
-
-No site-wide adoption. Any future sound record must pin its stable sound ID, uploader, exact content license, source URL, file hash and attribution/derivative requirements. Prefer CC0 or straightforward compatible attribution terms where equivalent candidates exist. Do not add a runtime Freesound API dependency.
-
-### 4.11 OpenGameArt
-
-**P6 decision:** `DEFER` as an individual-asset discovery source only
-
-OpenGameArt mixes materially different licenses. A collection/search result is never a production license class. Every selected artifact must be individually checked for source provenance, license, attribution/share-alike/derivative implications and final distribution compatibility.
-
-### 4.12 Project-created / generated world presentation
-
-**P6 decision:** `ADOPT` as a production method, not as a blanket asset set
-
-Project-owned backgrounds, textures, event illustrations and UI decoration are preferred where they materially strengthen the proto-Kanto/ancient presentation and third-party reuse would create a style/provenance mismatch.
-
-For generated resources, retain enough metadata to identify the generator/model/tool, source inputs where relevant, creation revision/date and subsequent human edits. P6 does not freeze exact art style or illustration density in Batch 01.
+**Decision:** `ADOPT` for selected backgrounds, textures, event illustrations and domain UI decoration with retained creation provenance.
 
 ---
 
-## 5. Stable resource identity and provenance manifest
+## 5. Stable identity and provenance
 
-Machine contract: `docs/P6_RESOURCE_MANIFEST_SCHEMA.json`.
+Machine contracts:
 
-Every concrete production artifact gets one semantic ID. Paths, hashes and upstream URLs are attributes of the ID, not the identity itself.
+- `docs/P6_RESOURCE_MANIFEST_SCHEMA.json`
+- `docs/P6_RESOURCE_MANIFEST.json`
+- `docs/P6_POKEMON_RESOURCE_SOURCE_MAP.json`
 
-Examples:
+Every concrete production artifact has one semantic `resource_id`. Paths, URLs, versions and hashes are attributes of that identity.
 
-```text
-font.ui.primary.ko-latn
-ui.icon.action.confirm
-ui.icon.action.back
-ui.mark.check.fortune-spike
-ui.mark.check.trouble-spike
-ui.mark.companion-slot.empty
-ui.mark.companion-slot.occupied
-pokemon.025.encounter.front.default
-pokemon.025.companion.icon.default
-location.proto-kanto.starting-village.background
-```
-
-A manifest record must include:
-
-- `resource_id`;
-- asset class and required/optional/deferred class;
-- source ID / source kind;
-- canonical upstream locator;
-- exact pin/version and content SHA-256 where a file exists;
-- rights holder / author or uploader where applicable;
-- exact license label and Pokémon-IP boundary;
-- attribution/notice reference;
-- repository and public-distribution classification;
-- build/fetch/generation mode;
-- reproducible preprocessing recipe/version;
-- normalized output format/dimensions;
-- preload/cache/eviction behavior;
-- encoded and decoded-byte measurements once available;
-- deterministic fallback.
-
-Unknown rights, missing required provenance or an unknown schema version must fail closed in production validation.
+Unknown rights, incompatible redistribution, source-pin drift, duplicate identities or missing required provenance fail closed.
 
 ---
 
-## 6. Build-time preprocessing contract
-
-### 6.1 General rules
+## 6. Build/import preprocessing contract
 
 ```text
 runtime_resize_as_default == false
 runtime_format_conversion == false
 runtime_font_conversion == false
+runtime_atlas_repack == false
 runtime_source_manifest_parsing_for_hot_paths == false
 duplicate_download_for_same_resource_id == false
 duplicate_decoded_instance_for_same_resource_id == false
 ```
 
-Build/import tooling should emit normalized production assets plus a compact indexed manifest suitable for direct runtime lookup.
+For the current pinned Gen-I animated family, full Batch 03 measurement proves a source-direct path fits the final `2 MiB` per-atlas budget. A trial deduplicating shelf repack still left 20 species above the old provisional `512 KiB` cap, so P6 does **not** impose custom repacking merely to preserve an invalid sample-derived threshold.
 
-### 6.2 Pixel/sprite resources
+Concealment, silhouette, partial reveal, shading, masks and environment overlays are presentation transforms over one semantic source identity. They may not materialize persistent duplicate source textures or mutate authoritative game time, RNG or event state.
 
-If `P6-HDG-001` selects sprite use:
-
-- preserve source pixel-grid semantics;
-- use integer/nearest-neighbor treatment for actual pixel art unless the selected family explicitly requires a different method;
-- crop/pad to a deterministic display box at build time;
-- retain source dimensions and normalized dimensions in generated metadata;
-- compare lossless PNG and suitable lossless WebP only after representative assets are measured;
-- do not generate every unused variation (back/shiny/animated/etc.) merely because the source has it.
-
-### 6.3 Illustration/background resources
-
-- resize to bounded phone presentation classes at build time;
-- compare modern compressed formats using representative device/browser support and measured decode behavior in Batch 02;
-- preserve one source/master outside runtime payload when edits/rebuilds require it;
-- do not preload a region-wide illustration library when only one or two cards are visible.
-
-### 6.4 SVG/icons
-
-- include only the used glyph files;
-- sanitize/normalize at build time;
-- use project-owned CSS/SVG for domain-specific semantics where practical;
-- do not ship a whole icon font for a handful of controls.
-
-### 6.5 Fonts
-
-- self-host the selected deterministic artifacts;
-- subset/weight-reduce at build time only through a reproducible recipe;
-- keep OFL notices and upstream version/pin;
-- avoid two resident full Korean font families unless measured fallback requirements justify them.
-
-### 6.6 Audio
-
-If audio is later adopted:
-
-- normalize sample format/codec/volume policy at build time;
-- keep short UI SFX small and reusable;
-- stream or on-demand load longer ambience/BGM rather than decoding the entire catalog into memory;
-- do not preload all Pokémon cries;
-- store per-file duration, encoded bytes and runtime policy in generated metadata.
+SVG/font normalization remains build-time work where useful. Audio, if later adopted, follows measured on-demand/streaming policy rather than whole-corpus preload.
 
 ---
 
 ## 7. Runtime lookup, cache and eviction contract
 
-The P7 implementation must preserve these P6 semantics regardless of framework:
+P7 preserves these semantics regardless of framework:
 
 1. `resource_id` is the canonical cache key.
-2. Concurrent requests for one uncached ID are coalesced into one in-flight load.
-3. Once decoded/loaded, repeated consumers share the cached instance according to the runtime's safe ownership model.
-4. Required common UI assets may remain resident.
-5. Region/event enrichment uses bounded region/event LRU-style lifetime rather than a permanent session-wide accumulation.
-6. Leaving a region/event makes non-resident optional resources eligible for eviction; exact thresholds come from Batch 02 measurement.
-7. Gameplay state stores semantic resource IDs or domain IDs, never runtime object handles.
-8. A missing optional resource returns its manifest fallback and records diagnostics; it does not branch authoritative gameplay.
-9. Production runtime should not make remote upstream asset APIs part of the ordinary render path.
+2. Concurrent misses for the same ID coalesce into one in-flight load.
+3. Repeated consumers share the cached decoded/downloaded instance.
+4. Required common UI may remain resident.
+5. Optional region/event resources have bounded lifetime.
+6. Leaving a region/event makes optional resources eligible for eviction.
+7. Gameplay state stores semantic IDs, never runtime resource-object handles.
+8. Missing optional resources yield deterministic fallback and diagnostics only.
+9. Upstream asset APIs are not part of the ordinary runtime render path.
 
 Expected complexity:
 
@@ -356,165 +226,119 @@ per_render_full_species_asset_scan == false
 
 ---
 
-## 8. Mobile budget methodology
+## 8. Frozen mobile resource budgets
 
-Batch 01 freezes **how budgets are measured**, not imaginary targets.
-
-### 8.1 Initial payload
-
-Measure from the actual production output after preprocessing:
-
-- application code/data separately from resources;
-- primary font bytes;
-- required common UI bytes;
-- first-screen / first-route resources;
-- optional enrichment excluded and included as separate scenarios.
-
-Final P6 budgets must report both compressed transfer/package bytes and the resource class that caused them.
-
-### 8.2 Decoded image memory
-
-For an RGBA8 image, use this as a conservative first-order calculation:
+Batch 03 replaces the provisional animated sample cap with full `001..151` measurement while leaving the compact/initial budgets unchanged.
 
 ```text
-decoded_bytes_estimate = width * height * 4
+p6_owned_required_initial_resource_payload <= 3 MiB
+pokemon_media_initial_payload == 0
+compact_icon_decoded_cache <= 384 KiB
+per_encounter_atlas_guardrail <= 2 MiB
+max_resident_encounter_atlases == 2
+encounter_atlas_decoded_cache <= 4 MiB
+combined_optional_pokemon_decoded_image_working_set <= 4.375 MiB
+baseline_bgm_ambience_ui_sfx_cries_payload == 0
+required_raster_location_event_illustration_payload == 0
 ```
 
-Then measure representative real browser/device behavior because decoder surfaces, color formats, animation frames and GPU uploads may differ from the simple estimate.
-
-The Batch 02 report must separate:
-
-- encoded asset size;
-- CPU-side decoded/image-object estimate where measurable;
-- GPU-side/upload implications where the selected P7 route exposes them;
-- simultaneously resident working-set size.
-
-Do not sum all 151 species files as resident memory when the runtime never needs them simultaneously.
-
-### 8.3 Audio memory
-
-Track separately:
-
-- compressed/packaged bytes;
-- short resident decoded SFX where applicable;
-- streamed/on-demand long-form audio buffers;
-- concurrent playback working set.
-
-### 8.4 Preload scope
-
-The default preload model is:
+Full evidence:
 
 ```text
-initial = required common UI + current-screen essentials
-region = bounded current-region recurring resources
-near_future = only explicitly known next/event resources when beneficial
-all_151_pokemon_media_preloaded = false
-full_audio_catalog_preloaded = false
+compact_source_canvas == 68x56
+compact_rgba8_decoded_bytes_each == 15,232
+24_compact_icons == 365,568 bytes <= 384 KiB
+animated_pairs_validated == 151
+old_512_KiB_atlas_cap_exceeded_by == 25 species
+max_animated_source_atlas == #085 == 673x673 == 1,811,716 RGBA8 bytes
+final_per_atlas_cap == 2,097,152 bytes
+final_two_atlas_cache_cap == 4,194,304 bytes
 ```
 
-### 8.5 Cache lifetime
+Whole-151 residency is not a valid memory model. All Pokémon media remains on-demand and only two encounter atlases may remain resident simultaneously.
 
-Final numerical cache limits must be justified by measured representative devices and content. The policy must expose at least:
-
-- resident common set;
-- bounded region LRU;
-- smaller event/on-demand LRU;
-- explicit eviction diagnostics/test hooks.
+P7 must additionally measure browser/device CPU/GPU accounting, but it may not silently weaken these P6 caps.
 
 ---
 
 ## 9. Validation contract
 
-P6 Batch 02/exit validation must reject at least:
+`tools/validate_p6_resources.py` rejects at least:
 
 - duplicate `resource_id` values;
-- unknown manifest schema versions;
-- missing source/provenance fields for production resources;
-- missing exact pin/hash where an imported concrete file should be pinned;
-- unknown or internally contradictory rights classifications;
-- Pokémon media marked `commit_allowed` / public `allowed` without an explicit reviewed justification;
-- required resources whose fallback is unusable;
-- optional resources whose absence changes authoritative gameplay;
-- two different canonical cache IDs unintentionally pointing at the same logical artifact;
-- one logical `resource_id` producing duplicate runtime loads when a cache hit should occur;
-- runtime-resize/reconversion requirements that could have been removed by the approved preprocessing recipe;
-- unbounded preload lists or full-corpus preload as a convenience default.
+- unknown schema/source-map versions;
+- missing or contradictory provenance/rights data;
+- illegal bundling/public allowance of uncleared Pokémon media;
+- source-pin drift;
+- initial Pokémon-media preload;
+- duplicate upstream artifact ownership;
+- compact/encounter decoded-memory violations;
+- cache-key/duplicate-instance drift;
+- unusable optional-media fallback semantics;
+- drift from the pinned full Gen-I measurement distribution.
 
-A future validator should operate on generated manifests before packaging and should be runnable in CI without downloading rights-gated Pokémon media.
+`tools/build_p6_production_import_manifest.py`:
 
----
+- validates PokéSprite `001..151` compact coverage;
+- validates all Gen-I animated PNG+JSON pairs and frame/source bounds;
+- supports the two pinned metadata layouts actually observed;
+- computes SHA-256 for every fetched artifact;
+- measures every source atlas against the final `2 MiB` guardrail;
+- fetches Pokémon media in memory only;
+- emits only metadata JSON evidence.
 
-## 10. Human Design Gate — P6-HDG-001 Pokémon visual density/family
-
-Technical evidence does not uniquely determine how much Pokémon imagery this **text-first ancient-world RPG** should show. This is a material presentation decision, so Batch 01 stops at this smallest owner gate rather than silently choosing a sprite family.
-
-### Option A — Encounter sprite + compact companion icon (**recommended**)
-
-- meaningful direct encounters display one static Pokémon image;
-- the three companion slots / compact list may use a small icon;
-- ordinary narrative remains text-first;
-- no default animation/back/shiny family.
-
-**Why recommended:** Pokémon identity remains visually immediate without making the product a graphical collector or forcing large image working sets. It also creates a concrete enough Batch 02 sample set to measure both encounter-card and compact-slot paths.
-
-### Option B — Compact icon only
-
-- Pokémon visuals appear only in companion/list/status-scale contexts;
-- encounters remain primarily prose/UI marks.
-
-**Tradeoff:** lowest Pokémon-media footprint, but major direct encounters may feel visually underpowered.
-
-### Option C — No Pokémon-derived visual media in v1
-
-- public-safe text/CSS presentation is also the intended v1 presentation;
-- Pokémon identity is conveyed through names, prose and project-owned marks.
-
-**Tradeoff:** simplest rights/resource path and smallest payload, but leaves significant presentation value unused in a Pokémon fan project.
-
-### Option D — Project-created/generated encounter illustrations
-
-- replace/reinterpret sprite presentation with project-created/generated illustrations for selected encounters.
-
-**Tradeoff:** strongest bespoke art-direction potential but highest authoring/provenance/style-consistency cost. Not recommended for the first playable resource baseline.
-
-The owner's choice must be recorded in `docs/DECISIONS.md` before P6 freezes exact Pokémon visual files, dimensions and production family.
+The normal static validator remains network-independent. CI explicitly runs the pinned live import and feeds the produced metadata manifest back through policy validation.
 
 ---
 
-## 11. P7 handoff constraints already frozen by Batch 01
+## 10. P6-HDG-001 — RESOLVED by D-036
 
-P7 may choose technology only after P6 exit, and its architecture must be capable of:
+```text
+compact_pokemon_identity_candidate == PokeSprite
+encounter_pokemon_presentation == animated_sprite
+unknown_encounter_conceal_reveal == true
+per_reveal_state_duplicate_sprite_assets == false
+all_151_encounter_animations_preloaded == false
+presentation_animation_mutates_authoritative_game_state == false
+current_blocking_p6_human_design_gate_count == 0
+```
 
-- semantic `resource_id` lookup independent of raw upstream paths;
-- build-time generated/indexed resource manifests;
+The player-facing reveal sequence is `concealed → silhouette → partial_reveal → revealed → identified`.
+
+---
+
+## 11. P7 handoff constraints
+
+P7 may choose technology but must preserve:
+
+- semantic `resource_id` lookup independent of upstream paths;
+- generated/indexed manifests;
 - deterministic fallbacks;
-- self-hosted approved resources;
-- optional rights-gated local enrichment without making it mandatory for gameplay;
-- coalesced asynchronous load + cache reuse;
-- bounded region/event eviction;
+- optional local rights-gated enrichment;
+- coalesced asynchronous loading and cache reuse;
+- bounded event/region eviction;
+- `384 KiB` compact cache, `2 MiB` per encounter atlas, at most `2` resident atlases, `4 MiB` encounter cache;
 - no per-frame manifest/species scans;
-- no routine runtime image/font/audio conversion;
-- testable loading/memory diagnostics needed to enforce the final P6 budgets.
+- no routine runtime media resize/repack/format conversion;
+- testable loading and memory diagnostics.
 
-This document deliberately does **not** choose React, another web framework, PWA packaging, native wrappers, storage architecture or save implementation.
+P6 deliberately does **not** choose React, another web framework, PWA packaging, native wrappers, save/storage architecture or backend design.
 
 ---
 
-## 12. Exact next P6 work after P6-HDG-001
+## 12. P6 exit verdict
 
-Run **P6 Batch 02 — exact artifact selection + measurement**:
+Validated candidate `95787eda4c1c04aeb27c4acb0c4256c12206e85b` passed P6 Resource Validation run #30, including full live import, produced-manifest policy validation and metadata-only Artifact upload.
 
-1. record the owner's visual-density decision;
-2. select the exact Pretendard artifact/weights/subset plan and verify license packaging;
-3. pin the exact Lucide release and only the used icon SVGs;
-4. select/project-author the required domain-specific SVG/CSS marks;
-5. if Pokémon visuals are selected, choose the exact source family/files for a representative Gen-I sample and classify them as public-safe vs optional local enrichment;
-6. generate file SHA-256 values and concrete `p6-resource-manifest-v1` records;
-7. run reproducible preprocessing on representative font/icon/image candidates;
-8. measure initial resource payload and representative decoded working sets rather than estimating final limits from source catalogs;
-9. compare candidate output formats/dimensions using measured encoded/decode/render behavior;
-10. freeze numeric initial payload, decoded-image, audio (if any), preload and cache budgets only from those measurements;
-11. add executable manifest/rights/duplicate/fallback validation;
-12. keep #12 open and P7 blocked until the full P6 exit audit passes.
+```text
+pokesprite_compact_import == 151/151 PASS
+animated_png_json_import == 151/151 PASS
+all_fetched_artifacts_hashed == true
+animated_source_atlas_over_2_MiB_count == 0
+metadata_only_evidence_boundary == PASS
+p6_complete == true
+issue_12_may_close == true
+p7_may_begin_after_issue_12_close == true
+```
 
-P6 Batch 01 does not authorize P7 implementation.
+The final PR head must remain green under the same P6 workflow before merge. `docs/P6_EXIT_AUDIT.md` is the strict exit authority.
