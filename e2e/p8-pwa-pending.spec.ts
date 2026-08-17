@@ -100,10 +100,17 @@ test('production service worker restores the exact P8 pending save with the prev
   let preview: ChildProcess | null = await startPreview();
   try {
     await page.goto('/');
-    await page.evaluate(async () => {
+    const firstInstallScope = await page.evaluate(async () => {
       if (!('serviceWorker' in navigator)) throw new Error('service workers are unavailable');
-      await navigator.serviceWorker.ready;
+      const registration = await navigator.serviceWorker.ready;
+      return registration.scope;
     });
+    expect(firstInstallScope.endsWith('/')).toBe(true);
+    await expect.poll(async () => page.evaluate(async () => {
+      const registration = await navigator.serviceWorker.ready;
+      return registration.active?.state ?? null;
+    })).toBe('activated');
+
     await page.reload();
     await expect.poll(async () => page.evaluate(() => navigator.serviceWorker.controller?.state ?? null)).toBe('activated');
 
@@ -116,6 +123,7 @@ test('production service worker restores the exact P8 pending save with the prev
 
     await page.reload({ waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Ancient Pokémon TRPG' })).toBeVisible();
+    expect(await page.evaluate(() => navigator.serviceWorker.controller?.state ?? null)).toBe('activated');
     await page.getByRole('button', { name: 'Continue saved run' }).click();
     await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
     expect(await readP8SaveJson(page)).toBe(pendingBeforeOffline);
