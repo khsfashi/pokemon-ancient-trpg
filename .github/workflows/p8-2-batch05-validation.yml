@@ -50,7 +50,7 @@ jobs:
       - name: Install phone browser engines
         run: npx playwright install --with-deps chromium webkit
       - name: P8.2 portrait and persistent profile HUD acceptance
-        run: npx playwright test e2e/p8-2-profile-hud.spec.ts --project=chromium --project=webkit
+        run: npx playwright test e2e/p8-2-profile-hud.spec.ts --project=phone-chromium --project=phone-webkit
       - name: Re-run inherited P8 phone smoke
         run: npm run test:browser:p8-smoke
       - name: Re-run P8 backup compatibility
