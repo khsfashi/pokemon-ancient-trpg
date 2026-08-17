@@ -145,7 +145,7 @@ export function NarrativeReveal({
   }
 
   return (
-    <div class="narrative-presentation">
+    <>
       {illustrationResourceId !== null && (
         <P8SceneIllustration
           resourceId={illustrationResourceId}
@@ -169,6 +169,6 @@ export function NarrativeReveal({
         {!complete && <span class="narrative-progress" aria-hidden="true">…</span>}
         {complete && cursor.beatIndex + 1 < beats.length && <span class="narrative-progress" aria-hidden="true">▼</span>}
       </button>
-    </div>
+    </>
   );
 }
