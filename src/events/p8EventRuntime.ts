@@ -4,7 +4,7 @@ import {
   type P8DomainCommand,
 } from '../domain/p8Authority';
 import type { HashProvider } from '../runtime/hashProvider';
-import { drawP5Bounded, type P5BoundedDrawRecord, type P5RngStreamKey } from '../runtime/p5Rng';
+import { bytesToHex, drawP5Bounded, type P5BoundedDrawRecord, type P5RngStreamKey } from '../runtime/p5Rng';
 import { resolveP8StaticCheck, p8CheckDrawsToPending, p8CheckToPendingResult, type P8CheckDegree, type P8StaticCheckSpec } from '../runtime/p8Checks';
 import {
   P5_CONTRACT_VERSION,
@@ -17,6 +17,7 @@ import {
 
 const U63_MAX = (1n << 63n) - 1n;
 const RECENT_HISTORY_CAP = 16;
+const STABLE_ID = /^[a-z0-9][a-z0-9._-]{0,63}$/;
 
 export type P8Condition =
   | boolean
@@ -86,26 +87,28 @@ export interface P8SelectionContext extends P8ContentIdentity {
   readonly transitionSeq: bigint;
   readonly triggerId: P5TriggerId;
   readonly evaluationOrdinal: number;
-  readonly startDrawIndex: bigint;
 }
 export interface P8SelectedEvent {
   readonly event: P8EventDefinition;
-  readonly nextDrawIndex: bigint;
   readonly selectionDraws: readonly P5BoundedDrawRecord[];
 }
 export interface P8PreparedEvent {
   readonly event: P8EventDefinition;
   readonly pending: PendingEventInstanceRuntimeV1;
-  readonly nextDrawIndex: bigint;
 }
 export interface P8ResolvedEvent {
   readonly state: P8AuthorityState;
   readonly transitionSeq: bigint;
-  readonly nextDrawIndex: bigint;
-  readonly pending: PendingEventInstanceRuntimeV1;
+  readonly resolvedPendingEvidence: PendingEventInstanceRuntimeV1;
+  readonly pendingAfterCommit: null;
   readonly postCommitTriggers: readonly P5TriggerId[];
 }
 
+interface WeightedCandidate { readonly event: P8EventDefinition; readonly weight: bigint; }
+
+function stableId(value: string, label: string): void {
+  if (!STABLE_ID.test(value)) throw new RangeError(`${label} must be a stable id`);
+}
 function countCompanions(state: P8AuthorityState): number {
   let count = 0;
   for (const slot of state.pokemon.companionSlots) if (slot !== null) count += 1;
@@ -156,11 +159,19 @@ export class P8EventCatalog {
     const byId = new Map<string, P8EventDefinition>();
     const byTrigger = new Map<P5TriggerId, P8EventDefinition[]>();
     for (const event of events) {
+      stableId(event.eventId, 'eventId');
+      if (!Number.isSafeInteger(event.contentRevision) || event.contentRevision < 0) throw new RangeError(`invalid content revision: ${event.eventId}`);
       if (byId.has(event.eventId)) throw new RangeError(`duplicate event id: ${event.eventId}`);
       if (event.baseWeight < 0n || event.baseWeight > U63_MAX) throw new RangeError(`invalid event weight: ${event.eventId}`);
-      const outcomes = new Set(event.outcomes.map((outcome) => outcome.outcomeId));
-      if (outcomes.size !== event.outcomes.length) throw new RangeError(`duplicate outcome id in ${event.eventId}`);
+      const outcomes = new Set<string>();
+      for (const outcome of event.outcomes) {
+        stableId(outcome.outcomeId, 'outcomeId');
+        if (!outcomes.add(outcome.outcomeId)) throw new RangeError(`duplicate outcome id in ${event.eventId}`);
+      }
+      const choiceIds = new Set<string>();
       for (const choice of event.choices) {
+        stableId(choice.choiceId, 'choiceId');
+        if (!choiceIds.add(choice.choiceId)) throw new RangeError(`duplicate choice id in ${event.eventId}`);
         const ids = choice.resolution.kind === 'direct' ? [choice.resolution.outcomeId] : Object.values(choice.resolution.outcomeMap);
         for (const outcomeId of ids) if (!outcomes.has(outcomeId)) throw new RangeError(`unknown outcome in ${event.eventId}: ${outcomeId}`);
       }
@@ -179,8 +190,18 @@ export class P8EventCatalog {
   candidates(triggerId: P5TriggerId): readonly P8EventDefinition[] { return this.byTrigger.get(triggerId) ?? []; }
 }
 
+function weightedEligibleP8Events(catalog: P8EventCatalog, state: P8AuthorityState, triggerId: P5TriggerId, transitionSeq: bigint): readonly WeightedCandidate[] {
+  const eligible: WeightedCandidate[] = [];
+  for (const event of catalog.candidates(triggerId)) {
+    if (!repeatEligible(state, event, transitionSeq) || !evaluateP8Condition(state, event.eligibility)) continue;
+    const weight = effectiveWeight(state, event);
+    if (weight > 0n) eligible.push({ event, weight });
+  }
+  return eligible;
+}
+
 export function eligibleP8Events(catalog: P8EventCatalog, state: P8AuthorityState, triggerId: P5TriggerId, transitionSeq: bigint): readonly P8EventDefinition[] {
-  return catalog.candidates(triggerId).filter((event) => repeatEligible(state, event, transitionSeq) && evaluateP8Condition(state, event.eligibility) && effectiveWeight(state, event) > 0n);
+  return weightedEligibleP8Events(catalog, state, triggerId, transitionSeq).map((candidate) => candidate.event);
 }
 
 export async function selectP8Event(
@@ -189,16 +210,17 @@ export async function selectP8Event(
   state: P8AuthorityState,
   context: P8SelectionContext,
 ): Promise<P8SelectedEvent | null> {
-  const eligible = eligibleP8Events(catalog, state, context.triggerId, context.transitionSeq);
+  if (!Number.isSafeInteger(context.evaluationOrdinal) || context.evaluationOrdinal < 0) throw new RangeError('evaluationOrdinal must be a non-negative safe integer');
+  const eligible = weightedEligibleP8Events(catalog, state, context.triggerId, context.transitionSeq);
   if (eligible.length === 0) return null;
-  if (eligible.length === 1) return { event: eligible[0]!, nextDrawIndex: context.startDrawIndex, selectionDraws: [] };
+  if (eligible.length === 1) return { event: eligible[0]!.event, selectionDraws: [] };
 
-  const weighted = eligible.map((event) => ({ event, weight: effectiveWeight(state, event) }));
   let total = 0n;
-  for (const candidate of weighted) {
+  for (const candidate of eligible) {
     total += candidate.weight;
     if (total > U63_MAX) throw new RangeError('eligible event weight total exceeds unsigned 63-bit range');
   }
+  const subjectId = `eval:${context.evaluationOrdinal}`;
   const key: P5RngStreamKey = {
     runSeedHex: context.runSeedHex,
     contentPackId: context.contentPackId,
@@ -206,13 +228,13 @@ export async function selectP8Event(
     originTransitionSeq: context.transitionSeq,
     triggerId: context.triggerId,
     channel: 'event.select',
-    subjectId: `event-select-${context.evaluationOrdinal}`,
+    subjectId,
   };
-  const draw = await drawP5Bounded(hashProvider, key, context.startDrawIndex, total);
+  const draw = await drawP5Bounded(hashProvider, key, 0n, total);
   let cursor = 0n;
-  for (const candidate of weighted) {
+  for (const candidate of eligible) {
     cursor += candidate.weight;
-    if (draw.value < cursor) return { event: candidate.event, nextDrawIndex: draw.nextDrawIndex, selectionDraws: draw.draws };
+    if (draw.value < cursor) return { event: candidate.event, selectionDraws: draw.draws };
   }
   throw new Error('weighted selection failed');
 }
@@ -230,12 +252,31 @@ function choiceView(state: P8AuthorityState, choice: P8EventChoice): PendingChoi
   return !enabled && choice.unavailableReasonId !== undefined ? { ...base, publicReasonId: choice.unavailableReasonId } : base;
 }
 
-export function prepareP8PendingEvent(
+async function derivePendingInstanceId(hashProvider: HashProvider, selected: P8SelectedEvent, context: P8SelectionContext): Promise<string> {
+  const canonicalIdentity = [
+    'pokemon-ancient-trpg/p5-pending-v1',
+    context.contentPackId,
+    context.contentPackVersion,
+    context.contentDigestSha256,
+    context.runSeedHex,
+    context.transitionSeq.toString(10),
+    context.triggerId,
+    context.evaluationOrdinal.toString(10),
+    selected.event.eventId,
+    selected.event.contentRevision.toString(10),
+  ].join('\0');
+  const digest = await hashProvider.sha256(new TextEncoder().encode(canonicalIdentity));
+  if (digest.byteLength !== 32) throw new Error(`SHA-256 provider returned ${digest.byteLength} bytes instead of 32`);
+  return `pending.${bytesToHex(digest).slice(0, 56)}`;
+}
+
+export async function prepareP8PendingEvent(
+  hashProvider: HashProvider,
   state: P8AuthorityState,
   selected: P8SelectedEvent,
   context: P8SelectionContext,
   precommitStateDigest: string,
-): P8PreparedEvent {
+): Promise<P8PreparedEvent> {
   const pending: PendingEventInstanceRuntimeV1 = {
     pendingSchemaVersion: P5_PENDING_SCHEMA_VERSION,
     p5ContractVersion: P5_CONTRACT_VERSION,
@@ -243,7 +284,7 @@ export function prepareP8PendingEvent(
     contentPackVersion: context.contentPackVersion,
     contentDigestSha256: context.contentDigestSha256,
     runSeedHex: context.runSeedHex,
-    instanceId: `pending.${context.evaluationOrdinal}`,
+    instanceId: await derivePendingInstanceId(hashProvider, selected, context),
     eventId: selected.event.eventId,
     contentRevision: selected.event.contentRevision,
     originTransitionSeq: context.transitionSeq,
@@ -251,10 +292,10 @@ export function prepareP8PendingEvent(
     evaluationOrdinal: context.evaluationOrdinal,
     phase: 'awaiting_choice',
     resolvedChoiceView: selected.event.choices.map((choice) => choiceView(state, choice)),
-    completedRngDrawRecords: selectionDrawsToPending(selected.selectionDraws, `event-select-${context.evaluationOrdinal}`),
+    completedRngDrawRecords: selectionDrawsToPending(selected.selectionDraws, `eval:${context.evaluationOrdinal}`),
     precommitStateDigest,
   };
-  return { event: selected.event, pending, nextDrawIndex: selected.nextDrawIndex };
+  return { event: selected.event, pending };
 }
 
 function findChoice(event: P8EventDefinition, pending: PendingEventInstanceRuntimeV1, choiceId: string): P8EventChoice {
@@ -312,27 +353,25 @@ export async function resolveP8EventChoice(
   pending: PendingEventInstanceRuntimeV1,
   choiceId: string,
   currentTransitionSeq: bigint,
-  startDrawIndex: bigint,
 ): Promise<P8ResolvedEvent> {
   if (currentTransitionSeq !== pending.originTransitionSeq) throw new RangeError('transition sequence changed while event was pending');
   const choice = findChoice(event, pending, choiceId);
   let outcomeId: string;
-  let nextDrawIndex = startDrawIndex;
   let completedRngDrawRecords = [...pending.completedRngDrawRecords];
   let completedCheckResult = pending.completedCheckResult;
 
   if (choice.resolution.kind === 'direct') {
     outcomeId = choice.resolution.outcomeId;
   } else {
+    const checkSubjectId = `${event.eventId}/${choice.choiceId}/${choice.resolution.check.checkId}`;
     const check = await resolveP8StaticCheck(hashProvider, state.character, {
       runSeedHex: pending.runSeedHex,
       contentPackId: pending.contentPackId,
       contentPackVersion: pending.contentPackVersion,
       originTransitionSeq: pending.originTransitionSeq,
       triggerId: pending.triggerId,
-    }, startDrawIndex, choice.resolution.check);
+    }, checkSubjectId, 0n, choice.resolution.check);
     outcomeId = choice.resolution.outcomeMap[check.degree];
-    nextDrawIndex = check.nextDrawIndex;
     completedRngDrawRecords = [...completedRngDrawRecords, ...p8CheckDrawsToPending(check)];
     completedCheckResult = p8CheckToPendingResult(check);
   }
@@ -342,7 +381,7 @@ export async function resolveP8EventChoice(
   const afterP5 = applyP5Effects(afterDomain, outcome.p5Effects);
   const committedTransitionSeq = currentTransitionSeq + 1n;
   const committed = finalizeBookkeeping(afterP5, event.eventId, committedTransitionSeq, outcome.enqueueChainSteps);
-  const readyPending: PendingEventInstanceRuntimeV1 = {
+  const resolvedPendingEvidence: PendingEventInstanceRuntimeV1 = {
     ...pending,
     phase: 'ready_to_commit',
     selectedChoiceId: choiceId,
@@ -350,5 +389,11 @@ export async function resolveP8EventChoice(
     ...(completedCheckResult === undefined ? {} : { completedCheckResult }),
     pendingConsequence: outcome.outcomeId,
   };
-  return { state: committed, transitionSeq: committedTransitionSeq, nextDrawIndex, pending: readyPending, postCommitTriggers: outcome.postCommitTriggers };
+  return {
+    state: committed,
+    transitionSeq: committedTransitionSeq,
+    resolvedPendingEvidence,
+    pendingAfterCommit: null,
+    postCommitTriggers: outcome.postCommitTriggers,
+  };
 }
