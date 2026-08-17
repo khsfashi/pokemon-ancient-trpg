@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "p8-slice-presentation-source-v1",
+  "contentPackId": "p8.reedbank-slice",
+  "contentPackVersion": "1",
+  "originLabels": {
+    "river_household": "River Household",
+    "storehouse_household": "Storehouse Household",
+    "orchard_household": "Orchard Household",
+    "repair_household": "Repair Household"
+  },
+  "practiceLabels": {
+    "route_guide": "Route Guide",
+    "quartermaster": "Quartermaster",
+    "field_mender": "Field Mender",
+    "go_between": "Go-Between"
+  },
+  "competenceLabels": {
+    "tracking": "Tracking",
+    "inventory": "Inventory",
+    "repair": "Repair",
+    "mediation": "Mediation",
+    "first_aid": "First Aid",
+    "climbing": "Climbing",
+    "foraging": "Foraging"
+  },
+  "localityLabels": {
+    "reedbank-settlement": "Reedbank Settlement",
+    "old-levee": "Old Levee",
+    "windbreak-orchard": "Windbreak Orchard"
+  },
+  "speciesLabels": {
+    "13": "Weedle",
+    "15": "Beedrill",
+    "19": "Rattata"
+  },
+  "specializations": [
+    {
+      "specializationId": "path_reader",
+      "label": "Path Reader",
+      "description": "Notice routes and danger early, then keep moving when the ground turns bad.",
+      "attributeIncreases": ["sense", "sense", "endurance", "agility"],
+      "personalCompetenceId": "first_aid"
+    },
+    {
+      "specializationId": "steady_hand",
+      "label": "Steady Hand",
+      "description": "Endure pressure, handle physical work, and improvise away from the settlement.",
+      "attributeIncreases": ["endurance", "endurance", "strength", "will"],
+      "personalCompetenceId": "climbing"
+    },
+    {
+      "specializationId": "field_eye",
+      "label": "Field Eye",
+      "description": "Read living terrain carefully and bring back useful food or materials.",
+      "attributeIncreases": ["sense", "sense", "intellect", "will"],
+      "personalCompetenceId": "foraging"
+    }
+  ],
+  "sceneSequence": [
+    {
+      "eventId": "slice.opening.market_call",
+      "triggerId": "run_started",
+      "eyebrow": "Settlement · morning",
+      "title": "A Call Across the Square",
+      "body": "A storehouse tally has gone wrong. Voices rise in the square, but no Pokémon is to blame; people are deciding who will carry the burden.",
+      "continueLabel": "Step into the square",
+      "choices": {
+        "step_into_square": "Step forward and hear the request"
+      },
+      "outcomes": {
+        "released": "The argument settles enough for the steward to speak plainly. You are free to choose whether to help."
+      }
+    },
+    {
+      "eventId": "slice.social.steward_request",
+      "triggerId": "player_action_committed",
+      "eyebrow": "Settlement · responsibility",
+      "title": "The Steward's Errand",
+      "body": "A small route must be checked before supplies move. The problem began with people and weather, not a convenient monster to defeat.",
+      "continueLabel": "Hear the terms",
+      "choices": {
+        "accept_errand": "Accept the route-checking errand"
+      },
+      "outcomes": {
+        "entrusted": "The steward marks you as entrusted with the route. That relationship will remain part of the run."
+      }
+    },
+    {
+      "eventId": "slice.relationship.millkeeper_ledger",
+      "triggerId": "player_action_committed",
+      "eyebrow": "Settlement · relationship",
+      "title": "A Promise at the Mill",
+      "body": "The millkeeper asks for an account when you return. It is not a faction banner yet—just a local person who will remember what you said.",
+      "continueLabel": "Make your promise",
+      "choices": {
+        "promise_return": "Promise to return with an honest account"
+      },
+      "outcomes": {
+        "promise_recorded": "The promise is remembered. Your next step is to leave Reedbank and test the old levee route."
+      }
+    },
+    {
+      "eventId": "slice.travel.leave_settlement",
+      "triggerId": "travel_step_committed",
+      "eyebrow": "Travel · survival",
+      "title": "Beyond the Last Dry Marker",
+      "body": "You leave the settlement with limited provisions. The old levee is exposed, narrow, and more valuable than it looks because every safe crossing matters.",
+      "continueLabel": "Take the old levee",
+      "choices": {
+        "take_old_levee": "Spend provisions and take the old levee"
+      },
+      "outcomes": {
+        "levee_reached": "One provision is spent. You reach the old levee and begin reading the living terrain around it."
+      }
+    },
+    {
+      "eventId": "slice.ecology.weedle_crossing",
+      "triggerId": "location_entered",
+      "eyebrow": "Pokémon ecology · direct interaction",
+      "title": "Weedle at the Crossing",
+      "body": "Weedle signs cross the route. You can simply give the colony space or risk a careful read of the tracks and feeding pattern.",
+      "continueLabel": "Observe the crossing",
+      "speciesId": 13,
+      "choices": {
+        "give_space": "Give the colony space and pass quietly",
+        "read_signs": "Read the signs closely (Sense + Tracking check)"
+      },
+      "outcomes": {
+        "observed": "You make direct contact with the ecology without forcing a bond. The route remains open.",
+        "setback": "The signs are misread and pressure builds, but the encounter is still recorded without turning Weedle into an enemy token.",
+        "partial": "You understand enough to pass, though the crossing costs time and attention.",
+        "full": "You read the route cleanly and learn how the colony is using the levee.",
+        "exceptional": "The pattern is unusually clear; you gain an extra ecological insight without recruiting a companion."
+      }
+    },
+    {
+      "eventId": "slice.mixed.orchard_boundary",
+      "triggerId": "travel_step_committed",
+      "eyebrow": "Human motive + Pokémon ecology",
+      "title": "The Windbreak Boundary",
+      "body": "The fastest line cuts through a useful windbreak. Beedrill activity and Rattata trails matter, but so does the orchard keeper's need to protect the boundary.",
+      "continueLabel": "Choose the route",
+      "speciesId": 15,
+      "choices": {
+        "protect_windbreak": "Respect the windbreak and take the careful route",
+        "take_shortcut": "Take the shortcut and accept the social cost"
+      },
+      "outcomes": {
+        "windbreak_protected": "You protect the windbreak, record the Beedrill and Rattata interactions, and keep the keeper's trust.",
+        "shortcut_taken": "You make faster ground, but the keeper remembers the strained choice. The Pokémon ecology was only part of the problem."
+      }
+    },
+    {
+      "eventId": "slice.ending.return_crossroads",
+      "triggerId": "milestone_committed",
+      "eyebrow": "Run ending",
+      "title": "Return to Reedbank",
+      "body": "You turn back with a route account, relationship consequences, survival cost, and direct Pokémon observations. A companion was never required.",
+      "continueLabel": "Return with your account",
+      "choices": {
+        "return_with_account": "Return to Reedbank and finish the run"
+      },
+      "outcomes": {
+        "ending_ready": "The first slice is complete. The 0/3 companion route is a valid ending, and the accumulated state remains saved."
+      }
+    }
+  ]
+}
