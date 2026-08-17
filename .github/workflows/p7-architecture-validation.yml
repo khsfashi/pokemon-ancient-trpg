@@ -13,6 +13,7 @@ on:
   push:
     branches:
       - main
+      - 'agent/**'
     paths:
       - 'docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md'
       - 'docs/P6_RESOURCE_BUDGET_AND_PIPELINE_CONTRACT.md'
@@ -30,9 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
         with:
-          python-version: '3.12'
+          python-version: '3.13'
       - name: Validate P7 architecture contract
         run: python tools/validate_p7_architecture.py
