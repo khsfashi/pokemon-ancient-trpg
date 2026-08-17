@@ -7,8 +7,10 @@ on:
       - 'docs/P8_BATCH_05_AUDIT.md'
       - 'docs/P8_EXIT_AUDIT.md'
       - 'e2e/p8-exit.spec.ts'
+      - 'e2e/p8-pwa-pending.spec.ts'
       - 'e2e/p8-save-compat.spec.ts'
       - 'playwright.p8-exit.config.ts'
+      - 'playwright.p8-pwa.config.ts'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/p8-batch05-validation.yml'
@@ -22,8 +24,10 @@ on:
       - 'docs/P8_BATCH_05_AUDIT.md'
       - 'docs/P8_EXIT_AUDIT.md'
       - 'e2e/p8-exit.spec.ts'
+      - 'e2e/p8-pwa-pending.spec.ts'
       - 'e2e/p8-save-compat.spec.ts'
       - 'playwright.p8-exit.config.ts'
+      - 'playwright.p8-pwa.config.ts'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/p8-batch05-validation.yml'
@@ -62,7 +66,9 @@ jobs:
         run: npx playwright install --with-deps chromium webkit
       - name: P8 backup compatibility in Chromium and WebKit
         run: npm run test:browser:p8-save
-      - name: P8 production Chromium/WebKit full-run, check-reload and offline pending proof
+      - name: P8 production Chromium/WebKit full-run and check-reload proof
         run: npm run test:browser:p8-exit
+      - name: P8 production PWA pending save with physical origin down
+        run: npm run test:browser:p8-pwa
       - name: Re-run inherited P7 resource, save and PWA browser acceptance
         run: npm run test:e2e
