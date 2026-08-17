@@ -1,5 +1,11 @@
 import { useMemo } from 'preact/hooks';
 import type { P8AuthorityState, P8AttributeId, P8CharacterState } from '../domain/p8Authority';
+import {
+  P8_EQUIPMENT_SLOT_IDS,
+  deriveP8EquipmentProjection,
+  type P8EquipmentProjection,
+  type P8EquipmentSlotId,
+} from '../domain/p8Equipment';
 import { P8_SLICE_SPECIALIZATIONS } from '../content/p8SlicePresentation';
 import {
   labelP8AttributeLocalized,
@@ -32,6 +38,42 @@ const PORTRAIT_LABELS = {
   },
 } as const;
 
+const EQUIPMENT_SLOT_LABELS: Readonly<Record<P8Locale, Readonly<Record<P8EquipmentSlotId, string>>>> = {
+  'ko-KR': {
+    main_hand: '주무기',
+    body: '몸 방어구',
+    guard: '보호구',
+    utility: '길 도구',
+    field: '생태 장비',
+  },
+  'en-US': {
+    main_hand: 'Main hand',
+    body: 'Body armor',
+    guard: 'Protection',
+    utility: 'Route tool',
+    field: 'Ecology gear',
+  },
+};
+
+const EQUIPMENT_ITEM_LABELS: Readonly<Record<P8Locale, Readonly<Record<string, string>>>> = {
+  'ko-KR': {
+    'iron.spear': '철제 창',
+    'travel.gambeson': '누비 여행갑옷',
+    'sting.veil': '독침 방호면',
+    'hide.buckler': '가죽 버클러',
+    'route.marker_kit': '길표식 꾸러미',
+    'field.observation_kit': '생태 관찰도구',
+  },
+  'en-US': {
+    'iron.spear': 'Iron spear',
+    'travel.gambeson': 'Travel gambeson',
+    'sting.veil': 'Sting veil',
+    'hide.buckler': 'Hide buckler',
+    'route.marker_kit': 'Route marker kit',
+    'field.observation_kit': 'Field observation kit',
+  },
+};
+
 const TEXT = {
   'ko-KR': {
     portraitChoice: '내 모습 고르기',
@@ -52,9 +94,17 @@ const TEXT = {
     load: '하중',
     comfortable: '적정',
     burdened: '과적',
+    attack: '공격',
+    defense: '방어',
+    fieldReadiness: '현장',
+    equipment: '착용 장비',
+    carriedSpare: '휴대 예비 장비',
+    emptyEquipment: '비어 있음',
+    itemLoad: '하중',
+    readinessNote: '준비도는 장비와 현재 능력을 한눈에 비교하기 위한 값입니다. 판정에 그대로 더하는 보너스나 포켓몬과 비교하는 전투력 점수가 아니며, 상황 보정과 위험 완화는 각 사건 규칙이 따로 처리합니다.',
     companions: '동행 포켓몬',
     emptySlot: '빈 자리',
-    details: '상세 능력과 생존 상태',
+    details: '장비·능력치·생존 상태',
     attributes: '능력치',
     competences: '익힌 솜씨',
     danger: '위험 기준',
@@ -82,9 +132,17 @@ const TEXT = {
     load: 'Load',
     comfortable: 'comfortable',
     burdened: 'burdened',
+    attack: 'Attack',
+    defense: 'Defense',
+    fieldReadiness: 'Field',
+    equipment: 'Equipped gear',
+    carriedSpare: 'Carried spare gear',
+    emptyEquipment: 'Empty',
+    itemLoad: 'Load',
+    readinessNote: 'Readiness is a glanceable comparison of current ability and gear. It is not a roll bonus or universal power score; authored context and hazard mitigation remain event rules.',
     companions: 'Pokémon companions',
     emptySlot: 'Empty slot',
-    details: 'Attributes and survival details',
+    details: 'Gear, attributes, and survival details',
     attributes: 'Attributes',
     competences: 'Practiced skills',
     danger: 'Danger rules',
@@ -105,33 +163,32 @@ export interface P8ExpeditionProfileProjection {
   readonly comfortableLoad: number;
   readonly burdened: boolean;
   readonly companionCount: number;
+  readonly equipment: P8EquipmentProjection;
 }
 
 /**
  * Read-only P8.2 presentation projection over the current executable slice.
  *
- * P3 owns the formulas: Vitality Max = 4 + Endurance and Comfortable Load =
- * 4 + Strength. Resource units have Load 1 under D-028. The current P8 slice
- * has no domain command that can authoritatively change human pressure state,
- * therefore it presents the contract baseline (full Vitality, Ready, Steady,
- * no Injury) instead of inventing a second stamina/HP authority in UI state.
+ * P3 owns Vitality Max = 4 + Endurance and D-028 Load. Equipment/readiness is
+ * calculated by the domain projection, whose cache keys only character and
+ * survival object identity, so unrelated world/event commits do not rescan
+ * item definitions. The current P8 slice has no authority command for human
+ * pressure state, so Vitality/Fatigue/Fear/Injury remain the contract baseline.
  */
 export function deriveP8ExpeditionProfile(authority: P8AuthorityState): P8ExpeditionProfileProjection {
   const vitalityMax = 4 + authority.character.attributes.endurance;
-  const currentLoad = authority.survival.resourcePools.provisions
-    + authority.survival.resourcePools.remedies
-    + authority.survival.resourcePools.materials;
-  const comfortableLoad = 4 + authority.character.attributes.strength;
+  const equipment = deriveP8EquipmentProjection(authority.character, authority.survival);
   return Object.freeze({
     vitalityCurrent: vitalityMax,
     vitalityMax,
     fatigueStage: 0,
     fearStage: 0,
     injuries: Object.freeze([]),
-    currentLoad,
-    comfortableLoad,
-    burdened: currentLoad > comfortableLoad,
+    currentLoad: equipment.currentLoad,
+    comfortableLoad: equipment.comfortableLoad,
+    burdened: equipment.burdened,
     companionCount: authority.pokemon.companionSlots.filter((slot) => slot !== null).length,
+    equipment,
   });
 }
 
@@ -162,6 +219,10 @@ export function saveP8PortraitId(portraitId: P8PortraitId): void {
   } catch {
     // Cosmetic preference storage must never block authoritative save commits.
   }
+}
+
+function labelEquipmentItem(itemId: string, locale: P8Locale): string {
+  return EQUIPMENT_ITEM_LABELS[locale][itemId] ?? itemId;
 }
 
 function PortraitArtwork({ portraitId, locale, compact = false }: { readonly portraitId: P8PortraitId; readonly locale: P8Locale; readonly compact?: boolean }) {
@@ -262,6 +323,12 @@ export function P8ExpeditionHud({ authority, portraitId, locale }: { readonly au
         <span class={profile.burdened ? 'warning' : ''}>{text.load} {profile.currentLoad}/{profile.comfortableLoad} · {profile.burdened ? text.burdened : text.comfortable}</span>
       </div>
 
+      <div class="readiness-strip" aria-label={text.equipment}>
+        <div><span>{text.attack}</span><strong>{profile.equipment.attackReadiness}</strong></div>
+        <div><span>{text.defense}</span><strong>{profile.equipment.defenseReadiness}</strong></div>
+        <div><span>{text.fieldReadiness}</span><strong>{profile.equipment.fieldReadiness}</strong></div>
+      </div>
+
       <div class="resource-grid">
         <div><span>{text.provisions}</span><strong>{authority.survival.resourcePools.provisions}</strong></div>
         <div><span>{text.remedies}</span><strong>{authority.survival.resourcePools.remedies}</strong></div>
@@ -271,6 +338,30 @@ export function P8ExpeditionHud({ authority, portraitId, locale }: { readonly au
       <details class="profile-details">
         <summary>{text.details}</summary>
         <div class="profile-details-body">
+          <section class="equipment-section">
+            <h2>{text.equipment}</h2>
+            <div class="equipment-slot-grid">
+              {P8_EQUIPMENT_SLOT_IDS.map((slotId) => {
+                const item = profile.equipment.equipped[slotId];
+                return (
+                  <div key={slotId}>
+                    <span>{EQUIPMENT_SLOT_LABELS[locale][slotId]}</span>
+                    <strong>{item === null ? text.emptyEquipment : labelEquipmentItem(item.itemId, locale)}</strong>
+                    <small>{item === null ? '' : `${text.itemLoad} ${item.load}`}</small>
+                  </div>
+                );
+              })}
+            </div>
+            {profile.equipment.carriedUnequipped.length > 0 && (
+              <div class="carried-spares">
+                <span>{text.carriedSpare}</span>
+                {profile.equipment.carriedUnequipped.map((item) => (
+                  <strong key={item.itemId}>{labelEquipmentItem(item.itemId, locale)} · {text.itemLoad} {item.load}</strong>
+                ))}
+              </div>
+            )}
+            <p class="muted readiness-note">{text.readinessNote}</p>
+          </section>
           <section>
             <h2>{text.attributes}</h2>
             <div class="hud-attribute-grid">
