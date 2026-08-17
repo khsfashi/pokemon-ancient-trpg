@@ -115,11 +115,9 @@ Implemented/proven boundaries include the mobile-first static Preact shell, froz
 
 Evidence: `docs/P7_BATCH_02_AUDIT.md`.
 
-### P7 Batch 03 — PASS CANDIDATE
+### P7 Batch 03 — ACCEPTED
 
-PR: **#102**  
-Branch: `agent/p7-batch03-runtime-save-foundation`  
-Validated head before documentation finalization: `3ab95789ec9cf72363e8be4ab45ed4caf3416103`
+PR #102 was squash-merged to `main` as `50bbd06a2040f0c0bddc9331afdbfaf357674111` after the final PR head passed the Node 24 validation lane and had no unresolved review thread.
 
 Batch 03 implements the deterministic runtime/save foundation:
 
@@ -134,24 +132,54 @@ Batch 03 implements the deterministic runtime/save foundation:
 - import validates JSON, version/migration, ranges/schema and content-pack identity before exactly one replacement;
 - no new npm/runtime dependency.
 
-Node 24 workflow run `31986880398` passed `npm ci`, strict TypeScript 6 typecheck, all Vitest fixtures and the production Vite/Workbox static build on PR #102.
+Final PR-head workflow run `31987081988` passed before merge.
 
 Evidence: `docs/P7_BATCH_03_AUDIT.md`.
 
-## Exact next work — after P7 Batch 03 merges
+### P7 Batch 04 — PASS CANDIDATE
 
-P7 Batch 04 — generated content/index boundary:
+PR: **#103**  
+Branch: `agent/p7-batch04-generated-runtime-pack`  
+Validated code head before documentation finalization: `737af1367513b798a81693c4c2a371cf294a5633`
 
-1. add a build-time runtime-pack generator that consumes validated project contracts/data;
-2. emit deterministic `trigger_id -> ordered event IDs` lookup;
-3. emit deterministic `resource_id -> runtime descriptor` lookup;
-4. emit deterministic `species_id -> runtime species/dossier descriptor` lookup;
-5. emit deterministic `semantic adapter ID -> registered runtime adapter` lookup;
-6. stabilize ordering before hashing and emit content pack id/version/SHA-256 digest;
-7. keep remote Pokémon APIs, authoring-schema parsing and uncleared Pokémon media out of runtime/public artifacts;
-8. keep the proven P5/P6 Python validators instead of rewriting them without a concrete benefit.
+Batch 04 implements the generated content/index boundary:
 
-P8 remains blocked until Batch 04 generated-index, Batch 05 resource-cache/measurement and Batch 06 offline/phone-browser gates all pass.
+- build-time `tools/build_p7_runtime_pack.py` consumes only validated project-owned P4/P5/P6 contracts/data;
+- existing P5/P6 Python validators remain the prerequisite gates instead of being rewritten;
+- committed `src/generated/runtime-pack.json` is regenerated deterministically and checked byte-for-byte;
+- pack identity is `p7.contract-fixtures` version `1`, SHA-256 `9c830e0b58d41089470594d263c16ba7e92377f6998b3f07785eb7708a059b2c`;
+- generated cardinalities are 7 events, 4 triggers, 7 resources, 151 Gen-I species and 92 semantic adapters;
+- deterministic `trigger_id -> ordered event IDs`, `resource_id -> descriptor`, `species_id -> dossier descriptor`, and semantic-adapter ID lookup are exposed from `src/generated`;
+- string lookups use own-property checks; dense species `1..151` uses one prebuilt 152-entry array to avoid repeated padded-key or `Map` allocation;
+- missing-trigger lookup reuses one frozen empty array;
+- generated resource descriptors strip remote/source locators and fail generation on forbidden remote markers;
+- uncleared Pokémon media remains `optional_local_only` metadata with deterministic fallback and no copied source binary;
+- no new npm/runtime dependency.
+
+Validated code head passed both overlapping lanes:
+
+```text
+P7 Batch 02 Validation run 31988847464 == PASS
+P7 Batch 04 Validation run 31988847470 == PASS
+```
+
+Evidence: `docs/P7_BATCH_04_AUDIT.md`.
+
+## Exact next work — after P7 Batch 04 merges
+
+P7 Batch 05 — resource loader and measured browser cache proof:
+
+1. implement one owner for resource loading with O(1)-equivalent `resource_id` registry access;
+2. coalesce in-flight requests so concurrent identical loads share one underlying request;
+3. implement a byte-bounded compact-icon LRU under the frozen 384 KiB cap;
+4. implement a byte-bounded encounter-atlas LRU under the frozen 4 MiB cap;
+5. enforce the max-two resident encounter guard;
+6. implement deterministic optional-media fallback without changing authoritative gameplay;
+7. keep atlas JSON out of render-path reparsing and avoid default resize/repack;
+8. use representative public-safe images for committed tests and keep optional Pokémon enrichment local-only;
+9. measure actual decoded/browser behavior on phone-sized Chromium and WebKit and compare it with the conservative P6 caps.
+
+P8 remains blocked until Batch 05 resource-cache/measurement and Batch 06 offline/phone-browser gates pass.
 
 Full sequence remains frozen in `docs/P7_IMPLEMENTATION_SKELETON_PLAN.md`.
 
