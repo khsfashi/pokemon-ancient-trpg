@@ -1,0 +1,74 @@
+name: P8 Authority Runtime Validation
+
+on:
+  pull_request:
+    paths:
+      - 'PROJECT_STATUS.md'
+      - 'docs/P3_ATTRIBUTE_CONTRACT.md'
+      - 'docs/P3_CHARACTER_CREATION_CONTRACT.md'
+      - 'docs/P3_DICE_AND_CHECK_CONTRACT.md'
+      - 'docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md'
+      - 'docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml'
+      - 'docs/P8_IMPLEMENTATION_PLAN.md'
+      - 'src/domain/**'
+      - 'src/events/**'
+      - 'src/runtime/p8*.ts'
+      - 'src/runtime/p5Rng.ts'
+      - 'src/saves/**'
+      - 'tests/p8-authority-runtime.test.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/p8-authority-runtime-validation.yml'
+  push:
+    branches:
+      - main
+      - 'agent/**'
+      - 'codex/**'
+    paths:
+      - 'PROJECT_STATUS.md'
+      - 'docs/P3_ATTRIBUTE_CONTRACT.md'
+      - 'docs/P3_CHARACTER_CREATION_CONTRACT.md'
+      - 'docs/P3_DICE_AND_CHECK_CONTRACT.md'
+      - 'docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md'
+      - 'docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml'
+      - 'docs/P8_IMPLEMENTATION_PLAN.md'
+      - 'src/domain/**'
+      - 'src/events/**'
+      - 'src/runtime/p8*.ts'
+      - 'src/runtime/p5Rng.ts'
+      - 'src/saves/**'
+      - 'tests/p8-authority-runtime.test.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/p8-authority-runtime-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Re-run P8 integration guard
+        run: python tools/validate_p8_vertical_slice.py
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install from committed lockfile
+        run: npm ci
+      - name: Strict TypeScript authority check
+        run: npm run typecheck
+      - name: Deterministic authority unit fixtures
+        run: npm run test
+      - name: P7-compatible production build regression
+        run: npm run build
