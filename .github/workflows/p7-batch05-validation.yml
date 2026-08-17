@@ -1,0 +1,55 @@
+name: P7 Batch 05 Validation
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'playwright.config.ts'
+      - 'src/resources/**'
+      - 'tests/resources.*'
+      - 'e2e/resource-cache.spec.ts'
+      - 'public/test-assets/**'
+      - 'docs/P7_BATCH_05_AUDIT.md'
+      - 'PROJECT_STATUS.md'
+      - '.github/workflows/p7-batch05-validation.yml'
+  push:
+    branches:
+      - main
+      - 'agent/**'
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'playwright.config.ts'
+      - 'src/resources/**'
+      - 'tests/resources.*'
+      - 'e2e/resource-cache.spec.ts'
+      - 'public/test-assets/**'
+      - 'docs/P7_BATCH_05_AUDIT.md'
+      - 'PROJECT_STATUS.md'
+      - '.github/workflows/p7-batch05-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install from committed lockfile
+        run: npm ci
+      - name: Strict typecheck
+        run: npm run typecheck
+      - name: Deterministic unit fixtures
+        run: npm run test
+      - name: Static PWA production build
+        run: npm run build
+      - name: Install phone browser engines
+        run: npx playwright install --with-deps chromium webkit
+      - name: Phone Chromium/WebKit resource measurement
+        run: npm run test:browser:resources
