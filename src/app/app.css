@@ -1,57 +1,204 @@
 :root {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #171410;
-  background: #f2ead8;
+  color: #1c211b;
+  background: #e8e1cf;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  line-height: 1.5;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgb(255 255 255 / 58%), transparent 36rem),
+    #e8e1cf;
 }
+
+button { font: inherit; }
+button:focus-visible { outline: 3px solid #315c49; outline-offset: 3px; }
+button:disabled { cursor: not-allowed; opacity: 0.52; }
 
 .shell {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: max(18px, env(safe-area-inset-top)) 14px max(18px, env(safe-area-inset-bottom));
 }
 
 .panel {
-  width: min(100%, 560px);
-  padding: 28px;
-  border: 1px solid #c7bda7;
-  border-radius: 18px;
+  width: min(100%, 480px);
+  padding: clamp(20px, 6vw, 30px);
+  border: 1px solid #c6bca3;
+  border-radius: 22px;
   background: #fffaf0;
-  box-shadow: 0 14px 40px rgb(23 20 16 / 8%);
+  box-shadow: 0 16px 44px rgb(36 41 32 / 10%);
 }
+
+.hero-panel { padding-top: 34px; padding-bottom: 34px; }
 
 .eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 9px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #596657;
+}
+
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: 14px; font-size: clamp(1.8rem, 8.5vw, 2.7rem); line-height: 1.08; letter-spacing: -0.035em; }
+h2 { margin-bottom: 8px; font-size: 1rem; }
+p { line-height: 1.58; }
+.lead { margin-bottom: 22px; font-size: 1.02rem; color: #363d34; }
+.muted { color: #687066; font-size: 0.88rem; }
+
+.action-stack, .choice-stack, .summary-stack { display: grid; gap: 11px; }
+.choice-stack { margin: 20px 0; }
+
+.primary, .secondary, .choice {
+  width: 100%;
+  min-height: 50px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+  touch-action: manipulation;
+}
+
+.primary, .secondary {
+  padding: 13px 16px;
+  border: 1px solid transparent;
+  font-weight: 800;
+}
+.primary { color: #fffdf7; background: #2f5543; }
+.secondary { color: #263329; background: #f0eadc; border-color: #bdb39c; }
+.primary:not(:disabled):active, .secondary:not(:disabled):active, .choice:not(:disabled):active { transform: translateY(1px); }
+
+.choice {
+  display: grid;
+  gap: 5px;
+  padding: 15px 16px;
+  border: 1px solid #c9c0aa;
+  text-align: left;
+  color: #20261f;
+  background: #fffcf6;
+}
+.choice:hover:not(:disabled), .choice.selected { border-color: #597460; background: #f1f3e8; }
+.choice strong { font-size: 1rem; }
+.choice span { font-size: 0.9rem; color: #626a5f; }
+
+.contract-note, .check-band, .reveal-card {
+  margin: 18px 0;
+  padding: 13px 14px;
+  border-radius: 13px;
+  background: #edf0e5;
+  color: #465247;
+  font-size: 0.88rem;
+}
+.check-band { font-weight: 800; text-transform: capitalize; }
+.reveal-card { display: grid; gap: 3px; }
+.reveal-card span { font-size: 0.8rem; color: #687066; }
+.reveal-card strong { font-size: 1.1rem; }
+
+.identity-grid, .ending-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+.identity-grid > div, .ending-grid > div, .attribute-grid > div {
+  display: grid;
+  gap: 3px;
+  padding: 11px;
+  border: 1px solid #d7cfbd;
+  border-radius: 12px;
+  background: #fffdf8;
+}
+.identity-grid span, .ending-grid span, .attribute-grid span { color: #73796f; font-size: 0.75rem; }
+.identity-grid strong, .ending-grid strong { font-size: 0.95rem; }
+
+.attribute-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+.attribute-grid > div { padding: 8px 6px; text-align: center; }
+.attribute-grid strong { font-size: 1.15rem; }
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #e7eadf;
   font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-h1 {
-  margin: 0;
-  font-size: clamp(1.8rem, 8vw, 2.8rem);
-  line-height: 1.05;
+.run-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 19px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #ded6c4;
+}
+.run-status span { padding: 5px 8px; border-radius: 999px; background: #efe9db; font-size: 0.73rem; font-weight: 750; }
+
+.pokemon-media {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 13px;
+  align-items: center;
+  margin: 18px 0;
+  padding: 12px;
+  border: 1px solid #c8cfbc;
+  border-radius: 16px;
+  background: #f2f5ea;
+}
+.pokemon-media p { margin-bottom: 4px; }
+.pokemon-media .muted { margin-top: 5px; margin-bottom: 0; }
+.pokemon-media-frame {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  overflow: hidden;
+  border: 1px dashed #9ea995;
+  border-radius: 14px;
+  background: repeating-linear-gradient(45deg, #e4e9dc 0 8px, #edf1e8 8px 16px);
+}
+.pokemon-image { display: block; max-width: 100%; max-height: 100%; object-fit: contain; image-rendering: auto; }
+
+.summary-block { margin-top: 20px; }
+.summary-block p { margin-bottom: 6px; font-size: 0.88rem; }
+
+.error-banner {
+  width: min(100%, 480px);
+  padding: 11px 13px;
+  border: 1px solid #b36c64;
+  border-radius: 12px;
+  color: #642c27;
+  background: #fff0ed;
+  font-size: 0.9rem;
 }
 
-p,
-li {
-  line-height: 1.6;
+footer { width: min(100%, 480px); padding: 0 4px; color: #78786f; font-size: 0.7rem; text-align: center; }
+
+@media (max-width: 380px) {
+  .panel { padding: 19px 16px; border-radius: 18px; }
+  .attribute-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pokemon-media { grid-template-columns: 72px minmax(0, 1fr); }
+  .pokemon-media-frame { width: 72px; height: 72px; }
 }
 
-ul {
-  margin: 20px 0 0;
-  padding-left: 20px;
+@media (prefers-reduced-motion: reduce) {
+  .primary, .secondary, .choice { transition: none; }
 }

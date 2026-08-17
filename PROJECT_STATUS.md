@@ -139,7 +139,8 @@ P8 issue: **#8 — First playable vertical slice**.
 Integration contract: **`p8-vertical-slice-v1`**.  
 Batch 01 / PR #106 is merged on `main` as `c73a5a103876d1c36e1ec2b48608d3ea66d63c46`.  
 Batch 02 / PR #107 is merged on `main` as `cd30ddb4d989b60cf7e2f58a2428a10a524c8ded`.  
-Current review: **Batch 03 / PR #108** (`codex/p8-batch03-authored-slice`).
+Batch 03 / PR #108 is merged on `main` as `b800632ae5fd6e49451862aa0fb4ff507ec2666b`.  
+Current review: **Batch 04 / PR #109** (`agent/p8-batch04-phone-flow`).
 
 Batch 01 freezes only the implementation/integration envelope. It does not freeze a final major faction identity, exact local canon, or the final P9 species/event breadth.
 
@@ -164,8 +165,8 @@ P8 implementation order:
 ```text
 Batch 01 vertical-slice contract/guards                       MERGED
 Batch 02 authoritative gameplay runtime                       MERGED
-Batch 03 coherent authored slice content + deterministic replay REVIEW #108
-→ Batch 04 phone Preact + save/resource integration
+Batch 03 coherent authored slice content + deterministic replay MERGED
+Batch 04 phone Preact + save/resource integration             REVIEW #109
 → Batch 05 Chromium/WebKit full-run proof + P8 exit audit
 ```
 
@@ -199,7 +200,7 @@ P7-compatible production build regression         = PASS
 
 ### Batch 03 authored deterministic slice
 
-PR #108 now provides the first coherent authored production-shaped proving pack on the Batch 02 authority surface:
+Batch 03 provides the first coherent authored production-shaped proving pack on the Batch 02 authority surface:
 
 - normalized source: `content/p8/vertical-slice.source.json`;
 - local/disposable canon scope with `durableCanonClaims = []`;
@@ -237,6 +238,39 @@ deterministic authority/replay fixtures     = PASS
 P7-compatible production build regression   = PASS
 ```
 
+### Batch 04 phone/save/resource integration
+
+PR #109 connects the authored slice to the actual phone-facing Preact/P7 boundaries without relocating gameplay truth into the UI:
+
+- phone flow for all three formative prompts, reveal, specialization, final sheet, seven event scenes, consequences, direct Pokémon interactions and ending summary;
+- one framework-independent `P8BrowserSession` owns authority, transition sequence, pending identity and save metadata;
+- Preact retains presentation/draft state only and dispatches intents into the shared P8/P5 event runtime;
+- P7 `IndexedDbSaveStore` persists explicit new-run, pending-event and committed-result boundaries;
+- pending refresh resumes the exact saved instance; committed refresh does not auto-select a new event;
+- strict P8 authority JSON restore parser preserves bigint/provenance-compatible save semantics;
+- optional Pokémon media has a single P7 `ResourceLoader` adapter and deterministic text-only fallback when no cleared ref exists;
+- validated non-authoritative presentation source is checked against authored event/choice/outcome identities;
+- complete Chromium phone smoke proves the actual Preact `0/3` route with both pending and committed reloads.
+
+Validated functional head before audit/status-only commits:
+
+```text
+55ba252e5da98a7f660bf4ae5357b9407a2abecb
+P8 Batch 04 Validation run 32007630319 = PASS
+P8 Vertical Slice Validation run 32007630256 = PASS
+P8 Authority Runtime Validation run 32007630297 = PASS
+P7 Batch 02 Validation run 32007630282 = PASS
+Vitest                              = 15 files / 58 tests PASS
+Chromium phone smoke                = 1/1 PASS
+transition_seq                      = 7
+current_locality                    = reedbank-settlement
+provisions                          = 2
+companions                          = 0
+direct_interactions                 = 3
+production dist                     = 8 files / 373,500 B
+backend / serverless / pokemon_media = 0 / 0 / 0
+```
+
 P8 must consume the frozen P1-P7 contracts instead of reopening them casually. The vertical slice must prove a phone-sized mixed-world loop with:
 
 1. settlement/social pressure;
@@ -257,12 +291,13 @@ Evidence:
 - `docs/P8_BATCH_01_AUDIT.md`
 - `docs/P8_BATCH_02_AUDIT.md`
 - `docs/P8_BATCH_03_AUDIT.md`
+- `docs/P8_BATCH_04_AUDIT.md`
 
 ## Exact next work
 
-**Finish P8 Batch 03 / PR #108 review and merge. After merge: P8 Batch 04 — phone-sized Preact flow + authoritative save/resource integration.**
+**Finish P8 Batch 04 / PR #109 review and merge. After merge: P8 Batch 05 — production Chromium/WebKit full-run proof + final P8 exit audit.**
 
-Do not move gameplay truth into Preact state. Batch 04 must render derived views and dispatch typed intents, persist normal/pending authority at explicit commit boundaries, and resolve optional Pokémon media only through the frozen P6/P7 resource path.
+Batch 05 must reuse the Batch 04 phone/session/resource path, prove the deterministic `0/3` route in both production-intended phone browsers, exercise P8 save/PWA compatibility, perform the manual mobile usability review, and map issue #8 to final exit evidence. Do not broaden into P9's all-151 content expansion yet.
 
 ## Later roadmap
 
