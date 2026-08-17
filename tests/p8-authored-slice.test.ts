@@ -91,15 +91,35 @@ describe('P8 Batch 03 deterministic authored replay', () => {
     expect(first.state.events.narrativeFlags['slice.zero_companion_route_complete']).toBe(true);
   });
 
-  it('replays the alternate checked ecology choice and preserves a distinct consequence lane', async () => {
+  it('replays the alternate meaningful-choice lane with distinct relationships, cost, and checked ecology', async () => {
     const result = await runP8SliceReplay(hash, P8_SLICE_REPLAYS.alternate);
+    const checkpointChoices = Object.fromEntries(
+      result.checkpoints.map((checkpoint) => [checkpoint.eventId, checkpoint.choiceId]),
+    );
     const ecology = result.checkpoints.find((checkpoint) => checkpoint.eventId === 'slice.ecology.weedle_crossing');
 
     expect(result.transitionSeq).toBe('7');
-    expect(ecology?.choiceId).toBe('read_signs');
+    expect(checkpointChoices).toMatchObject({
+      'slice.opening.market_call': 'hang_back_and_listen',
+      'slice.social.steward_request': 'set_terms',
+      'slice.relationship.millkeeper_ledger': 'decline_promise',
+      'slice.travel.leave_settlement': 'wait_for_ferry',
+      'slice.ecology.weedle_crossing': 'read_signs',
+      'slice.mixed.orchard_boundary': 'take_shortcut',
+      'slice.ending.return_crossroads': 'return_with_account',
+    });
     expect(ecology?.checkOutcomeBand).toBeDefined();
     expect(result.state.pokemon.companionSlots).toEqual([null, null, null]);
-    expect(result.state.world.relationships['orchard.keeper']).toBe('route_strained');
+    expect(result.state.world.relationships).toMatchObject({
+      'reedbank.steward': 'terms_set',
+      'reedbank.millkeeper': 'no_promise',
+      'orchard.keeper': 'route_strained',
+    });
+    expect(result.state.survival.resourcePools.provisions).toBe(3);
+    expect(result.state.events.narrativeFlags['slice.opening_observed_first']).toBe(true);
+    expect(result.state.events.narrativeFlags['slice.steward_terms_set']).toBe(true);
+    expect(result.state.events.narrativeFlags['slice.return_not_promised']).toBe(true);
+    expect(result.state.events.narrativeCounters['slice.travel_delay']).toBe(1);
     expect(result.state.events.narrativeCounters['slice.social_cost']).toBe(1);
     expect(result.state.events.narrativeFlags['slice.ending_ready']).toBe(true);
   });
