@@ -56,7 +56,7 @@ test('presents the Korean landing and first event as a game-first phone surface'
 
   await page.getByRole('button', { name: '새 여정' }).click();
   for (let index = 1; index <= 3; index += 1) {
-    await expect(page.getByText(`지난날의 기억 · ${index}/3`)).toBeVisible();
+    await expect(page.getByText(`지난 기억 · ${index}/3`)).toBeVisible();
     await chooseFirstFormativeAnswer(page);
   }
   await page.getByRole('button', { name: '강점 고르기' }).click();
