@@ -1,0 +1,73 @@
+name: Public Playtest Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: public-playtest-pages
+  cancel-in-progress: true
+
+env:
+  PUBLIC_BASE_PATH: /pokemon-ancient-trpg/
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build public subpath bundle
+        run: npx vite build --base="$PUBLIC_BASE_PATH"
+
+      - name: Prepare installable manifest for Pages scope
+        run: node tools/prepare-pages-manifest.mjs "$PUBLIC_BASE_PATH"
+
+      - name: Build offline service worker for Pages scope
+        run: node tools/build-service-worker.mjs
+        env:
+          VITE_BASE_PATH: ${{ env.PUBLIC_BASE_PATH }}
+
+      - name: Validate static output
+        run: |
+          node tools/validate-dist.mjs
+          node tools/validate-static-deployment.mjs
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
