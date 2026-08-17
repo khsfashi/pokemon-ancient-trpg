@@ -137,7 +137,8 @@ Evidence:
 
 P8 issue: **#8 — First playable vertical slice**.  
 Integration contract: **`p8-vertical-slice-v1`**.  
-Current review: **Batch 01 / PR #106** (`agent/p8-batch01-vertical-slice-contract`).
+Batch 01 / PR #106 is merged on `main` as `c73a5a103876d1c36e1ec2b48608d3ea66d63c46`.  
+Current review: **Batch 02 / PR #107** (`codex/p8-batch02-authority-runtime`).
 
 Batch 01 freezes only the implementation/integration envelope. It does not freeze a final major faction identity, exact local canon, or the final P9 species/event breadth.
 
@@ -157,16 +158,38 @@ shared P5 event engine for all pillars     = required
 runtime remote Pokémon API                 = forbidden
 ```
 
-P8 implementation order after Batch 01 merges:
+P8 implementation order:
 
 ```text
-Batch 02 authoritative gameplay runtime
+Batch 01 vertical-slice contract/guards                       MERGED
+Batch 02 authoritative gameplay runtime                       REVIEW #107
 → Batch 03 coherent authored slice content + deterministic replay
 → Batch 04 phone Preact + save/resource integration
 → Batch 05 Chromium/WebKit full-run proof + P8 exit audit
 ```
 
-Batch 02 must establish the framework-independent authoritative run/domain/event layer before story-specific UI grows. It owns deterministic character creation, the required P5 event-runtime subset, typed P2/P3/P4 adapters, atomic state transition tests, and a headless direct-event + checked-event proof.
+Batch 02 now provides the framework-independent authority foundation required before story-specific UI grows:
+
+- exact P3 human seven-Attribute character state and deterministic formative resolver;
+- legal four-increase / cap-3 / distinct-competence starting specialization;
+- P3 `2d6 + Attribute + Competence + Context` static checks using the existing P5 RNG primitive;
+- cached trigger-index P5 candidate lookup and pure no-RNG eligibility;
+- deterministic integer-weight event selection with 0/1 candidate no-RNG behavior;
+- pinned P5 pending-event snapshots with choice/check/RNG provenance;
+- a closed typed P2/P3/P4 command subset with aggregate atomic prevalidation;
+- event count/cooldown/recent-history/chain bookkeeping and ordered post-commit triggers;
+- headless direct + checked event proof with exact `0 → 1 → 2` transition sequencing.
+
+Validated functional head before audit-only commits:
+
+```text
+4d353ee0d0730f6e786cf22087eb80d799ac7fc5
+P8 Authority Runtime Validation run 32003901207 = PASS
+P8 integration guard                              = PASS
+strict TypeScript                                 = PASS
+all Vitest fixtures                               = PASS
+P7-compatible production build regression         = PASS
+```
 
 P8 must consume the frozen P1-P7 contracts instead of reopening them casually. The vertical slice must prove a phone-sized mixed-world loop with:
 
@@ -185,13 +208,14 @@ Evidence:
 - `docs/P8_VERTICAL_SLICE_CONTRACT.md`
 - `docs/P8_VERTICAL_SLICE_MANIFEST.json`
 - `docs/P8_IMPLEMENTATION_PLAN.md`
-- `docs/P8_BATCH_01_AUDIT.md` (added before Batch 01 acceptance)
+- `docs/P8_BATCH_01_AUDIT.md`
+- `docs/P8_BATCH_02_AUDIT.md`
 
 ## Exact next work
 
-**Finish P8 Batch 01 / PR #106 validation and review. After merge: P8 Batch 02 — authoritative gameplay runtime foundation.**
+**Finish P8 Batch 02 / PR #107 review and merge. After merge: P8 Batch 03 — coherent authored slice content + deterministic replay proof.**
 
-Do not start presentation-heavy P8 content/UI ahead of the Batch 02 authority layer. Batch 02 should remain headless/pure-TypeScript first and retain every applicable P5/P6/P7 gate.
+Do not begin presentation-heavy Batch 04 UI before the Batch 03 authored run is coherent and replayable on this authority surface.
 
 ## Later roadmap
 
