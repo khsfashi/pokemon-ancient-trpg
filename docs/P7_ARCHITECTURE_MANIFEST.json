@@ -2,6 +2,7 @@
   "schema_version": "p7-architecture-v1",
   "verified_date": "2026-08-17",
   "phase_issue": 7,
+  "candidate_pr": 100,
   "delivery": {
     "primary_target": "web-pwa",
     "backend_required": false,
@@ -58,7 +59,7 @@
     "service_worker_required_for_offline_baseline": true,
     "precache_scope": "public-safe-app-shell-and-required-core-content-only",
     "pokemon_media_precache": false,
-    "forced_mid-transition_update": false,
+    "forced_mid_transition_update": false,
     "offline_authoritative_play": true
   },
   "resources": {
