@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { illustrationResourceIdForPresentationKey } from '../resources/p8Illustrations';
+import { P8SceneIllustration } from './SceneIllustration';
 
 const REVEAL_TICK_MS = 24;
 const REVEAL_TICKS_PER_BEAT = 20;
@@ -86,6 +88,12 @@ export function NarrativeReveal({
   readonly onReadyChange: (ready: boolean) => void;
 }) {
   const beats = useMemo(() => cachedNarrativeBeats(text), [text]);
+  const illustrationResourceId = useMemo(
+    () => illustrationResourceIdForPresentationKey(presentationKey),
+    [presentationKey],
+  );
+  const locale = presentationKey.endsWith(':ko-KR') ? 'ko-KR' : 'en-US';
+  const compactIllustration = presentationKey.startsWith('resolution:');
   const finalBeatIndex = Math.max(0, beats.length - 1);
   const finalBeatLength = beats[finalBeatIndex]?.length ?? 0;
   const onReadyChangeRef = useRef(onReadyChange);
@@ -137,21 +145,30 @@ export function NarrativeReveal({
   }
 
   return (
-    <button
-      type="button"
-      class="lead narrative-copy"
-      data-narrative-key={presentationKey}
-      data-ready={complete ? 'true' : 'false'}
-      data-revealing={complete ? 'false' : 'true'}
-      aria-live="polite"
-      onClick={(event) => {
-        event.stopPropagation();
-        advance();
-      }}
-    >
-      <span>{visibleText}</span>
-      {!complete && <span class="narrative-progress" aria-hidden="true">…</span>}
-      {complete && cursor.beatIndex + 1 < beats.length && <span class="narrative-progress" aria-hidden="true">▼</span>}
-    </button>
+    <>
+      {illustrationResourceId !== null && (
+        <P8SceneIllustration
+          resourceId={illustrationResourceId}
+          locale={locale}
+          compact={compactIllustration}
+        />
+      )}
+      <button
+        type="button"
+        class="lead narrative-copy"
+        data-narrative-key={presentationKey}
+        data-ready={complete ? 'true' : 'false'}
+        data-revealing={complete ? 'false' : 'true'}
+        aria-live="polite"
+        onClick={(event) => {
+          event.stopPropagation();
+          advance();
+        }}
+      >
+        <span>{visibleText}</span>
+        {!complete && <span class="narrative-progress" aria-hidden="true">…</span>}
+        {complete && cursor.beatIndex + 1 < beats.length && <span class="narrative-progress" aria-hidden="true">▼</span>}
+      </button>
+    </>
   );
 }

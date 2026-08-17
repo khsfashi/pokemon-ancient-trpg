@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-17 20:28 KST**
+Last operational handoff update: **2026-08-17 20:53 KST**
 
 This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts, owner-playtest contracts, and live GitHub state. If this file and live state disagree, reconcile the file before advancing.
 
@@ -39,7 +39,7 @@ P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
 P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
-P8.2 second owner remediation         BATCHES 04-05 COMPLETE / BATCH 06 NEXT / #118 / BLOCKING P9
+P8.2 second owner remediation         BATCHES 04-06 COMPLETE / BATCH 07 NEXT / #118 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
@@ -68,13 +68,14 @@ The 2026-08-17 second owner replay judged P8.1 materially better but still below
 
 Owner feedback now requires all of the following:
 
-1. **More visual immersion**
-   - current image density is insufficient;
-   - important scenes need illustration identity;
-   - inline illustrations between narrative beats are desirable where useful;
-   - player should choose an initial portrait/avatar.
+1. **More visual immersion — Batch 06 complete**
+   - stable on-demand scene illustration resources now provide distinct opening, travel, Weedle, orchard and return identities;
+   - hero and compact consequence placement reuse the existing P6 resource/cache path;
+   - visible fallback remains deterministic and optional-media failure cannot affect gameplay;
+   - all current placeholders are repository-authored original SVGs with explicit provenance;
+   - automated exit evidence: `docs/P8_2_BATCH_06_AUDIT.md`, workflow run `32026963737` PASS.
 
-2. **Better Korean / novel-like creation**
+2. **Better Korean / novel-like creation — Batch 07 next**
    - some Korean remains awkward or hard to understand;
    - creation prompts feel too questionnaire-like;
    - formative memories/background selection should read like short fiction scenes;
@@ -159,41 +160,54 @@ Audit: **`docs/P8_2_BATCH_05_AUDIT.md`**.
 
 Do **not** repeat Batch 05 on a generic `next` request.
 
+### Batch 06 — illustration system + scene visual identity
+
+Implementation PR: **#122**.
+
+Accepted behavior:
+
+- five stable scene illustration resource IDs for Reedbank opening, old-levee travel, Weedle crossing, windbreak orchard and Reedbank return;
+- event/locality/NPC/Pokémon/item/equipment slot taxonomy, with event/locality/Pokémon subjects instantiated in this batch;
+- pending-scene hero art and compact consequence treatment driven only by the existing stable authored event ID;
+- existing P6 `ResourceLoader`/`BrowserImageDecoder` and full-scene LRU reused instead of a parallel image cache;
+- 960x540 decoded images remain below the frozen 2 MiB per-resource cap, with the inherited 4 MiB / two-entry scene cache;
+- no broad preload: only the currently presented authored scene requests media;
+- failed optional media renders a field-record fallback and cannot mutate authority, RNG, save state or choice eligibility;
+- player UI keeps implementation resource IDs hidden; stable IDs remain available only as internal cache/test identity;
+- an initial wrapper regression caught by inherited phone smoke was corrected with a Fragment so the established `.panel > .lead` DOM contract remains intact;
+- Chromium/WebKit illustration/fallback acceptance, inherited phone smoke and save compatibility remain green.
+
+Audit: **`docs/P8_2_BATCH_06_AUDIT.md`**. Exit workflow: **`32026963737` PASS**.
+
+Do **not** repeat Batch 06 on a generic `next` request.
+
 ## Exact next work
 
-**P9 must not start. Batch 06 is now the first incomplete P8.2 batch in #118.**
+**P9 must not start. Batch 07 is now the first incomplete P8.2 batch in #118.**
 
 Default sequence:
 
-1. **Batch 06 — illustration system + scene visual identity — NEXT**
-   - stable illustration resource IDs;
-   - event/locality/NPC/Pokémon/item illustration slot;
-   - optional inline art beats;
-   - missing-media fallback;
-   - P6 provenance/cache/budget compliance;
-   - opening/travel/Weedle/orchard-return scenes receive distinct visual identity or deliberate placeholders.
-
-2. **Batch 07 — native-Korean narrative pass + novel-like creation**
+1. **Batch 07 — native-Korean narrative pass + novel-like creation — NEXT**
    - rewrite three formative prompts as short narrative memory scenes;
    - second full Korean game-copy pass;
    - read-aloud naturalness review;
    - short idiomatic choice labels;
    - preserve deterministic hidden lifepath mapping unless explicitly revised.
 
-3. **Batch 08 — equipment slots + combat-readiness summary**
+2. **Batch 08 — equipment slots + combat-readiness summary**
    - authoritative stable item/equipment IDs;
    - weapon/body armor/accessory or protective wearable/utility/Pokémon-field gear surfaces;
    - attack/defense-like derived readiness;
    - bounded formulas from human stats/competence/equipment/preparation/context;
    - Load/save/cache integration.
 
-4. **Batch 09 — medieval-fantasy farming / preparation loop**
+3. **Batch 09 — medieval-fantasy farming / preparation loop**
    - settlement preparation -> travel -> gather/forage/salvage/hunt where valid -> risk -> return -> repair/barter/craft/equip -> depart again;
    - ordinary materials, provisions path, repair/material path, exchange/service reward, equipment improvement and at least one Pokémon-linked opportunity;
    - camp/rest/recovery tied to existing survival rules;
    - no generic kill-XP or automatic Pokémon loot.
 
-5. **Batch 10 — integrated automated + owner playtest gate**
+4. **Batch 10 — integrated automated + owner playtest gate**
    - Chromium/WebKit 390x844;
    - animation skip/advance/reduced-motion/transition safety;
    - profile/equipment/resources persistence;
@@ -255,6 +269,7 @@ Resource boundaries and exact P8 technical evidence remain in:
 - `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`
 - `docs/P8_2_BATCH_04_AUDIT.md`
 - `docs/P8_2_BATCH_05_AUDIT.md`
+- `docs/P8_2_BATCH_06_AUDIT.md`
 
 ## Later roadmap
 
