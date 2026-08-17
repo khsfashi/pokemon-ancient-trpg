@@ -29,19 +29,19 @@ test('chooses a cosmetic portrait and keeps a persistent expedition HUD across s
   const hud = page.locator('.expedition-hud');
   await expect(hud).toBeVisible();
   await expect(hud.locator('.portrait-herbalist')).toBeVisible();
-  await expect(hud.getByText('Vitality', { exact: false })).toBeVisible();
-  await expect(hud.getByText('Fatigue / stamina · Ready', { exact: false })).toBeVisible();
-  await expect(hud.getByText('Fear · Steady', { exact: false })).toBeVisible();
-  await expect(hud.getByText('Injuries · None', { exact: false })).toBeVisible();
+  await expect(hud.getByText('Vitality', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Fatigue / stamina · Ready', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Fear · Steady', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Injuries · None', { exact: true })).toBeVisible();
   await expect(hud.getByText(/Load 4\/[5-7]/)).toBeVisible();
-  await expect(hud.getByText('Provisions')).toBeVisible();
-  await expect(hud.getByText('Remedies')).toBeVisible();
-  await expect(hud.getByText('Materials')).toBeVisible();
+  await expect(hud.getByText('Provisions', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Remedies', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Materials', { exact: true })).toBeVisible();
 
   await hud.locator('summary').click();
-  await expect(hud.getByText('Vitality 0 → Incapacitated')).toBeVisible();
-  await expect(hud.getByText('Death → only through an explicit lethal path')).toBeVisible();
-  await expect(hud.getByText('Pokémon companions · 0/3')).toBeVisible();
+  await expect(hud.getByText('Vitality 0 → Incapacitated', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Death → only through an explicit lethal path', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Pokémon companions · 0/3', { exact: true })).toBeVisible();
 
   const geometry = await page.evaluate(() => ({
     width: window.innerWidth,
@@ -70,10 +70,10 @@ test('Korean HUD explains exertion and lethal-state rules without inventing a se
   await page.getByRole('button', { name: '길을 나선다' }).click();
 
   const hud = page.locator('.expedition-hud');
-  await expect(hud.getByText('활력(체력)', { exact: false })).toBeVisible();
-  await expect(hud.getByText('피로(스태미나) · 정상', { exact: false })).toBeVisible();
+  await expect(hud.getByText('활력(체력)', { exact: true })).toBeVisible();
+  await expect(hud.getByText('피로(스태미나) · 정상', { exact: true })).toBeVisible();
   await expect(hud.getByText('하중 4/', { exact: false })).toBeVisible();
   await hud.locator('summary').click();
-  await expect(hud.getByText('활력 0 → 행동불능')).toBeVisible();
-  await expect(hud.getByText('사망 → 명시된 치명 경로에서만 발생')).toBeVisible();
+  await expect(hud.getByText('활력 0 → 행동불능', { exact: true })).toBeVisible();
+  await expect(hud.getByText('사망 → 명시된 치명 경로에서만 발생', { exact: true })).toBeVisible();
 });
