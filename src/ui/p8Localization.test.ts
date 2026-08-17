@@ -43,12 +43,35 @@ describe('P8 bilingual presentation', () => {
     }
   });
 
-  test('official slice species names and shell copy exist in both locales', () => {
+  test('official slice species names and player-facing shell copy exist in both locales', () => {
     expect(labelP8SpeciesLocalized(13, 'ko-KR')).toBe('뿔충이');
     expect(labelP8SpeciesLocalized(15, 'ko-KR')).toBe('독침붕');
     expect(labelP8SpeciesLocalized(19, 'ko-KR')).toBe('꼬렛');
     expect(labelP8SpeciesLocalized(13, 'en-US')).toBe('Weedle');
-    expect(p8Text('ko-KR', 'start')).toBe('새 여정 시작');
-    expect(p8Text('en-US', 'start')).toBe('Start new run');
+    expect(p8Text('ko-KR', 'start')).toBe('새 여정');
+    expect(p8Text('en-US', 'start')).toBe('New journey');
+  });
+
+  test('normal Korean player UI does not expose implementation proof vocabulary', () => {
+    const playerFacingKeys = [
+      'mediaFailed',
+      'mediaChecking',
+      'mediaNotConfigured',
+      'mediaFallback',
+      'mediaLoaded',
+      'sliceEyebrow',
+      'landingLead',
+      'replaceSave',
+      'zeroCompanionContract',
+      'revealLead',
+      'attributeContract',
+      'committedSave',
+      'pendingSaveNote',
+      'restoredLead',
+      'footer',
+    ] as const;
+    const forbidden = ['P7', 'P8', 'IndexedDB', '권위 상태', '결정론', '리소스 캐시', '플레이 구간'];
+    const copy = playerFacingKeys.map((key) => p8Text('ko-KR', key)).join('\n');
+    for (const token of forbidden) expect(copy).not.toContain(token);
   });
 });
