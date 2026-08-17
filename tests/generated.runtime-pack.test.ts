@@ -9,15 +9,16 @@ import {
   runtimePack,
 } from '../src/generated';
 
-function canonicalize(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(canonicalize);
+function canonicalJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
   if (value !== null && typeof value === 'object') {
     const source = value as Record<string, unknown>;
-    const ordered: Record<string, unknown> = {};
-    for (const key of Object.keys(source).sort()) ordered[key] = canonicalize(source[key]);
-    return ordered;
+    const members = Object.keys(source)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonicalJson(source[key])}`);
+    return `{${members.join(',')}}`;
   }
-  return value;
+  return JSON.stringify(value);
 }
 
 async function sha256Hex(text: string): Promise<string> {
@@ -28,7 +29,6 @@ async function sha256Hex(text: string): Promise<string> {
 describe('P7 generated runtime pack', () => {
   it('pins exact content identity and reproduces the canonical pack digest', async () => {
     const { content_digest_sha256: expectedDigest, ...unsignedPack } = runtimePack;
-    const canonicalJson = JSON.stringify(canonicalize(unsignedPack));
 
     expect(runtimeContentIdentity).toEqual({
       contentPackId: 'p7.contract-fixtures',
@@ -36,7 +36,7 @@ describe('P7 generated runtime pack', () => {
       contentDigestSha256: expectedDigest,
     });
     expect(expectedDigest).toMatch(/^[0-9a-f]{64}$/);
-    expect(await sha256Hex(canonicalJson)).toBe(expectedDigest);
+    expect(await sha256Hex(canonicalJson(unsignedPack))).toBe(expectedDigest);
   });
 
   it('emits deterministic trigger and event indexes without rebuilding candidate lists', () => {
@@ -110,7 +110,7 @@ describe('P7 generated runtime pack', () => {
     });
     expect(getSemanticAdapterDescriptor('p4.encounter.route_is_eligible')).toMatchObject({
       kind: 'pure_predicate',
-      owner: 'P4',
+      reads: ['p4.encounter.direct_route_eligibility'],
     });
     expect(getSemanticAdapterDescriptor('p4.encounter.record_direct_interaction')).toMatchObject({
       kind: 'command',
