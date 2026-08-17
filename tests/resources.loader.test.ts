@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   COMPACT_ICON_CACHE_CAP_BYTES,
   ENCOUNTER_ATLAS_CACHE_CAP_BYTES,
+  ENCOUNTER_ATLAS_PER_RESOURCE_CAP_BYTES,
   MAX_RESIDENT_ENCOUNTER_ATLASES,
   ResourceLoader,
   type DecodedResource,
@@ -126,6 +127,20 @@ describe('ResourceLoader', () => {
     expect(loader.isCached('encounter.a')).toBe(false);
     expect(loader.isCached('encounter.b')).toBe(true);
     expect(loader.isCached('encounter.c')).toBe(true);
+  });
+
+  it('rejects an individual encounter decode above the frozen 2 MiB guardrail', async () => {
+    const item = descriptor('encounter.oversized', 'pokemon_encounter_image');
+    const decoder = new TestDecoder(new Map([
+      ['encounter.oversized', ENCOUNTER_ATLAS_PER_RESOURCE_CAP_BYTES + 1],
+    ]));
+    const loader = loaderFor([item], decoder);
+
+    const result = await loader.load(item.resource_id);
+
+    expect(result.kind).toBe('fallback');
+    expect(loader.getStats()).toMatchObject({ encounterEntries: 0, encounterBytes: 0, fallbackEntries: 1 });
+    expect(decoder.disposeCount).toBe(1);
   });
 
   it('falls back deterministically for missing optional local media and caches the fallback', async () => {
