@@ -138,7 +138,8 @@ Evidence:
 P8 issue: **#8 — First playable vertical slice**.  
 Integration contract: **`p8-vertical-slice-v1`**.  
 Batch 01 / PR #106 is merged on `main` as `c73a5a103876d1c36e1ec2b48608d3ea66d63c46`.  
-Current review: **Batch 02 / PR #107** (`codex/p8-batch02-authority-runtime`).
+Batch 02 / PR #107 is merged on `main` as `cd30ddb4d989b60cf7e2f58a2428a10a524c8ded`.  
+Current review: **Batch 03 / PR #108** (`codex/p8-batch03-authored-slice`).
 
 Batch 01 freezes only the implementation/integration envelope. It does not freeze a final major faction identity, exact local canon, or the final P9 species/event breadth.
 
@@ -162,13 +163,15 @@ P8 implementation order:
 
 ```text
 Batch 01 vertical-slice contract/guards                       MERGED
-Batch 02 authoritative gameplay runtime                       REVIEW #107
-→ Batch 03 coherent authored slice content + deterministic replay
+Batch 02 authoritative gameplay runtime                       MERGED
+Batch 03 coherent authored slice content + deterministic replay REVIEW #108
 → Batch 04 phone Preact + save/resource integration
 → Batch 05 Chromium/WebKit full-run proof + P8 exit audit
 ```
 
-Batch 02 now provides the framework-independent authority foundation required before story-specific UI grows:
+### Batch 02 authority foundation
+
+Batch 02 provides the framework-independent authority foundation required before story-specific UI grows:
 
 - exact P3 human seven-Attribute character state and deterministic formative resolver;
 - legal four-increase / cap-3 / distinct-competence starting specialization;
@@ -183,7 +186,7 @@ Batch 02 now provides the framework-independent authority foundation required be
 - headless direct + checked event proof with exact `0 → 1 → 2` transition sequencing;
 - frozen P5 weighted-selection and hazardous-check vectors pinned in the production-path tests.
 
-Validated functional head before workflow/audit-only commits:
+Batch 02 validated functional head before workflow/audit-only commits:
 
 ```text
 f751238d4ed5d8147adfecec5300e5ad4715b976
@@ -192,6 +195,46 @@ P8 integration guard                              = PASS
 strict TypeScript                                 = PASS
 all Vitest fixtures                               = PASS
 P7-compatible production build regression         = PASS
+```
+
+### Batch 03 authored deterministic slice
+
+PR #108 now provides the first coherent authored production-shaped proving pack on the Batch 02 authority surface:
+
+- normalized source: `content/p8/vertical-slice.source.json`;
+- local/disposable canon scope with `durableCanonClaims = []`;
+- three fiction-first formative prompts with deterministic hidden tags;
+- four approved local Origins and four approved local Learned Practices;
+- P4-traced proving subset: Weedle #013, Beedrill #015, Rattata #019;
+- seven once-per-run P5 events spanning ordinary human pressure, persistent relationships, travel/survival, Pokémon ecology/direct interaction, mixed human motive + ecology, and ending inputs;
+- typed `p2.world.commit_locality_transition` rather than direct story-side world mutation;
+- build-time generated trigger indexes and content digest;
+- reusable cached runtime event catalog initialized once;
+- compact headless replay inputs with per-transition pre/post authority SHA-256 evidence;
+- complete deterministic `0/3` route and alternate checked branch;
+- repeated identical execution yielding equivalent replay checkpoints and serialized authority state;
+- no required Pokémon media dependency and no P9 faction identity claim.
+
+Generated content identity:
+
+```text
+content_pack_id       = p8.reedbank-slice
+content_pack_version  = 1
+content_digest_sha256 = d19921e11a6015fdfd7da211d1f813386d23bc8637ecb300f724b6afac81eac5
+```
+
+Validated functional head before audit/status-only commits:
+
+```text
+a3eb8c828a9129c725eff7a33b2c925a63c64b10
+P8 Vertical Slice Validation run 32005741392 = PASS
+P8 Authority Runtime Validation run 32005741329 = PASS
+P7 Batch 02 Validation run 32005741379 = PASS
+P7 Batch 04 Validation run 32005741332 = PASS
+source/generated semantic check             = PASS
+strict TypeScript                           = PASS
+deterministic authority/replay fixtures     = PASS
+P7-compatible production build regression   = PASS
 ```
 
 P8 must consume the frozen P1-P7 contracts instead of reopening them casually. The vertical slice must prove a phone-sized mixed-world loop with:
@@ -204,7 +247,7 @@ P8 must consume the frozen P1-P7 contracts instead of reopening them casually. T
 6. a valid complete `0/3` companion path;
 7. resource presentation through the P6/P7 cache and optional-media boundaries.
 
-P8 must not interpret the current generated fixture pack as permission to make any Pokémon permanently unreachable. The long-form P9 content expansion still owns the complete breadth of living direct-interaction paths for all `151/151` species.
+P8 must not interpret the current generated proving pack as permission to make any Pokémon permanently unreachable. The long-form P9 content expansion still owns the complete breadth of living direct-interaction paths for all `151/151` species.
 
 Evidence:
 
@@ -213,12 +256,13 @@ Evidence:
 - `docs/P8_IMPLEMENTATION_PLAN.md`
 - `docs/P8_BATCH_01_AUDIT.md`
 - `docs/P8_BATCH_02_AUDIT.md`
+- `docs/P8_BATCH_03_AUDIT.md`
 
 ## Exact next work
 
-**Finish P8 Batch 02 / PR #107 review and merge. After merge: P8 Batch 03 — coherent authored slice content + deterministic replay proof.**
+**Finish P8 Batch 03 / PR #108 review and merge. After merge: P8 Batch 04 — phone-sized Preact flow + authoritative save/resource integration.**
 
-Do not begin presentation-heavy Batch 04 UI before the Batch 03 authored run is coherent and replayable on this authority surface.
+Do not move gameplay truth into Preact state. Batch 04 must render derived views and dispatch typed intents, persist normal/pending authority at explicit commit boundaries, and resolve optional Pokémon media only through the frozen P6/P7 resource path.
 
 ## Later roadmap
 
