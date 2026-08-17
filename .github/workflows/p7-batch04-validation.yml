@@ -32,7 +32,7 @@ on:
       - '.github/workflows/p7-batch04-validation.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   validate:
@@ -55,36 +55,13 @@ jobs:
         run: python tools/validate_p5_contract.py
       - name: Re-run frozen P6 validator before generation
         run: python tools/validate_p6_resources.py
-      - name: Generate deterministic runtime pack
-        run: python tools/build_p7_runtime_pack.py --output build/p7-runtime-pack.json
-      - name: Bootstrap committed runtime pack on the agent branch
-        if: ${{ github.event_name == 'push' && github.ref != 'refs/heads/main' && hashFiles('src/generated/runtime-pack.json') == '' }}
-        shell: bash
-        run: |
-          mkdir -p src/generated
-          cp build/p7-runtime-pack.json src/generated/runtime-pack.json
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/generated/runtime-pack.json
-          git commit -m 'Commit generated P7 runtime pack'
-          git push
-      - name: Require committed generated artifact when present
-        shell: bash
-        run: |
-          if test -f src/generated/runtime-pack.json; then
-            cmp -s src/generated/runtime-pack.json build/p7-runtime-pack.json || {
-              echo 'Committed runtime pack is stale.'
-              diff -u src/generated/runtime-pack.json build/p7-runtime-pack.json || true
-              exit 1
-            }
-          else
-            echo 'Bootstrap run: generated artifact will be committed by Batch 04.'
-          fi
+      - name: Require deterministic committed runtime pack
+        run: python tools/build_p7_runtime_pack.py --check
       - name: Upload normalized runtime-pack evidence
         uses: actions/upload-artifact@v4
         with:
           name: p7-runtime-pack
-          path: build/p7-runtime-pack.json
+          path: src/generated/runtime-pack.json
           if-no-files-found: error
           retention-days: 14
       - uses: actions/setup-node@v6
