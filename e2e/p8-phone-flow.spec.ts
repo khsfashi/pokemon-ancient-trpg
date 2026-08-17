@@ -70,33 +70,35 @@ test('completes the phone zero-companion slice and resumes pending/committed sav
 
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
   await expect(page.getByText('Zero-companion completion: proven')).toBeVisible();
-  await expect(page.getByText('Companions 0/3', { exact: false })).toBeVisible();
+  await expect(page.getByText('Companions 0/3', { exact: false }).first()).toBeVisible();
   await expect(page.getByText('Weedle')).toBeVisible();
   await expect(page.getByText('Beedrill')).toBeVisible();
   await expect(page.getByText('Rattata')).toBeVisible();
 
   const saved = await page.evaluate(async () => {
-    const [{ P8BrowserSession }, authorityModule] = await Promise.all([
-      import('/src/platform/p8BrowserSession.ts'),
-      import('/src/domain/p8Authority.ts'),
-    ]);
+    const { P8BrowserSession } = await import('/src/platform/p8BrowserSession.ts');
     const session = new P8BrowserSession();
     const snapshot = await session.resume();
-    if (snapshot.authority === null) throw new Error('P8 browser smoke save disappeared');
+    const authority = snapshot.authority;
+    if (authority === null) throw new Error('P8 browser smoke save disappeared');
     return {
       status: snapshot.status,
       transitionSeq: snapshot.transitionSeq.toString(),
-      authority: authorityModule.p8AuthorityStateToJson(snapshot.authority),
+      locality: authority.world.currentLocality,
+      provisions: authority.survival.resourcePools.provisions,
+      companionSpeciesIds: authority.pokemon.companionSlots.map((slot) => slot?.speciesId ?? null),
+      zeroCompanionComplete: authority.events.narrativeFlags['slice.zero_companion_route_complete'] === true,
+      directInteractions: [...authority.pokemon.directInteractions],
     };
   });
 
   expect(saved.status).toBe('ended');
   expect(saved.transitionSeq).toBe('7');
-  expect(saved.authority.world.current_locality).toBe('reedbank-settlement');
-  expect(saved.authority.survival.resource_pools.provisions).toBe(2);
-  expect(saved.authority.pokemon.companion_slots).toEqual([null, null, null]);
-  expect(saved.authority.events.narrative_flags['slice.zero_companion_route_complete']).toBe(true);
-  expect(saved.authority.pokemon.direct_interactions).toEqual([
+  expect(saved.locality).toBe('reedbank-settlement');
+  expect(saved.provisions).toBe(2);
+  expect(saved.companionSpeciesIds).toEqual([null, null, null]);
+  expect(saved.zeroCompanionComplete).toBe(true);
+  expect(saved.directInteractions).toEqual([
     '13:weedle.crossing:old-levee',
     '15:beedrill.windbreak:old-levee',
     '19:rattata.storetrail:old-levee',
@@ -105,9 +107,9 @@ test('completes the phone zero-companion slice and resumes pending/committed sav
   console.log(`P8_BATCH04_PHONE_SMOKE ${JSON.stringify({
     browserName,
     transitionSeq: saved.transitionSeq,
-    locality: saved.authority.world.current_locality,
-    provisions: saved.authority.survival.resource_pools.provisions,
-    companions: saved.authority.pokemon.companion_slots.filter((slot) => slot !== null).length,
-    directInteractions: saved.authority.pokemon.direct_interactions.length,
+    locality: saved.locality,
+    provisions: saved.provisions,
+    companions: saved.companionSpeciesIds.filter((speciesId) => speciesId !== null).length,
+    directInteractions: saved.directInteractions.length,
   })}`);
 });
