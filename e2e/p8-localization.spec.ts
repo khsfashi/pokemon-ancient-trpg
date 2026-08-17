@@ -41,7 +41,9 @@ async function assertPhoneLayout(page: Page): Promise<void> {
 }
 
 test('Korean/English switching is presentation-only, persistent, and phone-safe', async ({ page, browserName }) => {
-  await page.addInitScript(({ key }) => window.localStorage.setItem(key, 'ko-KR'), { key: LOCALE_KEY });
+  await page.addInitScript(({ key }) => {
+    if (window.localStorage.getItem(key) === null) window.localStorage.setItem(key, 'ko-KR');
+  }, { key: LOCALE_KEY });
   await page.goto('/');
 
   await expect(page.getByRole('heading', { name: '고대 포켓몬 TRPG' })).toBeVisible();
