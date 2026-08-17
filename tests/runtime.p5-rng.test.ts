@@ -95,7 +95,7 @@ describe('p5-rng-v1 production port', () => {
 
   it('fails closed before hashing malformed seed/ASCII input or zero bounds', async () => {
     const key = vectors[0].key;
-    expect(() => encodeP5RngV1Input({ ...key, runSeedHex: key.runSeedHex.toUpperCase() }, 0n)).toThrow(RangeError);
+    expect(() => encodeP5RngV1Input({ ...key, runSeedHex: '0123456789ABCDEF0123456789ABCDEF' }, 0n)).toThrow(RangeError);
     expect(() => encodeP5RngV1Input({ ...key, subjectId: '비결정적' }, 0n)).toThrow(RangeError);
     await expect(drawP5Bounded(provider, key, 0n, 0n)).rejects.toThrow(RangeError);
   });

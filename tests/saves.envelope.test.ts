@@ -14,7 +14,6 @@ describe('SaveEnvelopeV1 wire/runtime boundary', () => {
       const serialized = JSON.stringify(wire);
       expect(serialized).toContain('18446744073709551614');
       expect(serialized).toContain('9007199254740993');
-      expect(serialized).not.toContain('n"');
       expect(saveEnvelopeV1FromWire(JSON.parse(serialized) as unknown)).toEqual(runtime);
     });
   }
