@@ -172,19 +172,22 @@ Batch 02 now provides the framework-independent authority foundation required be
 
 - exact P3 human seven-Attribute character state and deterministic formative resolver;
 - legal four-increase / cap-3 / distinct-competence starting specialization;
-- P3 `2d6 + Attribute + Competence + Context` static checks using the existing P5 RNG primitive;
+- exact P3 `2d6 + Attribute + Competence + Context` static checks using the existing P5 RNG primitive;
+- frozen P3 bands: setback `<= -3`, costly `-2..-1`, full `0..+2`, exceptional `>= +3`;
 - cached trigger-index P5 candidate lookup and pure no-RNG eligibility;
 - deterministic integer-weight event selection with 0/1 candidate no-RNG behavior;
-- pinned P5 pending-event snapshots with choice/check/RNG provenance;
+- exact `event.select` subject `eval:<ordinal>` and independent keyed-stream draw indexes;
+- deterministic SHA-256-derived pending instance identity plus pinned choice/check/RNG provenance;
 - a closed typed P2/P3/P4 command subset with aggregate atomic prevalidation;
 - event count/cooldown/recent-history/chain bookkeeping and ordered post-commit triggers;
-- headless direct + checked event proof with exact `0 → 1 → 2` transition sequencing.
+- headless direct + checked event proof with exact `0 → 1 → 2` transition sequencing;
+- frozen P5 weighted-selection and hazardous-check vectors pinned in the production-path tests.
 
-Validated functional head before audit-only commits:
+Validated functional head before workflow/audit-only commits:
 
 ```text
-4d353ee0d0730f6e786cf22087eb80d799ac7fc5
-P8 Authority Runtime Validation run 32003901207 = PASS
+f751238d4ed5d8147adfecec5300e5ad4715b976
+P8 Authority Runtime Validation run 32004406948 = PASS
 P8 integration guard                              = PASS
 strict TypeScript                                 = PASS
 all Vitest fixtures                               = PASS
