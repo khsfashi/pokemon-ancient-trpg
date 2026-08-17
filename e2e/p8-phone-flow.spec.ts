@@ -84,7 +84,7 @@ test('presents the Korean landing and first event as a game-first phone surface'
   await page.getByRole('button', { name: '길을 나선다' }).click();
 
   await expect(page.getByRole('heading', { name: '창고 앞에서 터진 고함' })).toBeVisible();
-  await expect(page.locator('.run-status')).toBeVisible();
+  await expect(page.locator('.expedition-hud')).toBeVisible();
   await expect(page.locator('.panel > .eyebrow')).toContainText('갈대둑');
   await expect(page.locator('.panel > .lead')).toBeVisible();
   const choices = page.locator('.choice-stack button.choice:not([disabled])');
@@ -217,7 +217,9 @@ test('completes the phone zero-companion slice and resumes pending/committed sav
 
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
   await expect(page.getByText('Returned without a companion: complete', { exact: false })).toBeVisible();
-  await expect(page.getByText('Companions 0/3', { exact: false }).first()).toBeVisible();
+  const endingGrid = page.locator('.ending-grid');
+  await expect(endingGrid.getByText('Companions', { exact: true })).toBeVisible();
+  await expect(endingGrid.getByText('0/3', { exact: true })).toBeVisible();
   await expect(page.getByText('Weedle')).toBeVisible();
   await expect(page.getByText('Beedrill')).toBeVisible();
   await expect(page.getByText('Rattata')).toBeVisible();

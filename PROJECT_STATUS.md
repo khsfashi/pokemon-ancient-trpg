@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-17 19:44 KST**
+Last operational handoff update: **2026-08-17 20:28 KST**
 
 This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts, owner-playtest contracts, and live GitHub state. If this file and live state disagree, reconcile the file before advancing.
 
@@ -39,7 +39,7 @@ P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
 P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
-P8.2 second owner remediation         BATCH 04 COMPLETE / BATCH 05 NEXT / #118 / BLOCKING P9
+P8.2 second owner remediation         BATCHES 04-05 COMPLETE / BATCH 06 NEXT / #118 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
@@ -90,10 +90,14 @@ Owner feedback now requires all of the following:
    - animation remains presentation-only and never owns gameplay state;
    - automated exit evidence: `docs/P8_2_BATCH_04_AUDIT.md`, workflow run `32021587541` PASS.
 
-4. **Persistent player profile / state readability**
-   - portrait and identity should remain visible or one tap away;
-   - health/HP readability, food/provisions, stamina/exertion readability, attributes/current values and danger/game-over conditions must be understandable;
-   - existing P3 `Vitality / Fatigue / Fear / Injuries` remains authoritative until explicitly revised; do not add a duplicate stamina authority silently.
+4. **Persistent player profile / state readability — Batch 05 complete**
+   - three cosmetic starting portraits are selectable and persist for the active journey;
+   - portrait + Origin / Practice / specialization remain visible during play;
+   - Vitality current/max, Fatigue with stamina/exertion wording, Fear, Injuries, resources, Load, locality and companion slots are readable in the persistent expedition HUD;
+   - seven attributes and trained competences are expandable one tap away;
+   - incapacitation / critical-injury / death semantics are visible without silently changing P3 rules;
+   - no duplicate mutable HP/stamina authority or save-schema fork was introduced;
+   - automated exit evidence: `docs/P8_2_BATCH_05_AUDIT.md`, workflow run `32024921196` PASS.
 
 5. **Equipment and RPG stats**
    - visible weapons, armor, utility/accessory and Pokémon/ecology-related equipment are desired;
@@ -133,24 +137,35 @@ Audit: **`docs/P8_2_BATCH_04_AUDIT.md`**.
 
 Do **not** repeat Batch 04 on a generic `next` request.
 
+### Batch 05 — player portrait + persistent profile / expedition HUD
+
+Implementation PR: **#121**.
+
+Accepted behavior:
+
+- three initial cosmetic portrait choices and reload/resume persistence;
+- persistent portrait + Origin / Practice / specialization identity;
+- Vitality current/max derived from the frozen P3 formula `4 + Endurance`;
+- Fatigue/stamina, Fear and Injury baseline presentation without a second mutable UI-owned authority;
+- Provisions / Remedies / Materials, locality, companion slots and D-028 Load;
+- expandable seven attributes and trained competences;
+- explicit Incapacitated / Critical Injury / Death help, including `Vitality 0 = Incapacitated`;
+- specialization recovered from authoritative personal competence rather than separately saved;
+- HUD projection memoized by authoritative state identity;
+- legacy minimal-strip style leakage removed after strict Chromium/WebKit 390x844 overflow acceptance caught it;
+- Chromium/WebKit profile persistence, inherited phone smoke and save compatibility remain green.
+
+Audit: **`docs/P8_2_BATCH_05_AUDIT.md`**.
+
+Do **not** repeat Batch 05 on a generic `next` request.
+
 ## Exact next work
 
-**P9 must not start. Batch 05 is now the first incomplete P8.2 batch in #118.**
+**P9 must not start. Batch 06 is now the first incomplete P8.2 batch in #118.**
 
 Default sequence:
 
-1. **Batch 05 — player portrait + persistent profile / expedition HUD — NEXT**
-   - initial avatar selection;
-   - portrait + Origin/Practice/specialization;
-   - Vitality current/max;
-   - Fatigue presented with clear stamina/exertion meaning;
-   - Fear/Injuries when relevant;
-   - Provisions/Remedies/Materials;
-   - Load, locality, companion slots;
-   - expandable seven-attribute/competence profile;
-   - understandable incapacitation/critical-injury/death danger help.
-
-2. **Batch 06 — illustration system + scene visual identity**
+1. **Batch 06 — illustration system + scene visual identity — NEXT**
    - stable illustration resource IDs;
    - event/locality/NPC/Pokémon/item illustration slot;
    - optional inline art beats;
@@ -158,27 +173,27 @@ Default sequence:
    - P6 provenance/cache/budget compliance;
    - opening/travel/Weedle/orchard-return scenes receive distinct visual identity or deliberate placeholders.
 
-3. **Batch 07 — native-Korean narrative pass + novel-like creation**
+2. **Batch 07 — native-Korean narrative pass + novel-like creation**
    - rewrite three formative prompts as short narrative memory scenes;
    - second full Korean game-copy pass;
    - read-aloud naturalness review;
    - short idiomatic choice labels;
    - preserve deterministic hidden lifepath mapping unless explicitly revised.
 
-4. **Batch 08 — equipment slots + combat-readiness summary**
+3. **Batch 08 — equipment slots + combat-readiness summary**
    - authoritative stable item/equipment IDs;
    - weapon/body armor/accessory or protective wearable/utility/Pokémon-field gear surfaces;
    - attack/defense-like derived readiness;
    - bounded formulas from human stats/competence/equipment/preparation/context;
    - Load/save/cache integration.
 
-5. **Batch 09 — medieval-fantasy farming / preparation loop**
+4. **Batch 09 — medieval-fantasy farming / preparation loop**
    - settlement preparation -> travel -> gather/forage/salvage/hunt where valid -> risk -> return -> repair/barter/craft/equip -> depart again;
    - ordinary materials, provisions path, repair/material path, exchange/service reward, equipment improvement and at least one Pokémon-linked opportunity;
    - camp/rest/recovery tied to existing survival rules;
    - no generic kill-XP or automatic Pokémon loot.
 
-6. **Batch 10 — integrated automated + owner playtest gate**
+5. **Batch 10 — integrated automated + owner playtest gate**
    - Chromium/WebKit 390x844;
    - animation skip/advance/reduced-motion/transition safety;
    - profile/equipment/resources persistence;
@@ -239,6 +254,7 @@ Resource boundaries and exact P8 technical evidence remain in:
 - `docs/PLAYTEST_REMEDIATION.md`
 - `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`
 - `docs/P8_2_BATCH_04_AUDIT.md`
+- `docs/P8_2_BATCH_05_AUDIT.md`
 
 ## Later roadmap
 

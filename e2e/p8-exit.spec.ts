@@ -145,7 +145,9 @@ test('production Chromium/WebKit completes the deterministic zero-companion slic
 
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
   await expect(page.getByText('Returned without a companion: complete', { exact: false })).toBeVisible();
-  await expect(page.getByText('Companions 0/3', { exact: false }).first()).toBeVisible();
+  const endingGrid = page.locator('.ending-grid');
+  await expect(endingGrid.getByText('Companions', { exact: true })).toBeVisible();
+  await expect(endingGrid.getByText('0/3', { exact: true })).toBeVisible();
   await assertPhoneUsability(page);
 
   const saved = await readP8SaveWire(page);

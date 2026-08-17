@@ -16,7 +16,6 @@ import {
   labelP8AttributeLocalized,
   labelP8CheckBandLocalized,
   labelP8CompetenceLocalized,
-  labelP8LocalityLocalized,
   labelP8OriginLocalized,
   labelP8PracticeLocalized,
   labelP8RelationshipLocalized,
@@ -34,6 +33,14 @@ import {
 } from '../platform/p8BrowserSession';
 import { loadP8PokemonMedia, type P8PokemonMediaResult } from '../resources/p8PokemonPresentation';
 import { NarrativeReveal, usePrefersReducedMotion } from './NarrativeReveal';
+import {
+  loadP8PortraitId,
+  P8ExpeditionHud,
+  P8PortraitIdentity,
+  P8PortraitPicker,
+  saveP8PortraitId,
+  type P8PortraitId,
+} from './ProfileHud';
 
 const session = new P8BrowserSession();
 
@@ -91,19 +98,6 @@ function CharacterSummary({ character, locale }: { readonly character: P8Charact
       <div class="tag-row" aria-label={p8Text(locale, 'trainedCompetences')}>
         {Object.keys(character.trainedCompetences).map((id) => <span class="tag" key={id}>{labelP8CompetenceLocalized(id, locale)} +1</span>)}
       </div>
-    </div>
-  );
-}
-
-function RunStatus({ snapshot, locale }: { readonly snapshot: P8BrowserSessionSnapshot; readonly locale: P8Locale }) {
-  const authority = snapshot.authority;
-  if (authority === null) return null;
-  const companions = authority.pokemon.companionSlots.filter((slot) => slot !== null).length;
-  return (
-    <div class="run-status" aria-label={p8Text(locale, 'runStatus')}>
-      <span>{labelP8LocalityLocalized(authority.world.currentLocality, locale)}</span>
-      <span>{p8Text(locale, 'provisions')} {authority.survival.resourcePools.provisions}</span>
-      <span>{p8Text(locale, 'companions')} {companions}/3</span>
     </div>
   );
 }
@@ -168,6 +162,7 @@ export function App() {
   const [promptIndex, setPromptIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [specializationId, setSpecializationId] = useState(P8_SLICE_SPECIALIZATIONS[0]!.specializationId);
+  const [portraitId, setPortraitId] = useState<P8PortraitId>(() => loadP8PortraitId());
   const [busy, setBusy] = useState(false);
   const busyRef = useRef(false);
   const [error, setError] = useState<string | null>(null);
@@ -258,6 +253,7 @@ export function App() {
     setAnswers([]);
     setPromptIndex(0);
     setSpecializationId(P8_SLICE_SPECIALIZATIONS[0]!.specializationId);
+    setPortraitId(loadP8PortraitId());
     setError(null);
     setMode('prompts');
   }
@@ -273,6 +269,7 @@ export function App() {
   async function startRun(): Promise<void> {
     const started = await runAction(() => session.startNewRun(creationInput(answers, specialization)));
     if (started === null) return;
+    saveP8PortraitId(portraitId);
     const prepared = await runAction(() => session.prepareNextScene());
     if (prepared !== null) {
       setResolutionAcknowledged(false);
@@ -283,16 +280,13 @@ export function App() {
   async function resumeRun(): Promise<void> {
     const resumed = await runAction(() => session.resume());
     if (resumed !== null) {
+      setPortraitId(loadP8PortraitId());
       setResolutionAcknowledged(false);
       setMode('play');
     }
   }
 
   async function resolveChoice(choiceId: string): Promise<void> {
-    // The pending scene has no last resolution, so arming the next consequence before
-    // the authoritative action cannot change the currently presented scene. It does,
-    // however, ensure the committed consequence is already eligible when the staged
-    // snapshot swaps in during fade-in instead of popping in after the animation.
     setResolutionAcknowledged(false);
     await runAction(() => session.resolveChoice(choiceId), true);
   }
@@ -368,6 +362,7 @@ export function App() {
             );
           })}
         </div>
+        <P8PortraitPicker portraitId={portraitId} locale={locale} onChange={setPortraitId} />
         <button class="primary" onClick={() => setMode('confirm')}>{p8Text(locale, 'reviewCharacter')}</button>
       </section>
     );
@@ -376,6 +371,9 @@ export function App() {
       <section class="panel">
         <p class="eyebrow">{p8Text(locale, 'finalSheet')}</p>
         <h1>{localizedSpecialization.label}</h1>
+        <div class="character-portrait-preview">
+          <P8PortraitIdentity portraitId={portraitId} character={previewCharacter} locale={locale} />
+        </div>
         <CharacterSummary character={previewCharacter} locale={locale} />
         <div class="contract-note">{p8Text(locale, 'attributeContract')}</div>
         <button class="primary" disabled={busy} onClick={() => void startRun()}>{busy ? p8Text(locale, 'saving') : p8Text(locale, 'beginRun')}</button>
@@ -390,7 +388,6 @@ export function App() {
       const narrativeReady = isNarrativeReady(narrativeKey);
       body = (
         <section class="panel">
-          <RunStatus snapshot={presentedSnapshot} locale={locale} />
           <p class="eyebrow">{p8Text(locale, 'committedConsequence')} · {p8Text(locale, 'transition')} {presentedSnapshot.transitionSeq.toString()}</p>
           <h1>{scene?.title ?? activeResolution.eventId}</h1>
           {activeResolution.checkOutcomeBand !== undefined && <div class="check-band">{p8Text(locale, 'checkResult')}: {labelP8CheckBandLocalized(activeResolution.checkOutcomeBand, locale)}</div>}
@@ -410,7 +407,6 @@ export function App() {
       const relationships = Object.entries(presentedSnapshot.authority.world.relationships);
       body = (
         <section class="panel">
-          <RunStatus snapshot={presentedSnapshot} locale={locale} />
           <p class="eyebrow">{p8Text(locale, 'runComplete')}</p>
           <h1>{p8Text(locale, 'backAtReedbank')}</h1>
           <p class="lead">{p8Text(locale, 'endingLead')}</p>
@@ -443,7 +439,6 @@ export function App() {
       const narrativeReady = isNarrativeReady(narrativeKey);
       body = (
         <section class="panel">
-          <RunStatus snapshot={presentedSnapshot} locale={locale} />
           <p class="eyebrow">{scene.eyebrow}</p>
           <h1>{scene.title}</h1>
           <NarrativeReveal
@@ -473,7 +468,6 @@ export function App() {
     } else {
       body = (
         <section class="panel">
-          <RunStatus snapshot={presentedSnapshot} locale={locale} />
           <p class="eyebrow">{p8Text(locale, 'savedCheckpoint')} · {p8Text(locale, 'transition')} {presentedSnapshot.transitionSeq.toString()}</p>
           <h1>{p8Text(locale, 'continueCommitted')}</h1>
           <p class="lead">{p8Text(locale, 'restoredLead')}</p>
@@ -489,6 +483,9 @@ export function App() {
     <main class="shell">
       <LanguageSwitcher locale={locale} onChange={setLocale} />
       {error !== null && <div class="error-banner" role="alert">{error}</div>}
+      {mode === 'play' && presentedSnapshot.authority !== null && (
+        <P8ExpeditionHud authority={presentedSnapshot.authority} portraitId={portraitId} locale={locale} />
+      )}
       <div
         class={`scene-stage ${transitionKind}${transitionClass}`}
         data-transition-kind={transitionKind}
