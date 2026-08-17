@@ -20,6 +20,19 @@ describe('P8 bilingual presentation', () => {
     }
   });
 
+  test('Korean formative memories are narrative scenes with concise action choices', () => {
+    for (const source of P8_SLICE_PRESENTATION_PROMPTS) {
+      const korean = localizeP8Prompt(source, 'ko-KR');
+      const sentenceCount = korean.promptText.split(/[.!?]/u).map((part) => part.trim()).filter(Boolean).length;
+      expect(sentenceCount).toBeGreaterThanOrEqual(2);
+      expect(korean.promptText).not.toMatch(/[?？]\s*$/u);
+      for (const answer of korean.answers) {
+        expect(answer.text.length).toBeLessThanOrEqual(22);
+        expect(answer.text).not.toMatch(/[.!?。！？]\s*$/u);
+      }
+    }
+  });
+
   test('Korean and English preserve stable scene, choice and outcome identities', () => {
     for (const source of P8_SLICE_SCENE_SEQUENCE) {
       const english = getLocalizedP8Scene(source.eventId, 'en-US');
@@ -31,6 +44,41 @@ describe('P8 bilingual presentation', () => {
       expect(Object.keys(korean?.outcomes ?? {}).sort()).toEqual(Object.keys(english?.outcomes ?? {}).sort());
       expect(korean?.title).not.toBe(english?.title);
     }
+  });
+
+  test('current Korean narrative copy avoids questionnaire and translation-proof language', () => {
+    const forbidden = [
+      '상호작용',
+      '권위 상태',
+      '결정론',
+      'IndexedDB',
+      '리소스 캐시',
+      '플레이 구간',
+      '방금 선택의 결과가 기록되었습니다',
+      '정답은 없습니다',
+      '무엇이었나요?',
+      '무엇인가요?',
+    ];
+    const narrative = P8_SLICE_SCENE_SEQUENCE.flatMap((source) => {
+      const scene = getLocalizedP8Scene(source.eventId, 'ko-KR');
+      if (scene === undefined) return [];
+      return [scene.eyebrow, scene.title, scene.body, scene.continueLabel, ...Object.values(scene.choices), ...Object.values(scene.outcomes)];
+    }).join('\n');
+    const creation = P8_SLICE_PRESENTATION_PROMPTS.flatMap((source) => {
+      const prompt = localizeP8Prompt(source, 'ko-KR');
+      return [prompt.promptText, ...prompt.answers.map((answer) => answer.text)];
+    }).join('\n');
+    const shell = [
+      p8Text('ko-KR', 'landingLead'),
+      p8Text('ko-KR', 'promptHint'),
+      p8Text('ko-KR', 'revealLead'),
+      p8Text('ko-KR', 'specializationQuestion'),
+      p8Text('ko-KR', 'attributeContract'),
+      p8Text('ko-KR', 'committedSave'),
+      p8Text('ko-KR', 'restoredLead'),
+    ].join('\n');
+    const copy = `${creation}\n${narrative}\n${shell}`;
+    for (const token of forbidden) expect(copy).not.toContain(token);
   });
 
   test('specialization authority fields survive localization unchanged', () => {
