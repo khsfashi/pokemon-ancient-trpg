@@ -2,6 +2,7 @@ import { render } from 'preact';
 import { App } from './app/App';
 import './app/app.css';
 import './app/motion.css';
+import './app/illustration.css';
 import { registerAppServiceWorker } from './platform/serviceWorker';
 
 const root = document.getElementById('app');
