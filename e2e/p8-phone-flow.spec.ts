@@ -7,6 +7,26 @@ async function chooseFirstFormativeAnswer(page: Page): Promise<void> {
   await page.locator('button.choice').first().click();
 }
 
+async function startEnglishRunAtFirstScene(page: Page): Promise<void> {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'New journey' }).click();
+  await chooseFirstFormativeAnswer(page);
+  await chooseFirstFormativeAnswer(page);
+  await chooseFirstFormativeAnswer(page);
+  await page.getByRole('button', { name: 'Choose a strength' }).click();
+  await page.getByRole('button', { name: 'Review' }).click();
+  await page.getByRole('button', { name: 'Set out' }).click();
+  await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
+}
+
+async function savedTransitionSeq(page: Page): Promise<string> {
+  return page.evaluate(async () => {
+    const { P8BrowserSession } = await import('/src/platform/p8BrowserSession.ts');
+    const resumed = await new P8BrowserSession().resume();
+    return resumed.transitionSeq.toString();
+  });
+}
+
 async function resolveCurrentScene(page: Page): Promise<void> {
   await page.locator('button.choice:not([disabled])').first().click();
   await expect(page.getByText('Afterward', { exact: false })).toBeVisible();
@@ -83,6 +103,59 @@ test('presents the Korean landing and first event as a game-first phone surface'
   })}`);
 });
 
+test('narrative reveal taps never become authoritative choice taps and duplicate submits commit once', async ({ page, browserName }) => {
+  test.skip(browserName !== 'chromium', 'P8.2 Batch 04 adds one deterministic Chromium interaction-safety proof.');
+  await startEnglishRunAtFirstScene(page);
+
+  const narrative = page.locator('.narrative-copy');
+  const firstChoice = page.locator('.choice-stack button.choice').first();
+  await expect(narrative).toHaveAttribute('data-revealing', 'true');
+  await expect(firstChoice).toBeDisabled();
+  expect(await savedTransitionSeq(page)).toBe('0');
+
+  // Two taps on the narrative surface may finish/advance presentation only. Because
+  // the narrative surface owns and stops those clicks, they cannot fall through to
+  // the authoritative choice deck even when readiness flips between taps.
+  await narrative.dblclick();
+  await expect(narrative).toHaveAttribute('data-ready', 'true');
+  await expect(firstChoice).toBeEnabled();
+  await expect(page.getByText('Afterward', { exact: false })).toHaveCount(0);
+  expect(await savedTransitionSeq(page)).toBe('0');
+
+  // Dispatch two synchronous click events before Preact can repaint the disabled
+  // state. The busy ref must reject the second authoritative action immediately.
+  await page.evaluate(() => {
+    const choice = document.querySelector<HTMLButtonElement>('.choice-stack button.choice:not([disabled])');
+    if (choice === null) throw new Error('expected an enabled authoritative choice');
+    choice.click();
+    choice.click();
+  });
+
+  await expect(page.getByText('Afterward', { exact: false })).toBeVisible();
+  await expect(page.locator('.error-banner')).toHaveCount(0);
+  await expect(page.locator('.scene-stage')).toHaveAttribute('data-transition-kind', 'scene');
+  await expect(page.locator('.scene-stage')).toHaveAttribute('data-transition-phase', 'idle');
+  expect(await savedTransitionSeq(page)).toBe('1');
+});
+
+test('reduced motion reveals narrative immediately and bypasses presentation fades', async ({ page, browserName }) => {
+  test.skip(browserName !== 'chromium', 'P8.2 Batch 04 adds one deterministic Chromium reduced-motion proof.');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await startEnglishRunAtFirstScene(page);
+
+  const narrative = page.locator('.narrative-copy');
+  const firstChoice = page.locator('.choice-stack button.choice').first();
+  await expect(narrative).toHaveAttribute('data-ready', 'true');
+  await expect(narrative).toHaveAttribute('data-revealing', 'false');
+  await expect(firstChoice).toBeEnabled();
+  await expect(page.locator('.scene-stage')).toHaveAttribute('data-transition-phase', 'idle');
+
+  await firstChoice.click();
+  await expect(page.getByText('Afterward', { exact: false })).toBeVisible();
+  await expect(page.locator('.scene-stage')).toHaveAttribute('data-transition-phase', 'idle');
+  expect(await savedTransitionSeq(page)).toBe('1');
+});
+
 test('completes the phone zero-companion slice and resumes pending/committed saves exactly', async ({ page, browserName }) => {
   test.skip(browserName !== 'chromium', 'Batch 04 uses one Chromium phone smoke; Batch 05 owns Chromium + WebKit exit proof.');
 
@@ -131,11 +204,15 @@ test('completes the phone zero-companion slice and resumes pending/committed sav
   for (const sceneTitle of remainingSceneTitles) {
     await expect(page.getByRole('heading', { name: sceneTitle })).toBeVisible();
     await resolveCurrentScene(page);
+    if (sceneTitle === 'Beyond the Last Dry Marker') {
+      await expect(page.locator('.scene-stage')).toHaveAttribute('data-transition-kind', 'travel');
+    }
     await continueAfterConsequence(page);
   }
 
   await expect(page.getByRole('heading', { name: 'Return to Reedbank' })).toBeVisible();
   await resolveCurrentScene(page);
+  await expect(page.locator('.scene-stage')).toHaveAttribute('data-transition-kind', 'travel');
   await page.getByRole('button', { name: 'See journey summary' }).click();
 
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
