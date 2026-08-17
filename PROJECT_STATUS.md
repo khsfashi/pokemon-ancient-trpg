@@ -88,7 +88,7 @@ Owner feedback now requires all of the following:
    - locality-changing commits use a travel fade treatment while ordinary scene changes use a lighter transition;
    - reduced-motion renders immediately;
    - animation remains presentation-only and never owns gameplay state;
-   - automated exit evidence: `docs/P8_2_BATCH_04_AUDIT.md`, workflow run `32021373307` PASS.
+   - automated exit evidence: `docs/P8_2_BATCH_04_AUDIT.md`, workflow run `32021587541` PASS.
 
 4. **Persistent player profile / state readability**
    - portrait and identity should remain visible or one tap away;
