@@ -1,9 +1,10 @@
 # P6 Resource Budget and Pipeline Contract
 
-Status: **ACTIVE — P6 Batch 02 measured contract**  
+Status: **ACTIVE — P6 Batch 03 full-coverage measured contract**  
 Verified: **2026-08-17**  
 Owner phase: **#12 — P6 Resource and asset strategy**  
-Manifest: `docs/P6_RESOURCE_MANIFEST.json`
+Manifest: `docs/P6_RESOURCE_MANIFEST.json`  
+Full Pokémon source measurement: `docs/P6_POKEMON_RESOURCE_SOURCE_MAP.json`
 
 This contract converts the P6 strategy and D-036 into numeric resource guardrails without choosing the P7 framework. These are resource-pipeline budgets, not claims about total application bundle size or exact browser/GPU accounting.
 
@@ -31,7 +32,7 @@ Rules:
 
 ## 2. Compact Pokémon identity budget
 
-Pinned PokéSprite Gen-8 regular samples use a **68×56** canvas.
+Pinned PokéSprite Gen-8 regular files for National Pokédex `001..151` use a **68×56** canvas.
 
 ```text
 RGBA8 decoded estimate per icon = 68 * 56 * 4 = 15,232 bytes
@@ -44,32 +45,49 @@ hard compact-icon decoded cache cap = 384 KiB = 393,216 bytes
 
 ## 3. Animated direct-encounter budget
 
-Representative pinned PokéRogue candidate atlases:
+### 3.1 Why the Batch 02 sample cap changed
 
-| Sample | Atlas | Encoded PNG | RGBA8 estimate |
-|---|---:|---:|---:|
-| #001 Bulbasaur | 181×181 | 3,157 B | 131,044 B |
-| #151 Mew | 225×225 | pinned Git blob | 202,500 B |
+Batch 02 measured only #001 and #151 and explicitly warned that those samples did **not** prove the maximum across all 151. Its provisional 512 KiB per-atlas cap was therefore a hypothesis to test in Batch 03, not a reason to discard valid source coverage.
 
-These samples do not prove the maximum of all 151. Instead every imported encounter texture must satisfy:
+Batch 03 fetched and structurally validated every pinned Gen-I PNG+JSON pair. Results:
 
 ```text
-decoded budget per encounter atlas <= 512 KiB
-maximum concurrently resident encounter atlases = 2
-encounter-atlas decoded cache cap = 1 MiB
+animated ids validated = 151/151
+metadata layout distribution = texture-array-v1: 150, root-frames-meta-v1: 1
+metadata format distribution = RGBA8888: 150, I8: 1
+source atlases above old 512 KiB estimate = 25
+maximum source atlas = #085 Dodrio
+maximum source dimensions = 673x673
+maximum conservative RGBA8 decoded estimate = 1,811,716 bytes
 ```
 
-A source exceeding 512 KiB decoded is not silently resized at runtime. Build/import must normalize reproducibly, select another artifact, or reject that optional enrichment record. Atlas JSON is import input: validate and compile it once; do not reparse it per render.
+A trial deduplicating shelf-repack still left 20 species above 512 KiB, so adopting a custom repacker merely to defend the provisional sample cap would add complexity without solving the real constraint cleanly. P6 therefore chooses the simpler evidence-backed policy: use the validated source atlas directly and size the bounded runtime cache from the complete measurement.
+
+### 3.2 Final animated budget
+
+```text
+decoded budget per encounter atlas <= 2 MiB = 2,097,152 bytes
+maximum concurrently resident encounter atlases = 2
+encounter-atlas decoded cache cap = 4 MiB = 4,194,304 bytes
+```
+
+The measured maximum has about 285 KiB of headroom below the 2 MiB guardrail. Two worst-case measured atlases fit below the 4 MiB cache cap.
+
+This removes the need for runtime resize, runtime atlas repack, or a custom build-time repacker solely for memory compliance. Atlas JSON is import input: validate it once and compile/index what the selected P7 renderer needs; do not reparse it per render.
+
+If a later source revision exceeds 2 MiB decoded, it must be rejected, normalized reproducibly, or accompanied by a new measured contract update. Silent budget drift is forbidden.
 
 ## 4. Combined optional Pokémon working set
 
 ```text
 compact icon cache cap     = 384 KiB
-encounter atlas cache cap  = 1 MiB
-combined decoded image cap = 1.375 MiB
+encounter atlas cache cap  = 4 MiB
+combined decoded image cap = 4.375 MiB = 4,587,520 bytes
 ```
 
 Silhouette, shading, cropping, masking and environmental conceal/reveal must reuse the cached base texture. They may not create persistent duplicate Pokémon source textures.
+
+This is still a bounded working set: all 151 atlases remain on-demand and at most two encounter atlases may be resident simultaneously.
 
 ## 5. Currently omitted classes
 
@@ -96,12 +114,14 @@ For every external resource:
 4. verify recorded content hash or immutable Git-blob evidence;
 5. compute SHA-256 before producing a distributable bundled artifact;
 6. verify rights/provenance before changing public-distribution mode;
-7. normalize once at build/import time;
-8. validate image dimensions and atlas frame bounds;
+7. normalize only when measurement proves normalization is necessary;
+8. validate image dimensions, metadata layout and every atlas frame bound;
 9. emit compact indexed runtime metadata keyed by `resource_id`;
 10. coalesce duplicate requests and cache one decoded instance.
 
 A hash-late `build_time_fetch` may start from immutable Git-blob/byte-length evidence, but it may not become a distributable `bundled` artifact before SHA-256 is materialized. `metadata_only` Pokémon resources may not become public-bundled merely because a fetch succeeds.
+
+For the current pinned Gen-I animated family, Batch 03 proves that **no resize/repack is required for the final 2 MiB per-atlas budget**. Avoid preprocessing work that has no measured benefit.
 
 ## 7. P7 handoff invariants
 
@@ -111,11 +131,15 @@ duplicate_downloads = forbidden
 duplicate_long_lived_decoded_instances = forbidden
 runtime_font_conversion = forbidden
 runtime_default_image_resize = forbidden
+runtime_atlas_repack = forbidden
 runtime_atlas_json_reparse_on_render = forbidden
 all_151_media_preload = forbidden
 pokemon_media_initial_payload = 0
 compact_icon_decoded_cache <= 384 KiB
-encounter_atlas_decoded_cache <= 1 MiB
+per_encounter_atlas_decoded <= 2 MiB
+max_resident_encounter_atlases = 2
+encounter_atlas_decoded_cache <= 4 MiB
+combined_optional_pokemon_decoded_image_working_set <= 4.375 MiB
 p6_owned_initial_resource_payload <= 3 MiB
 ```
 
