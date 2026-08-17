@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const SERVICE_WORKER_PATH = new URL('../dist/sw.js', import.meta.url);
@@ -99,7 +99,7 @@ function pendingWire(identity: RuntimePackIdentity) {
   };
 }
 
-async function writePendingSave(page: import('@playwright/test').Page, wire: ReturnType<typeof pendingWire>): Promise<string> {
+async function writePendingSave(page: Page, wire: ReturnType<typeof pendingWire>): Promise<string> {
   return page.evaluate(async ({ slotId, wire }) => {
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
       const request = indexedDB.open('pokemon-ancient-trpg', 1);
@@ -126,7 +126,7 @@ async function writePendingSave(page: import('@playwright/test').Page, wire: Ret
   }, { slotId: SLOT_ID, wire });
 }
 
-async function readPendingSave(page: import('@playwright/test').Page): Promise<string> {
+async function readPendingSave(page: Page): Promise<string> {
   return page.evaluate(async (slotId) => {
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
       const request = indexedDB.open('pokemon-ancient-trpg', 1);
@@ -153,6 +153,23 @@ async function readPendingSave(page: import('@playwright/test').Page): Promise<s
   }, SLOT_ID);
 }
 
+async function reloadOffline(page: Page, browserName: string): Promise<void> {
+  if (browserName !== 'webkit') {
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    return;
+  }
+
+  // Playwright/WebKit's page.reload() can fail inside the automation transport when the
+  // context is offline, before the installed service worker gets to answer the navigation.
+  // Trigger the same browser reload from page JavaScript while a navigation waiter is armed.
+  await Promise.all([
+    page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+    page.evaluate(() => {
+      setTimeout(() => window.location.reload(), 0);
+    }),
+  ]);
+}
+
 test('installs the production worker, reloads offline, and keeps an update waiting during pending state', async ({ page, context, browserName }) => {
   const identity = await loadRuntimePackIdentity();
 
@@ -172,7 +189,7 @@ test('installs the production worker, reloads offline, and keeps an update waiti
   await expect.poll(async () => page.evaluate(() => navigator.serviceWorker.controller?.state ?? null)).toBe('activated');
 
   await context.setOffline(true);
-  await page.reload({ waitUntil: 'domcontentloaded' });
+  await reloadOffline(page, browserName);
   await expect(page.getByRole('heading', { name: 'Ancient Pokémon TRPG' })).toBeVisible();
   const offlineControllerState = await page.evaluate(() => navigator.serviceWorker.controller?.state ?? null);
   expect(offlineControllerState).toBe('activated');
