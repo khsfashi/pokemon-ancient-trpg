@@ -1,15 +1,15 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
-async function chooseFirstFormativeAnswer(page: Parameters<typeof test>[0] extends never ? never : any): Promise<void> {
+async function chooseFirstFormativeAnswer(page: Page): Promise<void> {
   await page.locator('button.choice').first().click();
 }
 
-async function resolveCurrentScene(page: any): Promise<void> {
+async function resolveCurrentScene(page: Page): Promise<void> {
   await page.locator('button.choice:not([disabled])').first().click();
   await expect(page.getByText('Committed consequence', { exact: false })).toBeVisible();
 }
 
-async function continueAfterConsequence(page: any): Promise<void> {
+async function continueAfterConsequence(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
 }
 
@@ -58,8 +58,8 @@ test('completes the phone zero-companion slice and resumes pending/committed sav
     'Weedle at the Crossing',
     'The Windbreak Boundary',
   ];
-  for (let index = 0; index < remainingSceneTitles.length; index += 1) {
-    await expect(page.getByRole('heading', { name: remainingSceneTitles[index]! })).toBeVisible();
+  for (const sceneTitle of remainingSceneTitles) {
+    await expect(page.getByRole('heading', { name: sceneTitle })).toBeVisible();
     await resolveCurrentScene(page);
     await continueAfterConsequence(page);
   }
