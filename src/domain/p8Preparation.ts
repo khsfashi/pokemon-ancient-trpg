@@ -70,21 +70,21 @@ const ACTIONS: readonly PreparationActionDefinition[] = Object.freeze([
     kind: 'gather',
     completionFlag: 'slice.prep.gathered_repair_stock',
     semanticFlags: Object.freeze(['slice.prep.mundane_materials_only']),
-    resourceDeltas: Object.freeze([{ poolId: 'materials', delta: 1 }]),
+    resourceDeltas: Object.freeze([{ poolId: 'materials' as const, delta: 1 }]),
   }),
   Object.freeze({
     actionId: 'repair.wet-route-gear',
     kind: 'repair',
     completionFlag: 'slice.prep.repaired_wet_route_gear',
     semanticFlags: Object.freeze([GEAR_SERVICED_FLAG]),
-    resourceDeltas: Object.freeze([{ poolId: 'materials', delta: -1 }]),
+    resourceDeltas: Object.freeze([{ poolId: 'materials' as const, delta: -1 }]),
   }),
   Object.freeze({
     actionId: 'forage.bank-edge',
     kind: 'forage',
     completionFlag: 'slice.prep.foraged_bank_edge',
     semanticFlags: Object.freeze(['slice.prep.local_foraging_complete']),
-    resourceDeltas: Object.freeze([{ poolId: 'provisions', delta: 1 }]),
+    resourceDeltas: Object.freeze([{ poolId: 'provisions' as const, delta: 1 }]),
   }),
   Object.freeze({
     actionId: 'hunt.rattata-storetrail',
@@ -97,7 +97,7 @@ const ACTIONS: readonly PreparationActionDefinition[] = Object.freeze([
     ]),
     // The patrol consumes bait/food. It deliberately grants no Pokémon-derived resource:
     // D-021/P4 require species- and locality-specific authority before such harvesting.
-    resourceDeltas: Object.freeze([{ poolId: 'provisions', delta: -1 }]),
+    resourceDeltas: Object.freeze([{ poolId: 'provisions' as const, delta: -1 }]),
   }),
   Object.freeze({
     actionId: 'trade.provision-for-remedy',
@@ -105,8 +105,8 @@ const ACTIONS: readonly PreparationActionDefinition[] = Object.freeze([
     completionFlag: 'slice.prep.traded_for_remedy',
     semanticFlags: Object.freeze(['slice.prep.local_barter_only']),
     resourceDeltas: Object.freeze([
-      { poolId: 'provisions', delta: -1 },
-      { poolId: 'remedies', delta: 1 },
+      { poolId: 'provisions' as const, delta: -1 },
+      { poolId: 'remedies' as const, delta: 1 },
     ]),
   }),
 ]);
