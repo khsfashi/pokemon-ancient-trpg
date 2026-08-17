@@ -10,6 +10,7 @@ on:
       - 'src/app/profile.css'
       - 'tests/p8-profile-hud.test.ts'
       - 'e2e/p8-2-profile-hud.spec.ts'
+      - 'e2e/p8-phone-flow.spec.ts'
       - '.github/workflows/p8-2-batch05-validation.yml'
   push:
     branches:
@@ -24,6 +25,7 @@ on:
       - 'src/app/profile.css'
       - 'tests/p8-profile-hud.test.ts'
       - 'e2e/p8-2-profile-hud.spec.ts'
+      - 'e2e/p8-phone-flow.spec.ts'
       - '.github/workflows/p8-2-batch05-validation.yml'
 
 permissions:
