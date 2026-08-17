@@ -1,0 +1,93 @@
+{
+  "schema_version": "p7-architecture-v1",
+  "verified_date": "2026-08-17",
+  "phase_issue": 7,
+  "delivery": {
+    "primary_target": "web-pwa",
+    "backend_required": false,
+    "deployment": "vercel-static",
+    "android_packaging": "deferred-capacitor-wrapper-only"
+  },
+  "toolchain": {
+    "node_line": "24.x-lts",
+    "package_manager": "npm-with-committed-lockfile",
+    "build_tool": "vite-8.x",
+    "language": "typescript-strict",
+    "ui": "preact-10.x",
+    "state_library": "none",
+    "router_library": "none-in-baseline",
+    "service_worker_build": "workbox-build-generateSW",
+    "unit_test": "vitest",
+    "browser_test": "playwright"
+  },
+  "runtime": {
+    "authoritative_core": "pure-typescript-domain-runtime",
+    "ui_is_authoritative": false,
+    "event_evaluation": "committed-transition-driven",
+    "per_frame_event_scan": false,
+    "per_render_event_scan": false,
+    "static_contract_reparse_on_render": false,
+    "derived_indexes_built_or_loaded_once": true,
+    "runtime_u64_representation": "bigint",
+    "wire_u64_representation": "unsigned-decimal-string",
+    "sha256_provider": "web-crypto-subtle-digest"
+  },
+  "save": {
+    "primary_storage": "indexeddb",
+    "authoritative_state_in_service_worker_cache": false,
+    "authoritative_state_in_local_storage": false,
+    "save_envelope_version": 1,
+    "migration_policy": "sequential-pure-fail-closed",
+    "backup_export": "versioned-json",
+    "backup_import": "validate-fully-before-atomic-write",
+    "run_seed_encoding": "32-lowercase-hex",
+    "content_pack_pin_required": true,
+    "pending_event_state_required": true
+  },
+  "content_pipeline": {
+    "runtime_remote_pokemon_api": false,
+    "external_source_access": "build-import-only",
+    "normalized_generated_artifacts": true,
+    "content_digest": "sha256-canonical-normalized-records",
+    "trigger_index_generated": true,
+    "resource_index_generated": true,
+    "runtime_whole_catalog_scan_required": false
+  },
+  "pwa": {
+    "manifest_required": true,
+    "service_worker_required_for_offline_baseline": true,
+    "precache_scope": "public-safe-app-shell-and-required-core-content-only",
+    "pokemon_media_precache": false,
+    "forced_mid-transition_update": false,
+    "offline_authoritative_play": true
+  },
+  "resources": {
+    "lookup_key": "resource_id",
+    "lookup_complexity": "O(1)-equivalent",
+    "inflight_request_coalescing": true,
+    "duplicate_long_lived_decoded_instances": false,
+    "all_151_media_preload": false,
+    "pokemon_media_initial_payload_bytes": 0,
+    "compact_icon_decoded_cache_cap_bytes": 393216,
+    "encounter_atlas_decoded_per_item_cap_bytes": 2097152,
+    "encounter_atlas_max_resident": 2,
+    "encounter_atlas_decoded_cache_cap_bytes": 4194304,
+    "combined_optional_pokemon_decoded_cap_bytes": 4587520,
+    "p6_owned_required_initial_resource_payload_cap_bytes": 3145728,
+    "runtime_default_image_resize": false,
+    "runtime_atlas_repack": false,
+    "runtime_atlas_json_reparse_on_render": false,
+    "missing_optional_media_changes_gameplay": false
+  },
+  "tests": {
+    "retain_p5_python_contract_gates": true,
+    "retain_p6_python_resource_gates": true,
+    "port_p5_rng_vectors_to_typescript": true,
+    "save_migration_fixtures": true,
+    "resource_cache_coalescing_and_eviction_fixtures": true,
+    "phone_viewport_chromium_and_webkit_e2e": true,
+    "offline_reload_resume_fixture": true,
+    "typecheck_required": true,
+    "production_build_required": true
+  }
+}
