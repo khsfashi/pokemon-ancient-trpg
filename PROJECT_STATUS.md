@@ -17,6 +17,38 @@ This file is the concise operational handoff. Durable authority remains in `docs
 - D-036 freezes hybrid Pokémon presentation: PokéSprite compact identity + animated encounter sprites + non-destructive conceal/reveal/shading/masking/environment layers.
 - Pokémon media remains optional and `metadata_only / not_cleared` for public distribution unless an exact artifact is affirmatively cleared.
 
+## Blocking owner playtest gate — P8.1
+
+Issue: **#114 — Playtest remediation: natural Korean, game-like UI, meaningful choices**.
+
+P8's technical integration/architecture exit remains valid, but the **player-facing product acceptance was rejected by the owner on 2026-08-17** after the first real playtest.
+
+Observed blockers:
+
+- Korean reads like literal/technical translation rather than native Korean game prose;
+- the current centered-card presentation does not read as a finished game UI;
+- the playable route feels incomplete;
+- too many main-path scenes expose only one effective action;
+- implementation/proof wording leaks into normal player-facing copy.
+
+Therefore:
+
+```text
+p8_technical_exit              == PASS
+p8_owner_product_acceptance    == FAIL / REOPENED AS P8.1
+p9_bulk_content_expansion      == BLOCKED UNTIL #114 CLOSES
+```
+
+Owner-approved presentation direction:
+
+- benchmark native-Korean editing/humanization practices and enforce a repo-local Korean game-copy skill;
+- use StudioWheel's `모험가 이야기` as an information-hierarchy/text-adventure-feel benchmark without copying proprietary assets/layouts;
+- ordinary gameplay events should normally present `2+` materially distinct choices where fiction permits;
+- single-action buttons are reserved for genuine acknowledgement/transition moments;
+- the first several minutes must read immediately as a game at the accepted phone viewport.
+
+Binding remediation contract: `docs/PLAYTEST_REMEDIATION.md`.
+
 ## Completed phases
 
 ```text
@@ -28,7 +60,8 @@ P4 Pokémon adaptation + Gen-I 151     COMPLETE
 P5 Narrative world-event engine       COMPLETE
 P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
-P8 First playable vertical slice      COMPLETE
+P8 First playable vertical slice      TECHNICAL COMPLETE
+P8.1 Owner playtest product gate      IN PROGRESS (#114)
 ```
 
 Strict exit evidence:
@@ -37,7 +70,7 @@ Strict exit evidence:
 - P5: `docs/P5_EXIT_AUDIT.md`
 - P6: `docs/P6_EXIT_AUDIT.md`
 - P7: `docs/P7_EXIT_AUDIT.md`
-- P8: `docs/P8_EXIT_AUDIT.md`
+- P8 technical exit: `docs/P8_EXIT_AUDIT.md`
 
 ## Frozen P6 resource boundary
 
@@ -176,9 +209,9 @@ zero_companion_flag  = true
 
 P8 also proves exact pending reload, committed reload, completed-check reload before later input, canonical P7 backup export/import compatibility, optional-media absence, and exact in-progress P8 pending-save recovery while the production preview origin is physically stopped.
 
-Manual mobile usability evidence is recorded in `docs/P8_BATCH_05_AUDIT.md`: actual presentation source/CSS was reviewed against the six Batch 05 criteria and backed by real `390x844` Chromium/WebKit execution plus automated no-horizontal-overflow and `>=44x44` visible-control measurements. This is not presented as separate physical-device touch-latency certification.
+Manual mobile usability evidence is recorded in `docs/P8_BATCH_05_AUDIT.md`: actual presentation source/CSS was reviewed against the six Batch 05 criteria and backed by real `390x844` Chromium/WebKit execution plus automated no-horizontal-overflow and `>=44x44` visible-control measurements. This is not presented as separate physical-device touch-latency certification, and the 2026-08-17 owner playtest proves that those technical usability checks did **not** establish game-like presentation quality.
 
-Final invariants:
+Final technical invariants:
 
 ```text
 mixed_world_loop_proven == true
@@ -205,20 +238,30 @@ Evidence:
 
 ## Exact next work
 
-**Begin P9 / issue #9 — Full world content + factions + complete Gen-I realization.**
+**Finish P8.1 / issue #114 before resuming P9.**
 
-Start with a bounded P9 Batch 01 contract/planning gate before bulk authoring:
+Active sequence:
 
-1. freeze the P9 world-content expansion envelope and scope-control rules;
-2. define a machine-checkable world-event category coverage manifest;
-3. define a machine-checkable `#001-#151` living direct-encounter realization manifest traced to P4/D-034;
-4. define the major-faction lane contract, targeting roughly `4..6` persistent setting-native lanes without prematurely writing hundreds of events;
-5. sequence later P9 batches so schema/validation, faction/world skeleton, species realization and breadth audits expand through the proven P5/P6/P7/P8 paths rather than forks.
+1. **Batch 01 — Korean game-copy + presentation shell**
+   - install the project-owned `.github/skills/korean-game-copy/SKILL.md` rules;
+   - rewrite all current Korean prompts/scenes/choices/outcomes/player UI strings;
+   - remove P7/P8/authority/determinism/IndexedDB/resource-cache proof language from the player surface;
+   - replace the generic centered-card web presentation with a game-like phone HUD / scene / choice hierarchy;
+   - retain the P6/P7/P8 technical invariants and rerun full validation.
+2. **Batch 02 — meaningful-choice density**
+   - audit all current scenes;
+   - add `2+` materially distinct choices to ordinary gameplay events where fiction permits;
+   - leave one-action buttons only for genuine acknowledgement/transition scenes;
+   - use existing P5/P8 authoritative choices/outcomes, never UI-only fake branches.
+3. **Batch 03 — player-facing acceptance**
+   - rerun Chromium/WebKit phone gates;
+   - deploy the corrected build;
+   - require another owner playtest before closing #114.
 
-Do **not** start by writing large amounts of content or by treating source/species/media presence as encounter realization. P9 closes only when every mandatory species has at least one meaningful authored living interaction path and the broader world-content categories/faction consequences are substantively realized.
+P9 / issue #9 remains queued immediately after #114 passes. Do **not** bulk-author P9 content before then.
 
 ## Later roadmap
 
-`#1 P0 → #2 P1 → #3 P2 → #4 P3 → #5 P4 → #6 P5 → #12 P6 → #7 P7 → #8 P8 → #9 P9 → #10 P10`
+`#1 P0 → #2 P1 → #3 P2 → #4 P3 → #5 P4 → #6 P5 → #12 P6 → #7 P7 → #8 P8 → #114 P8.1 → #9 P9 → #10 P10`
 
 P10 remains final audit/polish/release-readiness work after P9 content realization.
