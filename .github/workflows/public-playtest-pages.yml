@@ -52,6 +52,8 @@ jobs:
         run: |
           node tools/validate-dist.mjs
           node tools/validate-static-deployment.mjs
+        env:
+          EXPECTED_MANIFEST_START_URL: ${{ env.PUBLIC_BASE_PATH }}
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
