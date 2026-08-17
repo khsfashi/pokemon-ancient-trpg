@@ -1,0 +1,72 @@
+name: P8 Batch 04 Validation
+
+on:
+  pull_request:
+    paths:
+      - 'PROJECT_STATUS.md'
+      - 'content/p8/vertical-slice.presentation.json'
+      - 'docs/P8_BATCH_04_AUDIT.md'
+      - 'src/app/**'
+      - 'src/content/p8SlicePresentation.ts'
+      - 'src/domain/p8AuthorityJson.ts'
+      - 'src/platform/p8BrowserSession.ts'
+      - 'src/resources/p8PokemonPresentation.ts'
+      - 'tests/p8-phone-session.test.ts'
+      - 'tests/p8-pokemon-presentation.test.ts'
+      - 'tools/validate_p8_phone_presentation.py'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/p8-batch04-validation.yml'
+  push:
+    branches:
+      - main
+      - 'agent/**'
+      - 'codex/**'
+    paths:
+      - 'PROJECT_STATUS.md'
+      - 'content/p8/vertical-slice.presentation.json'
+      - 'docs/P8_BATCH_04_AUDIT.md'
+      - 'src/app/**'
+      - 'src/content/p8SlicePresentation.ts'
+      - 'src/domain/p8AuthorityJson.ts'
+      - 'src/platform/p8BrowserSession.ts'
+      - 'src/resources/p8PokemonPresentation.ts'
+      - 'tests/p8-phone-session.test.ts'
+      - 'tests/p8-pokemon-presentation.test.ts'
+      - 'tools/validate_p8_phone_presentation.py'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/p8-batch04-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Validate P8 phone presentation against authored authority
+        run: python tools/validate_p8_phone_presentation.py
+      - name: Re-run P8 authored pack guard
+        run: python tools/check_p8_slice_pack.py
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install from committed lockfile
+        run: npm ci
+      - name: Strict TypeScript integration check
+        run: npm run typecheck
+      - name: Save, authority and resource unit fixtures
+        run: npm run test
+      - name: Production PWA build regression
+        run: npm run build
