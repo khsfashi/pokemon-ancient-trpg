@@ -2,8 +2,6 @@
   position: relative;
   width: 100%;
   opacity: 1;
-  transform: translateZ(0);
-  will-change: opacity, transform;
 }
 
 .scene-stage.presentation-out {
@@ -11,6 +9,7 @@
   opacity: 0;
   transform: translateY(3px) scale(0.997);
   transition: opacity 110ms ease-in, transform 110ms ease-in;
+  will-change: opacity, transform;
 }
 
 .scene-stage.presentation-out.travel {
@@ -21,6 +20,7 @@
 .scene-stage.presentation-in {
   pointer-events: none;
   animation: p8-scene-enter 140ms ease-out both;
+  will-change: opacity, transform;
 }
 
 .scene-stage.presentation-in.travel {
