@@ -2,6 +2,7 @@
 
 Date: 2026-08-17
 Issue: #118
+Implementation PR: #122
 Scope: stable scene illustrations, fallback, cache/provenance guardrails, phone acceptance
 
 ## Implemented contract
@@ -44,8 +45,19 @@ Scope: stable scene illustrations, fallback, cache/provenance guardrails, phone 
 
 ## Automated result
 
-Pending PR validation. Record the final GitHub Actions run here before merge.
+Dedicated workflow run **32026963737**: **PASS** on commit `6f8c825af300354e18ca1efb6ec7042321b1fc39`.
+
+Passed gates:
+
+- strict TypeScript integration;
+- complete deterministic Vitest suite;
+- static production PWA build/validation;
+- Chromium + WebKit illustration and forced-fallback acceptance;
+- inherited P8 phone smoke;
+- inherited P8 save/backup compatibility.
+
+The first attempt exposed a DOM compatibility regression because an illustration wrapper displaced the inherited direct `.panel > .lead` narrative contract. The final implementation removes that wrapper and uses a Fragment, preserving the established DOM contract while keeping the illustration as a presentation-only sibling. The full lane then passed.
 
 ## Exit decision
 
-Batch 06 can close after the dedicated workflow is green and the inherited P8 regressions remain green. Batch 07 then becomes the first incomplete unblocked P8.2 batch.
+**Batch 06 is complete.** The dedicated workflow and inherited P8 regressions are green. **Batch 07 — native-Korean narrative pass + novel-like creation — is now the first incomplete unblocked P8.2 batch.**
