@@ -95,7 +95,7 @@ export interface P8ExpeditionProfileProjection {
   readonly vitalityMax: number;
   readonly fatigueStage: 0;
   readonly fearStage: 0;
-  readonly injuries: readonly [];
+  readonly injuries: readonly string[];
   readonly currentLoad: number;
   readonly comfortableLoad: number;
   readonly burdened: boolean;
