@@ -282,7 +282,7 @@ describe('P8 headless vertical-slice authority', () => {
     expect(checkedResolved.resolvedPendingEvidence.completedCheckResult).toBeDefined();
     expect(checkedResolved.resolvedPendingEvidence.completedRngDrawRecords.filter((draw) => draw.channel === 'check.d6').map((draw) => draw.drawIndex)).toEqual([0n, 1n]);
     const json = p8AuthorityStateToJson(runState);
-    expect(JSON.stringify(json)).toContain('p8-authority-v1');
+    expect(JSON.stringify(json)).toContain('p8-authority-v2');
     expect(JSON.stringify(json)).not.toContain('preact');
   });
 
