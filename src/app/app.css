@@ -63,7 +63,7 @@ button:disabled { cursor: not-allowed; opacity: 0.48; }
 }
 
 .language-switcher {
-  min-height: 42px;
+  min-height: 44px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -79,7 +79,7 @@ button:disabled { cursor: not-allowed; opacity: 0.48; }
 }
 .language-switcher button {
   min-width: 66px;
-  min-height: 40px;
+  min-height: 44px;
   padding: 7px 10px;
   border: 1px solid #5a5948;
   border-radius: 4px;
