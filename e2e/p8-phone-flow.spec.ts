@@ -76,7 +76,7 @@ test('presents the Korean landing and first event as a game-first phone surface'
 
   await page.getByRole('button', { name: '새 여정' }).click();
   for (let index = 1; index <= 3; index += 1) {
-    await expect(page.getByText(`지난 기억 · ${index}/3`)).toBeVisible();
+    await expect(page.getByText(`기억 속 한때 · ${index}/3`)).toBeVisible();
     await chooseFirstFormativeAnswer(page);
   }
   await page.getByRole('button', { name: '강점 고르기' }).click();
@@ -89,8 +89,8 @@ test('presents the Korean landing and first event as a game-first phone surface'
   await expect(page.locator('.panel > .lead')).toBeVisible();
   const choices = page.locator('.choice-stack button.choice:not([disabled])');
   await expect(choices).toHaveCount(2);
-  await expect(choices.nth(0)).toContainText('사이에 끼어 사정을 듣는다');
-  await expect(choices.nth(1)).toContainText('한발 물러서');
+  await expect(choices.nth(0)).toContainText('사이에 들어 사정을 듣는다');
+  await expect(choices.nth(1)).toContainText('뒤에서 말부터 들어 본다');
   await assertGameSurfaceGeometry(page);
   await assertNoPlayerFacingEngineeringJargon(page);
 
