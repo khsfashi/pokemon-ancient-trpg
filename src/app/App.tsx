@@ -289,18 +289,25 @@ export function App() {
   }
 
   async function resolveChoice(choiceId: string): Promise<void> {
-    const resolved = await runAction(() => session.resolveChoice(choiceId), true);
-    if (resolved !== null) setResolutionAcknowledged(false);
+    // The pending scene has no last resolution, so arming the next consequence before
+    // the authoritative action cannot change the currently presented scene. It does,
+    // however, ensure the committed consequence is already eligible when the staged
+    // snapshot swaps in during fade-in instead of popping in after the animation.
+    setResolutionAcknowledged(false);
+    await runAction(() => session.resolveChoice(choiceId), true);
   }
 
   async function continueFromCheckpoint(): Promise<void> {
     const prepared = await runAction(() => session.prepareNextScene(), true);
-    if (prepared !== null) setResolutionAcknowledged(false);
+    if (prepared !== null) setResolutionAcknowledged(true);
   }
 
   async function continueAfterResolution(): Promise<void> {
-    setResolutionAcknowledged(true);
-    if (snapshot.status !== 'ended') await continueFromCheckpoint();
+    if (snapshot.status === 'ended') {
+      setResolutionAcknowledged(true);
+      return;
+    }
+    await continueFromCheckpoint();
   }
 
   let body;
