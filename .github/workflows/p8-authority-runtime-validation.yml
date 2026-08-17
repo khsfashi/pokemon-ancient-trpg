@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'PROJECT_STATUS.md'
+      - 'content/p8/**'
       - 'docs/P3_ATTRIBUTE_CONTRACT.md'
       - 'docs/P3_CHARACTER_CREATION_CONTRACT.md'
       - 'docs/P3_DICE_AND_CHECK_CONTRACT.md'
@@ -11,12 +12,16 @@ on:
       - 'docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml'
       - 'docs/P8_IMPLEMENTATION_PLAN.md'
       - 'docs/P8_BATCH_02_AUDIT.md'
+      - 'src/content/**'
       - 'src/domain/**'
       - 'src/events/**'
+      - 'src/generated/p8-slice-pack.json'
       - 'src/runtime/p8*.ts'
       - 'src/runtime/p5Rng.ts'
       - 'src/saves/**'
-      - 'tests/p8-authority-runtime.test.ts'
+      - 'tests/p8-*.test.ts'
+      - 'tools/build_p8_slice_pack.py'
+      - 'tools/check_p8_slice_pack.py'
       - 'package.json'
       - 'package-lock.json'
       - 'tsconfig.json'
@@ -28,6 +33,7 @@ on:
       - 'codex/**'
     paths:
       - 'PROJECT_STATUS.md'
+      - 'content/p8/**'
       - 'docs/P3_ATTRIBUTE_CONTRACT.md'
       - 'docs/P3_CHARACTER_CREATION_CONTRACT.md'
       - 'docs/P3_DICE_AND_CHECK_CONTRACT.md'
@@ -35,12 +41,16 @@ on:
       - 'docs/P5_DOMAIN_ADAPTER_REGISTRY.yaml'
       - 'docs/P8_IMPLEMENTATION_PLAN.md'
       - 'docs/P8_BATCH_02_AUDIT.md'
+      - 'src/content/**'
       - 'src/domain/**'
       - 'src/events/**'
+      - 'src/generated/p8-slice-pack.json'
       - 'src/runtime/p8*.ts'
       - 'src/runtime/p5Rng.ts'
       - 'src/saves/**'
-      - 'tests/p8-authority-runtime.test.ts'
+      - 'tests/p8-*.test.ts'
+      - 'tools/build_p8_slice_pack.py'
+      - 'tools/check_p8_slice_pack.py'
       - 'package.json'
       - 'package-lock.json'
       - 'tsconfig.json'
@@ -62,6 +72,8 @@ jobs:
           python-version: '3.13'
       - name: Re-run P8 integration guard
         run: python tools/validate_p8_vertical_slice.py
+      - name: Check authored source and generated pack
+        run: python tools/check_p8_slice_pack.py
       - uses: actions/setup-node@v6
         with:
           node-version: '24'

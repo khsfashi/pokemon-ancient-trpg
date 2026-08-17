@@ -3,29 +3,40 @@ name: P8 Vertical Slice Validation
 on:
   pull_request:
     paths:
+      - 'content/p8/**'
       - 'docs/P2_FIRST_REGION_CONTRACT.md'
       - 'docs/P3_CHARACTER_CREATION_CONTRACT.md'
+      - 'docs/P4_SPECIES_COVERAGE_MANIFEST.yaml'
       - 'docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md'
       - 'docs/P7_ARCHITECTURE_MANIFEST.json'
       - 'docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md'
       - 'docs/P8_VERTICAL_SLICE_MANIFEST.json'
       - 'docs/P8_VERTICAL_SLICE_CONTRACT.md'
       - 'docs/P8_IMPLEMENTATION_PLAN.md'
+      - 'src/generated/p8-slice-pack.json'
+      - 'tools/build_p8_slice_pack.py'
+      - 'tools/check_p8_slice_pack.py'
       - 'tools/validate_p8_vertical_slice.py'
       - '.github/workflows/p8-vertical-slice-validation.yml'
   push:
     branches:
       - main
       - 'agent/**'
+      - 'codex/**'
     paths:
+      - 'content/p8/**'
       - 'docs/P2_FIRST_REGION_CONTRACT.md'
       - 'docs/P3_CHARACTER_CREATION_CONTRACT.md'
+      - 'docs/P4_SPECIES_COVERAGE_MANIFEST.yaml'
       - 'docs/P5_DETERMINISTIC_EVENT_FOUNDATION_CONTRACT.md'
       - 'docs/P7_ARCHITECTURE_MANIFEST.json'
       - 'docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md'
       - 'docs/P8_VERTICAL_SLICE_MANIFEST.json'
       - 'docs/P8_VERTICAL_SLICE_CONTRACT.md'
       - 'docs/P8_IMPLEMENTATION_PLAN.md'
+      - 'src/generated/p8-slice-pack.json'
+      - 'tools/build_p8_slice_pack.py'
+      - 'tools/check_p8_slice_pack.py'
       - 'tools/validate_p8_vertical_slice.py'
       - '.github/workflows/p8-vertical-slice-validation.yml'
 
@@ -43,3 +54,5 @@ jobs:
           python-version: '3.13'
       - name: Validate P8 vertical-slice contract
         run: python tools/validate_p8_vertical_slice.py
+      - name: Validate P8 authored source and generated pack
+        run: python tools/check_p8_slice_pack.py
