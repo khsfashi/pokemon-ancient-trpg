@@ -3,7 +3,7 @@ import type { HashProvider } from './hashProvider';
 import { drawP5Bounded, type P5BoundedDrawRecord, type P5RngStreamKey } from './p5Rng';
 import type { P5DoublesOverlay, P5OutcomeBand, PendingCheckResult, PendingRngDrawRecord } from '../saves/pendingEvent';
 
-export const P8_DIFFICULTIES = { routine: 7, standard: 9, hard: 11, severe: 13, extreme: 15 } as const;
+export const P8_DIFFICULTIES = { favorable: 7, standard: 9, hard: 11, severe: 13, extreme: 15 } as const;
 export type P8CheckDegree = 'failure' | 'compromise' | 'success' | 'strong_success';
 
 export interface P8StaticCheckSpec {
@@ -16,6 +16,7 @@ export interface P8StaticCheckSpec {
 
 export interface P8StaticCheckResult {
   readonly checkId: string;
+  readonly rngSubjectId: string;
   readonly dice: readonly [number, number];
   readonly attributeModifier: number;
   readonly competenceModifier: 0 | 1;
@@ -30,10 +31,11 @@ export interface P8StaticCheckResult {
   readonly nextDrawIndex: bigint;
 }
 
-function classifyMargin(margin: number): P8CheckDegree {
-  if (margin >= 4) return 'strong_success';
+export function classifyP8Margin(margin: number): P8CheckDegree {
+  if (!Number.isSafeInteger(margin)) throw new RangeError('margin must be a safe integer');
+  if (margin >= 3) return 'strong_success';
   if (margin >= 0) return 'success';
-  if (margin >= -3) return 'compromise';
+  if (margin >= -2) return 'compromise';
   return 'failure';
 }
 
@@ -56,6 +58,7 @@ export async function resolveP8StaticCheck(
   hashProvider: HashProvider,
   character: P8CharacterState,
   streamKey: Omit<P5RngStreamKey, 'channel' | 'subjectId'>,
+  rngSubjectId: string,
   startDrawIndex: bigint,
   spec: P8StaticCheckSpec,
 ): Promise<P8StaticCheckResult> {
@@ -64,7 +67,7 @@ export async function resolveP8StaticCheck(
   }
   if (!Number.isSafeInteger(spec.difficulty)) throw new RangeError('difficulty must be a safe integer');
 
-  const key: P5RngStreamKey = { ...streamKey, channel: 'check.d6', subjectId: spec.checkId };
+  const key: P5RngStreamKey = { ...streamKey, channel: 'check.d6', subjectId: rngSubjectId };
   const first = await drawP5Bounded(hashProvider, key, startDrawIndex, 6n);
   const second = await drawP5Bounded(hashProvider, key, first.nextDrawIndex, 6n);
   const dice: [number, number] = [Number(first.value) + 1, Number(second.value) + 1];
@@ -72,9 +75,10 @@ export async function resolveP8StaticCheck(
   const competenceModifier: 0 | 1 = spec.competenceId !== undefined && character.trainedCompetences[spec.competenceId] === 1 ? 1 : 0;
   const total = dice[0] + dice[1] + attributeModifier + competenceModifier + spec.contextModifier;
   const margin = total - spec.difficulty;
-  const degree = classifyMargin(margin);
+  const degree = classifyP8Margin(margin);
   return {
     checkId: spec.checkId,
+    rngSubjectId,
     dice,
     attributeModifier,
     competenceModifier,
@@ -105,7 +109,7 @@ export function p8CheckDrawsToPending(result: P8StaticCheckResult): readonly Pen
   return result.rngDraws.map((draw) => {
     const record: PendingRngDrawRecord = {
       channel: 'check.d6',
-      subjectId: result.checkId,
+      subjectId: result.rngSubjectId,
       drawIndex: draw.drawIndex,
       rawU64: draw.rawU64,
       accepted: draw.accepted,
