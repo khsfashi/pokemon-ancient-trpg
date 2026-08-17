@@ -32,7 +32,7 @@ on:
       - '.github/workflows/p7-batch04-validation.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
@@ -57,6 +57,17 @@ jobs:
         run: python tools/validate_p6_resources.py
       - name: Generate deterministic runtime pack
         run: python tools/build_p7_runtime_pack.py --output build/p7-runtime-pack.json
+      - name: Bootstrap committed runtime pack on the agent branch
+        if: ${{ github.event_name == 'push' && github.ref != 'refs/heads/main' && hashFiles('src/generated/runtime-pack.json') == '' }}
+        shell: bash
+        run: |
+          mkdir -p src/generated
+          cp build/p7-runtime-pack.json src/generated/runtime-pack.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/generated/runtime-pack.json
+          git commit -m 'Commit generated P7 runtime pack'
+          git push
       - name: Require committed generated artifact when present
         shell: bash
         run: |
