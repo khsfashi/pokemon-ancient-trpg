@@ -276,5 +276,6 @@ function isOptionalDescriptor(descriptor: LoadableResourceDescriptor): boolean {
 }
 
 export function isAllowedLocalResourceUrl(url: string): boolean {
+  if (url.startsWith('//') || url.startsWith('/\\')) return false;
   return url.startsWith('/') || url.startsWith('./') || url.startsWith('../') || url.startsWith('blob:');
 }
