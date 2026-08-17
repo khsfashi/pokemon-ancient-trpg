@@ -4,6 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 const SERVICE_WORKER_PATH = new URL('../dist/sw.js', import.meta.url);
 const RUNTIME_PACK_PATH = new URL('../src/generated/runtime-pack.json', import.meta.url);
 const SLOT_ID = 'p7-update-safety';
+const OFFLINE_LOAD_COUNT_KEY = 'p7-batch06-offline-document-load-count';
 
 interface RuntimePackIdentity {
   readonly content_pack_id: string;
@@ -159,15 +160,39 @@ async function reloadOffline(page: Page, browserName: string): Promise<void> {
     return;
   }
 
-  // Playwright/WebKit's page.reload() can fail inside the automation transport when the
-  // context is offline, before the installed service worker gets to answer the navigation.
-  // Trigger the same browser reload from page JavaScript while a navigation waiter is armed.
-  await Promise.all([
-    page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
-    page.evaluate(() => {
-      setTimeout(() => window.location.reload(), 0);
-    }),
-  ]);
+  // Playwright/WebKit's navigation transport reports an internal error when a navigation
+  // happens while the context is offline, even when the installed worker can satisfy it.
+  // Avoid all Playwright navigation APIs for this one interval: the browser performs the
+  // real location.reload(), and an init script increments only if a new document starts.
+  await page.addInitScript((key) => {
+    const parsed = Number.parseInt(sessionStorage.getItem(key) ?? '0', 10);
+    const previous = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+    sessionStorage.setItem(key, String(previous + 1));
+  }, OFFLINE_LOAD_COUNT_KEY);
+
+  await page.evaluate(() => {
+    setTimeout(() => window.location.reload(), 0);
+  });
+
+  const deadline = Date.now() + 10_000;
+  let observedNewDocument = false;
+  while (Date.now() < deadline) {
+    try {
+      const documentLoadCount = await page.evaluate((key) => {
+        return Number.parseInt(sessionStorage.getItem(key) ?? '0', 10);
+      }, OFFLINE_LOAD_COUNT_KEY);
+      if (documentLoadCount >= 1) {
+        observedNewDocument = true;
+        break;
+      }
+    } catch {
+      // A short transport gap is expected while WebKit swaps the document. Keep polling
+      // until the new execution context is reachable or the fail-closed deadline expires.
+    }
+    await new Promise<void>((resolve) => setTimeout(resolve, 50));
+  }
+
+  expect(observedNewDocument).toBe(true);
 }
 
 test('installs the production worker, reloads offline, and keeps an update waiting during pending state', async ({ page, context, browserName }) => {
