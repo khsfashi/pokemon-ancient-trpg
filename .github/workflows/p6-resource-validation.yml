@@ -1,0 +1,37 @@
+name: P6 Resource Validation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/P6_*'
+      - 'tools/validate_p6_resources.py'
+      - 'tools/requirements-p6-validation.txt'
+      - '.github/workflows/p6-resource-validation.yml'
+  push:
+    branches:
+      - main
+      - 'agent/**'
+    paths:
+      - 'docs/P6_*'
+      - 'tools/validate_p6_resources.py'
+      - 'tools/requirements-p6-validation.txt'
+      - '.github/workflows/p6-resource-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: tools/requirements-p6-validation.txt
+      - name: Install P6 validator dependencies
+        run: python -m pip install --disable-pip-version-check -r tools/requirements-p6-validation.txt
+      - name: Validate P6 resource manifest, provenance policy, and budgets
+        run: python tools/validate_p6_resources.py
