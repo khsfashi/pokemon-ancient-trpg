@@ -78,9 +78,9 @@ Phone browser acceptance requires:
 
 ## Validation
 
-Dedicated workflow **`P8.2 Batch 08 Validation`**: **PENDING**.
+Dedicated workflow **`P8.2 Batch 08 Validation`** run **`32038047344`**: **PASS**.
 
-The workflow runs:
+Passed in that run:
 
 - `npm ci`;
 - strict TypeScript integration check;
@@ -88,4 +88,6 @@ The workflow runs:
 - production PWA build and static-deployment validation;
 - equipment/profile phone acceptance on Chromium and WebKit;
 - P8 backup/save-resume compatibility on Chromium and WebKit;
-- inherited P8 phone smoke.
+- inherited P8 phone smoke including zero-companion completion/save-resume proof.
+
+The same PR head also passed **`P8 Authority Runtime Validation`** run `32038047402` and **`P7 Batch 02 Validation`** run `32038047377`, confirming the authoritative runtime and inherited architecture regression boundaries remain green.
