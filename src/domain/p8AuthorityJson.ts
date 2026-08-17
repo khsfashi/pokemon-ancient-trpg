@@ -3,6 +3,7 @@ import { isRecord, type JsonObject } from '../saves/jsonValue';
 import { parseUnsignedDecimal } from '../runtime/uint';
 
 const STABLE_ID = /^[a-z0-9][a-z0-9._-]{0,63}$/;
+const DIRECT_INTERACTION = /^(?:[1-9]|[1-9][0-9]|1[0-4][0-9]|15[01]):[a-z0-9][a-z0-9._-]{0,63}:[a-z0-9][a-z0-9._-]{0,63}$/;
 const RESOURCE_POOL_IDS: readonly P8ResourcePoolId[] = ['provisions', 'remedies', 'materials'];
 
 function record(value: unknown, label: string): Record<string, unknown> {
@@ -28,9 +29,18 @@ function safeInteger(value: unknown, label: string, minimum = 0, maximum = Numbe
   return value as number;
 }
 
-function stringArray(value: unknown, label: string): string[] {
+function stableIdArray(value: unknown, label: string): string[] {
   if (!Array.isArray(value)) throw new TypeError(`${label} must be an array`);
   return value.map((item, index) => stableId(item, `${label}[${index}]`));
+}
+
+function directInteractionArray(value: unknown): string[] {
+  if (!Array.isArray(value)) throw new TypeError('pokemon.direct_interactions must be an array');
+  return value.map((item, index) => {
+    const result = stringValue(item, `pokemon.direct_interactions[${index}]`);
+    if (!DIRECT_INTERACTION.test(result)) throw new RangeError(`pokemon.direct_interactions[${index}] has invalid canonical identity`);
+    return result;
+  });
 }
 
 function numericRecord(value: unknown, label: string, minimum = 0): Record<string, number> {
@@ -56,7 +66,7 @@ function booleanRecord(value: unknown, label: string): Record<string, boolean> {
 
 function parseCharacter(value: unknown): P8CharacterState {
   const source = record(value, 'character');
-  const answerIds = stringArray(source.formative_answer_ids, 'character.formative_answer_ids');
+  const answerIds = stableIdArray(source.formative_answer_ids, 'character.formative_answer_ids');
   if (answerIds.length !== 3) throw new RangeError('character requires exactly three formative answers');
   const attributesSource = record(source.attributes, 'character.attributes');
   const attributes = {} as Record<P8AttributeId, number>;
@@ -126,15 +136,15 @@ export function p8AuthorityStateFromJson(value: JsonObject): P8AuthorityState {
     survival: { resourcePools },
     pokemon: {
       companionSlots,
-      directInteractions: stringArray(pokemonSource.direct_interactions, 'pokemon.direct_interactions'),
+      directInteractions: directInteractionArray(pokemonSource.direct_interactions),
     },
     events: {
       counts: numericRecord(eventsSource.counts, 'events.counts', 0),
       lastResolvedTransition,
-      recentHistory: stringArray(eventsSource.recent_history, 'events.recent_history'),
+      recentHistory: stableIdArray(eventsSource.recent_history, 'events.recent_history'),
       narrativeFlags: booleanRecord(eventsSource.narrative_flags, 'events.narrative_flags'),
       narrativeCounters: numericRecord(eventsSource.narrative_counters, 'events.narrative_counters', Number.MIN_SAFE_INTEGER),
-      chainQueue: stringArray(eventsSource.chain_queue, 'events.chain_queue'),
+      chainQueue: stableIdArray(eventsSource.chain_queue, 'events.chain_queue'),
     },
   };
 }
