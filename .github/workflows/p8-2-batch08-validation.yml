@@ -1,0 +1,65 @@
+name: P8.2 Batch 08 Validation
+
+on:
+  pull_request:
+    paths:
+      - 'PROJECT_STATUS.md'
+      - 'docs/P8_2_BATCH_08_AUDIT.md'
+      - 'src/domain/p8Equipment.ts'
+      - 'src/domain/p8Authority.ts'
+      - 'src/domain/p8AuthorityJson.ts'
+      - 'src/app/ProfileHud.tsx'
+      - 'src/app/profile.css'
+      - 'tests/p8-equipment-readiness.test.ts'
+      - 'tests/p8-authority-runtime.test.ts'
+      - 'tests/p8-profile-hud.test.ts'
+      - 'e2e/p8-2-profile-hud.spec.ts'
+      - '.github/workflows/p8-2-batch08-validation.yml'
+  push:
+    branches:
+      - main
+      - 'agent/**'
+      - 'codex/**'
+    paths:
+      - 'PROJECT_STATUS.md'
+      - 'docs/P8_2_BATCH_08_AUDIT.md'
+      - 'src/domain/p8Equipment.ts'
+      - 'src/domain/p8Authority.ts'
+      - 'src/domain/p8AuthorityJson.ts'
+      - 'src/app/ProfileHud.tsx'
+      - 'src/app/profile.css'
+      - 'tests/p8-equipment-readiness.test.ts'
+      - 'tests/p8-authority-runtime.test.ts'
+      - 'tests/p8-profile-hud.test.ts'
+      - 'e2e/p8-2-profile-hud.spec.ts'
+      - '.github/workflows/p8-2-batch08-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install from committed lockfile
+        run: npm ci
+      - name: Strict TypeScript integration check
+        run: npm run typecheck
+      - name: Deterministic unit fixtures
+        run: npm run test
+      - name: Static production PWA build
+        run: npm run build
+      - name: Install phone browser engines
+        run: npx playwright install --with-deps chromium webkit
+      - name: P8.2 equipment and readiness phone acceptance
+        run: npx playwright test e2e/p8-2-profile-hud.spec.ts --project=phone-chromium --project=phone-webkit
+      - name: Re-run P8 backup and save-resume compatibility
+        run: npx playwright test e2e/p8-save-compat.spec.ts --project=phone-chromium --project=phone-webkit
+      - name: Re-run inherited P8 phone smoke
+        run: npm run test:browser:p8-smoke
