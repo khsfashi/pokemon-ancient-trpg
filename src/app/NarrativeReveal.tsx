@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 
 const REVEAL_TICK_MS = 24;
 const REVEAL_TICKS_PER_BEAT = 20;
@@ -83,16 +83,19 @@ export function NarrativeReveal({
   readonly text: string;
   readonly presentationKey: string;
   readonly reducedMotion: boolean;
-  readonly onReadyChange: (presentationKey: string, ready: boolean) => void;
+  readonly onReadyChange: (ready: boolean) => void;
 }) {
   const beats = useMemo(() => cachedNarrativeBeats(text), [text]);
   const finalBeatIndex = Math.max(0, beats.length - 1);
   const finalBeatLength = beats[finalBeatIndex]?.length ?? 0;
+  const onReadyChangeRef = useRef(onReadyChange);
   const [cursor, setCursor] = useState<NarrativeCursor>(() => (
     reducedMotion
       ? { beatIndex: finalBeatIndex, visibleCharacters: finalBeatLength }
       : { beatIndex: 0, visibleCharacters: 0 }
   ));
+
+  onReadyChangeRef.current = onReadyChange;
 
   useEffect(() => {
     setCursor(reducedMotion
@@ -103,8 +106,8 @@ export function NarrativeReveal({
   const complete = reducedMotion || narrativeCursorComplete(cursor, beats);
 
   useEffect(() => {
-    onReadyChange(presentationKey, complete);
-  }, [complete, onReadyChange, presentationKey]);
+    onReadyChangeRef.current(complete);
+  }, [complete, presentationKey]);
 
   useEffect(() => {
     if (reducedMotion || complete) return;
