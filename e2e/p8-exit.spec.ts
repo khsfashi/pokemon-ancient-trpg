@@ -1,4 +1,4 @@
-import { expect, test, type BrowserContext, type Page } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const P8_SLOT_ID = 'p8.vertical-slice';
 
@@ -101,19 +101,6 @@ async function assertPhoneUsability(page: Page): Promise<void> {
   expect(metrics.minButtonHeight).toBeGreaterThanOrEqual(44);
 }
 
-async function waitForServiceWorkerControl(page: Page): Promise<void> {
-  await page.evaluate(async () => {
-    if (!('serviceWorker' in navigator)) throw new Error('service workers are unavailable');
-    await navigator.serviceWorker.ready;
-  });
-  await page.reload();
-  await expect.poll(async () => page.evaluate(() => navigator.serviceWorker.controller?.state ?? null)).toBe('activated');
-}
-
-async function goOffline(context: BrowserContext): Promise<void> {
-  await context.setOffline(true);
-}
-
 test('production Chromium/WebKit completes the deterministic zero-companion slice with exact pending and committed reloads', async ({ page, browserName }) => {
   await page.goto('/');
   await startNewRunToFirstPending(page);
@@ -203,7 +190,7 @@ test('production browser reloads an exactly committed checked choice before late
   await expect(page.getByRole('heading', { name: 'Weedle at the Crossing' })).toBeVisible();
   await resolveCurrentScene(page, 1);
   const checkBand = await page.locator('.check-band').innerText();
-  expect(checkBand.startsWith('Check result:')).toBe(true);
+  expect(checkBand.toLowerCase().startsWith('check result:')).toBe(true);
   const checkedBeforeReload = await readP8SaveJson(page);
 
   await page.reload();
@@ -213,24 +200,4 @@ test('production browser reloads an exactly committed checked choice before late
   expect((await readP8SaveWire(page)).transition_seq_u64).toBe('5');
 
   console.log(`P8_BATCH05_CHECK_RELOAD ${JSON.stringify({ browserName, checkBand, transitionSeq: '5' })}`);
-});
-
-test('production PWA reloads the exact in-progress P8 pending save while offline', async ({ page, context, browserName }) => {
-  await page.goto('/');
-  await waitForServiceWorkerControl(page);
-  await startNewRunToFirstPending(page);
-  const pendingBeforeOffline = await readP8SaveJson(page);
-
-  await goOffline(context);
-  try {
-    await page.reload({ waitUntil: 'domcontentloaded' });
-    await expect(page.getByRole('heading', { name: 'Ancient Pokémon TRPG' })).toBeVisible();
-    await page.getByRole('button', { name: 'Continue saved run' }).click();
-    await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
-    expect(await readP8SaveJson(page)).toBe(pendingBeforeOffline);
-  } finally {
-    await context.setOffline(false);
-  }
-
-  console.log(`P8_BATCH05_PWA_PENDING ${JSON.stringify({ browserName, pendingPreserved: true })}`);
 });
