@@ -6,7 +6,16 @@ on:
       - 'PROJECT_STATUS.md'
       - 'docs/P8_BATCH_05_AUDIT.md'
       - 'docs/P8_EXIT_AUDIT.md'
+      - 'docs/LOCALIZATION_CONTRACT.md'
+      - 'content/p8/vertical-slice.ko-KR.json'
+      - 'src/app/App.tsx'
+      - 'src/app/app.css'
+      - 'src/ui/p8Localization.ts'
+      - 'src/ui/p8Localization.test.ts'
+      - 'index.html'
+      - 'public/manifest.webmanifest'
       - 'e2e/p8-exit.spec.ts'
+      - 'e2e/p8-localization.spec.ts'
       - 'e2e/p8-pwa-pending.spec.ts'
       - 'e2e/p8-save-compat.spec.ts'
       - 'playwright.p8-exit.config.ts'
@@ -23,7 +32,16 @@ on:
       - 'PROJECT_STATUS.md'
       - 'docs/P8_BATCH_05_AUDIT.md'
       - 'docs/P8_EXIT_AUDIT.md'
+      - 'docs/LOCALIZATION_CONTRACT.md'
+      - 'content/p8/vertical-slice.ko-KR.json'
+      - 'src/app/App.tsx'
+      - 'src/app/app.css'
+      - 'src/ui/p8Localization.ts'
+      - 'src/ui/p8Localization.test.ts'
+      - 'index.html'
+      - 'public/manifest.webmanifest'
       - 'e2e/p8-exit.spec.ts'
+      - 'e2e/p8-localization.spec.ts'
       - 'e2e/p8-pwa-pending.spec.ts'
       - 'e2e/p8-save-compat.spec.ts'
       - 'playwright.p8-exit.config.ts'
@@ -66,7 +84,7 @@ jobs:
         run: npx playwright install --with-deps chromium webkit
       - name: P8 backup compatibility in Chromium and WebKit
         run: npm run test:browser:p8-save
-      - name: P8 production Chromium/WebKit full-run and check-reload proof
+      - name: P8 production Chromium/WebKit full-run and bilingual proof
         run: npm run test:browser:p8-exit
       - name: P8 production PWA pending save with physical origin down
         run: npm run test:browser:p8-pwa
