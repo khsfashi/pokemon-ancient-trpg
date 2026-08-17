@@ -98,7 +98,7 @@ function validateKoreanCatalog(): void {
   );
   for (const scene of P8_SLICE_SCENE_SEQUENCE) {
     const localized = koreanSource.scenes[scene.eventId];
-    if (localized === undefined) throw new RangeError(`missing Korean scene: ${eventId}`);
+    if (localized === undefined) throw new RangeError(`missing Korean scene: ${scene.eventId}`);
     assertSameKeys(`scene choices ${scene.eventId}`, Object.keys(scene.choices), Object.keys(localized.choices));
     assertSameKeys(`scene outcomes ${scene.eventId}`, Object.keys(scene.outcomes), Object.keys(localized.outcomes));
   }
