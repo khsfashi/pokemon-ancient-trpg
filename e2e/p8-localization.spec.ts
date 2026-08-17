@@ -47,16 +47,16 @@ test('Korean/English switching is presentation-only, persistent, and phone-safe'
   await page.goto('/');
 
   await expect(page.getByRole('heading', { name: '고대 포켓몬 TRPG' })).toBeVisible();
-  await expect(page.getByRole('button', { name: '새 여정 시작' })).toBeVisible();
+  await expect(page.getByRole('button', { name: '새 여정' })).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'ko-KR');
   await assertPhoneLayout(page);
 
-  await page.getByRole('button', { name: '새 여정 시작' }).click();
+  await page.getByRole('button', { name: '새 여정' }).click();
   for (let index = 0; index < 3; index += 1) await page.locator('button.choice').first().click();
-  await page.getByRole('button', { name: '전문화 선택' }).click();
-  await page.getByRole('button', { name: '인물 확인' }).click();
-  await page.getByRole('button', { name: '여정 시작' }).click();
-  await expect(page.getByRole('heading', { name: '광장을 가로지른 외침' })).toBeVisible();
+  await page.getByRole('button', { name: '강점 고르기' }).click();
+  await page.getByRole('button', { name: '확인하기' }).click();
+  await page.getByRole('button', { name: '길을 나선다' }).click();
+  await expect(page.getByRole('heading', { name: '창고 앞에서 터진 고함' })).toBeVisible();
 
   const koreanSave = await readSaveJson(page);
   expect(koreanSave).toContain('slice.opening.market_call');
@@ -68,14 +68,14 @@ test('Korean/English switching is presentation-only, persistent, and phone-safe'
   await assertPhoneLayout(page);
 
   await page.reload();
-  await expect(page.getByRole('button', { name: 'Continue saved run' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Continue journey' })).toBeVisible();
   expect(await page.evaluate((key) => window.localStorage.getItem(key), LOCALE_KEY)).toBe('en-US');
-  await page.getByRole('button', { name: 'Continue saved run' }).click();
+  await page.getByRole('button', { name: 'Continue journey' }).click();
   await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
   expect(await readSaveJson(page)).toBe(koreanSave);
 
   await page.getByRole('button', { name: '한국어' }).click();
-  await expect(page.getByRole('heading', { name: '광장을 가로지른 외침' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '창고 앞에서 터진 고함' })).toBeVisible();
   expect(await readSaveJson(page)).toBe(koreanSave);
 
   console.log('P8_I18N_PROOF', JSON.stringify({ browserName, locales: ['ko-KR', 'en-US'], saveUnchanged: true }));
