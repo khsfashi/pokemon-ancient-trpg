@@ -73,10 +73,6 @@ export function P8SceneIllustration({
           <strong>{fallbackLabel}</strong>
         </div>
       )}
-      <figcaption>
-        <span>{locale === 'ko-KR' ? '장면 일러스트' : 'Scene illustration'}</span>
-        <code>{resourceId}</code>
-      </figcaption>
     </figure>
   );
 }
