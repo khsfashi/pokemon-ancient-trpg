@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-17 19:17 KST**
+Last operational handoff update: **2026-08-17 19:44 KST**
 
 This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts, owner-playtest contracts, and live GitHub state. If this file and live state disagree, reconcile the file before advancing.
 
@@ -39,7 +39,7 @@ P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
 P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
-P8.2 second owner remediation         ACTIVE / #118 / BLOCKING P9
+P8.2 second owner remediation         BATCH 04 COMPLETE / BATCH 05 NEXT / #118 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
@@ -80,13 +80,15 @@ Owner feedback now requires all of the following:
    - formative memories/background selection should read like short fiction scenes;
    - Korean should be authored for natural rhythm, not translated from English syntax.
 
-3. **Text and scene motion**
-   - narrative text progressively reveals;
-   - tap during reveal = immediately finish current beat;
-   - tap after reveal = advance to the next sentence/beat when authored;
-   - travel/location transitions should use lightweight fade-out/fade-in or equivalent;
-   - reduced-motion support remains mandatory;
-   - animation must never become authoritative gameplay state.
+3. **Text and scene motion — Batch 04 complete**
+   - reusable progressive narrative reveal is implemented;
+   - tap during reveal completes the active authored beat;
+   - explicit authored beat advancement is supported;
+   - choices remain isolated from text-skip taps and synchronous rapid double-submit is blocked;
+   - locality-changing commits use a travel fade treatment while ordinary scene changes use a lighter transition;
+   - reduced-motion renders immediately;
+   - animation remains presentation-only and never owns gameplay state;
+   - automated exit evidence: `docs/P8_2_BATCH_04_AUDIT.md`, workflow run `32021587541` PASS.
 
 4. **Persistent player profile / state readability**
    - portrait and identity should remain visible or one tap away;
@@ -109,21 +111,35 @@ Owner feedback now requires all of the following:
 
 Binding full plan: **`docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`**.
 
+## P8.2 completed work
+
+### Batch 04 — narrative motion + scene-transition foundation
+
+Implementation PR: **#120**.
+
+Accepted behavior:
+
+- bounded/cached authored-beat narrative reveal without per-character DOM trees;
+- tap-to-complete and authored beat advancement;
+- choice lock while narrative is incomplete;
+- synchronous duplicate-action guard before render-state updates;
+- authoritative state commits independently of presentation timing;
+- travel fade vs ordinary scene transition classification from committed locality change;
+- first-class reduced-motion path;
+- Chromium/WebKit proof that normal/reduced motion produces identical authoritative state for the tested route;
+- inherited P8 phone/save regressions remain green.
+
+Audit: **`docs/P8_2_BATCH_04_AUDIT.md`**.
+
+Do **not** repeat Batch 04 on a generic `next` request.
+
 ## Exact next work
 
-**P9 must not start. The first incomplete P8.2 batch in #118 owns the autonomous continuation lane.**
+**P9 must not start. Batch 05 is now the first incomplete P8.2 batch in #118.**
 
 Default sequence:
 
-1. **Batch 04 — narrative motion + scene-transition foundation**
-   - typewriter/reveal beats;
-   - tap-to-complete and tap-to-advance semantics;
-   - rapid-tap / double-submit protection;
-   - fade travel transitions and light scene crossfades;
-   - reduced-motion path;
-   - no timer/frame-driven event evaluation.
-
-2. **Batch 05 — player portrait + persistent profile / expedition HUD**
+1. **Batch 05 — player portrait + persistent profile / expedition HUD — NEXT**
    - initial avatar selection;
    - portrait + Origin/Practice/specialization;
    - Vitality current/max;
@@ -134,7 +150,7 @@ Default sequence:
    - expandable seven-attribute/competence profile;
    - understandable incapacitation/critical-injury/death danger help.
 
-3. **Batch 06 — illustration system + scene visual identity**
+2. **Batch 06 — illustration system + scene visual identity**
    - stable illustration resource IDs;
    - event/locality/NPC/Pokémon/item illustration slot;
    - optional inline art beats;
@@ -142,27 +158,27 @@ Default sequence:
    - P6 provenance/cache/budget compliance;
    - opening/travel/Weedle/orchard-return scenes receive distinct visual identity or deliberate placeholders.
 
-4. **Batch 07 — native-Korean narrative pass + novel-like creation**
+3. **Batch 07 — native-Korean narrative pass + novel-like creation**
    - rewrite three formative prompts as short narrative memory scenes;
    - second full Korean game-copy pass;
    - read-aloud naturalness review;
    - short idiomatic choice labels;
    - preserve deterministic hidden lifepath mapping unless explicitly revised.
 
-5. **Batch 08 — equipment slots + combat-readiness summary**
+4. **Batch 08 — equipment slots + combat-readiness summary**
    - authoritative stable item/equipment IDs;
    - weapon/body armor/accessory or protective wearable/utility/Pokémon-field gear surfaces;
    - attack/defense-like derived readiness;
    - bounded formulas from human stats/competence/equipment/preparation/context;
    - Load/save/cache integration.
 
-6. **Batch 09 — medieval-fantasy farming / preparation loop**
+5. **Batch 09 — medieval-fantasy farming / preparation loop**
    - settlement preparation -> travel -> gather/forage/salvage/hunt where valid -> risk -> return -> repair/barter/craft/equip -> depart again;
    - ordinary materials, provisions path, repair/material path, exchange/service reward, equipment improvement and at least one Pokémon-linked opportunity;
    - camp/rest/recovery tied to existing survival rules;
    - no generic kill-XP or automatic Pokémon loot.
 
-7. **Batch 10 — integrated automated + owner playtest gate**
+6. **Batch 10 — integrated automated + owner playtest gate**
    - Chromium/WebKit 390x844;
    - animation skip/advance/reduced-motion/transition safety;
    - profile/equipment/resources persistence;
@@ -176,6 +192,7 @@ Default sequence:
 - No gameplay transition triggered by animation completion alone.
 - Avoid per-character DOM trees for typewriter text; segment once and reuse.
 - Prefer compositor-friendly opacity/transform for motion.
+- `will-change` must not be held permanently when no transition is active.
 - Derived Load/combat/HUD summaries update on relevant state mutation and are cached/reused.
 - Stable resource ID owns image cache identity; repeated portraits/icons/equipment images reuse cached instances.
 - Do not preload all 151 Pokémon media.
@@ -205,7 +222,7 @@ primary target        = web/PWA
 backend               = none
 build runtime         = Node 24.x LTS
 package manager       = npm + committed lockfile
-build tool            = Vite 8.x
+build tool             = Vite 8.x
 language              = strict TypeScript
 presentation          = Preact 10.x only
 authoritative runtime = framework-independent pure TypeScript
@@ -221,6 +238,7 @@ Resource boundaries and exact P8 technical evidence remain in:
 - `docs/P8_EXIT_AUDIT.md`
 - `docs/PLAYTEST_REMEDIATION.md`
 - `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`
+- `docs/P8_2_BATCH_04_AUDIT.md`
 
 ## Later roadmap
 
