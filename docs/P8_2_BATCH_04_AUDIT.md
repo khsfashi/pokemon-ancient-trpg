@@ -68,7 +68,8 @@ This keeps the foundation compatible with later Batch 07 prose authoring without
 ## Automated evidence
 
 Dedicated workflow: **P8.2 Batch 04 Validation**  
-Functional run: **32021373307 — PASS**
+Validated functional head: **`ea62a912aed8cbee164e1643604e3cb7cb8bdfdd`**  
+Final functional run: **32021587541 — PASS**
 
 Passed stages:
 
@@ -83,6 +84,8 @@ Passed stages:
    - locality-changing travel selects the travel transition and preserves the expected authoritative event path;
 6. inherited P8 Chromium phone full-route smoke;
 7. inherited P8 Chromium + WebKit backup/save compatibility.
+
+Inherited validation on the same functional head also passed **P8 Batch 04 Validation 32021587510**, including the expanded Chromium phone assertions for narrative locking, synchronous duplicate input, reduced motion and travel classification.
 
 ## Guardrails preserved
 
