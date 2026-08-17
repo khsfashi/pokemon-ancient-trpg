@@ -132,7 +132,9 @@ P7 Batch 02 Validation run 31988847464 == PASS
 P7 Batch 04 Validation run 31988847470 == PASS
 ```
 
-The Batch 04 lane specifically proved:
+A documentation-inclusive PR head `3f3f42e3a0e16054cf03e96fc68020856aa15420` then passed `P7 Batch 04 Validation` run `31989017908`, re-running the frozen P5/P6 validators, deterministic pack check, Node 24 install/typecheck/tests and production build after the audit/status files were added.
+
+The Batch 04 lane specifically proves:
 
 ```text
 frozen P5 validator                  == PASS
@@ -163,4 +165,4 @@ Those remain P7 Batches 05–06 exactly as frozen in `docs/P7_IMPLEMENTATION_SKE
 
 ## Acceptance gate
 
-Batch 04 is accepted only after the final PR #103 head passes the dedicated Batch 04 validation lane and the existing overlapping Node/runtime lane, has no unresolved review thread, and merges without widening scope. P8 remains blocked until Batch 05 resource-cache/measurement and Batch 06 offline/phone-browser gates also pass.
+Batch 04 is accepted only after a code-bearing PR #103 head has passed both the overlapping Node/runtime lane and the dedicated Batch 04 lane, the final documentation-inclusive PR head has passed the dedicated Batch 04 lane that itself repeats Node 24 typecheck/tests/build, there is no unresolved review thread, and the PR merges without widening scope. P8 remains blocked until Batch 05 resource-cache/measurement and Batch 06 offline/phone-browser gates also pass.
