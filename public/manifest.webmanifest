@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Ancient Pokémon TRPG",
-  "short_name": "Ancient TRPG",
-  "description": "Offline-first mobile web shell for the pre-modern Pokémon TRPG project.",
+  "name": "고대 포켓몬 TRPG",
+  "short_name": "고대 포켓몬 TRPG",
+  "description": "한국어와 영어를 지원하는 고대 포켓몬 세계관의 오프라인 우선 모바일 TRPG입니다.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
