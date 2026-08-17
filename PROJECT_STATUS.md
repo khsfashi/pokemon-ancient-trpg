@@ -12,7 +12,7 @@ The repository owner intentionally advances work with short requests such as:
 @GitHub pokemon-ancient-trpg 다음 작업 진행해줘
 ```
 
-For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, this file, live PR/issue state, issue #114, and `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`, then execute the first incomplete unblocked P8.2 batch.
+For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, this file, live PR/issue state, active issue **#118**, and `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`, then execute the first incomplete unblocked P8.2 batch.
 
 ## Binding product direction
 
@@ -38,15 +38,15 @@ P5 Narrative world-event engine       COMPLETE
 P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
-P8.1 first owner remediation          BATCHES 01-03 COMPLETE
-P8.2 second owner remediation         ACTIVE / BLOCKING P9
+P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
+P8.2 second owner remediation         ACTIVE / #118 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
 
 ## P8.1 work already completed — do not repeat
 
-Issue: **#114**.
+Closed issue: **#114**.
 
 The first owner playtest rejected the original P8 as too technical, poorly localized, web-card-like and choice-light.
 
@@ -60,7 +60,9 @@ Completed remediation:
 
 Do **not** restart these batches on a generic `next` request.
 
-## Second owner playtest — active blockers
+## P8.2 — second owner playtest active blockers
+
+Active issue: **#118 — Owner playtest expansion: visuals, motion, profile, equipment and adventurer loop**.
 
 The 2026-08-17 second owner replay judged P8.1 materially better but still below the intended game experience.
 
@@ -109,7 +111,7 @@ Binding full plan: **`docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`**.
 
 ## Exact next work
 
-**P9 must not start. The first incomplete P8.2 batch owns the autonomous continuation lane.**
+**P9 must not start. The first incomplete P8.2 batch in #118 owns the autonomous continuation lane.**
 
 Default sequence:
 
@@ -222,6 +224,6 @@ Resource boundaries and exact P8 technical evidence remain in:
 
 ## Later roadmap
 
-`#1 P0 -> #2 P1 -> #3 P2 -> #4 P3 -> #5 P4 -> #6 P5 -> #12 P6 -> #7 P7 -> #8 P8 -> #114 P8.1/P8.2 owner acceptance -> #9 P9 -> #10 P10`
+`#1 P0 -> #2 P1 -> #3 P2 -> #4 P3 -> #5 P4 -> #6 P5 -> #12 P6 -> #7 P7 -> #8 P8 -> #114 P8.1 -> #118 P8.2 owner acceptance -> #9 P9 -> #10 P10`
 
-P9 resumes only after the integrated owner-product gate passes or the owner explicitly changes the roadmap.
+P9 resumes only after **#118 closes** or the owner explicitly changes the roadmap.
