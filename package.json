@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run tests",
+    "test:browser:resources": "playwright test e2e/resource-cache.spec.ts",
     "build": "npm run typecheck && vite build && node tools/build-service-worker.mjs && node tools/validate-dist.mjs",
     "preview": "vite preview --host 0.0.0.0"
   },
