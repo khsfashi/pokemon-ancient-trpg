@@ -1,0 +1,59 @@
+name: P7 Batch 02 Validation
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'vite.config.ts'
+      - 'index.html'
+      - 'public/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'e2e/**'
+      - 'tools/build-service-worker.mjs'
+      - 'tools/validate-dist.mjs'
+      - '.github/workflows/p7-batch02-validation.yml'
+  push:
+    branches:
+      - main
+      - 'agent/**'
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'vite.config.ts'
+      - 'index.html'
+      - 'public/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'e2e/**'
+      - 'tools/build-service-worker.mjs'
+      - 'tools/validate-dist.mjs'
+      - '.github/workflows/p7-batch02-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Require committed npm lockfile
+        run: test -f package-lock.json
+      - name: Install from lockfile
+        run: npm ci
+      - name: Strict typecheck
+        run: npm run typecheck
+      - name: Deterministic unit fixtures
+        run: npm run test
+      - name: Static PWA production build
+        run: npm run build

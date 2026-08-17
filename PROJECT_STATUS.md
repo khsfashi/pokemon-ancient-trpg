@@ -56,13 +56,11 @@ Full pinned P6 production import validated compact `151/151`, animated PNG+JSON 
 
 **P7 — Technical architecture, web/PWA target, save/data/resource pipeline, and tests (#7) is active.**
 
-### P7 Batch 01 candidate
+### P7 Batch 01 — ACCEPTED
 
-Branch: `agent/p7-batch01-architecture-contract`
+PR #100 was squash-merged to `main` as `973978424d0ac7aeb6ae89d43229a6049382ae8e` after `P7 Architecture Validation` passed.
 
-Architecture candidate: `p7-architecture-v1`.
-
-Frozen baseline after the Batch 01 PR merges green:
+Frozen architecture: `p7-architecture-v1`.
 
 ```text
 primary target        = web/PWA
@@ -82,7 +80,7 @@ deployment             = static Vercel-compatible output
 Android                = deferred Capacitor wrapper candidate only
 ```
 
-Important correctness boundary discovered/frozen in Batch 01:
+Correctness boundary:
 
 ```text
 P5 origin_transition_seq/draw_index = u64
@@ -95,40 +93,54 @@ SHA-256                              = Web Crypto HashProvider
 
 Do not serialize authoritative u64/u63 values through JavaScript `number` or implicit BigInt JSON conversion.
 
-Runtime/content/resource separation:
+### P7 Batch 02 candidate
 
-- Preact is presentation only; UI is never authoritative.
-- event eligibility remains committed-transition-driven with generated trigger indexes, never per frame/render.
-- remote Pokémon APIs remain build/import-only; runtime consumes generated normalized packs.
-- IndexedDB owns versioned content-pinned saves and fail-closed migrations/imports.
-- generated `resource_id` indexes provide O(1)-equivalent lookup.
-- duplicate resource loads coalesce and decoded cache instances are reused under the frozen P6 byte caps.
-- service-worker precache contains only public-safe app shell/required core resources; current Pokémon media is never public-preloaded.
+PR: **#101**  
+Branch: `agent/p7-batch02-executable-skeleton`
 
-Batch 01 evidence:
+Batch 02 now provides the executable architecture shell:
 
-- `docs/P7_ARCHITECTURE_MANIFEST.json`
-- `docs/P7_TECHNICAL_ARCHITECTURE_CONTRACT.md`
-- `docs/P7_IMPLEMENTATION_SKELETON_PLAN.md`
-- `docs/P7_BATCH_01_AUDIT.md`
-- `tools/validate_p7_architecture.py`
-- `.github/workflows/p7-architecture-validation.yml`
+```text
+Node             = 24.x in CI
+Vite             = 8.0.16
+TypeScript       = 6.0.3 strict
+Preact           = 10.29.7
+Vitest           = 4.1.10
+Playwright       = 1.62.1 dependency lane reserved
+workbox-build    = 7.4.1
+package-lock     = committed, lockfileVersion 3
+backend          = none
+```
 
-Batch 01 is accepted only after the final PR head reports `P7 Architecture Validation` green.
+Implemented/proven boundaries:
 
-## Exact next work — P7 Batch 02
+- mobile-first static Preact shell with no router/global-state dependency;
+- frozen `src/app`, `runtime`, `domain`, `events`, `content`, `saves`, `resources`, `platform`, `ui`, `generated` ownership directories;
+- exact u63/u64 `bigint` ↔ canonical unsigned-decimal-string conversion with fail-closed range validation;
+- immutable RNG cursor scaffold preserving u64 `draw_index` without claiming the Batch 03 SHA-256 algorithm yet;
+- explicitly non-production save JSON probe proving authoritative integers are not serialized through `number`;
+- one constructed `Map`-backed `resource_id` registry with duplicate-ID rejection and O(1)-equivalent lookup;
+- valid web app manifest and Workbox-generated service worker;
+- build-time public output guard that rejects binary media, known runtime Pokémon source/API origins, missing PWA shell files, and a required static shell above the inherited 3 MiB cap;
+- Node 24 CI requires the committed lockfile and runs `npm ci`, strict typecheck, Vitest, and the production Vite + Workbox static build.
 
-After Batch 01 merges:
+Batch 02 intentionally does **not** claim completion for production P5 SHA-256 RNG, IndexedDB/migrations, generated runtime packs, resource load coalescing/LRU eviction, or phone Chromium/WebKit offline E2E. Those remain later P7 batches.
 
-1. create the Node 24/npm/Vite 8/strict-TypeScript/Preact 10 executable skeleton and committed lockfile;
-2. create the frozen `src/app`, `runtime`, `domain`, `events`, `content`, `saves`, `resources`, `platform`, `ui`, `generated` ownership boundaries;
-3. add the first Vitest deterministic integer/RNG/save/resource fixtures;
-4. add a valid web app manifest and `workbox-build` public-safe service-worker build;
-5. prove `npm ci`, typecheck, unit tests and production static build in CI;
-6. prove the output contains no Pokémon source media and requires no backend;
-7. keep P8 blocked until later P7 batches prove IndexedDB reload/migration, P5 RNG vectors, generated indexes, resource cache behavior and phone-sized offline browser E2E.
+Evidence: `docs/P7_BATCH_02_AUDIT.md`.
 
-Implementation sequence for the rest of P7 is frozen in `docs/P7_IMPLEMENTATION_SKELETON_PLAN.md`.
+## Exact next work — after P7 Batch 02 merges
+
+P7 Batch 03 — deterministic runtime and save foundation:
+
+1. add a `HashProvider` backed by Web Crypto SHA-256;
+2. implement the exact frozen `p5-rng-v1` byte encoder with `bigint` u64 fields;
+3. port every frozen P5 RNG vector to TypeScript and require byte-for-byte equality;
+4. implement production `SaveEnvelopeV1` wire/runtime conversion with validated decimal-string u64 values;
+5. implement the native IndexedDB adapter and sequential pure fail-closed migration registry;
+6. prove atomic save/import replacement and pending-event reload for mid-choice, mid-roll, and mid-reaction states;
+7. keep P8 blocked until the remaining generated-index/resource-cache/offline-browser P7 gates also pass.
+
+Full sequence remains frozen in `docs/P7_IMPLEMENTATION_SKELETON_PLAN.md`.
 
 ## Later roadmap
 
