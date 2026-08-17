@@ -1,4 +1,5 @@
 import type { P8AuthorityState, P8AttributeId, P8CharacterState } from '../domain/p8Authority';
+import { P8_SLICE_SPECIALIZATIONS } from '../content/p8SlicePresentation';
 import {
   labelP8AttributeLocalized,
   labelP8CompetenceLocalized,
@@ -6,6 +7,7 @@ import {
   labelP8OriginLocalized,
   labelP8PracticeLocalized,
   labelP8SpeciesLocalized,
+  localizeP8Specialization,
   type P8Locale,
 } from '../ui/p8Localization';
 import './profile.css';
@@ -34,6 +36,7 @@ const TEXT = {
     portraitChoice: '내 모습 고르기',
     portraitHint: '이 모습은 전투 능력에 영향을 주지 않습니다. 여정 내내 내 프로필에 표시됩니다.',
     profile: '내 여행자',
+    specialization: '강점',
     locality: '현재 위치',
     vitality: '활력(체력)',
     fatigue: '피로(스태미나)',
@@ -63,6 +66,7 @@ const TEXT = {
     portraitChoice: 'Choose your portrait',
     portraitHint: 'Portraits are cosmetic. Your choice stays with the active journey profile.',
     profile: 'Traveler profile',
+    specialization: 'Strength',
     locality: 'Location',
     vitality: 'Vitality',
     fatigue: 'Fatigue / stamina',
@@ -128,6 +132,11 @@ export function deriveP8ExpeditionProfile(authority: P8AuthorityState): P8Expedi
     burdened: currentLoad > comfortableLoad,
     companionCount: authority.pokemon.companionSlots.filter((slot) => slot !== null).length,
   });
+}
+
+export function resolveP8SpecializationId(character: P8CharacterState): string | null {
+  const match = P8_SLICE_SPECIALIZATIONS.find((item) => character.trainedCompetences[item.personalCompetenceId] === 1);
+  return match?.specializationId ?? null;
 }
 
 export function isP8PortraitId(value: unknown): value is P8PortraitId {
@@ -215,12 +224,15 @@ export function P8PortraitPicker({ portraitId, locale, onChange }: { readonly po
 }
 
 export function P8PortraitIdentity({ portraitId, character, locale }: { readonly portraitId: P8PortraitId; readonly character: P8CharacterState; readonly locale: P8Locale }) {
+  const specializationId = resolveP8SpecializationId(character);
+  const specialization = specializationId === null ? null : P8_SLICE_SPECIALIZATIONS.find((item) => item.specializationId === specializationId) ?? null;
+  const specializationLabel = specialization === null ? null : localizeP8Specialization(specialization, locale).label;
   return (
     <div class="portrait-identity">
       <PortraitArtwork portraitId={portraitId} locale={locale} compact />
       <div>
-        <span>{labelP8OriginLocalized(character.originId, locale)}</span>
-        <strong>{labelP8PracticeLocalized(character.practiceId, locale)}</strong>
+        <span>{labelP8OriginLocalized(character.originId, locale)} · {labelP8PracticeLocalized(character.practiceId, locale)}</span>
+        <strong>{specializationLabel === null ? labelP8PracticeLocalized(character.practiceId, locale) : `${TEXT[locale].specialization} · ${specializationLabel}`}</strong>
       </div>
     </div>
   );
