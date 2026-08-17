@@ -3,9 +3,11 @@ name: P7 Batch 04 Validation
 on:
   pull_request:
     paths:
+      - 'PROJECT_STATUS.md'
       - 'docs/P4_SPECIES_COVERAGE_MANIFEST.yaml'
       - 'docs/P5_*'
       - 'docs/P6_RESOURCE_MANIFEST.json'
+      - 'docs/P7_BATCH_04_AUDIT.md'
       - 'src/generated/**'
       - 'tests/generated.runtime-pack.test.ts'
       - 'tools/build_p7_runtime_pack.py'
@@ -19,9 +21,11 @@ on:
       - main
       - 'agent/**'
     paths:
+      - 'PROJECT_STATUS.md'
       - 'docs/P4_SPECIES_COVERAGE_MANIFEST.yaml'
       - 'docs/P5_*'
       - 'docs/P6_RESOURCE_MANIFEST.json'
+      - 'docs/P7_BATCH_04_AUDIT.md'
       - 'src/generated/**'
       - 'tests/generated.runtime-pack.test.ts'
       - 'tools/build_p7_runtime_pack.py'
