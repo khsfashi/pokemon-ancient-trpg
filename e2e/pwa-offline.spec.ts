@@ -157,16 +157,16 @@ test('installs the production worker, reloads offline, and keeps an update waiti
   const identity = await loadRuntimePackIdentity();
 
   await page.goto('/');
-  const firstInstall = await page.evaluate(async () => {
+  const firstInstallScope = await page.evaluate(async () => {
     if (!('serviceWorker' in navigator)) throw new Error('service workers are unavailable');
     const registration = await navigator.serviceWorker.ready;
-    return {
-      scope: registration.scope,
-      activeState: registration.active?.state ?? null,
-    };
+    return registration.scope;
   });
-  expect(firstInstall.scope.endsWith('/')).toBe(true);
-  expect(firstInstall.activeState).toBe('activated');
+  expect(firstInstallScope.endsWith('/')).toBe(true);
+  await expect.poll(async () => page.evaluate(async () => {
+    const registration = await navigator.serviceWorker.ready;
+    return registration.active?.state ?? null;
+  })).toBe('activated');
 
   await page.reload();
   await expect.poll(async () => page.evaluate(() => navigator.serviceWorker.controller?.state ?? null)).toBe('activated');
@@ -229,7 +229,7 @@ test('installs the production worker, reloads offline, and keeps an update waiti
     expect(afterReload.controllerMatchesActive).toBe(true);
 
     console.log(`P7_PWA_PROOF ${browserName} ${JSON.stringify({
-      firstInstall: firstInstall.activeState,
+      firstInstall: 'activated',
       offlineReload: 'PASS',
       waitingUpdate: afterReload.hasWaitingWorker,
       pendingSavePreserved: true,
