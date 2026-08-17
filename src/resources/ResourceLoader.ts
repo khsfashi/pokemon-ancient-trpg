@@ -1,6 +1,7 @@
 import { ByteBoundedLru } from './ByteBoundedLru';
 
 export const COMPACT_ICON_CACHE_CAP_BYTES = 384 * 1024;
+export const ENCOUNTER_ATLAS_PER_RESOURCE_CAP_BYTES = 2 * 1024 * 1024;
 export const ENCOUNTER_ATLAS_CACHE_CAP_BYTES = 4 * 1024 * 1024;
 export const MAX_RESIDENT_ENCOUNTER_ATLASES = 2;
 
@@ -229,6 +230,10 @@ export class ResourceLoader<D extends LoadableResourceDescriptor, T> {
       case 'compact':
         return this.#compactCache.set(descriptor.resource_id, result, decodedBytes, dispose);
       case 'encounter':
+        if (decodedBytes > ENCOUNTER_ATLAS_PER_RESOURCE_CAP_BYTES) {
+          dispose?.();
+          return false;
+        }
         return this.#encounterCache.set(descriptor.resource_id, result, decodedBytes, dispose);
       case 'resident': {
         const existing = this.#resident.get(descriptor.resource_id);
