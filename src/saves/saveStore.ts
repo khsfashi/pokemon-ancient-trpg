@@ -36,6 +36,18 @@ export async function loadRuntimeEnvelope(
   return runtime;
 }
 
+export async function exportSaveJson(
+  store: SaveStore,
+  slotId: string,
+  expectedContent: SaveContentIdentity,
+  migrations: SaveMigrationRegistry = SAVE_V1_MIGRATIONS,
+): Promise<string | null> {
+  const runtime = await loadRuntimeEnvelope(store, slotId, expectedContent, migrations);
+  if (runtime === null) return null;
+  const canonicalWire = saveEnvelopeV1ToWire(runtime);
+  return `${JSON.stringify(canonicalWire, null, 2)}\n`;
+}
+
 export async function importSaveJson(
   store: SaveStore,
   slotId: string,

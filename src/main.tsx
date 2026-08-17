@@ -1,6 +1,7 @@
 import { render } from 'preact';
 import { App } from './app/App';
 import './app/app.css';
+import { registerAppServiceWorker } from './platform/serviceWorker';
 
 const root = document.getElementById('app');
 if (root === null) {
@@ -9,8 +10,8 @@ if (root === null) {
 
 render(<App />, root);
 
-if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+if (import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    void navigator.serviceWorker.register('/sw.js');
+    void registerAppServiceWorker();
   });
 }
