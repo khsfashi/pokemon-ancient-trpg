@@ -5,6 +5,7 @@ import {
   type P8CharacterCreationInput,
   type P8CharacterState,
 } from '../domain/p8Authority';
+import type { P8PreparationActionId } from '../domain/p8Preparation';
 import { createP8SliceCharacter, P8_SLICE_PRESENTATION_PROMPTS } from '../content/p8SliceContent';
 import {
   P8_SLICE_SPECIALIZATIONS,
@@ -33,6 +34,7 @@ import {
 } from '../platform/p8BrowserSession';
 import { loadP8PokemonMedia, type P8PokemonMediaResult } from '../resources/p8PokemonPresentation';
 import { NarrativeReveal, usePrefersReducedMotion } from './NarrativeReveal';
+import { P8PreparationPanel } from './PreparationPanel';
 import {
   loadP8PortraitId,
   P8ExpeditionHud,
@@ -291,6 +293,10 @@ export function App() {
     await runAction(() => session.resolveChoice(choiceId), true);
   }
 
+  async function performPreparationAction(actionId: P8PreparationActionId): Promise<void> {
+    await runAction(() => session.performPreparationAction(actionId), true);
+  }
+
   async function continueFromCheckpoint(): Promise<void> {
     const prepared = await runAction(() => session.prepareNextScene(), true);
     if (prepared !== null) setResolutionAcknowledged(true);
@@ -429,6 +435,12 @@ export function App() {
             <h2>{p8Text(locale, 'relationshipsRemembered')}</h2>
             {relationships.map(([id, state]) => <p key={id}><strong>{labelP8RelationshipLocalized(id, locale)}</strong> · {labelP8RelationshipStateLocalized(state, locale)}</p>)}
           </div>
+          <P8PreparationPanel
+            authority={presentedSnapshot.authority}
+            locale={locale}
+            busy={busy}
+            onAction={(actionId) => { void performPreparationAction(actionId); }}
+          />
           <div class="contract-note">{p8Text(locale, 'zeroCompanionCompletion')}: {presentedSnapshot.authority.events.narrativeFlags['slice.zero_companion_route_complete'] === true ? p8Text(locale, 'proven') : p8Text(locale, 'notReached')}.</div>
           <button class="secondary" onClick={beginCreation}>{p8Text(locale, 'startAnother')}</button>
         </section>
