@@ -93,12 +93,11 @@ SHA-256                              = Web Crypto HashProvider
 
 Do not serialize authoritative u64/u63 values through JavaScript `number` or implicit BigInt JSON conversion.
 
-### P7 Batch 02 candidate
+### P7 Batch 02 — ACCEPTED
 
-PR: **#101**  
-Branch: `agent/p7-batch02-executable-skeleton`
+PR #101 was squash-merged to `main` as `63455e993197adbbdcafc6c775a2d38a0a5ec25c` after the Node 24 `P7 Batch 02 Validation` gate passed.
 
-Batch 02 now provides the executable architecture shell:
+Batch 02 provides the executable architecture shell:
 
 ```text
 Node             = 24.x in CI
@@ -112,33 +111,47 @@ package-lock     = committed, lockfileVersion 3
 backend          = none
 ```
 
-Implemented/proven boundaries:
-
-- mobile-first static Preact shell with no router/global-state dependency;
-- frozen `src/app`, `runtime`, `domain`, `events`, `content`, `saves`, `resources`, `platform`, `ui`, `generated` ownership directories;
-- exact u63/u64 `bigint` ↔ canonical unsigned-decimal-string conversion with fail-closed range validation;
-- immutable RNG cursor scaffold preserving u64 `draw_index` without claiming the Batch 03 SHA-256 algorithm yet;
-- explicitly non-production save JSON probe proving authoritative integers are not serialized through `number`;
-- one constructed `Map`-backed `resource_id` registry with duplicate-ID rejection and O(1)-equivalent lookup;
-- valid web app manifest and Workbox-generated service worker;
-- build-time public output guard that rejects binary media, known runtime Pokémon source/API origins, missing PWA shell files, and a required static shell above the inherited 3 MiB cap;
-- Node 24 CI requires the committed lockfile and runs `npm ci`, strict typecheck, Vitest, and the production Vite + Workbox static build.
-
-Batch 02 intentionally does **not** claim completion for production P5 SHA-256 RNG, IndexedDB/migrations, generated runtime packs, resource load coalescing/LRU eviction, or phone Chromium/WebKit offline E2E. Those remain later P7 batches.
+Implemented/proven boundaries include the mobile-first static Preact shell, frozen source ownership directories, exact bigint decimal-wire helpers, immutable u64 RNG cursor scaffold, resource registry foundation, Workbox service worker, public-output guard and Node 24 CI lane.
 
 Evidence: `docs/P7_BATCH_02_AUDIT.md`.
 
-## Exact next work — after P7 Batch 02 merges
+### P7 Batch 03 — PASS CANDIDATE
 
-P7 Batch 03 — deterministic runtime and save foundation:
+PR: **#102**  
+Branch: `agent/p7-batch03-runtime-save-foundation`  
+Validated head before documentation finalization: `3ab95789ec9cf72363e8be4ab45ed4caf3416103`
 
-1. add a `HashProvider` backed by Web Crypto SHA-256;
-2. implement the exact frozen `p5-rng-v1` byte encoder with `bigint` u64 fields;
-3. port every frozen P5 RNG vector to TypeScript and require byte-for-byte equality;
-4. implement production `SaveEnvelopeV1` wire/runtime conversion with validated decimal-string u64 values;
-5. implement the native IndexedDB adapter and sequential pure fail-closed migration registry;
-6. prove atomic save/import replacement and pending-event reload for mid-choice, mid-roll, and mid-reaction states;
-7. keep P8 blocked until the remaining generated-index/resource-cache/offline-browser P7 gates also pass.
+Batch 03 implements the deterministic runtime/save foundation:
+
+- project-owned `HashProvider` plus Web Crypto SHA-256 provider;
+- exact frozen `p5-rng-v1` encoder with ASCII/NUL separators, 16-byte seed and big-endian bigint u64 fields;
+- all four frozen P5 vectors ported to TypeScript with byte, digest, raw-u64 and bounded-result equality;
+- rejection sampling records rejected/accepted raw draws and advances only the keyed stream draw index;
+- production `SaveEnvelopeV1` runtime/wire conversion with canonical decimal-string u64 fields;
+- strict pending-event persistence for choice, roll and reaction wait states, including recorded RNG/check/reaction data;
+- sequential one-version-at-a-time fail-closed migration registry;
+- native IndexedDB `save_slots` adapter with full-envelope `readwrite` replacement transactions;
+- import validates JSON, version/migration, ranges/schema and content-pack identity before exactly one replacement;
+- no new npm/runtime dependency.
+
+Node 24 workflow run `31986880398` passed `npm ci`, strict TypeScript 6 typecheck, all Vitest fixtures and the production Vite/Workbox static build on PR #102.
+
+Evidence: `docs/P7_BATCH_03_AUDIT.md`.
+
+## Exact next work — after P7 Batch 03 merges
+
+P7 Batch 04 — generated content/index boundary:
+
+1. add a build-time runtime-pack generator that consumes validated project contracts/data;
+2. emit deterministic `trigger_id -> ordered event IDs` lookup;
+3. emit deterministic `resource_id -> runtime descriptor` lookup;
+4. emit deterministic `species_id -> runtime species/dossier descriptor` lookup;
+5. emit deterministic `semantic adapter ID -> registered runtime adapter` lookup;
+6. stabilize ordering before hashing and emit content pack id/version/SHA-256 digest;
+7. keep remote Pokémon APIs, authoring-schema parsing and uncleared Pokémon media out of runtime/public artifacts;
+8. keep the proven P5/P6 Python validators instead of rewriting them without a concrete benefit.
+
+P8 remains blocked until Batch 04 generated-index, Batch 05 resource-cache/measurement and Batch 06 offline/phone-browser gates all pass.
 
 Full sequence remains frozen in `docs/P7_IMPLEMENTATION_SKELETON_PLAN.md`.
 
