@@ -1,13 +1,21 @@
-# P6 Batch 03 Audit — Production Import Coverage and Exit Candidate
+# P6 Batch 03 Audit — Production Import Coverage and Exit
 
 Date: **2026-08-17**  
 Phase: **P6 — Resource and asset strategy**  
 Issue: **#12**  
-Status: **full Gen-I measurement integrated; final verdict depends on final PR-head CI**
+Status: **PASS**
 
 ## 1. Scope
 
-Batch 03 converts the representative Batch 02 resource assumptions into an executable full-production-import proof against the frozen Pokémon source pins. It does not begin P7 and does not add Pokémon image/audio bytes to the repository.
+Batch 03 converts the representative Batch 02 resource assumptions into an executable full-production-import proof against the frozen Pokémon source pins. It does not add Pokémon image/audio bytes to the repository.
+
+Validated candidate:
+
+```text
+head == 95787eda4c1c04aeb27c4acb0c4256c12206e85b
+P6 Resource Validation run == #30
+workflow conclusion == success
+```
 
 ## 2. Compact identity proof
 
@@ -17,7 +25,7 @@ Frozen PokéSprite pin:
 c5aaa610ff2acdf7fd8e2dccd181bca8be9fcb3e
 ```
 
-The importer requires:
+The successful importer proved:
 
 ```text
 mapping_ids == 001..151
@@ -39,22 +47,20 @@ Frozen PokéRogue-assets pin:
 909b43612324622608023b3beb2f24f4ef159c1d
 ```
 
-For each National Pokédex ID `001..151`, the live importer requires both:
+For every National Pokédex ID `001..151`, the successful importer validated both:
 
 ```text
 images/pokemon/{id}.png
 images/pokemon/{id}.json
 ```
 
-It validates PNG IHDR dimensions, the metadata-declared image/size/format, non-empty frames, unique frame filenames, every frame rectangle, `spriteSourceSize` bounds when present, and SHA-256 for both PNG and JSON.
+It checks PNG IHDR dimensions, metadata-declared image/size/format, non-empty frames, unique frame filenames, every frame rectangle, `spriteSourceSize` bounds when present, and SHA-256 for both PNG and JSON.
 
 ## 4. Full-data discoveries
 
-The first Batch 03 live run correctly disproved two assumptions that representative sampling had not proven.
-
 ### 4.1 Provisional 512 KiB atlas cap was too small
 
-#003 already exceeded the provisional Batch 02 `512 KiB` decoded-atlas threshold. Full `001..151` measurement then established:
+The first live run correctly caught #003 exceeding the provisional Batch 02 `512 KiB` decoded-atlas threshold. Full `001..151` measurement established:
 
 ```text
 animated_pairs_validated == 151/151
@@ -64,7 +70,7 @@ max_source_dimensions == 673x673
 max_conservative_RGBA8_bytes == 1,811,716
 ```
 
-A deterministic source-rectangle dedupe/shelf-repack experiment still left **20** species above `512 KiB`, with #085 still around `1.65 MiB`. P6 therefore does not add repacking complexity merely to preserve a sample-derived cap that the complete corpus contradicts.
+A deterministic source-rectangle dedupe/shelf-repack experiment still left **20** species above `512 KiB`, with #085 still around `1.65 MiB`. P6 therefore rejects custom repacking merely to preserve an invalid sample-derived cap.
 
 ### 4.2 Two pinned metadata layouts exist
 
@@ -77,11 +83,9 @@ RGBA8888 metadata == 150
 I8 metadata == 1
 ```
 
-The importer now supports only those two layouts observed at the frozen pin and still validates their declared dimensions/image/format against the actual PNG.
+The importer supports only those two layouts observed at the frozen pin and validates their declared dimensions/image/format against the actual PNG.
 
 ## 5. Final measured mobile budget
-
-The full-data contract supersedes only the provisional animated-atlas budget. Initial payload and compact-icon budgets stay unchanged.
 
 ```text
 p6_owned_required_initial_resource_payload <= 3 MiB
@@ -102,8 +106,6 @@ Rationale:
 - no runtime resize or repack is required;
 - no custom build-time repacker is required solely for memory compliance.
 
-This is simpler and removes unnecessary CPU/build complexity while retaining a bounded mobile working set.
-
 ## 6. No-media public evidence boundary
 
 ```text
@@ -115,11 +117,19 @@ pokemon_media_repo_mode == metadata_only
 pokemon_media_public_distribution == not_cleared
 ```
 
-Only `build/p6-production-import-manifest.json` is eligible for the temporary CI artifact. Source Pokémon PNG bytes are never written by the importer.
+Run #30 uploaded only `p6-production-import-manifest`, a metadata JSON evidence artifact. Pokémon source PNG bytes are never written by the importer.
 
-## 7. Validator and CI integration
+## 7. Validator and CI proof
 
-`tools/validate_p6_resources.py` validates both the frozen static contracts and the produced live-import manifest. The produced evidence must prove:
+Run #30 completed all workflow stages successfully:
+
+1. static P6 validation;
+2. offline importer self-test;
+3. live full Gen-I production import;
+4. validation of the produced metadata manifest;
+5. metadata-only evidence upload.
+
+The produced evidence proves:
 
 - compact `151/151` ordered coverage;
 - animated `151/151` ordered coverage;
@@ -127,21 +137,13 @@ Only `build/p6-production-import-manifest.json` is eligible for the temporary CI
 - valid SHA-256 for every fetched artifact;
 - unique source paths;
 - compact `68x56` dimensions;
-- both pinned animated metadata layouts and their measured distribution;
+- both pinned animated metadata layouts and measured distribution;
 - every animated frame/source rectangle is valid;
 - exactly 25 pinned atlases exceed the superseded `512 KiB` sample cap;
 - pinned maximum remains #085 `673x673 / 1,811,716 B`;
 - **zero** atlases exceed the final `2 MiB` guardrail;
 - two worst-case atlases fit the `4 MiB` cache cap;
 - generated evidence remains metadata-only.
-
-`.github/workflows/p6-resource-validation.yml` executes:
-
-1. static P6 validation;
-2. offline importer self-test;
-3. live full Gen-I production import;
-4. validation of the produced metadata manifest;
-5. metadata-only evidence upload.
 
 ## 8. Performance notes
 
@@ -154,17 +156,16 @@ Only `build/p6-production-import-manifest.json` is eligible for the temporary CI
 - `resource_id` remains the O(1)-equivalent lookup/cache identity;
 - all 151 media preload remains forbidden.
 
-## 9. Batch 03 gate
-
-Implementation and full-data measurement are now present. P6 is still fail-closed until the **final PR head** passes the complete workflow after all contract documents are synchronized.
+## 9. Batch 03 verdict
 
 ```text
-compact_full_import_implemented == true
-animated_full_import_implemented == true
-full_gen1_budget_measurement_recorded == true
-old_512_KiB_hypothesis_superseded == true
+compact_full_import == PASS
+animated_full_import == PASS
+full_gen1_budget_measurement == PASS
+metadata_only_evidence_boundary == PASS
 final_per_atlas_guardrail == 2 MiB
 final_encounter_cache_cap == 4 MiB
-p6_exit_verdict_before_final_ci == PENDING
-p7_may_begin_before_p6_exit == false
+batch03 == PASS
 ```
+
+P6 may advance to its exit verdict; P7 may begin only after `docs/P6_EXIT_AUDIT.md` is also `PASS` and #12 is closed.
