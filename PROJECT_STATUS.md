@@ -136,11 +136,9 @@ Final PR-head workflow run `31987081988` passed before merge.
 
 Evidence: `docs/P7_BATCH_03_AUDIT.md`.
 
-### P7 Batch 04 — PASS CANDIDATE
+### P7 Batch 04 — ACCEPTED
 
-PR: **#103**  
-Branch: `agent/p7-batch04-generated-runtime-pack`  
-Validated code head before documentation finalization: `737af1367513b798a81693c4c2a371cf294a5633`
+PR #103 was squash-merged to `main` as `71d59b961dec745a2fa952776aef45c3077150eb` after the final PR head passed both overlapping validation lanes and had no unresolved review thread.
 
 Batch 04 implements the generated content/index boundary:
 
@@ -156,30 +154,72 @@ Batch 04 implements the generated content/index boundary:
 - uncleared Pokémon media remains `optional_local_only` metadata with deterministic fallback and no copied source binary;
 - no new npm/runtime dependency.
 
-Validated code head passed both overlapping lanes:
-
-```text
-P7 Batch 02 Validation run 31988847464 == PASS
-P7 Batch 04 Validation run 31988847470 == PASS
-```
-
 Evidence: `docs/P7_BATCH_04_AUDIT.md`.
 
-## Exact next work — after P7 Batch 04 merges
+### P7 Batch 05 — PASS CANDIDATE
 
-P7 Batch 05 — resource loader and measured browser cache proof:
+PR: **#104**  
+Branch: `agent/p7-batch05-resource-loader-cache`  
+Validated code head before documentation finalization: `be4019d6800fe8375599aa17609a7c1f12d41fcd`
 
-1. implement one owner for resource loading with O(1)-equivalent `resource_id` registry access;
-2. coalesce in-flight requests so concurrent identical loads share one underlying request;
-3. implement a byte-bounded compact-icon LRU under the frozen 384 KiB cap;
-4. implement a byte-bounded encounter-atlas LRU under the frozen 4 MiB cap;
-5. enforce the max-two resident encounter guard;
-6. implement deterministic optional-media fallback without changing authoritative gameplay;
-7. keep atlas JSON out of render-path reparsing and avoid default resize/repack;
-8. use representative public-safe images for committed tests and keep optional Pokémon enrichment local-only;
-9. measure actual decoded/browser behavior on phone-sized Chromium and WebKit and compare it with the conservative P6 caps.
+Batch 05 implements the runtime resource owner and browser cache proof:
 
-P8 remains blocked until Batch 05 resource-cache/measurement and Batch 06 offline/phone-browser gates pass.
+- generated O(1)-equivalent `resource_id` lookup feeds one `ResourceLoader` owner;
+- concurrent identical loads coalesce to one underlying fetch/decode;
+- compact Pokémon-icon decoded LRU is bounded to `384 KiB`;
+- encounter decoded LRU is bounded to `4 MiB`, with `2 MiB` individual admission guard and hard max-two resident guard;
+- evicted/invalidated decoded browser image instances are explicitly disposed;
+- optional missing/oversized media resolves to one cached deterministic presentation fallback without mutating authoritative gameplay;
+- remote `http:`, `https:`, protocol-relative `//host` and `/\\host` resource locators are rejected before fetch;
+- browser image decode is reused instead of reparsed/redecoded on each render access;
+- no default runtime resize/repack or render-path atlas JSON parse was added;
+- public-safe browser probes exist only in the Playwright process and are not copied into production `public/`/`dist/`;
+- no new runtime dependency was added.
+
+Validated code head evidence:
+
+```text
+P7 Batch 02 Validation run 31990707020 == PASS
+P7 Batch 05 Validation run 31990707021 == PASS
+Vitest                            11 files / 38 tests PASS
+production dist                   8 files / 181,269 B
+Workbox precache                  4 files / 13,901 B
+backend                           none
+pokemon_media                     0
+```
+
+Phone-sized `390x844` Chromium `151.0.7922.34` and WebKit `26.5` produced identical logical measurements:
+
+```text
+compact decoded resident       = 15,232 B <= 393,216 B
+largest encounter probe        = 1,638,400 B <= 2,097,152 B
+encounter decoded residents    = 3,211,264 B <= 4,194,304 B
+resident encounter count       = 2
+compact + encounter accounting = 3,226,496 B <= 4,587,520 B
+present resource fetch count   = 4 for 4 resources despite duplicate compact request
+optional fallback identity     = reused
+Chromium browser proof         = PASS
+WebKit browser proof           = PASS
+```
+
+`decodedBytes` is conservative RGBA8 accounting from actual browser-decoded natural dimensions; it is not claimed as exact browser heap/GPU residency because no stable cross-browser API exposes that value.
+
+Evidence: `docs/P7_BATCH_05_AUDIT.md`.
+
+## Exact next work — after P7 Batch 05 merges
+
+P7 Batch 06 — PWA/offline + deployment evidence:
+
+1. prove initial online load and service-worker installation;
+2. prove offline reload after the required shell is cached;
+3. prove new run -> save -> reload through the browser storage path;
+4. prove pending-event reload resumes without rerolling authoritative RNG/state;
+5. prove backup export/import round trip;
+6. prove an update/reload path never forces replacement during an authoritative pending transition;
+7. prove Vercel-compatible static output with no serverless/backend dependency;
+8. run the browser-level gate on phone-sized Chromium and WebKit.
+
+P8 remains blocked until Batch 06 offline/phone-browser gates pass.
 
 Full sequence remains frozen in `docs/P7_IMPLEMENTATION_SKELETON_PLAN.md`.
 
