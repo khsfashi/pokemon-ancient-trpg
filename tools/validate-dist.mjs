@@ -3,6 +3,7 @@ import { extname, join, relative } from 'node:path';
 
 const DIST = 'dist';
 const REQUIRED = ['index.html', 'manifest.webmanifest', 'sw.js'];
+const EXPECTED_MANIFEST_START_URL = process.env.EXPECTED_MANIFEST_START_URL ?? '/';
 const FORBIDDEN_BINARY_EXTENSIONS = new Set([
   '.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif', '.mp3', '.ogg', '.wav', '.m4a', '.flac',
 ]);
@@ -30,8 +31,10 @@ for (const required of REQUIRED) {
 }
 
 const manifest = JSON.parse(await readFile(join(DIST, 'manifest.webmanifest'), 'utf8'));
-if (manifest.display !== 'standalone' || manifest.start_url !== '/') {
-  throw new Error('Invalid Batch 02 web manifest');
+if (manifest.display !== 'standalone' || manifest.start_url !== EXPECTED_MANIFEST_START_URL) {
+  throw new Error(
+    `Invalid Batch 02 web manifest: expected start_url=${EXPECTED_MANIFEST_START_URL}, got ${String(manifest.start_url)}`,
+  );
 }
 
 const files = await walk(DIST);
@@ -60,4 +63,6 @@ if (totalBytes > 3 * 1024 * 1024) {
   throw new Error(`Batch 02 static shell exceeds inherited 3 MiB required-initial budget: ${totalBytes}`);
 }
 
-console.log(`dist validation PASS: ${files.length} files / ${totalBytes} bytes / backend=none / pokemon_media=0`);
+console.log(
+  `dist validation PASS: ${files.length} files / ${totalBytes} bytes / backend=none / pokemon_media=0 / start_url=${EXPECTED_MANIFEST_START_URL}`,
+);
