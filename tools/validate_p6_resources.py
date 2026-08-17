@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 from typing import Any
@@ -12,6 +13,8 @@ DOCS = ROOT / "docs"
 INITIAL_BUDGET = 3 * 1024 * 1024
 COMPACT_CACHE_CAP = 384 * 1024
 ENCOUNTER_CACHE_CAP = 1024 * 1024
+PER_ENCOUNTER_ATLAS_GUARDRAIL = 512 * 1024
+GEN1_IDS = list(range(1, 152))
 LUCIDE_IDS = {
     "ui.icon.action.back",
     "ui.icon.action.confirm",
@@ -24,12 +27,16 @@ def fail(message: str) -> None:
     raise AssertionError(message)
 
 
-def load(name: str) -> dict[str, Any]:
-    with (DOCS / name).open("r", encoding="utf-8") as handle:
+def load_path(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as handle:
         value = json.load(handle)
     if not isinstance(value, dict):
-        fail(f"{name}: root must be an object")
+        fail(f"{path}: root must be an object")
     return value
+
+
+def load(name: str) -> dict[str, Any]:
+    return load_path(DOCS / name)
 
 
 def validate_schema(schema: dict[str, Any], manifest: dict[str, Any]) -> None:
@@ -152,7 +159,7 @@ def validate_source_map(source: dict[str, Any]) -> None:
         expected = dims["width"] * dims["height"] * 4
         if sample["decoded_rgba8_bytes"] != expected:
             fail(f"#{sample['id']}: bad RGBA8 estimate")
-        if expected > ENCOUNTER_CACHE_CAP // 2:
+        if expected > PER_ENCOUNTER_ATLAS_GUARDRAIL:
             fail(f"#{sample['id']}: exceeds 512 KiB per-atlas guardrail")
 
     inv = source["runtime_invariants"]
@@ -166,13 +173,149 @@ def validate_source_map(source: dict[str, Any]) -> None:
         fail("conceal/reveal must not duplicate source assets")
 
 
+def is_sha256(value: Any) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in "0123456789abcdef" for character in value)
+    )
+
+
+def validate_production_import(
+    produced: dict[str, Any],
+    source: dict[str, Any],
+) -> None:
+    if produced.get("schema_version") != "p6-production-import-manifest-v1":
+        fail("production import manifest schema version drift")
+
+    generator = produced.get("generator", {})
+    if generator.get("network_fetch_mode") != "memory_only":
+        fail("production importer must fetch Pokémon media in memory only")
+    if generator.get("pokemon_media_written_to_output") is not False:
+        fail("production importer may not write Pokémon media to output")
+    if generator.get("output_contains_metadata_only") is not True:
+        fail("production import output must be metadata-only")
+
+    pins = produced.get("source_pins", {})
+    if pins.get("compact", {}).get("pin") != source["compact_identity"]["pin"]:
+        fail("production compact pin mismatch")
+    if pins.get("animated", {}).get("pin") != source["animated_encounter"]["pin"]:
+        fail("production animated pin mismatch")
+
+    coverage = produced.get("coverage", {})
+    if coverage.get("compact_required_ids") != {"first": 1, "last": 151, "count": 151}:
+        fail("production compact coverage contract drift")
+    if coverage.get("compact_validated_count") != 151:
+        fail("production compact import did not validate all 151")
+    if coverage.get("animated_selected_ids") != GEN1_IDS:
+        fail("P6 exit requires animated pair/frame validation across all Gen-I ids")
+    if coverage.get("animated_validated_count") != 151:
+        fail("production animated import did not validate all 151")
+
+    redistribution = produced.get("redistribution", {})
+    if redistribution.get("pokemon_media_repo_mode") != "metadata_only":
+        fail("production import repo mode drift")
+    if redistribution.get("pokemon_media_public_distribution") != "not_cleared":
+        fail("production Pokémon media public-distribution boundary drift")
+    if redistribution.get("produced_manifest_public_distribution") != "allowed_metadata_only":
+        fail("produced import manifest must be metadata-only")
+    if redistribution.get("source_media_embedded") is not False:
+        fail("produced import manifest embeds source media")
+
+    compact_records = produced.get("compact")
+    if not isinstance(compact_records, list) or len(compact_records) != 151:
+        fail("production compact record count must equal 151")
+    if [record.get("id") for record in compact_records] != GEN1_IDS:
+        fail("production compact ids must be ordered 001..151")
+    compact_paths: set[str] = set()
+    representative = {
+        item["id"]: item["sha256"]
+        for item in source["compact_identity"]["coverage_evidence"]["representative_exact_files"]
+    }
+    for record in compact_records:
+        species_id = record["id"]
+        path = record.get("path")
+        if not isinstance(path, str) or not path:
+            fail(f"#{species_id:03d}: compact path missing")
+        if path in compact_paths:
+            fail(f"#{species_id:03d}: duplicate compact path {path}")
+        compact_paths.add(path)
+        if not is_sha256(record.get("sha256")):
+            fail(f"#{species_id:03d}: compact SHA-256 invalid")
+        if representative.get(species_id) not in {None, record["sha256"]}:
+            fail(f"#{species_id:03d}: compact representative SHA-256 mismatch")
+        dims = record.get("dimensions")
+        if dims != {"width": 68, "height": 56}:
+            fail(f"#{species_id:03d}: compact dimensions drift")
+        if record.get("decoded_rgba8_bytes") != 68 * 56 * 4:
+            fail(f"#{species_id:03d}: compact decoded estimate drift")
+        if not isinstance(record.get("encoded_bytes"), int) or record["encoded_bytes"] <= 0:
+            fail(f"#{species_id:03d}: compact encoded size invalid")
+
+    animated_records = produced.get("animated")
+    if not isinstance(animated_records, list) or len(animated_records) != 151:
+        fail("production animated record count must equal 151")
+    if [record.get("id") for record in animated_records] != GEN1_IDS:
+        fail("production animated ids must be ordered 001..151")
+    texture_paths: set[str] = set()
+    metadata_paths: set[str] = set()
+    for record in animated_records:
+        species_id = record["id"]
+        texture_path = record.get("texture_path")
+        metadata_path = record.get("metadata_path")
+        if texture_path != source["animated_encounter"]["texture_template"].format(id=species_id):
+            fail(f"#{species_id:03d}: animated texture path drift")
+        if metadata_path != source["animated_encounter"]["atlas_metadata_template"].format(id=species_id):
+            fail(f"#{species_id:03d}: animated metadata path drift")
+        if texture_path in texture_paths or metadata_path in metadata_paths:
+            fail(f"#{species_id:03d}: duplicate animated source path")
+        texture_paths.add(texture_path)
+        metadata_paths.add(metadata_path)
+        if not is_sha256(record.get("texture_sha256")) or not is_sha256(record.get("metadata_sha256")):
+            fail(f"#{species_id:03d}: animated SHA-256 invalid")
+        dims = record.get("texture_dimensions")
+        if not isinstance(dims, dict):
+            fail(f"#{species_id:03d}: animated dimensions missing")
+        width, height = dims.get("width"), dims.get("height")
+        if not isinstance(width, int) or not isinstance(height, int) or width <= 0 or height <= 0:
+            fail(f"#{species_id:03d}: animated dimensions invalid")
+        decoded = width * height * 4
+        if record.get("decoded_rgba8_bytes") != decoded:
+            fail(f"#{species_id:03d}: animated RGBA8 estimate drift")
+        if decoded > PER_ENCOUNTER_ATLAS_GUARDRAIL:
+            fail(f"#{species_id:03d}: animated atlas exceeds 512 KiB guardrail")
+        if record.get("frame_bounds_valid") is not True:
+            fail(f"#{species_id:03d}: frame bounds not validated")
+        frame_count = record.get("frame_count")
+        unique_frame_count = record.get("unique_frame_count")
+        if not isinstance(frame_count, int) or frame_count <= 0 or unique_frame_count != frame_count:
+            fail(f"#{species_id:03d}: frame count/uniqueness invalid")
+        for key in ("texture_encoded_bytes", "metadata_encoded_bytes"):
+            if not isinstance(record.get(key), int) or record[key] <= 0:
+                fail(f"#{species_id:03d}: {key} invalid")
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--production-import-manifest",
+        type=Path,
+        default=None,
+        help="Optional metadata-only manifest emitted by the P6 production importer.",
+    )
+    args = parser.parse_args()
+
     schema = load("P6_RESOURCE_MANIFEST_SCHEMA.json")
     manifest = load("P6_RESOURCE_MANIFEST.json")
     source = load("P6_POKEMON_RESOURCE_SOURCE_MAP.json")
     validate_schema(schema, manifest)
     validate_manifest(manifest)
     validate_source_map(source)
+
+    if args.production_import_manifest is not None:
+        produced = load_path(args.production_import_manifest)
+        validate_production_import(produced, source)
+
     initial = sum(
         (r["runtime"].get("encoded_bytes") or 0)
         for r in manifest["resources"]
@@ -182,6 +325,8 @@ def main() -> int:
     print(f"Measured initial source bytes represented: {initial}/{INITIAL_BUDGET}")
     print(f"Compact cache cap: {COMPACT_CACHE_CAP}")
     print(f"Encounter cache cap: {ENCOUNTER_CACHE_CAP}")
+    if args.production_import_manifest is not None:
+        print("P6 production import manifest validation PASS: compact=151 animated=151")
     return 0
 
 
