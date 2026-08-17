@@ -243,7 +243,7 @@ export function P8ExpeditionHud({ authority, portraitId, locale }: { readonly au
   const text = TEXT[locale];
   const profile = useMemo(() => deriveP8ExpeditionProfile(authority), [authority]);
   return (
-    <aside class="run-status expedition-hud" aria-label={text.profile}>
+    <aside class="expedition-hud" aria-label={text.profile}>
       <div class="hud-primary-row">
         <P8PortraitIdentity portraitId={portraitId} character={authority.character} locale={locale} />
         <div class="hud-primary-stats">
