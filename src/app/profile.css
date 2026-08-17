@@ -1,0 +1,283 @@
+.expedition-hud {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  gap: 0.8rem;
+  width: min(100%, 44rem);
+  margin: 0 auto 0.8rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(219, 196, 151, 0.25);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(35, 31, 27, 0.97), rgba(24, 22, 20, 0.97));
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.22);
+}
+
+.hud-primary-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 1.2fr);
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.portrait-identity {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.portrait-identity > div {
+  display: grid;
+  min-width: 0;
+}
+
+.portrait-identity span,
+.hud-location span,
+.vitality-block span,
+.resource-grid span,
+.hud-attribute-grid span,
+.companion-slot-grid span {
+  font-size: 0.72rem;
+  color: var(--muted, #b8aa94);
+}
+
+.portrait-identity strong,
+.hud-location strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portrait-art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 6;
+}
+
+.portrait-art.compact {
+  flex: 0 0 3.15rem;
+  width: 3.15rem;
+  border-radius: 0.8rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.portrait-backdrop { fill: #40372f; }
+.portrait-pathfinder .portrait-backdrop { fill: #293a35; }
+.portrait-herbalist .portrait-backdrop { fill: #45372f; }
+.portrait-warden .portrait-backdrop { fill: #34384a; }
+.portrait-face { fill: #d8b18f; }
+.portrait-hair { fill: #312923; stroke: #211d1a; stroke-width: 3; stroke-linecap: round; fill-rule: evenodd; }
+.portrait-cloak { fill: #745943; stroke: #211d1a; stroke-width: 3; }
+.portrait-pathfinder .portrait-cloak { fill: #536c57; }
+.portrait-herbalist .portrait-cloak { fill: #82624c; }
+.portrait-warden .portrait-cloak { fill: #5b6078; }
+.portrait-mark { fill: none; stroke: #4a3428; stroke-width: 2.5; stroke-linecap: round; }
+.portrait-gear { fill: none; stroke: #c9aa6d; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+
+.hud-primary-stats {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.hud-location,
+.vitality-block > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.vitality-track {
+  height: 0.48rem;
+  margin-top: 0.28rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.vitality-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #9cbd78, #c7d79a);
+}
+
+.hud-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.hud-chip-row > span {
+  padding: 0.36rem 0.56rem;
+  border: 1px solid rgba(219, 196, 151, 0.17);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 0.73rem;
+  line-height: 1.2;
+}
+
+.hud-chip-row > span.warning {
+  border-color: rgba(226, 144, 93, 0.6);
+  background: rgba(170, 82, 46, 0.15);
+}
+
+.resource-grid,
+.hud-attribute-grid,
+.companion-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.resource-grid > div,
+.hud-attribute-grid > div,
+.companion-slot-grid > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.48rem 0.58rem;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.profile-details {
+  border-top: 1px solid rgba(219, 196, 151, 0.14);
+  padding-top: 0.65rem;
+}
+
+.profile-details summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: var(--muted, #b8aa94);
+  user-select: none;
+}
+
+.profile-details-body {
+  display: grid;
+  gap: 0.85rem;
+  padding-top: 0.8rem;
+}
+
+.profile-details-body h2 {
+  margin: 0 0 0.45rem;
+  font-size: 0.82rem;
+}
+
+.hud-attribute-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.companion-slot-grid > div.empty {
+  opacity: 0.56;
+}
+
+.danger-rules {
+  padding: 0.7rem;
+  border-radius: 0.75rem;
+  background: rgba(135, 72, 49, 0.12);
+}
+
+.danger-rules p {
+  margin: 0.28rem 0;
+  font-size: 0.76rem;
+}
+
+.portrait-picker {
+  display: grid;
+  gap: 0.7rem;
+  margin: 1.2rem 0;
+}
+
+.profile-section-heading p {
+  margin-bottom: 0.25rem;
+}
+
+.portrait-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.portrait-option {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.45rem;
+  border: 1px solid rgba(219, 196, 151, 0.18);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.025);
+  color: inherit;
+  text-align: center;
+}
+
+.portrait-option span {
+  min-height: 2.2em;
+  font-size: 0.72rem;
+  line-height: 1.1;
+}
+
+.portrait-option.selected {
+  border-color: rgba(224, 194, 126, 0.82);
+  background: rgba(200, 159, 80, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(224, 194, 126, 0.2);
+}
+
+.portrait-option:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.character-portrait-preview {
+  margin-bottom: 0.9rem;
+  padding: 0.65rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+@media (max-width: 540px) {
+  .expedition-hud {
+    gap: 0.65rem;
+    margin-bottom: 0.55rem;
+    padding: 0.72rem;
+    border-radius: 0.85rem;
+  }
+
+  .hud-primary-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hud-primary-stats {
+    grid-template-columns: 1fr 1.4fr;
+    align-items: end;
+  }
+
+  .portrait-art.compact {
+    flex-basis: 2.8rem;
+    width: 2.8rem;
+  }
+
+  .resource-grid,
+  .companion-slot-grid {
+    gap: 0.3rem;
+  }
+
+  .resource-grid > div,
+  .companion-slot-grid > div {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .hud-attribute-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.3rem;
+  }
+
+  .hud-attribute-grid > div {
+    display: grid;
+    gap: 0.08rem;
+    text-align: center;
+  }
+
+  .hud-chip-row > span {
+    font-size: 0.68rem;
+  }
+}
