@@ -159,8 +159,6 @@ def validate_source_map(source: dict[str, Any]) -> None:
         expected = dims["width"] * dims["height"] * 4
         if sample["decoded_rgba8_bytes"] != expected:
             fail(f"#{sample['id']}: bad RGBA8 estimate")
-        if expected > PER_ENCOUNTER_ATLAS_GUARDRAIL:
-            fail(f"#{sample['id']}: exceeds 512 KiB per-atlas guardrail")
 
     inv = source["runtime_invariants"]
     if inv["initial_pokemon_media_bytes"] != 0 or inv["all_151_preloaded"]:
@@ -257,8 +255,14 @@ def validate_production_import(
         fail("production animated record count must equal 151")
     if [record.get("id") for record in animated_records] != GEN1_IDS:
         fail("production animated ids must be ordered 001..151")
+
     texture_paths: set[str] = set()
     metadata_paths: set[str] = set()
+    source_over_ids: list[int] = []
+    normalized_over_ids: list[int] = []
+    max_source: tuple[int, int] = (-1, -1)
+    max_normalized: tuple[int, int, dict[str, int]] = (-1, -1, {})
+
     for record in animated_records:
         species_id = record["id"]
         texture_path = record.get("texture_path")
@@ -271,28 +275,107 @@ def validate_production_import(
             fail(f"#{species_id:03d}: duplicate animated source path")
         texture_paths.add(texture_path)
         metadata_paths.add(metadata_path)
+
         if not is_sha256(record.get("texture_sha256")) or not is_sha256(record.get("metadata_sha256")):
             fail(f"#{species_id:03d}: animated SHA-256 invalid")
-        dims = record.get("texture_dimensions")
+
+        dims = record.get("source_texture_dimensions")
         if not isinstance(dims, dict):
-            fail(f"#{species_id:03d}: animated dimensions missing")
+            fail(f"#{species_id:03d}: source animated dimensions missing")
         width, height = dims.get("width"), dims.get("height")
         if not isinstance(width, int) or not isinstance(height, int) or width <= 0 or height <= 0:
-            fail(f"#{species_id:03d}: animated dimensions invalid")
-        decoded = width * height * 4
-        if record.get("decoded_rgba8_bytes") != decoded:
-            fail(f"#{species_id:03d}: animated RGBA8 estimate drift")
-        if decoded > PER_ENCOUNTER_ATLAS_GUARDRAIL:
-            fail(f"#{species_id:03d}: animated atlas exceeds 512 KiB guardrail")
+            fail(f"#{species_id:03d}: source animated dimensions invalid")
+        source_decoded = width * height * 4
+        if record.get("source_decoded_rgba8_bytes") != source_decoded:
+            fail(f"#{species_id:03d}: source RGBA8 estimate drift")
+        source_within = source_decoded <= PER_ENCOUNTER_ATLAS_GUARDRAIL
+        if record.get("source_within_512_kib_guardrail") is not source_within:
+            fail(f"#{species_id:03d}: source guardrail classification drift")
+        if not source_within:
+            source_over_ids.append(species_id)
+        if source_decoded > max_source[1]:
+            max_source = (species_id, source_decoded)
+
         if record.get("frame_bounds_valid") is not True:
             fail(f"#{species_id:03d}: frame bounds not validated")
         frame_count = record.get("frame_count")
         unique_frame_count = record.get("unique_frame_count")
-        if not isinstance(frame_count, int) or frame_count <= 0 or unique_frame_count != frame_count:
-            fail(f"#{species_id:03d}: frame count/uniqueness invalid")
+        unique_rect_count = record.get("unique_source_rectangle_count")
+        if not isinstance(frame_count, int) or frame_count <= 0:
+            fail(f"#{species_id:03d}: frame count invalid")
+        if unique_frame_count != frame_count:
+            fail(f"#{species_id:03d}: frame filenames must be unique")
+        if not isinstance(unique_rect_count, int) or unique_rect_count <= 0 or unique_rect_count > frame_count:
+            fail(f"#{species_id:03d}: unique source rectangle count invalid")
+
+        plan = record.get("normalization_plan")
+        if not isinstance(plan, dict):
+            fail(f"#{species_id:03d}: normalization plan missing")
+        if plan.get("method") != "dedupe-source-rectangles+shelf-pack-v1":
+            fail(f"#{species_id:03d}: normalization method drift")
+        if plan.get("pixel_scale") != 1 or plan.get("rotation") is not False:
+            fail(f"#{species_id:03d}: normalization may not scale/rotate pixel art")
+        if plan.get("unique_source_rectangle_count") != unique_rect_count:
+            fail(f"#{species_id:03d}: normalization rectangle count drift")
+        packed_dims = plan.get("packed_dimensions")
+        if not isinstance(packed_dims, dict):
+            fail(f"#{species_id:03d}: normalized dimensions missing")
+        packed_width, packed_height = packed_dims.get("width"), packed_dims.get("height")
+        if (
+            not isinstance(packed_width, int)
+            or not isinstance(packed_height, int)
+            or packed_width <= 0
+            or packed_height <= 0
+        ):
+            fail(f"#{species_id:03d}: normalized dimensions invalid")
+        packed_area = packed_width * packed_height
+        if plan.get("packed_pixel_area") != packed_area:
+            fail(f"#{species_id:03d}: normalized area drift")
+        normalized_decoded = packed_area * 4
+        if plan.get("decoded_rgba8_bytes") != normalized_decoded:
+            fail(f"#{species_id:03d}: normalized RGBA8 estimate drift")
+        normalized_within = normalized_decoded <= PER_ENCOUNTER_ATLAS_GUARDRAIL
+        if plan.get("within_512_kib_guardrail") is not normalized_within:
+            fail(f"#{species_id:03d}: normalized guardrail classification drift")
+        if not normalized_within:
+            normalized_over_ids.append(species_id)
+        if normalized_decoded > max_normalized[1]:
+            max_normalized = (species_id, normalized_decoded, packed_dims)
+
         for key in ("texture_encoded_bytes", "metadata_encoded_bytes"):
             if not isinstance(record.get(key), int) or record[key] <= 0:
                 fail(f"#{species_id:03d}: {key} invalid")
+
+    measurement = produced.get("animated_budget_measurement")
+    if not isinstance(measurement, dict):
+        fail("animated budget measurement missing")
+    if measurement.get("source_over_512_kib_count") != len(source_over_ids):
+        fail("source over-budget count drift")
+    if measurement.get("source_over_512_kib_ids") != source_over_ids:
+        fail("source over-budget id list drift")
+    if measurement.get("normalized_over_512_kib_count") != len(normalized_over_ids):
+        fail("normalized over-budget count drift")
+    if measurement.get("normalized_over_512_kib_ids") != normalized_over_ids:
+        fail("normalized over-budget id list drift")
+    if measurement.get("max_source") != {
+        "id": max_source[0],
+        "decoded_rgba8_bytes": max_source[1],
+    }:
+        fail("max source atlas measurement drift")
+    if measurement.get("max_normalized") != {
+        "id": max_normalized[0],
+        "decoded_rgba8_bytes": max_normalized[1],
+        "packed_dimensions": max_normalized[2],
+    }:
+        fail("max normalized atlas measurement drift")
+
+    if normalized_over_ids:
+        fail(
+            "normalized encounter atlases exceed 512 KiB after deterministic repack: "
+            + ", ".join(f"#{species_id:03d}" for species_id in normalized_over_ids)
+        )
+    if max_normalized[1] > ENCOUNTER_CACHE_CAP // 2:
+        fail("normalized per-atlas maximum no longer permits two resident atlases in 1 MiB")
 
 
 def main() -> int:
@@ -326,7 +409,7 @@ def main() -> int:
     print(f"Compact cache cap: {COMPACT_CACHE_CAP}")
     print(f"Encounter cache cap: {ENCOUNTER_CACHE_CAP}")
     if args.production_import_manifest is not None:
-        print("P6 production import manifest validation PASS: compact=151 animated=151")
+        print("P6 production import manifest validation PASS: compact=151 animated=151 normalized<=512KiB")
     return 0
 
 
