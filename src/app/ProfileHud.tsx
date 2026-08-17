@@ -1,3 +1,4 @@
+import { useMemo } from 'preact/hooks';
 import type { P8AuthorityState, P8AttributeId, P8CharacterState } from '../domain/p8Authority';
 import { P8_SLICE_SPECIALIZATIONS } from '../content/p8SlicePresentation';
 import {
@@ -240,7 +241,7 @@ export function P8PortraitIdentity({ portraitId, character, locale }: { readonly
 
 export function P8ExpeditionHud({ authority, portraitId, locale }: { readonly authority: P8AuthorityState; readonly portraitId: P8PortraitId; readonly locale: P8Locale }) {
   const text = TEXT[locale];
-  const profile = deriveP8ExpeditionProfile(authority);
+  const profile = useMemo(() => deriveP8ExpeditionProfile(authority), [authority]);
   return (
     <aside class="run-status expedition-hud" aria-label={text.profile}>
       <div class="hud-primary-row">
