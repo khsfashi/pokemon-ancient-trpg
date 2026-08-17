@@ -11,10 +11,10 @@ This file is the concise operational handoff. Durable authority remains in `docs
 - Iron-age / medieval-fantasy-like ordinary material baseline with narrow Pokémon-dependent technology/culture islands.
 - No normalized trainer culture, routine ownership, portable containment, Poké Balls or PC storage.
 - Exactly three visible companion slots; `0/3` remains a valid complete run.
-- Mandatory Generation-I roster is National Pokédex `#001-#151`; **every species must remain encounterable / have a living direct-interaction path somewhere in total content**.
+- Mandatory Generation-I roster is National Pokédex `#001-#151`; every species must remain encounterable / have a living direct-interaction path somewhere in total content by P9 exit.
 - Pokémon use fixed six-axis species baselines plus capability/hazard tags; ordinary Pokémon do not scale with the player.
 - P5 deterministic event contracts remain authoritative for event/RNG/state behavior.
-- D-036 freezes hybrid Pokémon presentation: **PokéSprite compact identity + animated encounter sprites + non-destructive conceal/reveal/shading/masking/environment layers**.
+- D-036 freezes hybrid Pokémon presentation: PokéSprite compact identity + animated encounter sprites + non-destructive conceal/reveal/shading/masking/environment layers.
 - Pokémon media remains optional and `metadata_only / not_cleared` for public distribution unless an exact artifact is affirmatively cleared.
 
 ## Completed phases
@@ -28,6 +28,7 @@ P4 Pokémon adaptation + Gen-I 151     COMPLETE
 P5 Narrative world-event engine       COMPLETE
 P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
+P8 First playable vertical slice      COMPLETE
 ```
 
 Strict exit evidence:
@@ -36,8 +37,9 @@ Strict exit evidence:
 - P5: `docs/P5_EXIT_AUDIT.md`
 - P6: `docs/P6_EXIT_AUDIT.md`
 - P7: `docs/P7_EXIT_AUDIT.md`
+- P8: `docs/P8_EXIT_AUDIT.md`
 
-## Frozen P6 resource handoff
+## Frozen P6 resource boundary
 
 ```text
 p6_owned_required_initial_resource_payload <= 3 MiB
@@ -54,9 +56,9 @@ runtime_atlas_repack                         == false
 missing_optional_media_changes_gameplay      == false
 ```
 
-Full pinned P6 production import validated compact `151/151`, animated PNG+JSON `151/151`, every frame bound and SHA-256 evidence without writing Pokémon source media into CI evidence. Maximum measured conservative animated atlas decode remains #085 Dodrio at `673x673 / 1,811,716 B`, below the frozen 2 MiB guardrail.
+P6's full pinned import proved compact `151/151`, animated PNG+JSON `151/151`, bound frames and SHA-256 evidence without copying Pokémon source media into public CI evidence. Maximum measured conservative animated-atlas decode remains #085 Dodrio at `1,811,716 B`, below the 2 MiB guardrail.
 
-## Frozen P7 architecture handoff
+## Frozen P7 architecture boundary
 
 Architecture contract: **`p7-architecture-v1`**.
 
@@ -71,7 +73,7 @@ presentation          = Preact 10.x only
 state/router library  = none in baseline
 authoritative runtime = framework-independent pure TypeScript
 save storage          = IndexedDB
-PWA cache tooling      = workbox-build
+PWA cache tooling     = workbox-build
 unit tests             = Vitest
 browser tests          = Playwright
 deployment             = static Vercel-compatible output
@@ -91,60 +93,17 @@ SHA-256                              = Web Crypto HashProvider
 
 Do not serialize authoritative u64/u63 values through JavaScript `number` or implicit BigInt JSON conversion.
 
-### P7 accepted batches
+P7 browser acceptance physically stops the preview origin for offline proof, keeps gameplay state in IndexedDB, keeps a new service worker waiting during an active run, preserves exact pending authority, and enforces the P6 decoded-resource caps in Chromium/WebKit.
 
-- **Batch 01 / PR #100** — froze architecture/toolchain/data/save/PWA decisions.
-- **Batch 02 / PR #101** — executable mobile-first static Preact/Vite/Workbox shell and CI.
-- **Batch 03 / PR #102** — exact frozen P5 RNG, Web Crypto hash provider, save envelope/migrations/IndexedDB exact pending resume.
-- **Batch 04 / PR #103** — deterministic generated runtime pack/indexes, including all `151/151` Generation-I species.
-- **Batch 05 / PR #104** — runtime resource owner, coalescing, bounded decoded caches and phone Chromium/WebKit resource proof. PR #104 is merged on `main` as `9fa7859c4884ae49101b6f4c7c9e981a012c9e93`.
-- **Batch 06 / PR #105** — browser save/backup round trip, production service-worker lifecycle, real-origin-outage reload, update waiting safety and Vercel-compatible static deployment proof.
+Evidence: `docs/P7_BATCH_01_AUDIT.md` through `docs/P7_BATCH_06_AUDIT.md` and `docs/P7_EXIT_AUDIT.md`.
 
-Batch 06 final validated code head before audit-only commits: `e0c81dfa7f25198aece7fc7766b5bf4b507e38a5`.
+## Frozen P8 vertical-slice handoff
 
-```text
-P7 Batch 06 Validation run 31998678801 = PASS
-Node                                  = 24.19.0
-npm                                   = 11.17.0
-Vitest                                = 11 files / 40 tests PASS
-Workbox precache                      = 4 files / 13,968 B
-production dist                       = 8 files / 181,336 B
-backend                               = 0
-serverless                            = 0
-pokemon_media                         = 0
-Chromium                              = 151.0.7922.34
-WebKit                                = 26.5
-resource browser proofs               = PASS / PASS
-save browser proofs                   = PASS / PASS
-PWA origin-outage/update proofs       = PASS / PASS
-```
-
-Browser save proof preserves `transition_seq_u64=18446744073709551614`, `origin_transition_seq_u64=9007199254740993`, pending phase `awaiting_reaction`, two completed RNG draws and a 2,428 B canonical backup across reload/export/import in both browsers.
-
-PWA proof physically stops the production preview origin before reload rather than relying on browser offline emulation. Chromium and WebKit both reload the cached shell with the origin unreachable. A byte-changed service worker then remains `waiting`, the old worker stays controller, and the pending authoritative IndexedDB save remains unchanged.
-
-Evidence:
-
-- `docs/P7_BATCH_01_AUDIT.md`
-- `docs/P7_BATCH_02_AUDIT.md`
-- `docs/P7_BATCH_03_AUDIT.md`
-- `docs/P7_BATCH_04_AUDIT.md`
-- `docs/P7_BATCH_05_AUDIT.md`
-- `docs/P7_BATCH_06_AUDIT.md`
-- `docs/P7_EXIT_AUDIT.md`
-
-## Active P8 handoff
-
-P8 issue: **#8 — First playable vertical slice**.  
 Integration contract: **`p8-vertical-slice-v1`**.  
-Batch 01 / PR #106 is merged on `main` as `c73a5a103876d1c36e1ec2b48608d3ea66d63c46`.  
-Batch 02 / PR #107 is merged on `main` as `cd30ddb4d989b60cf7e2f58a2428a10a524c8ded`.  
-Batch 03 / PR #108 is merged on `main` as `b800632ae5fd6e49451862aa0fb4ff507ec2666b`.  
-Current review: **Batch 04 / PR #109** (`agent/p8-batch04-phone-flow`).
+Issue: **#8 — First playable vertical slice**.  
+Accepted batches: PRs **#106, #107, #108, #109, #110**.
 
-Batch 01 freezes only the implementation/integration envelope. It does not freeze a final major faction identity, exact local canon, or the final P9 species/event breadth.
-
-Required first-slice envelope:
+P8 proves one bounded production-shaped Reedbank run without pretending to provide P9 breadth:
 
 ```text
 primary settlement                         = 1
@@ -152,136 +111,85 @@ meaningfully distinct local/ecology areas >= 2
 formative character prompts                = 3
 curated Origins                            >= 4
 curated Learned Practices                  >= 4
-curated Pokémon proving set                = 3..8
+curated Pokémon proving set                = 3
 visible companion slots                    = 3
-zero-companion completion                  = required
-all-151 direct-interaction breadth in P8   = false
-shared P5 event engine for all pillars     = required
+zero-companion completion                  = proven
+shared P5 event engine for all pillars     = proven
 runtime remote Pokémon API                 = forbidden
+backend dependency                         = none
+all-151 direct-interaction breadth in P8   = false
 ```
 
-P8 implementation order:
+The coherent route contains:
+
+1. three fiction-first formative memories and deterministic Origin/Learned Practice resolution;
+2. a legal P3 starting specialization;
+3. ordinary settlement/social pressure whose immediate cause is not a Pokémon;
+4. a persistent millkeeper relationship promise;
+5. travel/survival pressure and provision cost;
+6. P5 event eligibility/pending/choice/consequence through one shared runtime;
+7. Weedle direct ecology with a P3/P5 checked branch;
+8. a mixed orchard-keeper motive + Beedrill/Rattata ecology event;
+9. a saved return ending with a valid complete `0/3` companion path.
+
+### P8 production browser exit evidence
+
+Validated functional head before final audit/status-only commits:
 
 ```text
-Batch 01 vertical-slice contract/guards                       MERGED
-Batch 02 authoritative gameplay runtime                       MERGED
-Batch 03 coherent authored slice content + deterministic replay MERGED
-Batch 04 phone Preact + save/resource integration             REVIEW #109
-→ Batch 05 Chromium/WebKit full-run proof + P8 exit audit
+4aaaf55c979453314f3ce3999aa26f68c1ef1ed6
+P8 Batch 05 Validation run 32009086550 = PASS
 ```
 
-### Batch 02 authority foundation
-
-Batch 02 provides the framework-independent authority foundation required before story-specific UI grows:
-
-- exact P3 human seven-Attribute character state and deterministic formative resolver;
-- legal four-increase / cap-3 / distinct-competence starting specialization;
-- exact P3 `2d6 + Attribute + Competence + Context` static checks using the existing P5 RNG primitive;
-- frozen P3 bands: setback `<= -3`, costly `-2..-1`, full `0..+2`, exceptional `>= +3`;
-- cached trigger-index P5 candidate lookup and pure no-RNG eligibility;
-- deterministic integer-weight event selection with 0/1 candidate no-RNG behavior;
-- exact `event.select` subject `eval:<ordinal>` and independent keyed-stream draw indexes;
-- deterministic SHA-256-derived pending instance identity plus pinned choice/check/RNG provenance;
-- a closed typed P2/P3/P4 command subset with aggregate atomic prevalidation;
-- event count/cooldown/recent-history/chain bookkeeping and ordered post-commit triggers;
-- headless direct + checked event proof with exact `0 → 1 → 2` transition sequencing;
-- frozen P5 weighted-selection and hazardous-check vectors pinned in the production-path tests.
-
-Batch 02 validated functional head before workflow/audit-only commits:
+Accepted proof:
 
 ```text
-f751238d4ed5d8147adfecec5300e5ad4715b976
-P8 Authority Runtime Validation run 32004406948 = PASS
-P8 integration guard                              = PASS
-strict TypeScript                                 = PASS
-all Vitest fixtures                               = PASS
-P7-compatible production build regression         = PASS
+Node                       = 24.19.0
+npm                        = 11.17.0
+Vitest                     = 15 files / 58 tests PASS
+Vite                       = 8.0.16
+Workbox precache           = 4 files / 206,132 B
+production dist            = 8 files / 373,500 B
+backend / serverless       = 0 / 0
+pokemon_media              = 0
+Chromium                   = 151.0.7922.34
+WebKit                     = 26.5
+phone viewport             = 390x844
+P8 backup proofs           = 2/2 PASS
+P8 full/check proofs       = 4/4 PASS
+P8 physical-offline proofs = 2/2 PASS
+P7 resource regression     = 2/2 PASS
+P7 save regression         = 2/2 PASS
+P7 PWA regression          = 2/2 PASS
 ```
 
-### Batch 03 authored deterministic slice
-
-Batch 03 provides the first coherent authored production-shaped proving pack on the Batch 02 authority surface:
-
-- normalized source: `content/p8/vertical-slice.source.json`;
-- local/disposable canon scope with `durableCanonClaims = []`;
-- three fiction-first formative prompts with deterministic hidden tags;
-- four approved local Origins and four approved local Learned Practices;
-- P4-traced proving subset: Weedle #013, Beedrill #015, Rattata #019;
-- seven once-per-run P5 events spanning ordinary human pressure, persistent relationships, travel/survival, Pokémon ecology/direct interaction, mixed human motive + ecology, and ending inputs;
-- typed `p2.world.commit_locality_transition` rather than direct story-side world mutation;
-- build-time generated trigger indexes and content digest;
-- reusable cached runtime event catalog initialized once;
-- compact headless replay inputs with per-transition pre/post authority SHA-256 evidence;
-- complete deterministic `0/3` route and alternate checked branch;
-- repeated identical execution yielding equivalent replay checkpoints and serialized authority state;
-- no required Pokémon media dependency and no P9 faction identity claim.
-
-Generated content identity:
+Both browsers finish the real production Preact route at:
 
 ```text
-content_pack_id       = p8.reedbank-slice
-content_pack_version  = 1
-content_digest_sha256 = d19921e11a6015fdfd7da211d1f813386d23bc8637ecb300f724b6afac81eac5
+transition_seq       = 7
+current_locality     = reedbank-settlement
+provisions           = 2
+companions           = 0/3
+direct_interactions  = 3
+zero_companion_flag  = true
 ```
 
-Validated functional head before audit/status-only commits:
+P8 also proves exact pending reload, committed reload, completed-check reload before later input, canonical P7 backup export/import compatibility, optional-media absence, and exact in-progress P8 pending-save recovery while the production preview origin is physically stopped.
+
+Manual mobile usability evidence is recorded in `docs/P8_BATCH_05_AUDIT.md`: actual presentation source/CSS was reviewed against the six Batch 05 criteria and backed by real `390x844` Chromium/WebKit execution plus automated no-horizontal-overflow and `>=44x44` visible-control measurements. This is not presented as separate physical-device touch-latency certification.
+
+Final invariants:
 
 ```text
-a3eb8c828a9129c725eff7a33b2c925a63c64b10
-P8 Vertical Slice Validation run 32005741392 = PASS
-P8 Authority Runtime Validation run 32005741329 = PASS
-P7 Batch 02 Validation run 32005741379 = PASS
-P7 Batch 04 Validation run 32005741332 = PASS
-source/generated semantic check             = PASS
-strict TypeScript                           = PASS
-deterministic authority/replay fixtures     = PASS
-P7-compatible production build regression   = PASS
+mixed_world_loop_proven == true
+shared_event_engine_proven == true
+deterministic_save_reload_proven == true
+zero_companion_completion_proven == true
+phone_chromium_webkit_proven == true
+p6_resource_boundaries_preserved == true
+p7_architecture_preserved == true
+p9_151_breadth_not_prematurely_claimed == true
 ```
-
-### Batch 04 phone/save/resource integration
-
-PR #109 connects the authored slice to the actual phone-facing Preact/P7 boundaries without relocating gameplay truth into the UI:
-
-- phone flow for all three formative prompts, reveal, specialization, final sheet, seven event scenes, consequences, direct Pokémon interactions and ending summary;
-- one framework-independent `P8BrowserSession` owns authority, transition sequence, pending identity and save metadata;
-- Preact retains presentation/draft state only and dispatches intents into the shared P8/P5 event runtime;
-- P7 `IndexedDbSaveStore` persists explicit new-run, pending-event and committed-result boundaries;
-- pending refresh resumes the exact saved instance; committed refresh does not auto-select a new event;
-- strict P8 authority JSON restore parser preserves bigint/provenance-compatible save semantics;
-- optional Pokémon media has a single P7 `ResourceLoader` adapter and deterministic text-only fallback when no cleared ref exists;
-- validated non-authoritative presentation source is checked against authored event/choice/outcome identities;
-- complete Chromium phone smoke proves the actual Preact `0/3` route with both pending and committed reloads.
-
-Validated functional head before audit/status-only commits:
-
-```text
-55ba252e5da98a7f660bf4ae5357b9407a2abecb
-P8 Batch 04 Validation run 32007630319 = PASS
-P8 Vertical Slice Validation run 32007630256 = PASS
-P8 Authority Runtime Validation run 32007630297 = PASS
-P7 Batch 02 Validation run 32007630282 = PASS
-Vitest                              = 15 files / 58 tests PASS
-Chromium phone smoke                = 1/1 PASS
-transition_seq                      = 7
-current_locality                    = reedbank-settlement
-provisions                          = 2
-companions                          = 0
-direct_interactions                 = 3
-production dist                     = 8 files / 373,500 B
-backend / serverless / pokemon_media = 0 / 0 / 0
-```
-
-P8 must consume the frozen P1-P7 contracts instead of reopening them casually. The vertical slice must prove a phone-sized mixed-world loop with:
-
-1. settlement/social pressure;
-2. travel/survival;
-3. a persistent faction/relationship thread;
-4. Pokémon ecology/direct interaction;
-5. the complete deterministic event/save/reload path;
-6. a valid complete `0/3` companion path;
-7. resource presentation through the P6/P7 cache and optional-media boundaries.
-
-P8 must not interpret the current generated proving pack as permission to make any Pokémon permanently unreachable. The long-form P9 content expansion still owns the complete breadth of living direct-interaction paths for all `151/151` species.
 
 Evidence:
 
@@ -292,15 +200,25 @@ Evidence:
 - `docs/P8_BATCH_02_AUDIT.md`
 - `docs/P8_BATCH_03_AUDIT.md`
 - `docs/P8_BATCH_04_AUDIT.md`
+- `docs/P8_BATCH_05_AUDIT.md`
+- `docs/P8_EXIT_AUDIT.md`
 
 ## Exact next work
 
-**Finish P8 Batch 04 / PR #109 review and merge. After merge: P8 Batch 05 — production Chromium/WebKit full-run proof + final P8 exit audit.**
+**Begin P9 / issue #9 — Full world content + factions + complete Gen-I realization.**
 
-Batch 05 must reuse the Batch 04 phone/session/resource path, prove the deterministic `0/3` route in both production-intended phone browsers, exercise P8 save/PWA compatibility, perform the manual mobile usability review, and map issue #8 to final exit evidence. Do not broaden into P9's all-151 content expansion yet.
+Start with a bounded P9 Batch 01 contract/planning gate before bulk authoring:
+
+1. freeze the P9 world-content expansion envelope and scope-control rules;
+2. define a machine-checkable world-event category coverage manifest;
+3. define a machine-checkable `#001-#151` living direct-encounter realization manifest traced to P4/D-034;
+4. define the major-faction lane contract, targeting roughly `4..6` persistent setting-native lanes without prematurely writing hundreds of events;
+5. sequence later P9 batches so schema/validation, faction/world skeleton, species realization and breadth audits expand through the proven P5/P6/P7/P8 paths rather than forks.
+
+Do **not** start by writing large amounts of content or by treating source/species/media presence as encounter realization. P9 closes only when every mandatory species has at least one meaningful authored living interaction path and the broader world-content categories/faction consequences are substantively realized.
 
 ## Later roadmap
 
 `#1 P0 → #2 P1 → #3 P2 → #4 P3 → #5 P4 → #6 P5 → #12 P6 → #7 P7 → #8 P8 → #9 P9 → #10 P10`
 
-P9 must realize substantive world-content breadth and all 151 living direct-interaction paths. P10 is final audit/polish/release-readiness work.
+P10 remains final audit/polish/release-readiness work after P9 content realization.
