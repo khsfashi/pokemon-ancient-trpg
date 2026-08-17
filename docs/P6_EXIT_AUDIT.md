@@ -3,13 +3,21 @@
 Date: **2026-08-17**  
 Issue: **#12**  
 Candidate branch: `agent/p6-batch03-production-import-exit`  
-Verdict: **PENDING FINAL PR-HEAD CI**
+Verdict: **PASS**
 
-P6 becomes `COMPLETE` only after the final candidate head passes the complete P6 Resource Validation workflow. The audit remains fail-closed until that proof is green.
+P6 exit is accepted from the successful full-production-import candidate and remains subject to the same workflow on the final PR head.
+
+Validated candidate evidence:
+
+```text
+head == 95787eda4c1c04aeb27c4acb0c4256c12206e85b
+P6 Resource Validation run == #30
+workflow conclusion == success
+```
 
 ## 1. Required outputs
 
-| Requirement | Evidence | Candidate status |
+| Requirement | Evidence | Status |
 |---|---|---|
 | Resource strategy | `docs/RESOURCE_STRATEGY.md` | PASS |
 | Versioned provenance/resource manifest | `docs/P6_RESOURCE_MANIFEST_SCHEMA.json`, `docs/P6_RESOURCE_MANIFEST.json` | PASS |
@@ -17,8 +25,9 @@ P6 becomes `COMPLETE` only after the final candidate head passes the complete P6
 | ADOPT / ADAPT / DEFER decisions | `docs/RESOURCE_STRATEGY.md` | PASS |
 | Mobile budget/loading contract | `docs/P6_RESOURCE_BUDGET_AND_PIPELINE_CONTRACT.md` | PASS |
 | D-036 presentation decision | `docs/DECISION_D036_HYBRID_POKEMON_PRESENTATION.md`, `docs/P6_HYBRID_POKEMON_PRESENTATION_CONTRACT.md` | PASS |
+| Batch 03 production-import audit | `docs/P6_BATCH_03_AUDIT.md` | PASS |
 | Static executable validation | `tools/validate_p6_resources.py` | PASS |
-| Full production-import validation | `tools/build_p6_production_import_manifest.py` + CI | PENDING FINAL CI |
+| Full production-import validation | `tools/build_p6_production_import_manifest.py` + CI run #30 | PASS |
 
 ## 2. Frozen product/resource boundary
 
@@ -40,7 +49,7 @@ conceal_reveal_materializes_duplicate_source_assets == false
 presentation_animation_mutates_authoritative_game_state == false
 ```
 
-This does not weaken the world-content requirement: National Pokédex `001..151` must retain a living direct-interaction path in game content. Optional media failure cannot remove a gameplay encounter.
+This does not weaken the world-content requirement: National Pokédex `001..151` retain a living direct-interaction path in game content. Optional media failure cannot remove a gameplay encounter.
 
 ## 3. Frozen source pins
 
@@ -59,8 +68,6 @@ Pin drift fails validation.
 
 ## 4. Full Gen-I production measurement
 
-Batch 03 performed the measurement that Batch 02 deliberately left open.
-
 ```text
 compact_default_pngs_validated == 151/151
 animated_png_json_pairs_validated == 151/151
@@ -74,7 +81,7 @@ max_source_atlas_dimensions == 673x673
 max_source_atlas_RGBA8_estimate == 1,811,716 bytes
 ```
 
-The old `512 KiB` per-atlas value is superseded because full coverage disproved it. A repack experiment still left 20 species above `512 KiB`, so a custom repacker is not imposed merely to preserve that provisional sample cap.
+The provisional Batch 02 `512 KiB` per-atlas value is superseded because complete coverage disproved it. A repack experiment still left 20 species above `512 KiB`, so P6 does not impose custom repacking merely to preserve an invalid representative-sample cap.
 
 ## 5. Final frozen mobile budgets
 
@@ -106,7 +113,7 @@ The final `2 MiB` per-atlas guardrail gives headroom over the measured `1,811,71
 
 ## 6. Production-import exit proof
 
-The final workflow must prove, on the final candidate head:
+Run #30 proved:
 
 ```text
 pokesprite_compact_validated == 151/151
@@ -118,11 +125,11 @@ produced_evidence_contains_pokemon_source_media == false
 produced_evidence_is_metadata_only == true
 ```
 
-The live checker fetches pinned media in memory, validates/hash-materializes it, and writes only JSON metadata evidence.
+The live checker fetches pinned media in memory, validates/hash-materializes it, and writes only JSON metadata evidence. The successful CI Artifact `p6-production-import-manifest` is metadata-only evidence rather than a Pokémon media bundle.
 
 ## 7. Fail-closed validation obligations
 
-The final head must reject or prevent:
+The frozen validators reject or prevent:
 
 - duplicate resource IDs and duplicate logical source ownership;
 - unknown schema versions;
@@ -136,11 +143,11 @@ The final head must reject or prevent:
 - optional-media absence changing gameplay;
 - Pokémon source media appearing in generated public CI evidence.
 
-The pinned full-data distribution is itself regression-checked: 151 IDs, layout distribution `150/1`, format distribution `150/1`, 25 species above the superseded `512 KiB` threshold, and max #085 `673x673 / 1,811,716 B`.
+The pinned full-data distribution is regression-checked: 151 IDs, layout distribution `150/1`, format distribution `150/1`, 25 species above the superseded `512 KiB` threshold, and max #085 `673x673 / 1,811,716 B`.
 
-## 8. P7 handoff if and only if final verdict becomes PASS
+## 8. P7 handoff
 
-P7 #7 may begin after this audit becomes `PASS`, the final candidate remains CI-green, and #12 closes. P7 must preserve:
+P7 #7 is unblocked after #12 closes. P7 must preserve:
 
 - semantic `resource_id` lookup;
 - generated/indexed manifests rather than hot-path source parsing;
@@ -155,18 +162,16 @@ P7 #7 may begin after this audit becomes `PASS`, the final candidate remains CI-
 
 P6 does not preselect the P7 framework, PWA packaging, save/storage implementation or deployment target.
 
-## 9. Candidate verdict
-
-Current pre-final-CI state:
+## 9. Exit verdict
 
 ```text
 p6_static_contracts_present == true
 p6_batch03_live_validator_present == true
 p6_full_gen1_measurement_recorded == true
-p6_final_live_import_ci_passed == not_yet_proven_on_final_head
-p6_complete == false
-issue_12_may_close == false
-p7_may_begin == false
+p6_validated_candidate_ci == PASS
+p6_complete == true
+issue_12_may_close == true
+p7_may_begin_after_issue_12_close == true
 ```
 
-After a green final PR-head workflow, promote this verdict to `PASS`, close #12, and advance `PROJECT_STATUS.md` to P7.
+**P6 verdict: PASS.** The final PR head must remain green under the same P6 Resource Validation workflow before merge.
