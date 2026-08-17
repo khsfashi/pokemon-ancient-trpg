@@ -1,0 +1,73 @@
+name: P7 Batch 02 Validation
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'vite.config.ts'
+      - 'index.html'
+      - 'public/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'e2e/**'
+      - 'tools/build-service-worker.mjs'
+      - 'tools/validate-dist.mjs'
+      - '.github/workflows/p7-batch02-validation.yml'
+  push:
+    branches:
+      - 'agent/p7-batch02-executable-skeleton'
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'vite.config.ts'
+      - 'index.html'
+      - 'public/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'e2e/**'
+      - 'tools/build-service-worker.mjs'
+      - 'tools/validate-dist.mjs'
+      - '.github/workflows/p7-batch02-validation.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Bootstrap committed npm lockfile when absent
+        run: |
+          if [ ! -f package-lock.json ]; then
+            npm install --package-lock-only --ignore-scripts
+          fi
+      - name: Install from lockfile
+        run: npm ci
+      - name: Strict typecheck
+        run: npm run typecheck
+      - name: Deterministic unit fixtures
+        run: npm run test
+      - name: Static PWA production build
+        run: npm run build
+      - name: Commit bootstrapped lockfile
+        if: github.event_name == 'push' && github.ref == 'refs/heads/agent/p7-batch02-executable-skeleton'
+        run: |
+          if git status --porcelain -- package-lock.json | grep -q .; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add package-lock.json
+            git commit -m 'P7 Batch 02 lock npm dependencies'
+            git push
+          fi
