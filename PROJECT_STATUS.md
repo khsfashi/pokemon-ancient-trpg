@@ -1,8 +1,8 @@
 # Project Status
 
-Last explanatory handoff update: **2026-08-17**
+Last operational handoff update: **2026-08-17**
 
-This file is the concise operational handoff. Durable product authority remains in `docs/DECISIONS.md`, separate later decision files and phase contracts; live GitHub state wins if this file is stale.
+This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts and exit audits; live GitHub state wins if this file is stale.
 
 ## Binding direction
 
@@ -11,11 +11,11 @@ This file is the concise operational handoff. Durable product authority remains 
 - Iron-age / medieval-fantasy-like ordinary material baseline with narrow Pokémon-dependent technology/culture islands.
 - No normalized trainer culture, routine ownership, portable containment, Poké Balls or PC storage.
 - Exactly three visible companion slots; `0/3` remains a valid complete run.
-- Mandatory Generation-I roster is National Pokédex #001-#151; D-034 requires every species to have a living direct-interaction path somewhere in total content.
+- Mandatory Generation-I roster is National Pokédex `#001-#151`; every species has a living direct-interaction path somewhere in total content.
 - Pokémon use fixed six-axis species baselines plus capability/hazard tags; ordinary Pokémon do not scale with the player.
 - P5 deterministic event contracts remain authoritative for event/RNG/state behavior.
-- D-036 freezes hybrid Pokémon presentation: **PokéSprite-style compact identity + animated encounter sprites + non-destructive conceal/reveal/shading/masking/environment layers**.
-- Pokémon media remains optional and `metadata_only / not_cleared` for public distribution until an exact artifact is affirmatively cleared.
+- D-036 freezes hybrid Pokémon presentation: **PokéSprite compact identity + animated encounter sprites + non-destructive conceal/reveal/shading/masking/environment layers**.
+- Pokémon media remains optional and `metadata_only / not_cleared` for public distribution unless an exact artifact is affirmatively cleared.
 
 ## Completed phases
 
@@ -26,87 +26,39 @@ P2 World bible and setting contract   COMPLETE
 P3 Core TRPG rules/character model    COMPLETE
 P4 Pokémon adaptation + Gen-I 151     COMPLETE
 P5 Narrative world-event engine       COMPLETE
+P6 Resource/asset/provenance/budget   COMPLETE
 ```
 
-P4 strict exit evidence remains in `docs/P4_EXIT_AUDIT.md`; all `001..151` dossiers are complete. P5 strict exit evidence remains in `docs/P5_EXIT_AUDIT.md`; `p5-event-contract-v1` is frozen.
+P4 strict exit evidence: `docs/P4_EXIT_AUDIT.md`.  
+P5 strict exit evidence: `docs/P5_EXIT_AUDIT.md`.  
+P6 strict exit evidence: `docs/P6_EXIT_AUDIT.md`.
 
-## Current phase
+## P6 final handoff
 
-**P6 — Resource and asset strategy, sourcing, provenance, and mobile budget (#12) is active.** P7 remains blocked.
+P6 Batch 03 replaced representative-resource assumptions with full pinned Gen-I production-import validation.
 
-Primary P6 artifacts:
-
-- strategy: `docs/RESOURCE_STRATEGY.md`
-- Batch 01 audit: `docs/P6_BATCH_01_AUDIT.md`
-- D-036 decision: `docs/DECISION_D036_HYBRID_POKEMON_PRESENTATION.md`
-- hybrid presentation contract: `docs/P6_HYBRID_POKEMON_PRESENTATION_CONTRACT.md`
-- Batch 02 audit: `docs/P6_BATCH_02_AUDIT.md`
-- concrete manifest: `docs/P6_RESOURCE_MANIFEST.json`
-- manifest schema: `docs/P6_RESOURCE_MANIFEST_SCHEMA.json`
-- Pokémon source map: `docs/P6_POKEMON_RESOURCE_SOURCE_MAP.json`
-- budget/pipeline contract: `docs/P6_RESOURCE_BUDGET_AND_PIPELINE_CONTRACT.md`
-- validator: `tools/validate_p6_resources.py`
-
-### P6 Batch 01 — PASS
-
-Batch 01 derived resource classes, public-safe fallback rules, stable `resource_id` semantics and build-time normalization. Its unresolved `P6-HDG-001` snapshot is historical and superseded by D-036.
-
-### P6-HDG-001 — RESOLVED by D-036
+Validated candidate evidence:
 
 ```text
-compact_pokemon_identity_candidate == PokeSprite
-encounter_pokemon_presentation == animated_sprite
-unknown_encounter_conceal_reveal == true
-per_reveal_state_duplicate_sprite_assets == false
-all_151_encounter_animations_preloaded == false
-presentation_animation_mutates_authoritative_game_state == false
-current_blocking_p6_human_design_gate_count == 0
+candidate_head == 95787eda4c1c04aeb27c4acb0c4256c12206e85b
+P6 Resource Validation run == #30 / success
+PokéSprite compact default PNG == 151/151
+PokéRogue animated PNG+JSON == 151/151
+all frame/source bounds valid == true
+SHA-256 materialized for every fetched artifact == true
+CI evidence == metadata-only JSON
+Pokémon source media written to evidence == false
 ```
 
-### P6 Batch 02 — PASS
-
-Exact upstream pins:
+Full animated-source measurement:
 
 ```text
-Pretendard v1.3.9
-  5c41199ea0024a9e0b2cb31735265056e5472d76
-Lucide 1.27.0
-  4aec3f892fd6c23063bc2fead83c899b5d412b1c
-PokéSprite compact candidate
-  c5aaa610ff2acdf7fd8e2dccd181bca8be9fcb3e
-PokéRogue animated candidate
-  909b43612324622608023b3beb2f24f4ef159c1d
-```
-
-Measured generic baseline:
-
-```text
-PretendardVariable.woff2 source bytes == 2057688
-Lucide generic icon count == 4
-Lucide selected source bytes == 1347
-Pokemon media initial payload == 0
-```
-
-Representative compact measurements:
-
-```text
-pokesprite_source_canvas == 68x56
-rgba8_decoded_bytes_per_compact_icon == 15232
-three_visible_icons_decoded_bytes == 45696
-compact_decoded_cache_cap == 384 KiB
-all_151_compact_icons_preloaded == false
-```
-
-Representative animated-atlas measurements:
-
-```text
-pokemon_001_atlas == 181x181
-pokemon_001_rgba8_estimate == 131044
-pokemon_151_atlas == 225x225
-pokemon_151_rgba8_estimate == 202500
-per_encounter_atlas_guardrail == 512 KiB
-max_resident_encounter_atlases == 2
-encounter_atlas_cache_cap == 1 MiB
+metadata_layout.texture-array-v1 == 150
+metadata_layout.root-frames-meta-v1 == 1
+metadata_format.RGBA8888 == 150
+metadata_format.I8 == 1
+old provisional 512 KiB cap exceeded by == 25 species
+max source atlas == #085 Dodrio == 673x673 == 1,811,716 conservative RGBA8 bytes
 ```
 
 Frozen P6 resource budgets:
@@ -115,52 +67,50 @@ Frozen P6 resource budgets:
 p6_owned_required_initial_resource_payload <= 3 MiB
 pokemon_media_initial_payload == 0
 compact_icon_decoded_cache <= 384 KiB
-encounter_atlas_decoded_cache <= 1 MiB
-combined_optional_pokemon_decoded_image_working_set <= 1.375 MiB
-baseline_bgm_ambience_ui_sfx_cries_payload == 0
-required_raster_location_event_illustration_payload == 0
+per_encounter_atlas_guardrail <= 2 MiB
+max_resident_encounter_atlases == 2
+encounter_atlas_decoded_cache <= 4 MiB
+combined_optional_pokemon_decoded_image_working_set <= 4.375 MiB
 ```
 
-Rights/public-build boundary remains fail-closed:
+Runtime/resource invariants inherited by P7:
 
 ```text
-pokemon_media_repo_mode_default == metadata_only
-pokemon_media_public_distribution_default == not_cleared
-public_safe_build_requires_pokemon_images == false
-public_safe_build_requires_pokemon_cries == false
+cache_key == resource_id
+duplicate_instance_policy == reuse_single_cached_instance
+all_151_pokemon_media_preloaded == false
+runtime_default_image_resize == false
+runtime_atlas_repack == false
+per_render_full_manifest_scan == false
+per_render_full_species_asset_scan == false
 missing_optional_media_changes_authoritative_gameplay == false
 ```
 
-Executable validation now rejects duplicate resource identities, illegal bundling/public Pokémon media, initial Pokémon-media preload, source-pin drift and decoded-budget violations.
+## Current phase
 
-Validation command:
+**P7 — Technical architecture, web/PWA target, save/data/resource pipeline, and tests (#7) is active.**
 
-```bash
-python tools/validate_p6_resources.py
-```
+P7 goal: freeze an implementation-ready architecture only after P1-P6 product/data/resource contracts are stable.
 
-Current pre-publish local result:
+Hard constraints from #7:
 
-```text
-P6 resource validation == PASS
-manifest_record_count == 7
-measured_initial_source_bytes_represented == 2059035 / 3145728
-p6_complete == false
-p7_may_begin == false
-```
+- prefer a lightweight mobile-first web runtime unless evidence shows it is insufficient;
+- do not require a backend without a concrete gameplay/product need;
+- avoid unnecessary runtime allocation/work;
+- generate/cache derived indexes instead of repeated scans/recomputation;
+- preserve P6 provenance, redistribution, preprocessing, loading and memory budgets;
+- base technical choices on current primary documentation and proven tooling.
 
-## Exact next work
+## Exact next work — P7 Batch 01
 
-Continue **P6 Batch 03 — production import coverage + P6 exit audit**:
-
-1. run the pinned PokéSprite compact import check across `001..151`;
-2. run selected Gen-I animated PNG+JSON pair/frame-bound validation;
-3. materialize SHA-256 for every actually fetched artifact in the produced import manifest;
-4. prove no public distributable artifact includes `not_cleared` Pokémon media;
-5. run budget/duplicate/cache/fallback validation against produced artifacts;
-6. reconcile historical unresolved-gate wording in `docs/RESOURCE_STRATEGY.md`;
-7. produce `docs/P6_EXIT_AUDIT.md`;
-8. close #12 and unblock P7 **only** if the full P6 exit audit passes.
+1. evaluate current lightweight mobile-first web/PWA runtime candidates against primary documentation;
+2. choose the minimum framework/build-tooling boundary that satisfies deterministic P2-P6 contracts;
+3. freeze runtime/content/resource separation and indexed `resource_id` loading/caching architecture;
+4. freeze local save schema/versioning/migration plus backup/export/import behavior;
+5. freeze imported Pokémon data → generated/hash-indexed artifact pipeline;
+6. define deterministic fixtures/tests for rules, events, saves, data and resource loading;
+7. define offline/PWA/deployment behavior and only retain an Android packaging path if evidence justifies it;
+8. produce a versioned architecture contract and implementation-ready skeleton plan for P7 exit.
 
 ## Later roadmap
 
