@@ -133,9 +133,40 @@ Evidence:
 - `docs/P7_BATCH_06_AUDIT.md`
 - `docs/P7_EXIT_AUDIT.md`
 
-## Exact next work
+## Active P8 handoff
 
-**P8 — Vertical-slice gameplay implementation (#8).**
+P8 issue: **#8 — First playable vertical slice**.  
+Integration contract: **`p8-vertical-slice-v1`**.  
+Current review: **Batch 01 / PR #106** (`agent/p8-batch01-vertical-slice-contract`).
+
+Batch 01 freezes only the implementation/integration envelope. It does not freeze a final major faction identity, exact local canon, or the final P9 species/event breadth.
+
+Required first-slice envelope:
+
+```text
+primary settlement                         = 1
+meaningfully distinct local/ecology areas >= 2
+formative character prompts                = 3
+curated Origins                            >= 4
+curated Learned Practices                  >= 4
+curated Pokémon proving set                = 3..8
+visible companion slots                    = 3
+zero-companion completion                  = required
+all-151 direct-interaction breadth in P8   = false
+shared P5 event engine for all pillars     = required
+runtime remote Pokémon API                 = forbidden
+```
+
+P8 implementation order after Batch 01 merges:
+
+```text
+Batch 02 authoritative gameplay runtime
+→ Batch 03 coherent authored slice content + deterministic replay
+→ Batch 04 phone Preact + save/resource integration
+→ Batch 05 Chromium/WebKit full-run proof + P8 exit audit
+```
+
+Batch 02 must establish the framework-independent authoritative run/domain/event layer before story-specific UI grows. It owns deterministic character creation, the required P5 event-runtime subset, typed P2/P3/P4 adapters, atomic state transition tests, and a headless direct-event + checked-event proof.
 
 P8 must consume the frozen P1-P7 contracts instead of reopening them casually. The vertical slice must prove a phone-sized mixed-world loop with:
 
@@ -148,6 +179,19 @@ P8 must consume the frozen P1-P7 contracts instead of reopening them casually. T
 7. resource presentation through the P6/P7 cache and optional-media boundaries.
 
 P8 must not interpret the current generated fixture pack as permission to make any Pokémon permanently unreachable. The long-form P9 content expansion still owns the complete breadth of living direct-interaction paths for all `151/151` species.
+
+Evidence:
+
+- `docs/P8_VERTICAL_SLICE_CONTRACT.md`
+- `docs/P8_VERTICAL_SLICE_MANIFEST.json`
+- `docs/P8_IMPLEMENTATION_PLAN.md`
+- `docs/P8_BATCH_01_AUDIT.md` (added before Batch 01 acceptance)
+
+## Exact next work
+
+**Finish P8 Batch 01 / PR #106 validation and review. After merge: P8 Batch 02 — authoritative gameplay runtime foundation.**
+
+Do not start presentation-heavy P8 content/UI ahead of the Batch 02 authority layer. Batch 02 should remain headless/pure-TypeScript first and retain every applicable P5/P6/P7 gate.
 
 ## Later roadmap
 

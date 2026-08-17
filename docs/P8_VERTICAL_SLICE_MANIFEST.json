@@ -1,0 +1,87 @@
+{
+  "schema_version": "p8-vertical-slice-v1",
+  "verified_date": "2026-08-17",
+  "phase_issue": 8,
+  "upstream": {
+    "p2_region_contract": "docs/P2_FIRST_REGION_CONTRACT.md",
+    "p3_character_creation_contract": "docs/P3_CHARACTER_CREATION_CONTRACT.md",
+    "p5_event_contract_version": "p5-event-contract-v1",
+    "p6_resource_contract": "docs/P6_RESOURCE_BUDGET_AND_PIPELINE_CONTRACT.md",
+    "p7_architecture_version": "p7-architecture-v1",
+    "world_content_contract": "docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md"
+  },
+  "slice_scope": {
+    "primary_settlement_count": 1,
+    "travel_corridor_min": 1,
+    "meaningfully_distinct_local_or_ecology_context_min": 2,
+    "formative_prompt_count": 3,
+    "curated_origin_count_min": 4,
+    "curated_practice_count_min": 4,
+    "curated_species_count_min": 3,
+    "curated_species_count_max": 8,
+    "visible_companion_slots": 3,
+    "zero_companion_completion_required": true,
+    "all_151_required_in_slice": false
+  },
+  "required_loop_proofs": {
+    "character_creation_reveal_and_specialization": true,
+    "settlement_social_pressure": true,
+    "human_social_non_pokemon_immediate_cause": true,
+    "travel_survival_event": true,
+    "persistent_faction_or_relationship_thread": true,
+    "pokemon_ecology_direct_interaction": true,
+    "mixed_human_motive_and_pokemon_ecology": true,
+    "event_eligibility_choice_check_consequence": true,
+    "deterministic_save_reload_resume": true,
+    "coherent_run_ending": true,
+    "phone_sized_ui": true
+  },
+  "runtime": {
+    "authoritative_core": "framework-independent-pure-typescript",
+    "event_engine": "p5-shared-data-driven",
+    "event_evaluation": "committed-transition-driven",
+    "separate_faction_event_engine": false,
+    "separate_pokemon_event_engine": false,
+    "hardcoded_story_events_in_ui": false,
+    "ui_direct_authoritative_mutation": false,
+    "pending_event_persisted_before_player_wait": true,
+    "save_storage": "indexeddb",
+    "content_pack_pin_required": true,
+    "runtime_remote_pokemon_api": false,
+    "runtime_whole_event_catalog_scan": false
+  },
+  "resource_guards": {
+    "inherit_p6_p7_caps_without_relaxation": true,
+    "pokemon_media_initial_payload_bytes": 0,
+    "compact_icon_decoded_cache_cap_bytes": 393216,
+    "encounter_atlas_decoded_per_item_cap_bytes": 2097152,
+    "encounter_atlas_max_resident": 2,
+    "encounter_atlas_decoded_cache_cap_bytes": 4194304,
+    "combined_optional_pokemon_decoded_cap_bytes": 4587520,
+    "required_initial_resource_payload_cap_bytes": 3145728,
+    "missing_optional_media_changes_gameplay": false,
+    "runtime_default_image_resize": false,
+    "runtime_atlas_repack": false
+  },
+  "content_boundaries": {
+    "batch01_freezes_new_major_faction_identity": false,
+    "batch01_freezes_new_persistent_world_canon": false,
+    "local_noncanonical_slice_details_allowed": true,
+    "exact_species_subset_deferred_to_authored_slice_batch": true,
+    "exact_origin_practice_mapping_deferred_to_runtime_content_batches": true,
+    "p9_owns_all_151_direct_interaction_breadth": true,
+    "zero_companion_path_may_not_be_content_gated": true
+  },
+  "validation": {
+    "retain_p5_contract_gates": true,
+    "retain_p6_resource_gates": true,
+    "retain_p7_architecture_gates": true,
+    "pure_runtime_unit_tests_required": true,
+    "deterministic_replay_fixture_required": true,
+    "mid_event_reload_fixture_required": true,
+    "zero_companion_end_to_end_fixture_required": true,
+    "phone_chromium_webkit_e2e_required": true,
+    "typecheck_required": true,
+    "production_build_required": true
+  }
+}
