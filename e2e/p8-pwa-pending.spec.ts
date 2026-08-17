@@ -84,15 +84,15 @@ async function readP8SaveJson(page: Page): Promise<string> {
 }
 
 async function startNewRunToFirstPending(page: Page): Promise<void> {
-  await page.getByRole('button', { name: 'Start new run' }).click();
+  await page.getByRole('button', { name: 'New journey' }).click();
   for (const index of [1, 2, 3]) {
-    await expect(page.getByText(`Formative memory · ${index}/3`)).toBeVisible();
+    await expect(page.getByText(`A memory from before · ${index}/3`)).toBeVisible();
     await page.locator('button.choice').first().click();
   }
-  await expect(page.getByText('Background reveal')).toBeVisible();
-  await page.getByRole('button', { name: 'Choose a specialization' }).click();
-  await page.getByRole('button', { name: 'Review character' }).click();
-  await page.getByRole('button', { name: 'Begin the run' }).click();
+  await expect(page.getByText('Your past')).toBeVisible();
+  await page.getByRole('button', { name: 'Choose a strength' }).click();
+  await page.getByRole('button', { name: 'Review' }).click();
+  await page.getByRole('button', { name: 'Set out' }).click();
   await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
 }
 
@@ -124,7 +124,7 @@ test('production service worker restores the exact P8 pending save with the prev
     await page.reload({ waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Ancient Pokémon TRPG' })).toBeVisible();
     expect(await page.evaluate(() => navigator.serviceWorker.controller?.state ?? null)).toBe('activated');
-    await page.getByRole('button', { name: 'Continue saved run' }).click();
+    await page.getByRole('button', { name: 'Continue journey' }).click();
     await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
     expect(await readP8SaveJson(page)).toBe(pendingBeforeOffline);
 
