@@ -273,6 +273,6 @@ Resource boundaries and exact P8 technical evidence remain in:
 
 ## Later roadmap
 
-`#1 P0 -> #2 P1 -> #3 P2 -> #4 P3 -> #4 P3 -> #5 P4 -> #6 P5 -> #12 P6 -> #7 P7 -> #8 P8 -> #114 P8.1 -> #118 P8.2 owner acceptance -> #9 P9 -> #10 P10`
+`#1 P0 -> #2 P1 -> #3 P2 -> #4 P3 -> #5 P4 -> #6 P5 -> #12 P6 -> #7 P7 -> #8 P8 -> #114 P8.1 -> #118 P8.2 owner acceptance -> #9 P9 -> #10 P10`
 
 P9 resumes only after **#118 closes** or the owner explicitly changes the roadmap.
