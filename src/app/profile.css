@@ -35,8 +35,11 @@
 .hud-location span,
 .vitality-block span,
 .resource-grid span,
+.readiness-strip span,
 .hud-attribute-grid span,
-.companion-slot-grid span {
+.companion-slot-grid span,
+.equipment-slot-grid span,
+.carried-spares span {
   font-size: 0.72rem;
   color: var(--muted, #b8aa94);
 }
@@ -121,6 +124,7 @@
   background: rgba(170, 82, 46, 0.15);
 }
 
+.readiness-strip,
 .resource-grid,
 .hud-attribute-grid,
 .companion-slot-grid {
@@ -129,6 +133,7 @@
   gap: 0.45rem;
 }
 
+.readiness-strip > div,
 .resource-grid > div,
 .hud-attribute-grid > div,
 .companion-slot-grid > div {
@@ -138,6 +143,16 @@
   padding: 0.48rem 0.58rem;
   border-radius: 0.65rem;
   background: rgba(255, 255, 255, 0.04);
+}
+
+.readiness-strip > div {
+  border: 1px solid rgba(224, 194, 126, 0.14);
+  background: linear-gradient(180deg, rgba(200, 159, 80, 0.09), rgba(255, 255, 255, 0.025));
+}
+
+.readiness-strip strong {
+  font-size: 1rem;
+  color: #ead8ad;
 }
 
 .profile-details {
@@ -161,6 +176,60 @@
 .profile-details-body h2 {
   margin: 0 0 0.45rem;
   font-size: 0.82rem;
+}
+
+.equipment-section {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.equipment-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.equipment-slot-grid > div {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+  padding: 0.55rem 0.62rem;
+  border: 1px solid rgba(219, 196, 151, 0.12);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.equipment-slot-grid strong {
+  overflow: hidden;
+  font-size: 0.8rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.equipment-slot-grid small {
+  font-size: 0.67rem;
+  color: var(--muted, #b8aa94);
+}
+
+.carried-spares {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.carried-spares strong {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.readiness-note {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.45;
 }
 
 .hud-attribute-grid {
@@ -255,15 +324,25 @@
     width: 2.8rem;
   }
 
+  .readiness-strip,
   .resource-grid,
   .companion-slot-grid {
     gap: 0.3rem;
   }
 
+  .readiness-strip > div,
   .resource-grid > div,
   .companion-slot-grid > div {
     display: grid;
     gap: 0.1rem;
+  }
+
+  .equipment-slot-grid {
+    gap: 0.3rem;
+  }
+
+  .equipment-slot-grid > div {
+    padding: 0.48rem 0.52rem;
   }
 
   .hud-attribute-grid {

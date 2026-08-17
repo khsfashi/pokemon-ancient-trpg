@@ -25,7 +25,7 @@ function authority() {
   return createInitialP8AuthorityState(character, 'river-edge', { provisions: 3, remedies: 1, materials: 0 });
 }
 
-describe('P8.2 Batch 05 expedition profile projection', () => {
+describe('P8.2 expedition profile projection', () => {
   it('uses the frozen P3 Vitality and D-028 Load formulas without creating another stamina authority', () => {
     const run = authority();
     const profile = deriveP8ExpeditionProfile(run);
@@ -38,19 +38,22 @@ describe('P8.2 Batch 05 expedition profile projection', () => {
     expect(profile.injuries).toEqual([]);
 
     expect(run.character.attributes.strength).toBe(2);
-    expect(profile.currentLoad).toBe(4);
+    expect(profile.equipment.pooledResourceLoad).toBe(4);
+    expect(profile.equipment.equipmentLoad).toBe(3);
+    expect(profile.currentLoad).toBe(7);
     expect(profile.comfortableLoad).toBe(6);
-    expect(profile.burdened).toBe(false);
+    expect(profile.burdened).toBe(true);
   });
 
-  it('recomputes Load only from authoritative carried resource inputs', () => {
+  it('recomputes Load from authoritative pooled resources while preserving notable equipment', () => {
     const run = authority();
     const heavier = {
       ...run,
-      survival: { resourcePools: { provisions: 5, remedies: 2, materials: 2 } },
+      survival: { ...run.survival, resourcePools: { provisions: 5, remedies: 2, materials: 2 } },
     };
     const profile = deriveP8ExpeditionProfile(heavier);
-    expect(profile.currentLoad).toBe(9);
+    expect(profile.equipment.equipmentLoad).toBe(3);
+    expect(profile.currentLoad).toBe(12);
     expect(profile.comfortableLoad).toBe(6);
     expect(profile.burdened).toBe(true);
   });

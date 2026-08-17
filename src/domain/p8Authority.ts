@@ -1,4 +1,12 @@
 import type { JsonObject } from '../saves/jsonValue';
+import {
+  assertP8EquipmentInventory,
+  createInitialP8EquipmentInventory,
+  getP8EquipmentDefinition,
+  isP8EquipmentSlotId,
+  type P8EquipmentInventoryState,
+  type P8EquipmentSlotId,
+} from './p8Equipment';
 
 export const P8_ATTRIBUTE_IDS = ['strength', 'endurance', 'agility', 'sense', 'intellect', 'will', 'presence'] as const;
 export type P8AttributeId = (typeof P8_ATTRIBUTE_IDS)[number];
@@ -28,10 +36,13 @@ export interface P8CharacterState {
 }
 export interface P8CompanionSlotState { readonly speciesId: number; readonly willingnessRef: string; }
 export interface P8AuthorityState {
-  readonly schemaVersion: 'p8-authority-v1';
+  readonly schemaVersion: 'p8-authority-v2';
   readonly character: P8CharacterState;
   readonly world: { readonly currentLocality: string; readonly relationships: Readonly<Record<string, string>>; };
-  readonly survival: { readonly resourcePools: Readonly<Record<P8ResourcePoolId, number>>; };
+  readonly survival: {
+    readonly resourcePools: Readonly<Record<P8ResourcePoolId, number>>;
+    readonly equipment: P8EquipmentInventoryState;
+  };
   readonly pokemon: {
     readonly companionSlots: readonly [P8CompanionSlotState | null, P8CompanionSlotState | null, P8CompanionSlotState | null];
     readonly directInteractions: readonly string[];
@@ -51,6 +62,7 @@ export type P8DomainCommand =
   | { readonly commandId: 'p2.world.commit_relationship_state'; readonly relationshipRef: string; readonly stateId: string; readonly causeId: string }
   | { readonly commandId: 'p2.world.commit_locality_transition'; readonly fromLocality: string; readonly toLocality: string; readonly routeRef: string }
   | { readonly commandId: 'p3.inventory.adjust_resource_pool'; readonly poolId: P8ResourcePoolId; readonly delta: number; readonly reasonId: string }
+  | { readonly commandId: 'p3.inventory.set_equipment_slot'; readonly slotId: P8EquipmentSlotId; readonly itemId: string | null; readonly reasonId: string }
   | { readonly commandId: 'p4.companion.commit_voluntary_join'; readonly speciesId: number; readonly slot: 0 | 1 | 2; readonly willingnessRef: string; readonly eventId: string }
   | { readonly commandId: 'p4.companion.commit_separation'; readonly slot: 0 | 1 | 2; readonly reasonId: string }
   | { readonly commandId: 'p4.encounter.record_direct_interaction'; readonly speciesId: number; readonly encounterRef: string; readonly routeRef: string };
@@ -158,10 +170,12 @@ export function createInitialP8AuthorityState(
 ): P8AuthorityState {
   stableId(currentLocality, 'currentLocality');
   for (const [id, value] of Object.entries(resourcePools)) { safeInt(value, id); if (value < 0) throw new RangeError(`${id} cannot be negative`); }
+  const equipment = createInitialP8EquipmentInventory();
+  assertP8EquipmentInventory(equipment);
   return {
-    schemaVersion: 'p8-authority-v1', character,
+    schemaVersion: 'p8-authority-v2', character,
     world: { currentLocality, relationships: {} },
-    survival: { resourcePools: { ...resourcePools } },
+    survival: { resourcePools: { ...resourcePools }, equipment },
     pokemon: { companionSlots: [null, null, null], directInteractions: [] },
     events: { counts: {}, lastResolvedTransition: {}, recentHistory: [], narrativeFlags: {}, narrativeCounters: {}, chainQueue: [] },
   };
@@ -179,6 +193,17 @@ function validateCommand(state: P8AuthorityState, command: P8DomainCommand): voi
     case 'p3.inventory.adjust_resource_pool': {
       stableId(command.reasonId, 'reasonId'); safeInt(command.delta, 'delta');
       if (command.delta === 0 || state.survival.resourcePools[command.poolId] + command.delta < 0) throw new RangeError('resource adjustment is invalid');
+      return;
+    }
+    case 'p3.inventory.set_equipment_slot': {
+      stableId(command.reasonId, 'reasonId');
+      if (!isP8EquipmentSlotId(command.slotId)) throw new RangeError('unknown equipment slot');
+      if (command.itemId === null) return;
+      stableId(command.itemId, 'itemId');
+      const definition = getP8EquipmentDefinition(command.itemId);
+      if (definition === undefined) throw new RangeError(`unknown equipment item: ${command.itemId}`);
+      if (definition.slotId !== command.slotId) throw new RangeError(`${command.itemId} cannot be equipped in ${command.slotId}`);
+      if (!state.survival.equipment.carriedItemIds.includes(command.itemId)) throw new RangeError(`equipment item is not carried: ${command.itemId}`);
       return;
     }
     case 'p4.companion.commit_voluntary_join':
@@ -203,7 +228,18 @@ function applyCommand(state: P8AuthorityState, command: P8DomainCommand): P8Auth
     case 'p2.world.commit_locality_transition':
       return { ...state, world: { ...state.world, currentLocality: command.toLocality } };
     case 'p3.inventory.adjust_resource_pool':
-      return { ...state, survival: { resourcePools: { ...state.survival.resourcePools, [command.poolId]: state.survival.resourcePools[command.poolId] + command.delta } } };
+      return { ...state, survival: { ...state.survival, resourcePools: { ...state.survival.resourcePools, [command.poolId]: state.survival.resourcePools[command.poolId] + command.delta } } };
+    case 'p3.inventory.set_equipment_slot':
+      return {
+        ...state,
+        survival: {
+          ...state.survival,
+          equipment: {
+            ...state.survival.equipment,
+            equippedItemIds: { ...state.survival.equipment.equippedItemIds, [command.slotId]: command.itemId },
+          },
+        },
+      };
     case 'p4.companion.commit_voluntary_join': {
       const slots = [...state.pokemon.companionSlots] as [P8CompanionSlotState | null, P8CompanionSlotState | null, P8CompanionSlotState | null];
       slots[command.slot] = { speciesId: command.speciesId, willingnessRef: command.willingnessRef };
@@ -226,6 +262,7 @@ export function prevalidateAndApplyDomainCommands(state: P8AuthorityState, comma
   for (const value of Object.values(simulated.survival.resourcePools)) {
     if (!Number.isSafeInteger(value) || value < 0) throw new RangeError('resource pool is invalid after effect-plan simulation');
   }
+  assertP8EquipmentInventory(simulated.survival.equipment);
   return simulated;
 }
 
@@ -239,7 +276,13 @@ export function p8AuthorityStateToJson(state: P8AuthorityState): JsonObject {
       attributes: { ...state.character.attributes }, trained_competences: { ...state.character.trainedCompetences },
     },
     world: { current_locality: state.world.currentLocality, relationships: { ...state.world.relationships } },
-    survival: { resource_pools: { ...state.survival.resourcePools } },
+    survival: {
+      resource_pools: { ...state.survival.resourcePools },
+      notable_inventory: {
+        carried_item_ids: [...state.survival.equipment.carriedItemIds],
+        equipped_item_ids: { ...state.survival.equipment.equippedItemIds },
+      },
+    },
     pokemon: { companion_slots: state.pokemon.companionSlots.map((slot) => slot === null ? null : { ...slot }), direct_interactions: [...state.pokemon.directInteractions] },
     events: {
       counts: { ...state.events.counts }, last_resolved_transition: lastResolvedTransition, recent_history: [...state.events.recentHistory],

@@ -33,12 +33,21 @@ test('chooses a cosmetic portrait and keeps a persistent expedition HUD across s
   await expect(hud.getByText('Fatigue / stamina · Ready', { exact: true })).toBeVisible();
   await expect(hud.getByText('Fear · Steady', { exact: true })).toBeVisible();
   await expect(hud.getByText('Injuries · None', { exact: true })).toBeVisible();
-  await expect(hud.getByText(/Load 4\/[5-7]/)).toBeVisible();
+  await expect(hud.getByText(/Load 7\/[5-7]/)).toBeVisible();
+  await expect(hud.getByText('Attack', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Defense', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Field', { exact: true })).toBeVisible();
   await expect(hud.getByText('Provisions', { exact: true })).toBeVisible();
   await expect(hud.getByText('Remedies', { exact: true })).toBeVisible();
   await expect(hud.getByText('Materials', { exact: true })).toBeVisible();
 
   await hud.locator('summary').click();
+  await expect(hud.getByText('Iron spear', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Travel gambeson', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Sting veil', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Route marker kit', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Field observation kit', { exact: true })).toBeVisible();
+  await expect(hud.getByText(/Hide buckler · Load 1/)).toBeVisible();
   await expect(hud.getByText('Vitality 0 → Incapacitated', { exact: true })).toBeVisible();
   await expect(hud.getByText('Death → only through an explicit lethal path', { exact: true })).toBeVisible();
   await expect(hud.getByText('Pokémon companions · 0/3', { exact: true })).toBeVisible();
@@ -53,9 +62,10 @@ test('chooses a cosmetic portrait and keeps a persistent expedition HUD across s
   await page.getByRole('button', { name: 'Continue journey' }).click();
   await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
   await expect(page.locator('.expedition-hud')).toBeVisible();
+  await expect(page.locator('.expedition-hud').getByText('Attack', { exact: true })).toBeVisible();
 });
 
-test('Korean HUD explains exertion and lethal-state rules without inventing a second stamina pool', async ({ page, browserName }) => {
+test('Korean HUD explains exertion, equipment readiness, and lethal-state rules without inventing a second stamina pool', async ({ page, browserName }) => {
   test.skip(browserName !== 'chromium', 'One Korean semantic acceptance is sufficient; persistence coverage runs on all configured projects.');
   await page.addInitScript(() => window.localStorage.setItem('pokemon-ancient-trpg.locale.v1', 'ko-KR'));
   await page.goto('/');
@@ -72,8 +82,14 @@ test('Korean HUD explains exertion and lethal-state rules without inventing a se
   const hud = page.locator('.expedition-hud');
   await expect(hud.getByText('활력(체력)', { exact: true })).toBeVisible();
   await expect(hud.getByText('피로(스태미나) · 정상', { exact: true })).toBeVisible();
-  await expect(hud.getByText('하중 4/', { exact: false })).toBeVisible();
+  await expect(hud.getByText('하중 7/', { exact: false })).toBeVisible();
+  await expect(hud.getByText('공격', { exact: true })).toBeVisible();
+  await expect(hud.getByText('방어', { exact: true })).toBeVisible();
+  await expect(hud.getByText('현장', { exact: true })).toBeVisible();
   await hud.locator('summary').click();
+  await expect(hud.getByText('철제 창', { exact: true })).toBeVisible();
+  await expect(hud.getByText('독침 방호면', { exact: true })).toBeVisible();
+  await expect(hud.getByText('생태 관찰도구', { exact: true })).toBeVisible();
   await expect(hud.getByText('활력 0 → 행동불능', { exact: true })).toBeVisible();
   await expect(hud.getByText('사망 → 명시된 치명 경로에서만 발생', { exact: true })).toBeVisible();
 });

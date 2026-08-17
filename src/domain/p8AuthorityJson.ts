@@ -1,4 +1,11 @@
 import { P8_ATTRIBUTE_IDS, type P8AttributeId, type P8AuthorityState, type P8CharacterState, type P8CompanionSlotState, type P8ResourcePoolId } from './p8Authority';
+import {
+  P8_EQUIPMENT_SLOT_IDS,
+  assertP8EquipmentInventory,
+  createInitialP8EquipmentInventory,
+  type P8EquipmentInventoryState,
+  type P8EquipmentSlotId,
+} from './p8Equipment';
 import { isRecord, type JsonObject } from '../saves/jsonValue';
 import { parseUnsignedDecimal } from '../runtime/uint';
 
@@ -89,6 +96,23 @@ function parseCharacter(value: unknown): P8CharacterState {
   };
 }
 
+function parseEquipment(value: unknown): P8EquipmentInventoryState {
+  const source = record(value, 'survival.notable_inventory');
+  const carriedItemIds = stableIdArray(source.carried_item_ids, 'survival.notable_inventory.carried_item_ids');
+  const equippedSource = record(source.equipped_item_ids, 'survival.notable_inventory.equipped_item_ids');
+  if (Object.keys(equippedSource).length !== P8_EQUIPMENT_SLOT_IDS.length) {
+    throw new RangeError('survival.notable_inventory.equipped_item_ids contains unsupported keys');
+  }
+  const equippedItemIds = {} as Record<P8EquipmentSlotId, string | null>;
+  for (const slotId of P8_EQUIPMENT_SLOT_IDS) {
+    const itemId = equippedSource[slotId];
+    equippedItemIds[slotId] = itemId === null ? null : stableId(itemId, `survival.notable_inventory.equipped_item_ids.${slotId}`);
+  }
+  const inventory: P8EquipmentInventoryState = { carriedItemIds, equippedItemIds };
+  assertP8EquipmentInventory(inventory);
+  return inventory;
+}
+
 function parseCompanion(value: unknown, label: string): P8CompanionSlotState | null {
   if (value === null) return null;
   const source = record(value, label);
@@ -100,8 +124,12 @@ function parseCompanion(value: unknown, label: string): P8CompanionSlotState | n
 
 export function p8AuthorityStateFromJson(value: JsonObject): P8AuthorityState {
   const source = record(value, 'authoritative_state');
-  if (source.schema_version !== 'p8-authority-v1') throw new RangeError('unsupported P8 authority schema version');
+  const sourceVersion = source.schema_version;
+  if (sourceVersion !== 'p8-authority-v1' && sourceVersion !== 'p8-authority-v2') {
+    throw new RangeError('unsupported P8 authority schema version');
+  }
 
+  const character = parseCharacter(source.character);
   const worldSource = record(source.world, 'world');
   const relationshipSource = record(worldSource.relationships, 'world.relationships');
   const relationships: Record<string, string> = {};
@@ -112,6 +140,9 @@ export function p8AuthorityStateFromJson(value: JsonObject): P8AuthorityState {
   const resourcePools = {} as Record<P8ResourcePoolId, number>;
   for (const id of RESOURCE_POOL_IDS) resourcePools[id] = safeInteger(poolSource[id], `survival.resource_pools.${id}`, 0);
   if (Object.keys(poolSource).length !== RESOURCE_POOL_IDS.length) throw new RangeError('survival.resource_pools contains unsupported keys');
+  const equipment = sourceVersion === 'p8-authority-v1'
+    ? createInitialP8EquipmentInventory()
+    : parseEquipment(survivalSource.notable_inventory);
 
   const pokemonSource = record(source.pokemon, 'pokemon');
   if (!Array.isArray(pokemonSource.companion_slots) || pokemonSource.companion_slots.length !== 3) {
@@ -127,13 +158,13 @@ export function p8AuthorityStateFromJson(value: JsonObject): P8AuthorityState {
   }
 
   return {
-    schemaVersion: 'p8-authority-v1',
-    character: parseCharacter(source.character),
+    schemaVersion: 'p8-authority-v2',
+    character,
     world: {
       currentLocality: stableId(worldSource.current_locality, 'world.current_locality'),
       relationships,
     },
-    survival: { resourcePools },
+    survival: { resourcePools, equipment },
     pokemon: {
       companionSlots,
       directInteractions: directInteractionArray(pokemonSource.direct_interactions),

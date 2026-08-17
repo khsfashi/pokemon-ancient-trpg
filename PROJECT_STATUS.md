@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-17 22:05 KST**
+Last operational handoff update: **2026-08-17 23:11 KST**
 
 This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts, owner-playtest contracts, and live GitHub state. If this file and live state disagree, reconcile this file before advancing.
 
@@ -37,7 +37,7 @@ P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
 P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
-P8.2 second owner remediation         BATCHES 04-07 COMPLETE / BATCH 08 NEXT / #118 / BLOCKING P9
+P8.2 second owner remediation         BATCHES 04-08 IMPLEMENTED+VALIDATED / PR #124 READY / BATCH 09 NEXT AFTER MERGE / #118 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
@@ -48,12 +48,13 @@ Active issue: **#118 — Owner playtest expansion: visuals, motion, profile, equ
 
 The owner replay requires the first several minutes to look and move like a real game, read naturally in Korean, communicate player/survival state clearly, use illustrations for immersion, support equipment/preparation/progression at `0/3` companions, and still feel fundamentally Pokémon-shaped.
 
-Completed work — do not repeat:
+Implemented and validated work — do not repeat:
 
 - **PR #120 / Batch 04** — progressive narrative reveal, tap-to-complete/advance isolation, rapid-submit guard, scene/travel transitions, reduced-motion parity.
 - **PR #121 / Batch 05** — portrait selection, persistent expedition/profile HUD, Vitality/Fatigue/Fear/Injuries/resources/Load/locality/companions, danger semantics.
 - **PR #122 / Batch 06** — stable on-demand scene illustrations, existing P6 loader/cache reuse, missing-media fallback, first-run visual identities.
 - **PR #123 / Batch 07** — three formative memory scenes, concise action choices, second native-Korean pass, stable-ID/lifepath preservation, questionnaire/proof-language regression guards.
+- **PR #124 / Batch 08** — stable notable equipment IDs, five slots, D-028 carried Load integration, bounded Attack/Defense/Field readiness, cached derived projection, `p8-authority-v2` save migration, Korean equipment HUD. PR is validated and ready for review; merge before starting Batch 09 on `main`.
 
 Audits:
 
@@ -61,32 +62,27 @@ Audits:
 - `docs/P8_2_BATCH_05_AUDIT.md`
 - `docs/P8_2_BATCH_06_AUDIT.md`
 - `docs/P8_2_BATCH_07_AUDIT.md`
+- `docs/P8_2_BATCH_08_AUDIT.md`
 
-### Batch 07 validation
+### Batch 08 validation
 
-Dedicated workflow **`P8.2 Batch 07 Validation`** run **`32032044967`**: **PASS**.
+Dedicated workflow **`P8.2 Batch 08 Validation`** run **`32038047344`**: **PASS**.
 
 Verified:
 
-- strict TypeScript + full unit suite + production PWA build;
-- Chromium/WebKit 390px Korean creation memories and touch/overflow acceptance;
-- bilingual locale switching with authoritative save JSON unchanged;
-- inherited P8 phone smoke, zero-companion full completion and exact save/resume behavior;
-- existing event/choice/lifepath/RNG authority remains unchanged.
+- strict TypeScript + full deterministic unit suite + production PWA build;
+- authoritative stable equipment inventory plus five slot assignments;
+- deterministic guard-item swap changes only declared readiness/effect surfaces while carried Load remains unchanged;
+- D-028 notable-item + pooled-resource Load accounting and cached projection reuse;
+- explicit `p8-authority-v1 -> p8-authority-v2` migration and v2 round-trip;
+- Chromium/WebKit phone HUD shows Attack/Defense/Field readiness, five equipped items and carried spare gear;
+- Korean equipment/readiness copy and 390px overflow acceptance;
+- P8 backup/save-resume compatibility and inherited zero-companion phone smoke;
+- inherited P8 Authority Runtime and P7 architecture validations remain green.
 
 ## Exact next work
 
-### Batch 08 — equipment slots + combat-readiness summary — NEXT
-
-- authoritative stable item/equipment IDs;
-- visible weapon/body armor/accessory or protective wearable/utility/Pokémon-field gear surfaces;
-- attack/defense-like derived readiness;
-- bounded formulas from existing human stats/competence/equipment/preparation/context;
-- no universal combat-power score and no player-scaled ordinary Pokémon;
-- D-028 Load/save/cache integration;
-- explicit contract/decision update first if a genuinely new stamina or combat authority is required.
-
-### Batch 09 — medieval-fantasy farming / preparation loop
+### Batch 09 — medieval-fantasy farming / preparation loop — NEXT AFTER PR #124 MERGE
 
 ```text
 settlement preparation
