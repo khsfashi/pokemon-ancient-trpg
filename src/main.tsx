@@ -1,6 +1,7 @@
 import { render } from 'preact';
 import { App } from './app/App';
 import './app/app.css';
+import './app/motion.css';
 import { registerAppServiceWorker } from './platform/serviceWorker';
 
 const root = document.getElementById('app');
