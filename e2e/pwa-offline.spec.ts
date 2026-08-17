@@ -1,16 +1,72 @@
 import { expect, test, type Page } from '@playwright/test';
+import { spawn, type ChildProcess } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const SERVICE_WORKER_PATH = new URL('../dist/sw.js', import.meta.url);
 const RUNTIME_PACK_PATH = new URL('../src/generated/runtime-pack.json', import.meta.url);
+const PREVIEW_URL = 'http://127.0.0.1:4173';
 const SLOT_ID = 'p7-update-safety';
-const OFFLINE_LOAD_COUNT_KEY = 'p7-batch06-offline-document-load-count';
 
 interface RuntimePackIdentity {
   readonly content_pack_id: string;
   readonly content_pack_version: string;
   readonly content_digest_sha256: string;
   readonly p5_contract_version: string;
+}
+
+function delay(milliseconds: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+async function originIsOnline(): Promise<boolean> {
+  try {
+    const response = await fetch(PREVIEW_URL, {
+      headers: { 'cache-control': 'no-cache' },
+      signal: AbortSignal.timeout(500),
+    });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+async function waitForOriginState(expectedOnline: boolean): Promise<void> {
+  const deadline = Date.now() + 10_000;
+  while (Date.now() < deadline) {
+    if (await originIsOnline() === expectedOnline) return;
+    await delay(50);
+  }
+  throw new Error(`preview origin did not become ${expectedOnline ? 'online' : 'offline'}`);
+}
+
+async function startPreview(): Promise<ChildProcess> {
+  const preview = spawn(process.execPath, [
+    'node_modules/vite/bin/vite.js',
+    'preview',
+    '--host', '127.0.0.1',
+    '--port', '4173',
+    '--strictPort',
+  ], { stdio: 'ignore' });
+
+  await waitForOriginState(true);
+  if (preview.exitCode !== null || preview.signalCode !== null) {
+    throw new Error(`preview exited before becoming usable: exit=${preview.exitCode} signal=${preview.signalCode}`);
+  }
+  return preview;
+}
+
+async function stopPreview(preview: ChildProcess): Promise<void> {
+  if (preview.exitCode === null && preview.signalCode === null) {
+    preview.kill('SIGTERM');
+    const gracefulDeadline = Date.now() + 5_000;
+    while (preview.exitCode === null && preview.signalCode === null && Date.now() < gracefulDeadline) {
+      await delay(50);
+    }
+    if (preview.exitCode === null && preview.signalCode === null) {
+      preview.kill('SIGKILL');
+    }
+  }
+  await waitForOriginState(false);
 }
 
 async function loadRuntimePackIdentity(): Promise<RuntimePackIdentity> {
@@ -154,80 +210,46 @@ async function readPendingSave(page: Page): Promise<string> {
   }, SLOT_ID);
 }
 
-async function reloadOffline(page: Page, browserName: string): Promise<void> {
-  if (browserName !== 'webkit') {
-    await page.reload({ waitUntil: 'domcontentloaded' });
-    return;
-  }
-
-  // Playwright/WebKit's navigation transport reports an internal error when a navigation
-  // happens while the context is offline, even when the installed worker can satisfy it.
-  // Avoid all Playwright navigation APIs for this one interval: the browser performs the
-  // real location.reload(), and an init script increments only if a new document starts.
-  await page.addInitScript((key) => {
-    const parsed = Number.parseInt(sessionStorage.getItem(key) ?? '0', 10);
-    const previous = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
-    sessionStorage.setItem(key, String(previous + 1));
-  }, OFFLINE_LOAD_COUNT_KEY);
-
-  await page.evaluate(() => {
-    setTimeout(() => window.location.reload(), 0);
-  });
-
-  const deadline = Date.now() + 10_000;
-  let observedNewDocument = false;
-  while (Date.now() < deadline) {
-    try {
-      const documentLoadCount = await page.evaluate((key) => {
-        return Number.parseInt(sessionStorage.getItem(key) ?? '0', 10);
-      }, OFFLINE_LOAD_COUNT_KEY);
-      if (documentLoadCount >= 1) {
-        observedNewDocument = true;
-        break;
-      }
-    } catch {
-      // A short transport gap is expected while WebKit swaps the document. Keep polling
-      // until the new execution context is reachable or the fail-closed deadline expires.
-    }
-    await new Promise<void>((resolve) => setTimeout(resolve, 50));
-  }
-
-  expect(observedNewDocument).toBe(true);
-}
-
-test('installs the production worker, reloads offline, and keeps an update waiting during pending state', async ({ page, context, browserName }) => {
+test('installs the production worker, reloads with the origin down, and keeps an update waiting during pending state', async ({ page, browserName }) => {
   const identity = await loadRuntimePackIdentity();
-
-  await page.goto('/');
-  const firstInstallScope = await page.evaluate(async () => {
-    if (!('serviceWorker' in navigator)) throw new Error('service workers are unavailable');
-    const registration = await navigator.serviceWorker.ready;
-    return registration.scope;
-  });
-  expect(firstInstallScope.endsWith('/')).toBe(true);
-  await expect.poll(async () => page.evaluate(async () => {
-    const registration = await navigator.serviceWorker.ready;
-    return registration.active?.state ?? null;
-  })).toBe('activated');
-
-  await page.reload();
-  await expect.poll(async () => page.evaluate(() => navigator.serviceWorker.controller?.state ?? null)).toBe('activated');
-
-  await context.setOffline(true);
-  await reloadOffline(page, browserName);
-  await expect(page.getByRole('heading', { name: 'Ancient Pokémon TRPG' })).toBeVisible();
-  const offlineControllerState = await page.evaluate(() => navigator.serviceWorker.controller?.state ?? null);
-  expect(offlineControllerState).toBe('activated');
-  await context.setOffline(false);
-
-  const expectedPendingJson = await writePendingSave(page, pendingWire(identity));
-  expect(await readPendingSave(page)).toBe(expectedPendingJson);
-
   const originalServiceWorker = await readFile(SERVICE_WORKER_PATH, 'utf8');
-  const updateMarker = `\n// p7-batch06-update-probe-${browserName}-${Date.now()}\n`;
-  await writeFile(SERVICE_WORKER_PATH, originalServiceWorker + updateMarker, 'utf8');
+  let preview: ChildProcess | null = await startPreview();
+  let serviceWorkerMutated = false;
 
   try {
+    await page.goto('/');
+    const firstInstallScope = await page.evaluate(async () => {
+      if (!('serviceWorker' in navigator)) throw new Error('service workers are unavailable');
+      const registration = await navigator.serviceWorker.ready;
+      return registration.scope;
+    });
+    expect(firstInstallScope.endsWith('/')).toBe(true);
+    await expect.poll(async () => page.evaluate(async () => {
+      const registration = await navigator.serviceWorker.ready;
+      return registration.active?.state ?? null;
+    })).toBe('activated');
+
+    await page.reload();
+    await expect.poll(async () => page.evaluate(() => navigator.serviceWorker.controller?.state ?? null)).toBe('activated');
+
+    await stopPreview(preview);
+    preview = null;
+    expect(await originIsOnline()).toBe(false);
+
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await expect(page.getByRole('heading', { name: 'Ancient Pokémon TRPG' })).toBeVisible();
+    const offlineControllerState = await page.evaluate(() => navigator.serviceWorker.controller?.state ?? null);
+    expect(offlineControllerState).toBe('activated');
+
+    preview = await startPreview();
+
+    const expectedPendingJson = await writePendingSave(page, pendingWire(identity));
+    expect(await readPendingSave(page)).toBe(expectedPendingJson);
+
+    const updateMarker = `\n// p7-batch06-update-probe-${browserName}-${Date.now()}\n`;
+    await writeFile(SERVICE_WORKER_PATH, originalServiceWorker + updateMarker, 'utf8');
+    serviceWorkerMutated = true;
+
     const updateState = await page.evaluate(async () => {
       const registration = await navigator.serviceWorker.getRegistration('/');
       if (registration?.active === null || registration === undefined) {
@@ -272,11 +294,16 @@ test('installs the production worker, reloads offline, and keeps an update waiti
 
     console.log(`P7_PWA_PROOF ${browserName} ${JSON.stringify({
       firstInstall: 'activated',
-      offlineReload: 'PASS',
+      originOutageReload: 'PASS',
       waitingUpdate: afterReload.hasWaitingWorker,
       pendingSavePreserved: true,
     })}`);
   } finally {
-    await writeFile(SERVICE_WORKER_PATH, originalServiceWorker, 'utf8');
+    if (serviceWorkerMutated) {
+      await writeFile(SERVICE_WORKER_PATH, originalServiceWorker, 'utf8');
+    }
+    if (preview !== null) {
+      await stopPreview(preview);
+    }
   }
 });
