@@ -83,7 +83,7 @@ export function NarrativeReveal({
   readonly text: string;
   readonly presentationKey: string;
   readonly reducedMotion: boolean;
-  readonly onReadyChange: (ready: boolean) => void;
+  readonly onReadyChange: (presentationKey: string, ready: boolean) => void;
 }) {
   const beats = useMemo(() => cachedNarrativeBeats(text), [text]);
   const finalBeatIndex = Math.max(0, beats.length - 1);
@@ -103,7 +103,7 @@ export function NarrativeReveal({
   const complete = reducedMotion || narrativeCursorComplete(cursor, beats);
 
   useEffect(() => {
-    onReadyChange(complete);
+    onReadyChange(presentationKey, complete);
   }, [complete, onReadyChange, presentationKey]);
 
   useEffect(() => {
