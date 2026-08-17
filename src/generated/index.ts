@@ -1,2 +1,18 @@
-// Batch 04 owns generated runtime-pack indexes. This module is intentionally empty in Batch 02.
-export {};
+export {
+  RUNTIME_CONTENT_SCOPE,
+  RUNTIME_PACK_FORMAT_VERSION,
+  getEventDescriptor,
+  getEventIdsForTrigger,
+  getResourceDescriptor,
+  getSemanticAdapterDescriptor,
+  getSpeciesDescriptor,
+  runtimeContentIdentity,
+  runtimePack,
+  type RuntimeEventDescriptor,
+  type RuntimePackV1,
+  type RuntimeResourceAvailability,
+  type RuntimeResourceDescriptor,
+  type RuntimeSemanticAdapterDescriptor,
+  type RuntimeSemanticAdapterKind,
+  type RuntimeSpeciesDescriptor,
+} from './runtimePack';

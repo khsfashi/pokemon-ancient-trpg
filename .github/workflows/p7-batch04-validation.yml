@@ -1,0 +1,81 @@
+name: P7 Batch 04 Validation
+
+on:
+  pull_request:
+    paths:
+      - 'PROJECT_STATUS.md'
+      - 'docs/P4_SPECIES_COVERAGE_MANIFEST.yaml'
+      - 'docs/P5_*'
+      - 'docs/P6_RESOURCE_MANIFEST.json'
+      - 'docs/P7_BATCH_04_AUDIT.md'
+      - 'src/generated/**'
+      - 'tests/generated.runtime-pack.test.ts'
+      - 'tools/build_p7_runtime_pack.py'
+      - 'tools/validate_p5_contract.py'
+      - 'tools/validate_p6_resources.py'
+      - 'tools/requirements-p5-validation.txt'
+      - 'tools/requirements-p6-validation.txt'
+      - '.github/workflows/p7-batch04-validation.yml'
+  push:
+    branches:
+      - main
+      - 'agent/**'
+    paths:
+      - 'PROJECT_STATUS.md'
+      - 'docs/P4_SPECIES_COVERAGE_MANIFEST.yaml'
+      - 'docs/P5_*'
+      - 'docs/P6_RESOURCE_MANIFEST.json'
+      - 'docs/P7_BATCH_04_AUDIT.md'
+      - 'src/generated/**'
+      - 'tests/generated.runtime-pack.test.ts'
+      - 'tools/build_p7_runtime_pack.py'
+      - 'tools/validate_p5_contract.py'
+      - 'tools/validate_p6_resources.py'
+      - 'tools/requirements-p5-validation.txt'
+      - 'tools/requirements-p6-validation.txt'
+      - '.github/workflows/p7-batch04-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: |
+            tools/requirements-p5-validation.txt
+            tools/requirements-p6-validation.txt
+      - name: Install existing validator dependencies
+        run: python -m pip install --disable-pip-version-check -r tools/requirements-p5-validation.txt -r tools/requirements-p6-validation.txt
+      - name: Re-run frozen P5 validator before generation
+        run: python tools/validate_p5_contract.py
+      - name: Re-run frozen P6 validator before generation
+        run: python tools/validate_p6_resources.py
+      - name: Require deterministic committed runtime pack
+        run: python tools/build_p7_runtime_pack.py --check
+      - name: Upload normalized runtime-pack evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: p7-runtime-pack
+          path: src/generated/runtime-pack.json
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install from committed lockfile
+        run: npm ci
+      - name: Strict typecheck
+        run: npm run typecheck
+      - name: Deterministic unit fixtures
+        run: npm run test
+      - name: Static PWA production build
+        run: npm run build
