@@ -97,13 +97,13 @@ export class P8BrowserSession {
   public async startNewRun(input: P8CharacterCreationInput, runSeedHex?: string): Promise<P8BrowserSessionSnapshot> {
     const seed = runSeedHex ?? randomRunSeed(this.#randomBytes);
     if (!RUN_SEED_HEX.test(seed)) throw new RangeError('runSeedHex must be 32 lowercase hex characters');
-    // P8.3 owner replay: the first screen must not begin already burdened. The D-028
-    // resource bundles still cost Load 1 each; the slice now starts with a lean two-bundle
-    // expedition pack and earns/gathers additional supplies through play.
+    // P8.3 keeps the complete expedition pack needed by the authored preparation loop.
+    // Comfortable Load is tuned in the equipment projection so this normal kit starts
+    // ready rather than falsely presenting the player as already burdened.
     this.#authority = createInitialP8AuthorityState(
       createP8SliceCharacter(input),
       'reedbank-settlement',
-      { provisions: 1, remedies: 1, materials: 0 },
+      { provisions: 3, remedies: 1, materials: 0 },
     );
     this.#transitionSeq = 0n;
     this.#pending = null;
