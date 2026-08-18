@@ -17,11 +17,20 @@ describe('P8.2 illustration catalog', () => {
       expect(entry.semanticClass).toBe('scene_illustration');
       expect(entry.asset_class).toBe('pokemon_encounter_image');
       expect(entry.requirement).toBe('optional');
-      expect(entry.output_format).toBe('svg');
-      expect(entry.sourceKind).toBe('project_authored_original_svg');
+      expect(['svg', 'png']).toContain(entry.output_format);
+      expect(['project_authored_original_svg', 'project_authored_original_raster']).toContain(entry.sourceKind);
       expect(entry.decodedBudgetBytes).toBe(P8_FULL_SCENE_DECODED_BUDGET_BYTES);
       expect(entry.provenance.length).toBeGreaterThan(20);
     }
+
+    const orchard = P8_ILLUSTRATIONS.find((entry) => entry.resourceId === 'p8.illustration.orchard.windbreak-boundary');
+    expect(orchard?.output_format).toBe('png');
+    expect(orchard?.fileName).toBe('windbreak-orchard.png');
+    expect(orchard?.sourceKind).toBe('project_authored_original_raster');
+
+    const legacyVectorScenes = P8_ILLUSTRATIONS.filter((entry) => entry.resourceId !== 'p8.illustration.orchard.windbreak-boundary');
+    expect(legacyVectorScenes.every((entry) => entry.output_format === 'svg')).toBe(true);
+    expect(legacyVectorScenes.every((entry) => entry.sourceKind === 'project_authored_original_svg')).toBe(true);
   });
 
   it('assigns distinct visual identity to opening, travel, Weedle, orchard and return', () => {
