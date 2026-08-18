@@ -1,1 +1,159 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc"><title id="title">Windbreak orchard boundary</title><desc id="desc">Original project-authored placeholder illustration of an orchard windbreak with pollinator activity and a contested shortcut.</desc><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b7c68"/><stop offset="1" stop-color="#d4b36c"/></linearGradient></defs><rect width="960" height="540" fill="url(#sky)"/><path d="M0 340c160-65 288-38 430-54 162-18 281-70 530-27v281H0Z" fill="#526b43"/><g stroke="#40352a" stroke-width="18" stroke-linecap="round"><path d="M170 264v190M320 240v214M500 250v204M690 230v224M835 258v196"/></g><g fill="#2d5237"><circle cx="160" cy="220" r="80"/><circle cx="315" cy="190" r="88"/><circle cx="498" cy="200" r="86"/><circle cx="690" cy="175" r="92"/><circle cx="836" cy="215" r="82"/></g><g fill="#b75b3d"><circle cx="132" cy="222" r="11"/><circle cx="188" cy="190" r="10"/><circle cx="292" cy="215" r="12"/><circle cx="517" cy="184" r="11"/><circle cx="720" cy="199" r="12"/><circle cx="818" cy="225" r="10"/></g><path d="M55 540c145-113 247-143 382-120 93 16 159 13 283-21 82-23 145-21 240-2v143Z" fill="#997b4e"/><path d="M150 500c144-89 239-92 353-62 105 28 174 16 314-25" fill="none" stroke="#d6c08f" stroke-width="12" stroke-dasharray="18 18" opacity=".7"/><g transform="translate(625 285)" fill="#d5a940" stroke="#3a3124" stroke-width="5"><path d="M0 0 34-21 66-3 59 28 31 45 3 28Z"/><path d="M29-14v50M7 4l48 17"/><path d="M63 1 92-16M59 24l30 12"/></g><text x="42" y="70" fill="#fff1cf" font-family="serif" font-size="34" letter-spacing="4">WINDBREAK ORCHARD</text><text x="45" y="103" fill="#efe2bd" font-family="sans-serif" font-size="17" letter-spacing="2">BOUNDARY · POLLINATORS · HUMAN COST</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc" shape-rendering="crispEdges">
+  <title id="title">방풍림 과수원 경계의 독침붕</title>
+  <desc id="desc">고해상도 픽셀풍으로 그린 전근대 과수원 경계. 낡은 돌담과 목책, 천 경고표식, 과수원지기와 독침붕의 침 방향 및 비행 자세가 보인다.</desc>
+
+  <!-- dusk sky: hard pixel bands, no smooth gradient -->
+  <rect width="960" height="540" fill="#192319"/>
+  <rect width="960" height="78" fill="#59654d"/>
+  <rect y="78" width="960" height="66" fill="#6f7557"/>
+  <rect y="144" width="960" height="64" fill="#8a8058"/>
+  <rect y="208" width="960" height="52" fill="#a17e4e"/>
+  <rect x="0" y="252" width="960" height="288" fill="#263326"/>
+
+  <!-- distant blocky ridge / windbreak -->
+  <path fill="#33442f" d="M0 206h54v-18h42v12h48v-30h48v18h54v-42h42v30h60v-54h48v42h48v-24h48v30h54v-48h48v36h60v-66h48v54h54v-30h54v36h72v-48h48v66h48v-24h48v66H960v118H0z"/>
+  <path fill="#1d2c22" d="M0 244h72v-24h48v12h54v-42h42v36h60v-18h48v30h66v-54h42v42h54v-30h48v36h72v-18h54v24h72v-48h48v36h60v-30h54v48h48v-18h60v94H0z"/>
+
+  <!-- orchard tree rows, squared clusters -->
+  <g fill="#3d5435">
+    <path d="M66 254h42v-30h54v18h36v72H54v-48h12z"/>
+    <path d="M238 234h48v-36h54v18h42v88H226v-52h12z"/>
+    <path d="M410 244h48v-42h60v24h42v86H398v-50h12z"/>
+    <path d="M780 248h42v-36h54v24h42v78H768v-48h12z"/>
+  </g>
+  <g fill="#53643b">
+    <rect x="78" y="236" width="54" height="36"/><rect x="126" y="246" width="54" height="42"/>
+    <rect x="248" y="218" width="60" height="42"/><rect x="306" y="226" width="60" height="48"/>
+    <rect x="424" y="220" width="60" height="42"/><rect x="480" y="234" width="60" height="48"/>
+    <rect x="792" y="230" width="60" height="42"/><rect x="846" y="244" width="54" height="42"/>
+  </g>
+  <g fill="#a85232">
+    <rect x="92" y="258" width="12" height="12"/><rect x="148" y="272" width="12" height="12"/>
+    <rect x="270" y="240" width="12" height="12"/><rect x="330" y="252" width="12" height="12"/>
+    <rect x="448" y="246" width="12" height="12"/><rect x="510" y="260" width="12" height="12"/>
+    <rect x="816" y="250" width="12" height="12"/><rect x="870" y="264" width="12" height="12"/>
+  </g>
+  <g fill="#4b3826">
+    <rect x="112" y="288" width="18" height="94"/><rect x="292" y="276" width="18" height="112"/>
+    <rect x="470" y="282" width="18" height="106"/><rect x="834" y="282" width="18" height="106"/>
+  </g>
+
+  <!-- stone boundary wall -->
+  <g fill="#665e4a">
+    <rect x="0" y="376" width="960" height="42"/>
+    <rect x="0" y="370" width="78" height="12"/><rect x="90" y="364" width="96" height="18"/><rect x="198" y="370" width="90" height="12"/>
+    <rect x="300" y="362" width="108" height="20"/><rect x="420" y="368" width="90" height="14"/><rect x="522" y="362" width="102" height="20"/>
+    <rect x="636" y="368" width="96" height="14"/><rect x="744" y="360" width="108" height="22"/><rect x="864" y="368" width="96" height="14"/>
+  </g>
+  <g fill="#82765b">
+    <rect x="12" y="382" width="72" height="12"/><rect x="102" y="388" width="78" height="12"/><rect x="204" y="382" width="66" height="12"/>
+    <rect x="312" y="386" width="84" height="12"/><rect x="432" y="382" width="66" height="12"/><rect x="540" y="388" width="72" height="12"/>
+    <rect x="648" y="382" width="72" height="12"/><rect x="762" y="386" width="78" height="12"/><rect x="876" y="382" width="72" height="12"/>
+  </g>
+  <g fill="#34291e">
+    <rect x="288" y="346" width="18" height="92"/><rect x="624" y="342" width="18" height="96"/>
+    <rect x="276" y="354" width="54" height="12"/><rect x="606" y="350" width="60" height="12"/>
+  </g>
+
+  <!-- worn forked track -->
+  <path fill="#73593a" d="M0 540v-66h144l114-62h126l-96 64h120l104-64h132l-114 70h430v58z"/>
+  <path fill="#9a7a4c" d="M0 516h156l114-64h60l-96 64h180l108-68h60l-96 68h474v24H0z"/>
+  <g fill="#b39a69">
+    <rect x="48" y="504" width="48" height="8"/><rect x="162" y="486" width="42" height="8"/>
+    <rect x="276" y="462" width="36" height="8"/><rect x="438" y="490" width="42" height="8"/>
+    <rect x="552" y="466" width="36" height="8"/><rect x="690" y="506" width="48" height="8"/>
+  </g>
+
+  <!-- medieval warning post + cloth strip -->
+  <g>
+    <rect x="548" y="322" width="16" height="114" fill="#4a321f"/>
+    <rect x="530" y="328" width="54" height="12" fill="#63462a"/>
+    <path fill="#8f3f31" d="M564 340h54v18h-12v18h-18v18h-24z"/>
+    <rect x="576" y="350" width="18" height="8" fill="#b95a40"/>
+  </g>
+
+  <!-- orchard keeper: quilted coat, hood, hooked staff -->
+  <g transform="translate(146 312)">
+    <rect x="24" y="0" width="42" height="12" fill="#403126"/>
+    <rect x="12" y="12" width="66" height="48" fill="#574536"/>
+    <rect x="24" y="18" width="42" height="36" fill="#b58b66"/>
+    <rect x="6" y="60" width="78" height="66" fill="#59613e"/>
+    <rect x="18" y="68" width="12" height="50" fill="#74764c"/>
+    <rect x="48" y="68" width="12" height="50" fill="#74764c"/>
+    <rect x="-6" y="72" width="18" height="54" fill="#59613e"/>
+    <rect x="84" y="72" width="18" height="54" fill="#59613e"/>
+    <rect x="18" y="126" width="24" height="48" fill="#3e3428"/>
+    <rect x="54" y="126" width="24" height="48" fill="#3e3428"/>
+    <rect x="12" y="168" width="30" height="12" fill="#251f1a"/>
+    <rect x="54" y="168" width="30" height="12" fill="#251f1a"/>
+    <rect x="98" y="48" width="8" height="132" fill="#5f472d"/>
+    <rect x="106" y="42" width="30" height="8" fill="#5f472d"/>
+    <rect x="128" y="48" width="8" height="24" fill="#5f472d"/>
+  </g>
+
+  <!-- Beedrill: readable wings, forelimb stingers and abdomen stinger -->
+  <g transform="translate(648 224)">
+    <!-- rear wing, then front wing -->
+    <path fill="#b9c4aa" d="M58 10h60v12h18v42h-18v12H70V64H52V28h6z"/>
+    <path fill="#879983" d="M70 22h42v10h12v26h-12v8H78V56H64V32h6z"/>
+    <path fill="#d0d5ba" d="M22 0h54v12h18v38H82v12H34V50H16V14h6z"/>
+    <path fill="#98a68d" d="M32 12h34v8h14v24H68v8H40V42H28V20h4z"/>
+
+    <!-- head and eyes -->
+    <rect x="18" y="68" width="54" height="48" fill="#d7aa38"/>
+    <rect x="12" y="78" width="12" height="28" fill="#a87b27"/>
+    <rect x="66" y="78" width="12" height="28" fill="#a87b27"/>
+    <rect x="22" y="80" width="18" height="22" fill="#9c302d"/>
+    <rect x="50" y="80" width="18" height="22" fill="#9c302d"/>
+    <rect x="26" y="84" width="8" height="8" fill="#df6f55"/>
+    <rect x="54" y="84" width="8" height="8" fill="#df6f55"/>
+    <rect x="34" y="108" width="22" height="8" fill="#3b2a20"/>
+
+    <!-- thorax / abdomen bands -->
+    <rect x="72" y="64" width="54" height="62" fill="#d8aa37"/>
+    <rect x="84" y="70" width="42" height="14" fill="#2c2920"/>
+    <rect x="92" y="96" width="34" height="14" fill="#2c2920"/>
+    <rect x="120" y="78" width="42" height="44" fill="#d7a934"/>
+    <rect x="132" y="82" width="30" height="12" fill="#2b2820"/>
+    <rect x="138" y="106" width="24" height="12" fill="#2b2820"/>
+
+    <!-- abdominal stinger points toward route -->
+    <path fill="#d8d2b7" d="M162 90h42v12h18v10h-18v10h-42z"/>
+    <path fill="#5e5749" d="M204 102h36v8h-36z"/>
+
+    <!-- forelimbs and long stingers -->
+    <rect x="56" y="118" width="12" height="34" fill="#2d2c23"/>
+    <rect x="22" y="144" width="44" height="12" fill="#2d2c23"/>
+    <path fill="#d9d3b9" d="M-26 146h50v10h-50l-24-5z"/>
+    <rect x="76" y="118" width="12" height="42" fill="#2d2c23"/>
+    <rect x="84" y="154" width="46" height="12" fill="#2d2c23"/>
+    <path fill="#d9d3b9" d="M128 154h52v10h-52l24-5z"/>
+
+    <!-- legs -->
+    <rect x="80" y="124" width="10" height="34" fill="#353129"/>
+    <rect x="88" y="150" width="32" height="10" fill="#353129"/>
+    <rect x="110" y="120" width="10" height="34" fill="#353129"/>
+    <rect x="116" y="146" width="32" height="10" fill="#353129"/>
+  </g>
+
+  <!-- wing vibration / approach vector, blocky not smooth -->
+  <g fill="#c7c6a4" opacity="0.7">
+    <rect x="704" y="198" width="54" height="4"/><rect x="716" y="188" width="42" height="4"/>
+    <rect x="768" y="210" width="42" height="4"/><rect x="786" y="220" width="30" height="4"/>
+  </g>
+  <g fill="#d5b46f" opacity="0.78">
+    <rect x="612" y="340" width="30" height="6"/><rect x="594" y="350" width="36" height="6"/>
+    <rect x="576" y="360" width="42" height="6"/>
+  </g>
+
+  <!-- foreground grass / stakes for depth -->
+  <g fill="#16251b">
+    <rect x="24" y="430" width="12" height="86"/><rect x="42" y="452" width="12" height="64"/>
+    <rect x="892" y="428" width="12" height="88"/><rect x="912" y="446" width="12" height="70"/>
+    <rect x="80" y="458" width="10" height="58"/><rect x="858" y="462" width="10" height="54"/>
+  </g>
+  <g fill="#344831">
+    <rect x="18" y="464" width="36" height="10"/><rect x="66" y="480" width="36" height="10"/>
+    <rect x="840" y="478" width="42" height="10"/><rect x="900" y="466" width="36" height="10"/>
+  </g>
+</svg>
