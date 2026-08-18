@@ -56,14 +56,17 @@
         "protect_windbreak versus take_shortcut",
         "human livelihood shaped by Pokémon ecology"
       ],
-      "status": "ready",
+      "status": "completed",
       "revision": 1,
       "owner_review": "pending",
-      "owner_feedback": ""
+      "owner_feedback": "",
+      "worker": "chatgpt",
+      "completed_at": "2026-08-18T07:41:00+00:00",
+      "updated_at": "2026-08-18T07:41:00+00:00"
     }
   ],
   "schema_version": 2,
   "planner_worker": "chatgpt",
   "created_at": "2026-08-18T06:20:00+00:00",
-  "updated_at": "2026-08-18T07:36:00+00:00"
+  "updated_at": "2026-08-18T07:41:00+00:00"
 }
