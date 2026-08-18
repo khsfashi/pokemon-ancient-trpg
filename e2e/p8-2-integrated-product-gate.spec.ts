@@ -71,6 +71,7 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
   // product gate uses reduced motion so both engines can prove the entire combined
   // first-play state without spending runtime on presentation delays.
   await page.emulateMedia({ reducedMotion: 'reduce' });
+  // Seed only a fresh profile: every reload below must prove the user's persisted locale rather than rewrite it.
   await page.addInitScript(({ key }) => {
     if (window.localStorage.getItem(key) === null) window.localStorage.setItem(key, 'ko-KR');
   }, { key: LOCALE_KEY });
