@@ -5,6 +5,8 @@ const FATIGUE_COUNTER = 'p3.survival.fatigue';
 const INJURY_COUNTER = 'p3.survival.injuries';
 const INCAPACITATED_FLAG = 'p3.survival.incapacitated';
 const COLLAPSE_RISK_FLAG = 'p3.survival.collapse_risk';
+const FATIGUE_MAX_STAGE = 2;
+const MAX_ACTIVE_INJURIES = 3;
 
 export interface P8SurvivalPressureProjection {
   readonly vitalityCurrent: number;
@@ -33,19 +35,18 @@ function clamp(value: number, minimum: number, maximum: number): number {
 
 export function deriveP8SurvivalPressure(state: P8AuthorityState): P8SurvivalPressureProjection {
   const vitalityMax = 4 + state.character.attributes.endurance;
-  const fatigueLimit = 4 + state.character.attributes.will;
   const vitalityDamage = clamp(counter(state, VITALITY_DAMAGE_COUNTER), 0, vitalityMax);
-  const fatigueStage = clamp(counter(state, FATIGUE_COUNTER), 0, fatigueLimit);
-  const injuries = counter(state, INJURY_COUNTER);
+  const fatigueStage = clamp(counter(state, FATIGUE_COUNTER), 0, FATIGUE_MAX_STAGE);
+  const injuries = clamp(counter(state, INJURY_COUNTER), 0, MAX_ACTIVE_INJURIES);
   const vitalityCurrent = vitalityMax - vitalityDamage;
   return Object.freeze({
     vitalityCurrent,
     vitalityMax,
     fatigueStage,
-    fatigueLimit,
+    fatigueLimit: FATIGUE_MAX_STAGE,
     injuries,
     incapacitated: vitalityCurrent === 0,
-    collapseRisk: injuries >= 2 || fatigueStage >= fatigueLimit,
+    collapseRisk: injuries >= 2 || fatigueStage >= FATIGUE_MAX_STAGE,
   });
 }
 
@@ -62,8 +63,8 @@ export function applyP8SurvivalPressure(
   }
 
   const vitalityCurrent = clamp(current.vitalityCurrent + vitalityDelta, 0, current.vitalityMax);
-  const fatigueStage = clamp(current.fatigueStage + fatigueDelta, 0, current.fatigueLimit);
-  const injuries = Math.max(0, current.injuries + injuryDelta);
+  const fatigueStage = clamp(current.fatigueStage + fatigueDelta, 0, FATIGUE_MAX_STAGE);
+  const injuries = clamp(current.injuries + injuryDelta, 0, MAX_ACTIVE_INJURIES);
   const narrativeCounters = {
     ...state.events.narrativeCounters,
     [VITALITY_DAMAGE_COUNTER]: current.vitalityMax - vitalityCurrent,
@@ -73,7 +74,7 @@ export function applyP8SurvivalPressure(
   const narrativeFlags = {
     ...state.events.narrativeFlags,
     [INCAPACITATED_FLAG]: vitalityCurrent === 0,
-    [COLLAPSE_RISK_FLAG]: injuries >= 2 || fatigueStage >= current.fatigueLimit,
+    [COLLAPSE_RISK_FLAG]: injuries >= 2 || fatigueStage >= FATIGUE_MAX_STAGE,
   };
 
   return {
