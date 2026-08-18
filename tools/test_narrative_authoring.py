@@ -25,12 +25,16 @@ class NarrativeAuthoringTests(unittest.TestCase):
                     {
                         "issue": {
                             "number": 12,
+                            "updated_at": "2026-08-18T05:00:00Z",
                             "title": "[authoring] windbreak-beedrill",
                             "body": json.dumps(
                                 {
                                     "title": "방풍림 독침붕",
                                     "brief": "초반 조우",
                                     "target_total_chars": 20000,
+                                    "mode": "revise",
+                                    "session_id": "s002",
+                                    "feedback": "위협 묘사를 강화",
                                 },
                                 ensure_ascii=False,
                             ),
@@ -45,6 +49,9 @@ class NarrativeAuthoringTests(unittest.TestCase):
             self.assertEqual(request["title"], "방풍림 독침붕")
             self.assertEqual(request["issue_number"], 12)
             self.assertEqual(request["worker"], "auto")
+            self.assertEqual(request["mode"], "revise")
+            self.assertEqual(request["session_id"], "s002")
+            self.assertEqual(len(request["request_key"]), 24)
 
     def test_plan_requires_strict_backward_dependencies(self) -> None:
         invalid = {
@@ -73,6 +80,37 @@ class NarrativeAuthoringTests(unittest.TestCase):
         }
         with self.assertRaises(ValueError):
             na.validate_plan(invalid, "topic")
+
+    def test_context_section_extracts_only_requested_range(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            path = root / "docs" / "dossiers.md"
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                "## #013 Weedle\nweedle facts\n---\n## #015 Beedrill\nbeedrill facts\nneedle facts\n---\n## #016 Pidgey\npidgey facts",
+                encoding="utf-8",
+            )
+            with mock.patch.object(na, "ROOT", root):
+                result = na.read_context_section(
+                    {
+                        "path": "docs/dossiers.md",
+                        "start_marker": "## #015 Beedrill",
+                        "end_marker": "---\n## #016 Pidgey",
+                    }
+                )
+            self.assertIn("beedrill facts", result)
+            self.assertIn("needle facts", result)
+            self.assertNotIn("weedle facts", result)
+            self.assertNotIn("pidgey facts", result)
+
+    def test_full_context_rejects_oversized_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            path = root / "huge.md"
+            path.write_text("x" * (na.MAX_FULL_CONTEXT_FILE_CHARS + 1), encoding="utf-8")
+            with mock.patch.object(na, "ROOT", root):
+                with self.assertRaises(ValueError):
+                    na.read_full_context_file("huge.md")
 
     def test_session_qa_accepts_bounded_unique_prose(self) -> None:
         session = {"target_chars": 500, "target_paragraphs": 4}
@@ -103,9 +141,169 @@ class NarrativeAuthoringTests(unittest.TestCase):
             stderr="Usage limit reached. Try again later.",
         )
         with mock.patch.object(na.subprocess, "run", return_value=completed):
-            status, diagnostics = na.run_codex("prompt", pathlib.Path("schema.json"), pathlib.Path("out.json"))
+            status, diagnostics = na.run_codex(
+                "prompt", pathlib.Path("schema.json"), pathlib.Path("out.json")
+            )
         self.assertEqual(status, "quota")
         self.assertIn("Usage limit", diagnostics)
+
+    def test_missing_codex_is_classified_without_exception(self) -> None:
+        with mock.patch.object(na.subprocess, "run", side_effect=FileNotFoundError("codex missing")):
+            status, diagnostics = na.run_codex(
+                "prompt", pathlib.Path("schema.json"), pathlib.Path("out.json")
+            )
+        self.assertEqual(status, "missing")
+        self.assertIn("codex missing", diagnostics)
+
+    def test_revision_preserves_identity_and_marks_downstream_review(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            authoring_root = pathlib.Path(tmp) / "topics"
+            with mock.patch.object(na, "AUTHORING_ROOT", authoring_root):
+                topic = {
+                    "topic_id": "topic",
+                    "status": "complete_pending_owner_review",
+                    "updated_at": na.now_iso(),
+                }
+                plan = self._completed_plan()
+                tdir = authoring_root / "topic"
+                tdir.mkdir(parents=True)
+                na.write_json(tdir / "topic.json", topic)
+                na.write_json(tdir / "plan.json", plan)
+                na.write_json(
+                    tdir / "continuity-ledger.json",
+                    {"schema_version": 2, "facts": [], "unresolved_hooks": []},
+                )
+                self._seed_completed_artifacts(tdir, plan)
+
+                na.prepare_revision(topic, plan, "s001", "독침붕 위협을 강화", False)
+
+                self.assertEqual(plan["sessions"][0]["session_id"], "s001")
+                self.assertEqual(plan["sessions"][0]["revision"], 2)
+                self.assertEqual(plan["sessions"][0]["status"], "revision_requested")
+                self.assertEqual(plan["sessions"][1]["status"], "continuity_review")
+                self.assertEqual(plan["sessions"][2]["status"], "continuity_review")
+                self.assertTrue(
+                    (tdir / "sessions" / "s001" / "revisions" / "r001" / "draft.ko-KR.md").exists()
+                )
+
+    def test_cascade_revision_marks_dependents_for_regeneration(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            authoring_root = pathlib.Path(tmp) / "topics"
+            with mock.patch.object(na, "AUTHORING_ROOT", authoring_root):
+                topic = {"topic_id": "topic", "status": "complete_pending_owner_review"}
+                plan = self._completed_plan()
+                tdir = authoring_root / "topic"
+                tdir.mkdir(parents=True)
+                na.write_json(tdir / "topic.json", topic)
+                na.write_json(tdir / "plan.json", plan)
+                na.write_json(
+                    tdir / "continuity-ledger.json",
+                    {"schema_version": 2, "facts": [], "unresolved_hooks": []},
+                )
+                self._seed_completed_artifacts(tdir, plan)
+
+                na.prepare_revision(topic, plan, "s001", "전체 연쇄 재작성", True)
+
+                self.assertTrue(
+                    all(s["status"] == "revision_requested" for s in plan["sessions"])
+                )
+                self.assertTrue(all(s["revision"] == 2 for s in plan["sessions"]))
+
+    def test_request_intent_is_idempotent_per_issue_revision(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            authoring_root = pathlib.Path(tmp) / "topics"
+            with mock.patch.object(na, "AUTHORING_ROOT", authoring_root):
+                topic = {
+                    "topic_id": "topic",
+                    "status": "complete_pending_owner_review",
+                    "applied_request_keys": [],
+                }
+                plan = self._completed_plan()
+                tdir = authoring_root / "topic"
+                tdir.mkdir(parents=True)
+                na.write_json(tdir / "topic.json", topic)
+                na.write_json(tdir / "plan.json", plan)
+                na.write_json(
+                    tdir / "continuity-ledger.json",
+                    {"schema_version": 2, "facts": [], "unresolved_hooks": []},
+                )
+                self._seed_completed_artifacts(tdir, plan)
+                request = {
+                    "request_key": "same-key",
+                    "mode": "revise",
+                    "session_id": "s002",
+                    "feedback": "다시",
+                    "cascade": False,
+                }
+                na.apply_request_intent(request, topic)
+                once = na.read_json(tdir / "plan.json")["sessions"][1]["revision"]
+                topic_after = na.read_json(tdir / "topic.json")
+                na.apply_request_intent(request, topic_after)
+                twice = na.read_json(tdir / "plan.json")["sessions"][1]["revision"]
+                self.assertEqual(once, 2)
+                self.assertEqual(twice, 2)
+
+    @staticmethod
+    def _completed_plan() -> dict:
+        return {
+            "topic_id": "topic",
+            "title": "topic",
+            "sessions": [
+                {
+                    "session_id": "s001",
+                    "title": "one",
+                    "purpose": "one",
+                    "target_chars": 1000,
+                    "target_paragraphs": 4,
+                    "dependencies": [],
+                    "continuity_focus": [],
+                    "status": "completed",
+                    "revision": 1,
+                },
+                {
+                    "session_id": "s002",
+                    "title": "two",
+                    "purpose": "two",
+                    "target_chars": 1000,
+                    "target_paragraphs": 4,
+                    "dependencies": ["s001"],
+                    "continuity_focus": [],
+                    "status": "completed",
+                    "revision": 1,
+                },
+                {
+                    "session_id": "s003",
+                    "title": "three",
+                    "purpose": "three",
+                    "target_chars": 1000,
+                    "target_paragraphs": 4,
+                    "dependencies": ["s002"],
+                    "continuity_focus": [],
+                    "status": "completed",
+                    "revision": 1,
+                },
+            ],
+        }
+
+    @staticmethod
+    def _seed_completed_artifacts(tdir: pathlib.Path, plan: dict) -> None:
+        for session in plan["sessions"]:
+            sid = session["session_id"]
+            sdir = tdir / "sessions" / sid
+            na.write_json(sdir / "spec.json", session)
+            na.write_json(sdir / "context.json", {"session": sid})
+            na.write_text(sdir / "draft.ko-KR.md", f"{sid} old prose")
+            na.write_json(sdir / "summary.json", {"summary": f"{sid} summary"})
+            na.write_json(
+                sdir / "continuity.json",
+                {
+                    "introduced": [f"fact:{sid}"],
+                    "changed": [],
+                    "resolved": [],
+                    "unresolved_hooks": [],
+                },
+            )
+            na.write_json(sdir / "qa.json", {"status": "pass"})
 
 
 if __name__ == "__main__":
