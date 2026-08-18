@@ -124,7 +124,14 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
+      - name: Prefer Ubuntu archive over unhealthy Azure APT mirror
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            sudo sed -i '/azure\.archive\.ubuntu\.com/d' /etc/apt/apt-mirrors.txt
+          fi
+
       - name: Install Chromium/WebKit system dependencies and missing browsers
+        timeout-minutes: 10
         run: npx playwright install --with-deps chromium webkit
 
       - name: Consolidated phone browser regression
@@ -140,6 +147,7 @@ jobs:
           e2e/p8-2-illustrations.spec.ts
           e2e/p8-2-korean-narrative.spec.ts
           e2e/p8-2-preparation-loop.spec.ts
+          e2e/p8-2-integrated-product-gate.spec.ts
           --project=phone-chromium
           --project=phone-webkit
 

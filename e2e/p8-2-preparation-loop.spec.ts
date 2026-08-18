@@ -65,7 +65,7 @@ test('completes and persists the full settlement-travel-risk-camp-return loop on
   await expect(panel).toHaveAttribute('data-preparation-locality', 'old-levee');
   await expect(stat(panel, 'Current place')).toHaveText('Old Levee');
   await expect(flee).toBeDisabled();
-  await expect(stat(panel, 'Vitality')).toHaveText('4/5');
+  await expect(stat(panel, 'Vitality')).toHaveText('5/6');
   await expect(stat(panel, 'Fatigue')).toHaveText('2/2');
   await expect(stat(panel, 'Injuries')).toHaveText('1');
   await expect(camp).toBeEnabled();
@@ -84,7 +84,7 @@ test('completes and persists the full settlement-travel-risk-camp-return loop on
   trade = panel.locator('[data-preparation-action="trade.provision-for-remedy"]');
   await expect(panel).toHaveAttribute('data-preparation-locality', 'old-levee');
   await expect(stat(panel, 'Current place')).toHaveText('Old Levee');
-  await expect(stat(panel, 'Vitality')).toHaveText('4/5');
+  await expect(stat(panel, 'Vitality')).toHaveText('5/6');
   await expect(stat(panel, 'Fatigue')).toHaveText('2/2');
   await expect(stat(panel, 'Injuries')).toHaveText('1');
   await expect(camp).toBeEnabled();
@@ -92,7 +92,7 @@ test('completes and persists the full settlement-travel-risk-camp-return loop on
   await camp.click();
   await expect(panel).toHaveAttribute('data-preparation-locality', 'reedbank-settlement');
   await expect(stat(panel, 'Current place')).toHaveText('Reedbank Settlement');
-  await expect(stat(panel, 'Vitality')).toHaveText('5/5');
+  await expect(stat(panel, 'Vitality')).toHaveText('6/6');
   await expect(stat(panel, 'Fatigue')).toHaveText('1/2');
   await expect(stat(panel, 'Injuries')).toHaveText('0');
   await expect(repair).toBeEnabled();
@@ -141,7 +141,7 @@ test('completes and persists the full settlement-travel-risk-camp-return loop on
   expect(saved.locality).toBe('reedbank-settlement');
   expect(saved.pools).toEqual({ provisions: 0, remedies: 1, materials: 1 });
   expect(saved.guard).toBe('hide.buckler');
-  expect(saved.pressure).toMatchObject({ vitalityCurrent: 5, fatigueStage: 1, fatigueLimit: 2, injuries: 0 });
+  expect(saved.pressure).toMatchObject({ vitalityCurrent: 6, vitalityMax: 6, fatigueStage: 1, fatigueLimit: 2, injuries: 0 });
   expect(saved.companions).toEqual([null, null, null]);
   expect(saved.complete).toBe(true);
   expect(saved.nonlethal).toBe(true);

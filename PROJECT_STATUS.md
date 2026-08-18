@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-18 10:55 KST**
+Last operational handoff update: **2026-08-18 12:05 KST**
 
 This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts, owner-playtest contracts, and live GitHub state. If this file and live state disagree, reconcile this file before advancing.
 
@@ -12,7 +12,7 @@ The repository owner intentionally advances work with short requests such as:
 @GitHub pokemon-ancient-trpg 다음 작업 진행해줘
 ```
 
-For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, this file, live PR/issue state, active issue **#118**, and `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`, then finish the first incomplete unblocked P8.2 batch.
+For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, this file, live PR/issue state, active issue **#118**, and `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`, then finish the first incomplete unblocked P8.2 work.
 
 ## Binding product direction
 
@@ -37,7 +37,7 @@ P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
 P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
-P8.2 second owner remediation         BATCHES 04-08 VALIDATED / BATCH 09 IMPLEMENTED IN PR #125 / FINAL CI GATE / #118 / BLOCKING P9
+P8.2 second owner remediation         BATCHES 04-09 MERGED / BATCH 10 AUTOMATED GATE IMPLEMENTED / FINAL CI + OWNER REPLAY / #118 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
@@ -48,15 +48,17 @@ Active issue: **#118 — Owner playtest expansion: visuals, motion, profile, equ
 
 The owner replay requires the first several minutes to look and move like a real game, read naturally in Korean, communicate player/survival state clearly, use illustrations for immersion, support equipment/preparation/progression at `0/3` companions, and still feel fundamentally Pokémon-shaped.
 
-Implemented and validated work — do not repeat:
+Implemented and merged — do not repeat:
 
 - **PR #120 / Batch 04** — progressive narrative reveal, tap-to-complete/advance isolation, rapid-submit guard, scene/travel transitions, reduced-motion parity.
 - **PR #121 / Batch 05** — portrait selection, persistent expedition/profile HUD, Vitality/Fatigue/Fear/Injuries/resources/Load/locality/companions, danger semantics.
 - **PR #122 / Batch 06** — stable on-demand scene illustrations, existing P6 loader/cache reuse, missing-media fallback, first-run visual identities.
 - **PR #123 / Batch 07** — three formative memory scenes, concise action choices, second native-Korean pass, stable-ID/lifepath preservation, questionnaire/proof-language regression guards.
 - **PR #124 / Batch 08** — stable notable equipment IDs, five slots, D-028 carried Load integration, bounded Attack/Defense/Field readiness, cached derived projection, `p8-authority-v2` save migration, Korean equipment HUD.
+- **PR #125 / Batch 09** — bounded settlement/field risk/camp/return/improvement/barter loop, real locality travel, persisted Vitality/Fatigue/Injury pressure, Rattata-linked salvage ethics, zero-companion progression.
+- **PR #126 / CI consolidation** — replaced the historical P7/P8/P8.2 workflow fan-out with one `P8 Integrated Validation` runtime gate while preserving contract, unit, build, Chromium/WebKit, save, PWA and offline coverage.
 
-Batch 09 implementation in **PR #125** — do not duplicate:
+Batch 09 authoritative behavior:
 
 - bounded six-step settlement -> field risk -> camp -> return -> equipment improvement -> barter loop;
 - ordinary Materials and Provisions gathering before departure;
@@ -79,22 +81,31 @@ Audits:
 - `docs/P8_2_BATCH_07_AUDIT.md`
 - `docs/P8_2_BATCH_08_AUDIT.md`
 - `docs/P8_2_BATCH_09_AUDIT.md`
+- `docs/P8_2_BATCH_10_AUDIT.md`
+- `docs/CI_VALIDATION_CONSOLIDATION.md`
 
 ## Exact next work
 
-### Finish Batch 09 — PR #125 final validation and merge
+### Batch 10 — integrated automated + owner product gate — ACTIVE
 
-Do not merge an intermediate green commit. The final PR head must pass the dedicated **`P8.2 Batch 09 Validation`** plus inherited P8/P7 authority/browser regressions. Record final-head run IDs/results in PR #125, then merge.
+The Batch 10 branch adds one longitudinal Chromium/WebKit 390x844 acceptance that crosses the combined product surfaces in a single persisted journey:
 
-### Batch 10 — integrated automated + owner product gate — NEXT AFTER PR #125 MERGE
+- native-Korean remembered-scene creation;
+- non-default portrait selection and persistence;
+- opening illustration + persistent expedition HUD;
+- pending-event save/reload;
+- full seven-transition zero-companion run;
+- post-return gathering/foraging/Rattata risk/camp/repair/barter loop;
+- dangerous field-checkpoint reload;
+- hide-buckler equipment improvement;
+- resource/survival/equipment/derived-readiness persistence across final reload;
+- Korean completed-loop copy and mobile overflow proof.
 
-- Chromium + WebKit 390x844 complete run;
-- animation skip/advance/reduced-motion/transition safety;
-- portrait/profile/equipment/resources/survival persistence;
-- illustration fallback;
-- PWA offline pending-save regression;
-- Korean product-language pass across the combined first-play experience;
-- owner replay confirms the combined experience is ready for P9 multiplication.
+It is included inside the existing **`P8 Integrated Validation`** job rather than creating a new expensive workflow. Existing motion, illustration-fallback, PWA/offline, resource-contract, save-compatibility and full-run gates remain in that same consolidated job.
+
+**Next automation step:** the final PR head must pass `P8 Integrated Validation`. Do not accept an intermediate green commit.
+
+**Next human/product step after green CI:** run the deployed build and answer the eight Batch 10 owner replay questions in `docs/P8_2_BATCH_10_AUDIT.md`. Only an affirmative owner replay closes #118 and unblocks P9.
 
 ## Architecture / performance guardrails
 
@@ -107,6 +118,7 @@ Do not merge an intermediate green commit. The final PR head must pass the dedic
 - Derived Load/combat/HUD summaries update only on relevant authoritative state mutation and should be cached/reused.
 - Save schema changes require explicit versioning/migration coverage.
 - Rapid taps must not double-commit authoritative choices.
+- Batch 10 validation must remain inside the consolidated P8 runtime gate; do not reintroduce batch-per-workflow fan-out.
 
 ## Key rule compatibility
 
@@ -139,7 +151,9 @@ browser tests         = Playwright
 Key references:
 
 - `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`
+- `docs/P8_2_BATCH_10_AUDIT.md`
 - `docs/P8_2_BATCH_09_AUDIT.md`
+- `docs/CI_VALIDATION_CONSOLIDATION.md`
 - `docs/PLAYTEST_REMEDIATION.md`
 - `docs/P8_EXIT_AUDIT.md`
 - `docs/P7_EXIT_AUDIT.md`
