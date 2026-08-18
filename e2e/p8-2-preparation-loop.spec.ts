@@ -36,7 +36,7 @@ function stat(panel: Locator, label: string): Locator {
 test('completes and persists the full settlement-travel-risk-camp-return loop on a phone surface', async ({ page }) => {
   await reachReturnSummary(page);
 
-  const panel = page.locator('.preparation-panel');
+  let panel = page.locator('.preparation-panel');
   await expect(panel).toBeVisible();
   await expect(panel).toHaveAttribute('data-preparation-locality', 'reedbank-settlement');
   await expect(panel.getByText('Expedition loop', { exact: true })).toBeVisible();
@@ -44,13 +44,13 @@ test('completes and persists the full settlement-travel-risk-camp-return loop on
   await expect(stat(panel, 'Current place')).toHaveText('Reedbank Settlement');
   await expect(panel.getByText(/decide whether the Rattata signs are worth the risk/i)).toBeVisible();
 
-  const gather = panel.locator('[data-preparation-action="gather.repair-stock"]');
-  const forage = panel.locator('[data-preparation-action="forage.bank-edge"]');
-  const hunt = panel.locator('[data-preparation-action="hunt.rattata-storetrail"]');
-  const flee = panel.locator('[data-preparation-action="flee.rattata-storetrail"]');
-  const camp = panel.locator('[data-preparation-action="camp.rest-and-treat"]');
-  const repair = panel.locator('[data-preparation-action="repair.wet-route-gear"]');
-  const trade = panel.locator('[data-preparation-action="trade.provision-for-remedy"]');
+  let gather = panel.locator('[data-preparation-action="gather.repair-stock"]');
+  let forage = panel.locator('[data-preparation-action="forage.bank-edge"]');
+  let hunt = panel.locator('[data-preparation-action="hunt.rattata-storetrail"]');
+  let flee = panel.locator('[data-preparation-action="flee.rattata-storetrail"]');
+  let camp = panel.locator('[data-preparation-action="camp.rest-and-treat"]');
+  let repair = panel.locator('[data-preparation-action="repair.wet-route-gear"]');
+  let trade = panel.locator('[data-preparation-action="trade.provision-for-remedy"]');
 
   await expect(hunt).toBeDisabled();
   await expect(camp).toBeDisabled();
@@ -70,6 +70,24 @@ test('completes and persists the full settlement-travel-risk-camp-return loop on
   await expect(stat(panel, 'Injuries')).toHaveText('1');
   await expect(camp).toBeEnabled();
   await expect(repair).toBeDisabled();
+
+  // Prove that the dangerous field checkpoint itself survives a full browser reload.
+  await page.reload();
+  await page.getByRole('button', { name: 'Continue journey' }).click();
+  panel = page.locator('.preparation-panel');
+  gather = panel.locator('[data-preparation-action="gather.repair-stock"]');
+  forage = panel.locator('[data-preparation-action="forage.bank-edge"]');
+  hunt = panel.locator('[data-preparation-action="hunt.rattata-storetrail"]');
+  flee = panel.locator('[data-preparation-action="flee.rattata-storetrail"]');
+  camp = panel.locator('[data-preparation-action="camp.rest-and-treat"]');
+  repair = panel.locator('[data-preparation-action="repair.wet-route-gear"]');
+  trade = panel.locator('[data-preparation-action="trade.provision-for-remedy"]');
+  await expect(panel).toHaveAttribute('data-preparation-locality', 'old-levee');
+  await expect(stat(panel, 'Current place')).toHaveText('Old Levee');
+  await expect(stat(panel, 'Vitality')).toHaveText('4/5');
+  await expect(stat(panel, 'Fatigue')).toHaveText('2/5');
+  await expect(stat(panel, 'Injuries')).toHaveText('1');
+  await expect(camp).toBeEnabled();
 
   await camp.click();
   await expect(panel).toHaveAttribute('data-preparation-locality', 'reedbank-settlement');
