@@ -1,0 +1,418 @@
+/*
+ * P8.3 owner golden screen.
+ *
+ * This slice intentionally applies only while the authored windbreak/Beedrill
+ * illustration is the active pending scene. It does not restyle the rest of
+ * the product before owner visual approval.
+ *
+ * Reference direction: the owner's supplied mock plus Life in Adventure
+ * (모험가 이야기) for scene-first text-RPG density, compact survival status,
+ * medieval material framing and pixel-art readability. No external layout or
+ * proprietary artwork is copied here.
+ */
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) {
+  width: min(100%, 390px);
+  gap: 0;
+  padding: 0;
+  background: #14110e;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) > .language-switcher,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) > footer {
+  display: none;
+}
+
+/* Persistent HUD: identity, vitality, fatigue, one immediate resource, injury. */
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  width: 100%;
+  height: 78px;
+  margin: 0;
+  padding: 6px 7px;
+  gap: 6px;
+  align-items: stretch;
+  border: 2px solid #4b3523;
+  border-radius: 0;
+  color: #ead9b8;
+  background: #17130f;
+  box-shadow: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-primary-row {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 6px;
+  align-items: center;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-identity {
+  flex: 0 0 104px;
+  gap: 5px;
+  min-width: 0;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-art.compact {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 56px;
+  border: 1px solid #75502d;
+  border-radius: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 48px 56px;
+  image-rendering: pixelated;
+  box-shadow: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-art.compact > * {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-pathfinder.compact {
+  background-image: url('/ui/portraits/portrait-pathfinder.png');
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-herbalist.compact {
+  background-image: url('/ui/portraits/portrait-herbalist.png');
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-warden.compact {
+  background-image: url('/ui/portraits/portrait-warden.png');
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-identity > div {
+  display: block;
+  min-width: 0;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-identity span {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-identity strong {
+  display: block;
+  overflow: hidden;
+  color: #e8d5aa;
+  font-family: var(--p83-pixel-display);
+  font-size: 0.64rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-primary-stats {
+  flex: 1 1 92px;
+  display: block;
+  min-width: 82px;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-location {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .vitality-block {
+  display: grid;
+  gap: 4px;
+  height: 100%;
+  align-content: center;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .vitality-block > div:first-child {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 4px;
+  align-items: center;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .vitality-block > div:first-child > span {
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  color: transparent;
+  background: url('/ui/hud/hud-vitality.png') center / 20px 20px no-repeat;
+  image-rendering: pixelated;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .vitality-block strong {
+  color: #f0ddb8;
+  font-family: var(--p83-pixel-display);
+  font-size: 0.8rem;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .vitality-track {
+  height: 8px;
+  margin: 0;
+  border: 1px solid #3e2c20;
+  border-radius: 0;
+  background: #2a211b;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .vitality-track span {
+  border-radius: 0;
+  background: #a53d37;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row {
+  flex: 0 0 66px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  padding: 3px 3px 3px 23px;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #4d3827;
+  border-radius: 0;
+  color: #d8c39b;
+  background-color: #201a15;
+  background-position: 2px center;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  font-family: var(--p83-pixel-display);
+  font-size: 0.49rem;
+  line-height: 1.05;
+  white-space: normal;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span:nth-child(1) {
+  background-image: url('/ui/hud/hud-stamina.png');
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span:nth-child(3) {
+  background-image: url('/ui/hud/hud-injury.png');
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span:nth-child(2),
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span:nth-child(4),
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .readiness-strip {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid {
+  flex: 0 0 50px;
+  display: block;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid > div {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid > div:first-child {
+  display: grid;
+  height: 100%;
+  padding: 24px 2px 2px;
+  align-content: center;
+  justify-items: center;
+  gap: 0;
+  border: 1px solid #4d3827;
+  border-radius: 0;
+  background-color: #201a15;
+  background-image: url('/ui/hud/hud-provisions.png');
+  background-position: center 5px;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  image-rendering: pixelated;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid span {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid strong {
+  font-family: var(--p83-pixel-display);
+  font-size: 0.75rem;
+  color: #ebd5aa;
+}
+
+/* Existing deep profile remains available, but no longer occupies persistent HUD space. */
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details {
+  position: absolute;
+  top: 57px;
+  right: 6px;
+  width: 54px;
+  padding: 0;
+  border: 0;
+  background: #17130f;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details summary {
+  overflow: hidden;
+  height: 16px;
+  padding: 1px 4px;
+  border: 1px solid #5a412c;
+  color: #aa946e;
+  font-family: var(--p83-pixel-display);
+  font-size: 0.45rem;
+  line-height: 12px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details[open] {
+  top: 70px;
+  right: 4px;
+  width: calc(100% - 8px);
+  max-height: calc(100svh - 78px);
+  overflow: auto;
+  padding: 10px;
+  border: 2px solid #6d4c2d;
+  background: #1b1712;
+}
+
+/* Golden scene: authored raster art first, then readable event prose, then two choices. */
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-stage {
+  width: 100%;
+  margin: 0;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) {
+  display: flex;
+  min-height: auto;
+  padding: 0 0 8px;
+  border: 2px solid #4b3523;
+  border-top: 0;
+  border-radius: 0;
+  flex-direction: column;
+  color: #e8dcc7;
+  background: #1a1612;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'])::before,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'])::after {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'] {
+  order: 0;
+  width: 100%;
+  height: 252px;
+  margin: 0;
+  border: 0;
+  border-bottom: 2px solid #62452d;
+  border-radius: 0;
+  background: #17130f;
+  box-shadow: none;
+  aspect-ratio: auto;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'] .scene-illustration-frame {
+  background: #17130f;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'] .scene-illustration-image {
+  image-rendering: pixelated;
+  animation: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) > .eyebrow {
+  order: 1;
+  min-height: 0;
+  margin: 8px 12px 2px;
+  padding: 0;
+  border: 0;
+  color: #b99b68;
+  background: transparent;
+  box-shadow: none;
+  font-family: var(--p83-pixel-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) > h1 {
+  order: 2;
+  margin: 0 12px 5px;
+  color: #f0dfbd;
+  font-family: var(--p83-pixel-display);
+  font-size: 1.02rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .narrative-copy {
+  order: 3;
+  display: block;
+  width: auto;
+  min-height: 154px;
+  max-height: 172px;
+  margin: 0 10px 7px;
+  padding: 9px 10px;
+  overflow-y: auto;
+  border: 1px solid #4c3928;
+  border-radius: 0;
+  color: #e6dccb;
+  background: #211b16;
+  box-shadow: none;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-size: 0.79rem;
+  font-weight: 500;
+  line-height: 1.58;
+  text-align: left;
+  word-break: keep-all;
+  white-space: pre-wrap;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .pokemon-media {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .choice-stack {
+  order: 4;
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0 10px;
+  border: 0;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .choice-stack::before {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .choice {
+  min-height: 52px;
+  padding: 8px 28px 8px 10px;
+  border: 2px solid #5e432c;
+  border-radius: 0;
+  color: #eadbbd;
+  background: #241c16;
+  box-shadow: none;
+  font-family: var(--p83-pixel-display);
+  font-size: 0.69rem;
+  line-height: 1.35;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .choice::after {
+  color: #bd8b43;
+  font-size: 1rem;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) > .muted:last-child {
+  display: none;
+}
+
+@media (max-width: 360px) {
+  .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-identity {
+    flex-basis: 92px;
+  }
+
+  .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row {
+    flex-basis: 58px;
+  }
+
+  .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid {
+    flex-basis: 42px;
+  }
+}
