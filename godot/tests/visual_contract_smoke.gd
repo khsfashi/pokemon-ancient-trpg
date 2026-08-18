@@ -20,6 +20,8 @@ const FORBIDDEN_SPECIES_TOKENS := [
 	"beedrill", "독침붕", "weedle", "뿔충이", "rattata", "꼬렛", "pikachu", "피카츄"
 ]
 
+var _failed := false
+
 func _init() -> void:
 	for path in PROJECT_LAYERS + UI_ASSETS:
 		_require_resource(path)
@@ -38,16 +40,26 @@ func _init() -> void:
 	_assert_true(encounter_source.contains("region_rect"), "P6 encounter atlas must select frame regions instead of drawing the full atlas")
 	_assert_true(encounter_source.contains("_atlas_texture"), "P6 encounter animation must reuse one decoded atlas texture")
 
+	if _failed:
+		quit(1)
+		return
 	print("P8.3 Godot visual contract smoke: PASS")
 	quit(0)
 
 func _require_resource(path: String) -> void:
 	_assert_true(FileAccess.file_exists(path), "missing retained resource: %s" % path)
+	if not FileAccess.file_exists(path):
+		return
 	_assert_true(ResourceLoader.exists(path), "Godot cannot import retained resource: %s" % path)
+	if not ResourceLoader.exists(path):
+		return
 	var texture := load(path) as Texture2D
 	_assert_true(texture != null, "retained resource is not loadable as Texture2D: %s" % path)
 
 func _require_layer_separation(path: String) -> void:
+	if not FileAccess.file_exists(path):
+		_assert_true(false, "missing retained layer source: %s" % path)
+		return
 	var source := FileAccess.get_file_as_string(path).to_lower()
 	_assert_true(not source.contains("<text"), "localized/runtime text baked into art layer: %s" % path)
 	_assert_true(not source.contains("<image"), "embedded raster/flattened image found in art layer: %s" % path)
@@ -57,5 +69,5 @@ func _require_layer_separation(path: String) -> void:
 func _assert_true(condition: bool, message: String) -> void:
 	if condition:
 		return
+	_failed = true
 	push_error(message)
-	quit(1)
