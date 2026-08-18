@@ -1,3 +1,24 @@
+@font-face {
+  font-family: 'P83 NeoDunggeunmo';
+  src: url('../generated/fonts/neodgm.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'P83 NeoDunggeunmo Pro';
+  src: url('../generated/fonts/neodgm_pro.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --p83-pixel-display: 'P83 NeoDunggeunmo', ui-monospace, monospace;
+  --p83-pixel-body: 'P83 NeoDunggeunmo Pro', 'P83 NeoDunggeunmo', ui-sans-serif, system-ui, sans-serif;
+}
+
 .language-switcher::before {
   content: '◆  고대 기행';
 }
