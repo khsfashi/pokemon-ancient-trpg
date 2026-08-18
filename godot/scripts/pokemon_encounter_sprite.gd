@@ -188,7 +188,7 @@ func _apply_frame(index: int) -> void:
 	var region: Rect2 = frame["region"]
 	var source_size: Vector2 = frame["source_size"]
 	var sprite_source: Rect2 = frame["sprite_source"]
-	var scale_factor := min(size.x / source_size.x, size.y / source_size.y)
+	var scale_factor: float = min(size.x / source_size.x, size.y / source_size.y)
 	if scale_factor >= 1.0:
 		scale_factor = max(1.0, floor(scale_factor))
 
