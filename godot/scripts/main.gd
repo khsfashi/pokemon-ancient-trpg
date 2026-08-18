@@ -2,8 +2,10 @@ extends Control
 
 const LayerCanvasScript = preload("res://scripts/layer_canvas.gd")
 const PixelSkinScript = preload("res://scripts/pixel_skin.gd")
+const PokemonEncounterSpriteScript = preload("res://scripts/pokemon_encounter_sprite.gd")
 const SpikeRuntimeScript = preload("res://scripts/spike_runtime.gd")
-const LOCAL_BEEDRILL_PATH := "res://local_assets/pokemon/beedrill.png"
+const LOCAL_BEEDRILL_ATLAS_PATH := "res://local_assets/pokemon/beedrill/15.png"
+const LOCAL_BEEDRILL_METADATA_PATH := "res://local_assets/pokemon/beedrill/15.json"
 
 const ICON_VITALITY := "res://assets/ui/icon_vitality.svg"
 const ICON_FATIGUE := "res://assets/ui/icon_fatigue.svg"
@@ -135,19 +137,18 @@ func _add_pokemon_layer() -> void:
 	pokemon_layer.size = Vector2(390, 610)
 	surface_root.add_child(pokemon_layer)
 
-	if ResourceLoader.exists(LOCAL_BEEDRILL_PATH):
-		var texture := load(LOCAL_BEEDRILL_PATH) as Texture2D
-		if texture != null:
-			var sprite := TextureRect.new()
-			sprite.name = "BeedrillP6Sprite"
-			sprite.texture = texture
-			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-			sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			sprite.position = Vector2(190, 204)
-			sprite.size = Vector2(166, 166)
-			pokemon_layer.add_child(sprite)
+	if FileAccess.file_exists(LOCAL_BEEDRILL_ATLAS_PATH) and FileAccess.file_exists(LOCAL_BEEDRILL_METADATA_PATH):
+		var encounter = PokemonEncounterSpriteScript.new()
+		encounter.name = "BeedrillP6Sprite"
+		encounter.atlas_path = LOCAL_BEEDRILL_ATLAS_PATH
+		encounter.metadata_path = LOCAL_BEEDRILL_METADATA_PATH
+		encounter.position = Vector2(190, 204)
+		encounter.size = Vector2(166, 166)
+		pokemon_layer.add_child(encounter)
+		if encounter.is_resource_ready():
 			return
+		push_warning("P6 Beedrill atlas failed to load: %s" % encounter.failure_reason())
+		encounter.queue_free()
 
 	# Public repository intentionally keeps Pokemon media metadata-only.
 	var missing := _make_panel(Rect2(194, 224, 164, 86), Color(0.08, 0.08, 0.06, 0.78), Color("#8d7b50"), 2)
