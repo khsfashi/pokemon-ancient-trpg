@@ -35,7 +35,7 @@ func _draw_background() -> void:
 	draw_rect(Rect2(0, 310, 390, 300), Color("#746247"))
 	draw_rect(Rect2(236, 260, 154, 350), Color("#4c493d"))
 	for y in range(272, 594, 24):
-		var offset := 0 if ((y / 24) as int) % 2 == 0 else 12
+		var offset := 0 if int(y / 24) % 2 == 0 else 12
 		for x in range(246 - offset, 406, 32):
 			draw_rect(Rect2(x, y, 27, 17), Color("#77705d"))
 
