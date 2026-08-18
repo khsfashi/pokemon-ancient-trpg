@@ -69,19 +69,22 @@ function prepareRoute(state: P8AuthorityState): P8AuthorityState {
 }
 
 describe('P8.2 coherent survival preparation loop', () => {
-  it('runs preparation -> risky Rattata pursuit -> gear improvement -> camp recovery -> return barter without a repeatable faucet', () => {
+  it('runs settlement prep -> real travel/risk -> field recovery -> return -> gear improvement/barter', () => {
     const returned = returnedState();
     const initialResourceUnits = resourceUnits(returned);
     const initialCompanions = returned.pokemon.companionSlots;
 
     let state = apply(returned, 'gather.repair-stock');
+    expect(state.world.currentLocality).toBe('reedbank-settlement');
     expect(state.survival.resourcePools).toEqual({ provisions: 2, remedies: 1, materials: 1 });
     expect(state.events.narrativeFlags['slice.prep.mundane_materials_only']).toBe(true);
 
     state = apply(state, 'forage.bank-edge');
+    expect(state.world.currentLocality).toBe('reedbank-settlement');
     expect(state.survival.resourcePools.provisions).toBe(3);
 
     state = apply(state, 'hunt.rattata-storetrail');
+    expect(state.world.currentLocality).toBe('old-levee');
     expect(state.survival.resourcePools).toEqual({ provisions: 2, remedies: 1, materials: 2 });
     expect(state.events.narrativeFlags['slice.prep.rattata_route_marked']).toBe(true);
     expect(state.events.narrativeFlags['slice.prep.hunt_nonlethal']).toBe(true);
@@ -93,20 +96,23 @@ describe('P8.2 coherent survival preparation loop', () => {
     const injuredLoad = deriveP8EquipmentProjection(state.character, state.survival, hurt.injuries);
     expect(injuredLoad.comfortableLoad).toBe(4);
 
+    state = apply(state, 'camp.rest-and-treat');
+    expect(state.world.currentLocality).toBe('reedbank-settlement');
+    expect(state.survival.resourcePools).toEqual({ provisions: 1, remedies: 0, materials: 2 });
+    expect(deriveP8SurvivalPressure(state)).toMatchObject({ vitalityCurrent: 5, fatigueStage: 0, injuries: 0 });
+    expect(state.events.narrativeFlags['slice.prep.camp_recovered']).toBe(true);
+    expect(state.events.narrativeFlags['slice.prep.returned_from_field_loop']).toBe(true);
+
     state = apply(state, 'repair.wet-route-gear');
     expect(state.survival.resourcePools.materials).toBe(1);
     expect(state.survival.equipment.equippedItemIds.guard).toBe('hide.buckler');
     expect(state.events.narrativeFlags['slice.prep.gear_serviced']).toBe(true);
-    expect(deriveP8EquipmentProjection(state.character, state.survival, 1).defenseReadiness).toBeGreaterThan(
+    expect(deriveP8EquipmentProjection(state.character, state.survival, 0).defenseReadiness).toBeGreaterThan(
       deriveP8EquipmentProjection(returned.character, returned.survival, 0).defenseReadiness,
     );
 
-    state = apply(state, 'camp.rest-and-treat');
-    expect(state.survival.resourcePools).toEqual({ provisions: 1, remedies: 0, materials: 1 });
-    expect(deriveP8SurvivalPressure(state)).toMatchObject({ vitalityCurrent: 5, fatigueStage: 0, injuries: 0 });
-    expect(state.events.narrativeFlags['slice.prep.camp_recovered']).toBe(true);
-
     state = apply(state, 'trade.provision-for-remedy');
+    expect(state.world.currentLocality).toBe('reedbank-settlement');
     expect(state.survival.resourcePools).toEqual({ provisions: 0, remedies: 1, materials: 1 });
     expect(state.events.narrativeFlags['slice.prep.local_barter_only']).toBe(true);
     expect(resourceUnits(state)).toBeLessThanOrEqual(initialResourceUnits + 2);
@@ -123,11 +129,12 @@ describe('P8.2 coherent survival preparation loop', () => {
     expect(state.events.narrativeFlags['slice.prep.complete']).toBe(true);
   });
 
-  it('makes hunt and retreat mutually exclusive and gives retreat the safer no-reward consequence', () => {
+  it('makes hunt and retreat mutually exclusive, but both really leave Reedbank for the old levee', () => {
     let state = prepareRoute(returnedState());
     const before = deriveP8SurvivalPressure(state);
 
     state = apply(state, 'flee.rattata-storetrail');
+    expect(state.world.currentLocality).toBe('old-levee');
     expect(deriveP8SurvivalPressure(state)).toMatchObject({
       vitalityCurrent: before.vitalityCurrent,
       fatigueStage: 1,
@@ -141,9 +148,12 @@ describe('P8.2 coherent survival preparation loop', () => {
       available: false,
       blockedReason: 'already-complete',
     });
+    expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'camp.rest-and-treat')).toMatchObject({
+      available: true,
+    });
   });
 
-  it('requires field preparation before the Rattata decision and authored Rattata evidence before either route', () => {
+  it('requires field preparation and authored Rattata evidence before either travel-risk route', () => {
     const returned = returnedState();
     expect(deriveP8PreparationProjection(returned).actions.find((action) => action.actionId === 'hunt.rattata-storetrail')).toMatchObject({
       available: false,
@@ -161,20 +171,32 @@ describe('P8.2 coherent survival preparation loop', () => {
     });
   });
 
-  it('requires a remedy to clear a hunt Injury at camp and never drives resource pools below zero', () => {
+  it('requires a remedy to clear a hunt Injury before camp can return the player to Reedbank', () => {
     let state = prepareRoute(returnedState(2, 0));
     state = apply(state, 'hunt.rattata-storetrail');
-    state = apply(state, 'repair.wet-route-gear');
+    expect(state.world.currentLocality).toBe('old-levee');
     expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'camp.rest-and-treat')).toMatchObject({
       available: false,
       blockedReason: 'remedies-required',
     });
     expect(() => apply(state, 'camp.rest-and-treat')).toThrow(/remedies-required/);
+    expect(state.world.currentLocality).toBe('old-levee');
+  });
 
-    const noFood = returnedState(0);
-    expect(deriveP8PreparationProjection(noFood).actions.find((action) => action.actionId === 'trade.provision-for-remedy')).toMatchObject({
+  it('keeps settlement repair and barter locked until camp recovery has returned the player', () => {
+    let state = prepareRoute(returnedState());
+    state = apply(state, 'flee.rattata-storetrail');
+    expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'repair.wet-route-gear')).toMatchObject({
       available: false,
       blockedReason: 'camp-recovery-required',
+    });
+
+    state = apply(state, 'camp.rest-and-treat');
+    expect(state.world.currentLocality).toBe('reedbank-settlement');
+    expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'repair.wet-route-gear')).toMatchObject({ available: true });
+    expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'trade.provision-for-remedy')).toMatchObject({
+      available: false,
+      blockedReason: 'gear-improvement-required',
     });
   });
 
@@ -201,7 +223,7 @@ describe('P8.2 coherent survival preparation loop', () => {
     expect(threeActions).toEqual(zeroActions);
   });
 
-  it('stays locked before the return and caches projections only while authority identity is unchanged', () => {
+  it('stays locked before the first return and caches projections only while authority identity is unchanged', () => {
     const beforeReturn = createInitialP8AuthorityState(character(), 'reedbank-settlement', { provisions: 2, remedies: 1, materials: 0 });
     const locked = deriveP8PreparationProjection(beforeReturn);
     expect(locked.unlocked).toBe(false);
