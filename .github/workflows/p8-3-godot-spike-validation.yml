@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'godot/**'
+      - 'tools/materialize_p8_3_beedrill.py'
       - 'docs/P8_3_GODOT_ARCHITECTURE_SPIKE.md'
       - 'PROJECT_STATUS.md'
       - '.github/workflows/p8-3-godot-spike-validation.yml'
@@ -22,7 +23,7 @@ env:
 
 jobs:
   godot-spike:
-    name: Godot 4.6.3 parity + visual contract + boot smoke
+    name: Godot 4.6.3 parity + visual contract + rendered capture harness
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -102,6 +103,44 @@ jobs:
           set -euo pipefail
           godot --headless --path godot --script res://tests/visual_contract_smoke.gd 2>&1 | tee test-results/godot-spike/visual-contract-smoke.log
           grep -F 'P8.3 Godot visual contract smoke: PASS' test-results/godot-spike/visual-contract-smoke.log
+
+      - name: Validate local P6 materializer contract without network
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/materialize_p8_3_beedrill.py --self-test 2>&1 | tee test-results/godot-spike/p6-local-materializer-self-test.log
+          grep -F 'P8.3 Beedrill local materializer self-test: PASS' test-results/godot-spike/p6-local-materializer-self-test.log
+
+      - name: Validate rendered owner-capture harness without rights-bound Pokemon media
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v xvfb-run
+          rm -rf godot/captures/owner-evidence
+          xvfb-run -a godot --audio-driver Dummy --path godot --script res://tests/owner_evidence_capture.gd -- --allow-missing-p6 \
+            2>&1 | tee test-results/godot-spike/owner-evidence-capture-harness.log
+          grep -F 'P8.3 owner evidence capture harness: PASS owner_candidate=false p6_rendered=false frames=0' \
+            test-results/godot-spike/owner-evidence-capture-harness.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          import struct
+
+          root = Path("godot/captures/owner-evidence")
+          expected = [("opening.png", (390, 844)), ("windbreak-missing-p6-ci.png", (390, 844))]
+          for name, dimensions in expected:
+              raw = (root / name).read_bytes()
+              if raw[:8] != b"\x89PNG\r\n\x1a\n" or raw[12:16] != b"IHDR":
+                  raise SystemExit(f"{name}: invalid PNG")
+              actual = struct.unpack(">II", raw[16:24])
+              if actual != dimensions:
+                  raise SystemExit(f"{name}: expected {dimensions}, got {actual}")
+
+          manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+          if manifest["p6"]["files_present"] or manifest["p6"]["rendered"] or manifest["owner_evidence_candidate"]:
+              raise SystemExit("CI harness must not claim rights-bound P6 owner evidence")
+          PY
+          cp godot/captures/owner-evidence/manifest.json test-results/godot-spike/owner-evidence-harness.json
 
       - name: Upload Godot spike logs
         if: always()
