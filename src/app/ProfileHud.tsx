@@ -6,6 +6,7 @@ import {
   type P8EquipmentProjection,
   type P8EquipmentSlotId,
 } from '../domain/p8Equipment';
+import { deriveP8SurvivalPressure } from '../domain/p8Survival';
 import { P8_SLICE_SPECIALIZATIONS } from '../content/p8SlicePresentation';
 import {
   labelP8AttributeLocalized,
@@ -109,9 +110,9 @@ const TEXT = {
     competences: '익힌 솜씨',
     danger: '위험 기준',
     incapacitated: '활력 0 → 행동불능',
-    critical: '치명상 → 즉시 치료·구조가 필요한 별도 위기',
+    critical: '부상 2개 이상 또는 피로 한계 → 쓰러질 위험',
     death: '사망 → 명시된 치명 경로에서만 발생',
-    baselineNote: '이 짧은 여정에는 아직 활력·피로·공포·부상을 바꾸는 사건이 없어 시작 상태가 유지됩니다.',
+    baselineNote: '활력·피로·부상은 길 위의 선택에 따라 실제로 변하며 저장됩니다. 부상 하나마다 편하게 감당할 수 있는 하중도 1 줄어듭니다.',
   },
   'en-US': {
     portraitChoice: 'Choose your portrait',
@@ -147,18 +148,20 @@ const TEXT = {
     competences: 'Practiced skills',
     danger: 'Danger rules',
     incapacitated: 'Vitality 0 → Incapacitated',
-    critical: 'Critical Injury → separate rescue/treatment emergency',
+    critical: '2+ Injuries or maximum Fatigue → Collapse risk',
     death: 'Death → only through an explicit lethal path',
-    baselineNote: 'Nothing in this short journey currently changes Vitality, Fatigue, Fear, or Injuries, so those values remain at their starting state.',
+    baselineNote: 'Vitality, Fatigue, and Injuries now change with field decisions and persist in the save. Each Injury also reduces comfortable Load by 1.',
   },
 } as const;
 
 export interface P8ExpeditionProfileProjection {
   readonly vitalityCurrent: number;
   readonly vitalityMax: number;
-  readonly fatigueStage: 0;
+  readonly fatigueStage: number;
+  readonly fatigueLimit: number;
   readonly fearStage: 0;
-  readonly injuries: readonly string[];
+  readonly injuries: number;
+  readonly collapseRisk: boolean;
   readonly currentLoad: number;
   readonly comfortableLoad: number;
   readonly burdened: boolean;
@@ -166,24 +169,18 @@ export interface P8ExpeditionProfileProjection {
   readonly equipment: P8EquipmentProjection;
 }
 
-/**
- * Read-only P8.2 presentation projection over the current executable slice.
- *
- * P3 owns Vitality Max = 4 + Endurance and D-028 Load. Equipment/readiness is
- * calculated by the domain projection, whose cache keys only character and
- * survival object identity, so unrelated world/event commits do not rescan
- * item definitions. The current P8 slice has no authority command for human
- * pressure state, so Vitality/Fatigue/Fear/Injury remain the contract baseline.
- */
+/** Read-only P8.2 projection over the canonical saved authority state. */
 export function deriveP8ExpeditionProfile(authority: P8AuthorityState): P8ExpeditionProfileProjection {
-  const vitalityMax = 4 + authority.character.attributes.endurance;
-  const equipment = deriveP8EquipmentProjection(authority.character, authority.survival);
+  const pressure = deriveP8SurvivalPressure(authority);
+  const equipment = deriveP8EquipmentProjection(authority.character, authority.survival, pressure.injuries);
   return Object.freeze({
-    vitalityCurrent: vitalityMax,
-    vitalityMax,
-    fatigueStage: 0,
+    vitalityCurrent: pressure.vitalityCurrent,
+    vitalityMax: pressure.vitalityMax,
+    fatigueStage: pressure.fatigueStage,
+    fatigueLimit: pressure.fatigueLimit,
     fearStage: 0,
-    injuries: Object.freeze([]),
+    injuries: pressure.injuries,
+    collapseRisk: pressure.collapseRisk,
     currentLoad: equipment.currentLoad,
     comfortableLoad: equipment.comfortableLoad,
     burdened: equipment.burdened,
@@ -317,9 +314,9 @@ export function P8ExpeditionHud({ authority, portraitId, locale }: { readonly au
       </div>
 
       <div class="hud-chip-row">
-        <span>{text.fatigue} · {text.ready}</span>
+        <span class={profile.fatigueStage >= profile.fatigueLimit ? 'warning' : ''}>{text.fatigue} · {profile.fatigueStage}/{profile.fatigueLimit}</span>
         <span>{text.fear} · {text.steady}</span>
-        <span>{text.injuries} · {text.noInjury}</span>
+        <span class={profile.injuries > 0 ? 'warning' : ''}>{text.injuries} · {profile.injuries === 0 ? text.noInjury : profile.injuries}</span>
         <span class={profile.burdened ? 'warning' : ''}>{text.load} {profile.currentLoad}/{profile.comfortableLoad} · {profile.burdened ? text.burdened : text.comfortable}</span>
       </div>
 
@@ -388,7 +385,7 @@ export function P8ExpeditionHud({ authority, portraitId, locale }: { readonly au
           <section class="danger-rules">
             <h2>{text.danger}</h2>
             <p>{text.incapacitated}</p>
-            <p>{text.critical}</p>
+            <p class={profile.collapseRisk ? 'warning' : ''}>{text.critical}</p>
             <p>{text.death}</p>
             <p class="muted">{text.baselineNote}</p>
           </section>
