@@ -20,8 +20,8 @@ func _ready() -> void:
 func _build_surface_root() -> void:
 	surface_root = Control.new()
 	surface_root.name = "SurfaceRoot"
-	_full_rect(surface_root)
 	add_child(surface_root)
+	_full_rect(surface_root)
 
 func _build_transition_overlay() -> void:
 	transition_overlay = ColorRect.new()
@@ -30,15 +30,15 @@ func _build_transition_overlay() -> void:
 	transition_overlay.modulate.a = 0.0
 	transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	transition_overlay.z_index = 100
-	_full_rect(transition_overlay)
 	add_child(transition_overlay)
+	_full_rect(transition_overlay)
 
 func _show_opening_surface() -> void:
 	_clear_surface()
 	var background := LayerCanvasScript.new() as SpikeLayerCanvas
 	background.layer_kind = SpikeLayerCanvas.LayerKind.BACKGROUND
-	_full_rect(background)
 	surface_root.add_child(background)
+	_full_rect(background)
 
 	var shade := ColorRect.new()
 	shade.color = Color(0.06, 0.07, 0.05, 0.34)
@@ -99,12 +99,12 @@ func _show_event_surface() -> void:
 	_add_event_hud()
 	_add_event_panel()
 
-func _add_world_layer(kind: SpikeLayerCanvas.LayerKind, layer_z: int) -> void:
+func _add_world_layer(kind: int, layer_z: int) -> void:
 	var layer := LayerCanvasScript.new() as SpikeLayerCanvas
 	layer.layer_kind = kind
 	layer.z_index = layer_z
-	_full_rect(layer)
 	surface_root.add_child(layer)
+	_full_rect(layer)
 
 func _add_pokemon_layer() -> void:
 	var pokemon_layer := Control.new()
@@ -243,7 +243,10 @@ func _fade_to(callback: Callable) -> void:
 	tween.tween_property(transition_overlay, "modulate:a", 1.0, 0.14)
 	tween.tween_callback(callback)
 	tween.tween_property(transition_overlay, "modulate:a", 0.0, 0.20)
-	tween.tween_callback(func() -> void: transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE)
+	tween.tween_callback(Callable(self, "_unlock_transition_input"))
+
+func _unlock_transition_input() -> void:
+	transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _clear_surface() -> void:
 	choice_buttons.clear()
