@@ -68,8 +68,9 @@ test('presents the Korean landing and first event as a game-first phone surface'
   await page.addInitScript(({ key }) => window.localStorage.setItem(key, 'ko-KR'), { key: LOCALE_KEY });
   await page.goto('/');
 
-  await expect(page.locator('.panel.hero-panel')).toBeVisible();
-  await expect(page.locator('.language-switcher')).toBeVisible();
+  await expect(page.getByTestId('opening-v2')).toBeVisible();
+  await expect(page.locator('.panel.hero-panel')).toHaveCount(0);
+  await expect(page.locator('.opening-v2__locale')).toBeVisible();
   await expect(page.getByRole('heading', { name: '고대 포켓몬 TRPG' })).toBeVisible();
   await expect(page.getByRole('button', { name: '새 여정' })).toBeVisible();
   await assertNoPlayerFacingEngineeringJargon(page);
