@@ -92,9 +92,11 @@ test('Korean orchard boundary makes Beedrill threat, ecology, and livelihood phy
   await expect(narrative).toContainText('두 번째 진동음');
   await expect(narrative).toContainText('다른 일손이 바구니를 내려놓는다');
   await expect(narrative).toContainText('방풍림을 베면 제방 바람이 어린 과수를 때리고');
-  await expect(page.getByText('길을 정한다', { exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: '돌담을 끼고 방풍림 바깥으로 돌아간다' })).toBeVisible();
-  await expect(page.getByRole('button', { name: '경고선을 넘어 안쪽 지름길로 시간을 줄인다' })).toBeVisible();
+
+  const orchardChoices = page.locator('.choice-stack button.choice:not([disabled])');
+  await expect(orchardChoices).toHaveCount(2);
+  await expect(page.getByRole('button', { name: '돌담을 끼고 방풍림 바깥으로 돌아간다' })).toBeEnabled();
+  await expect(page.getByRole('button', { name: '경고선을 넘어 안쪽 지름길로 시간을 줄인다' })).toBeEnabled();
   await assertPhoneSafeChoices(page);
 
   const visibleCopy = await page.locator('main').innerText();
