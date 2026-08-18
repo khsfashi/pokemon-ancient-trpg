@@ -22,7 +22,7 @@ env:
 
 jobs:
   godot-spike:
-    name: Godot 4.6.3 parity + boot smoke
+    name: Godot 4.6.3 parity + visual contract + boot smoke
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -95,6 +95,13 @@ jobs:
           set -euo pipefail
           godot --headless --path godot --script res://tests/parity_smoke.gd 2>&1 | tee test-results/godot-spike/parity-smoke.log
           grep -F 'P8.3 Godot parity smoke: PASS' test-results/godot-spike/parity-smoke.log
+
+      - name: Run layered visual contract smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --path godot --script res://tests/visual_contract_smoke.gd 2>&1 | tee test-results/godot-spike/visual-contract-smoke.log
+          grep -F 'P8.3 Godot visual contract smoke: PASS' test-results/godot-spike/visual-contract-smoke.log
 
       - name: Upload Godot spike logs
         if: always()
