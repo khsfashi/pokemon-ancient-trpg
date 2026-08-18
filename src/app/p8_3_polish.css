@@ -1,0 +1,11 @@
+.language-switcher::before {
+  content: '◆  고대 기행';
+}
+
+/* Keep compact affordances monochrome/pixel-like until authored HUD sprites replace them. */
+.readiness-strip > div:nth-child(1)::before { content: '◆'; }
+.readiness-strip > div:nth-child(2)::before { content: '■'; }
+.readiness-strip > div:nth-child(3)::before { content: '⌁'; }
+.resource-grid > div:nth-child(1)::before { content: '▧'; }
+.resource-grid > div:nth-child(2)::before { content: '+'; }
+.resource-grid > div:nth-child(3)::before { content: '▦'; }
