@@ -27,20 +27,24 @@ test('chooses a cosmetic portrait and keeps a persistent expedition HUD across s
   await page.getByRole('button', { name: 'Set out' }).click();
 
   const hud = page.locator('.expedition-hud');
+  const primary = hud.locator('.hud-primary-row');
+  const chips = hud.locator('.hud-chip-row');
+  const readiness = hud.locator('.readiness-strip');
+  const resources = hud.locator('.resource-grid');
   await expect(hud).toBeVisible();
-  await expect(hud.locator('.portrait-herbalist')).toBeVisible();
-  await expect(hud.getByText('Vitality', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Fatigue / stamina · 0/2', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Fear · Steady', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Injuries · None', { exact: true })).toBeVisible();
-  await expect(hud.getByText(/Load 7\/[7-9]/)).toBeVisible();
-  await expect(hud.getByText('burdened', { exact: true })).toHaveCount(0);
-  await expect(hud.getByText('Attack', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Defense', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Field', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Provisions', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Remedies', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Materials', { exact: true })).toBeVisible();
+  await expect(primary.locator('.portrait-herbalist')).toBeVisible();
+  await expect(primary.getByText('Vitality', { exact: true })).toBeVisible();
+  await expect(chips.getByText('Fatigue / stamina · 0/2', { exact: true })).toBeVisible();
+  await expect(chips.getByText('Fear · Steady', { exact: true })).toBeVisible();
+  await expect(chips.getByText('Injuries · None', { exact: true })).toBeVisible();
+  await expect(chips.getByText(/Load 7\/[7-9]/)).toBeVisible();
+  await expect(chips.getByText('burdened', { exact: true })).toHaveCount(0);
+  await expect(readiness.getByText('Attack', { exact: true })).toBeVisible();
+  await expect(readiness.getByText('Defense', { exact: true })).toBeVisible();
+  await expect(readiness.getByText('Field', { exact: true })).toBeVisible();
+  await expect(resources.getByText('Provisions', { exact: true })).toBeVisible();
+  await expect(resources.getByText('Remedies', { exact: true })).toBeVisible();
+  await expect(resources.getByText('Materials', { exact: true })).toBeVisible();
 
   await hud.locator('summary').click();
   await expect(hud.getByText('Iron spear', { exact: true })).toBeVisible();
@@ -61,9 +65,10 @@ test('chooses a cosmetic portrait and keeps a persistent expedition HUD across s
 
   await page.reload();
   await page.getByRole('button', { name: 'Continue journey' }).click();
-  await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
-  await expect(page.locator('.expedition-hud')).toBeVisible();
-  await expect(page.locator('.expedition-hud').getByText('Attack', { exact: true })).toBeVisible();
+  const resumedHud = page.locator('.expedition-hud');
+  await expect(resumedHud.locator('.hud-primary-row .portrait-herbalist')).toBeVisible();
+  await expect(resumedHud).toBeVisible();
+  await expect(resumedHud.locator('.readiness-strip').getByText('Attack', { exact: true })).toBeVisible();
 });
 
 test('Korean HUD explains exertion, equipment readiness, and lethal-state rules without inventing a second stamina pool', async ({ page, browserName }) => {
@@ -81,13 +86,16 @@ test('Korean HUD explains exertion, equipment readiness, and lethal-state rules 
   await page.getByRole('button', { name: '길을 나선다' }).click();
 
   const hud = page.locator('.expedition-hud');
-  await expect(hud.getByText('활력(체력)', { exact: true })).toBeVisible();
-  await expect(hud.getByText('피로(스태미나) · 0/2', { exact: true })).toBeVisible();
-  await expect(hud.getByText('하중 7/', { exact: false })).toBeVisible();
-  await expect(hud.getByText('과적', { exact: true })).toHaveCount(0);
-  await expect(hud.getByText('공격', { exact: true })).toBeVisible();
-  await expect(hud.getByText('방어', { exact: true })).toBeVisible();
-  await expect(hud.getByText('현장', { exact: true })).toBeVisible();
+  const primary = hud.locator('.hud-primary-row');
+  const chips = hud.locator('.hud-chip-row');
+  const readiness = hud.locator('.readiness-strip');
+  await expect(primary.getByText('활력(체력)', { exact: true })).toBeVisible();
+  await expect(chips.getByText('피로(스태미나) · 0/2', { exact: true })).toBeVisible();
+  await expect(chips.getByText('하중 7/', { exact: false })).toBeVisible();
+  await expect(chips.getByText('과적', { exact: true })).toHaveCount(0);
+  await expect(readiness.getByText('공격', { exact: true })).toBeVisible();
+  await expect(readiness.getByText('방어', { exact: true })).toBeVisible();
+  await expect(readiness.getByText('현장', { exact: true })).toBeVisible();
   await hud.locator('summary').click();
   await expect(hud.getByText('철제 창', { exact: true })).toBeVisible();
   await expect(hud.getByText('독침 방호면', { exact: true })).toBeVisible();
