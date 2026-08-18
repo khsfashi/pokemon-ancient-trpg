@@ -53,7 +53,8 @@
 }
 
 .opening-v2__locale button {
-  min-height: 36px;
+  min-width: 64px;
+  min-height: 44px;
   padding: 6px 11px;
   border: 0;
   border-radius: 999px;
@@ -62,6 +63,7 @@
   font-size: 0.76rem;
   font-weight: 750;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .opening-v2__locale button.is-active {
