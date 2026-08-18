@@ -41,7 +41,6 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
 
   const hud = page.locator('.expedition-hud');
   const illustration = page.locator('.scene-illustration[data-resource-id="p8.illustration.orchard.windbreak-boundary"]');
-  const narrative = page.locator('.narrative-copy');
   const choices = page.locator('.choice-stack button.choice:not([disabled])');
 
   await expect(hud).toBeVisible();
@@ -53,7 +52,6 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
 
   const raster = illustration.locator('img.scene-illustration-image');
   await expect(raster).toBeVisible();
-  await expect(raster).toHaveAttribute('src', /windbreak-orchard\.png/);
 
   const geometry = await page.evaluate(() => {
     const hud = document.querySelector<HTMLElement>('.expedition-hud')!;
@@ -77,6 +75,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
       rasterWidth: raster.naturalWidth,
       rasterHeight: raster.naturalHeight,
       rasterRendering: getComputedStyle(raster).imageRendering,
+      rasterSrcIsDecodedBlob: raster.currentSrc.startsWith('blob:'),
       narrativeFont: getComputedStyle(narrative).fontFamily,
       iconBackgrounds: [vitalityIconHost, staminaIconHost, injuryIconHost, provisionsIconHost]
         .map((node) => getComputedStyle(node).backgroundImage),
@@ -94,6 +93,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   expect(geometry.rasterWidth).toBe(384);
   expect(geometry.rasterHeight).toBe(276);
   expect(geometry.rasterRendering).toBe('pixelated');
+  expect(geometry.rasterSrcIsDecodedBlob).toBe(true);
   expect(geometry.narrativeFont).not.toContain('NeoDunggeunmo');
   expect(geometry.iconBackgrounds.every((value) => value !== 'none')).toBe(true);
 
