@@ -48,7 +48,7 @@ const COPY = {
     },
     rest: {
       label: 'Make camp, treat wounds, and return',
-      detail: 'Spend one Provision. If injured, spend one Remedy too. Restore Vitality, clear Fatigue, treat one Injury, then walk back to Reedbank.',
+      detail: 'Spend one Provision. If injured, spend one Remedy too. Recover up to 2 Vitality, reduce Fatigue by one stage, treat one Injury, then walk back to Reedbank.',
     },
     repair: {
       label: 'Reinforce the hide buckler back home',
@@ -92,7 +92,7 @@ const COPY = {
     },
     rest: {
       label: '길에서 야영해 상처를 돌보고 돌아온다',
-      detail: '식량 하나를 먹고 쉽니다. 다쳤다면 치료물자 하나도 사용해 활력을 회복하고 피로를 풀며 부상 하나를 치료합니다. 몸을 추스른 뒤 갈대둑으로 돌아옵니다.',
+      detail: '식량 하나를 먹고 쉽니다. 다쳤다면 치료물자 하나도 사용합니다. 활력은 최대 2 회복하고, 피로는 한 단계 낮추며, 부상 하나를 치료한 뒤 갈대둑으로 돌아옵니다.',
     },
     repair: {
       label: '돌아온 뒤 가죽 버클러를 손봐 착용한다',
