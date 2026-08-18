@@ -1,0 +1,65 @@
+name: P8.3 Regression Diagnostic
+
+on:
+  push:
+    branches:
+      - p8-3/golden-screen-windbreak
+    paths:
+      - 'src/**'
+      - 'e2e/**'
+      - 'package.json'
+      - '.github/workflows/p8-3-regression-diagnostic.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install from committed lockfile
+        run: npm ci
+
+      - name: Install Chromium and WebKit
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: resource-cache
+        run: npx playwright test e2e/resource-cache.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: browser-save
+        run: npx playwright test e2e/browser-save.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-phone-flow
+        run: npx playwright test e2e/p8-phone-flow.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-save-compat
+        run: npx playwright test e2e/p8-save-compat.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-localization
+        run: npx playwright test e2e/p8-localization.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-2-motion
+        run: npx playwright test e2e/p8-2-motion.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-2-profile-hud
+        run: npx playwright test e2e/p8-2-profile-hud.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-2-illustrations
+        run: npx playwright test e2e/p8-2-illustrations.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-2-korean-narrative
+        run: npx playwright test e2e/p8-2-korean-narrative.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-2-preparation-loop
+        run: npx playwright test e2e/p8-2-preparation-loop.spec.ts --project=phone-chromium --project=phone-webkit
+
+      - name: p8-2-integrated-product-gate
+        run: npx playwright test e2e/p8-2-integrated-product-gate.spec.ts --project=phone-chromium --project=phone-webkit
