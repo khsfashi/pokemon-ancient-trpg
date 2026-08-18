@@ -14,7 +14,28 @@ The owner-review scene is composed in this order:
 6. Godot Control UI — HUD, prose, choice buttons, details entry.
 7. `TransitionOverlay` — fade/input ownership during surface changes.
 
-The current code-drawn environment/human shapes are **layout scaffolding only**. They exist to prove scene ownership, occlusion and hierarchy; they are not owner-acceptance art.
+The former code-drawn rectangle scaffold has been replaced by retained project-owned SVG resources. They intentionally use crisp, grid-aligned vector primitives so Godot can import them deterministically while the spike is still remote-reviewable. They are separate resources, not a flattened screenshot.
+
+Current retained layer set:
+
+```text
+environment/opening_reedbank.svg
+human/opening_traveler.svg
+foreground/opening_brush.svg
+
+environment/orchard_far.svg
+environment/orchard_mid.svg
+human/orchard_keeper.svg
+foreground/orchard_foliage.svg
+
+ui/icon_vitality.svg
+ui/icon_fatigue.svg
+ui/icon_provisions.svg
+```
+
+`godot/scripts/pixel_skin.gd` is the shared project-owned Control skin for square pixel borders, button focus/press states, panel palette and typography colors. Localized text remains runtime `Label`/`Button` content.
+
+`godot/tests/visual_contract_smoke.gd` rejects missing/unloadable retained resources, `<text>` or embedded `<image>` elements in world/human layers, known Pokemon species tokens baked into those layers, removal of the separate P6 Pokemon slot, and the old developer spike label leaking into the player-facing opening.
 
 ## Local Pokemon media slot
 
@@ -28,18 +49,11 @@ godot/local_assets/pokemon/beedrill.png
 
 At runtime the scene checks `ResourceLoader.exists()` for this slot. If it is absent, the Pokemon layer displays a neutral materialization notice instead of fabricating a Pokemon silhouette.
 
-## Acceptance-art handoff
+## Owner screenshot boundary
 
-When replacing the layout scaffold, create/export **separate** files rather than one flattened screenshot. Minimum useful set for the orchard scene:
+The committed SVG layers are now recomposable acceptance candidates, but the windbreak owner screenshot is **not complete** until Godot renders the scene with the real locally materialized P6 Beedrill resource. CI may validate clean-checkout import/boot and layer separation; it must not invent or commit a replacement Pokemon merely to make a screenshot self-contained.
 
-```text
-environment/orchard_far.png
-environment/orchard_mid.png
-human/orchard_keeper.png
-ui/frame_event.png
-ui/button_choice.png
-ui/hud_plate.png
-foreground/orchard_foliage.png
-```
+Final owner evidence remains two 390×844 Godot renders:
 
-Keep localized text, choice labels, stats and Pokemon sprites out of those rasters. Pixel UI pieces should share one pixel scale, border weight and palette instead of mixing unrelated free packs.
+- opening/title from retained opening environment + traveler + foreground + Control UI;
+- windbreak event from retained orchard far/mid + keeper + real P6 Beedrill + foreground + Control HUD/event/choices.
