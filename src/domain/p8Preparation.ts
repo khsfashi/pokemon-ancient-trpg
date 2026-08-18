@@ -332,8 +332,8 @@ function applySurvivalEffect(state: P8AuthorityState, action: PreparationActionD
   if (action.actionId === 'camp.rest-and-treat') {
     const pressure = deriveP8SurvivalPressure(state);
     return applyP8SurvivalPressure(state, {
-      vitalityDelta: pressure.vitalityMax - pressure.vitalityCurrent,
-      fatigueDelta: -pressure.fatigueStage,
+      vitalityDelta: Math.min(2, pressure.vitalityMax - pressure.vitalityCurrent),
+      fatigueDelta: -Math.min(1, pressure.fatigueStage),
       injuryDelta: pressure.injuries > 0 ? -1 : 0,
     });
   }
