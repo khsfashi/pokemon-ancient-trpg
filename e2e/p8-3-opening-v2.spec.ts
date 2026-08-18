@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test.use({ viewport: { width: 390, height: 844 } });
 
-test('opening V2 is a standalone full-screen game surface at 390x844', async ({ page }) => {
+test('opening V2 is a standalone full-screen game surface at 390x844', async ({ page, browserName }) => {
   await page.goto('/');
 
   const opening = page.getByTestId('opening-v2');
@@ -35,6 +35,13 @@ test('opening V2 is a standalone full-screen game surface at 390x844', async ({ 
   expect(startBox!.x).toBeGreaterThanOrEqual(0);
   expect(startBox!.x + startBox!.width).toBeLessThanOrEqual(390);
   expect(startBox!.y + startBox!.height).toBeLessThanOrEqual(844);
+
+  if (browserName === 'chromium') {
+    await page.screenshot({
+      path: 'test-results/p8-3-opening-v2-390x844.png',
+      fullPage: false,
+    });
+  }
 });
 
 test('V2 opening hands off to existing character creation without rendering both shells', async ({ page }) => {
