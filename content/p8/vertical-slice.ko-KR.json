@@ -1,1 +1,191 @@
-{"schemaVersion":"p8-slice-locale-v1","locale":"ko-KR","contentPackId":"p8.reedbank-slice","contentPackVersion":"1","originLabels":{"river_household":"강가 집안","storehouse_household":"곡물창고 집안","orchard_household":"과수원 집안","repair_household":"수선공 집안"},"practiceLabels":{"route_guide":"길잡이","quartermaster":"살림지기","field_mender":"수선공","go_between":"중재자"},"competenceLabels":{"tracking":"추적","inventory":"물자 관리","repair":"수선","mediation":"중재","first_aid":"응급처치","climbing":"등반","foraging":"채집"},"localityLabels":{"reedbank-settlement":"갈대둑 마을","old-levee":"옛 제방길","windbreak-orchard":"방풍림 과수원"},"speciesLabels":{"13":"뿔충이","15":"독침붕","19":"꼬렛"},"specializations":{"path_reader":{"label":"길눈 밝은 자","description":"발자국과 눌린 풀, 물길의 모양을 먼저 봅니다. 낯선 길에서도 위험을 한발 앞서 알아챕니다."},"steady_hand":{"label":"든든한 일손","description":"손에 쥔 도구와 몸을 믿습니다. 일이 꼬여도 끝까지 버티며 당장 필요한 해답을 만들어 냅니다."},"field_eye":{"label":"들판 살피는 눈","description":"풀빛과 나무껍질, 바람이 바뀌는 순간을 잘 봅니다. 먹을 것과 쓸 만한 재료를 남보다 먼저 찾아냅니다."}},"prompts":{"home":{"promptText":"강물이 둑 아래까지 차오른 새벽이었다. 사람들이 잠에서 깨기도 전에 몸이 먼저 움직였다. 그날 가장 먼저 달려간 곳이 아직 선명하다.","answers":{"home.storehouse":"곡식 자루부터 옮겼다","home.ferry":"나루터 사람들을 불렀다","home.orchard":"어린 나무를 묶어 세웠다"}},"rupture":{"promptText":"한번 크게 곤란을 겪고 나면 몸이 먼저 기억한다. 그 뒤로 길을 나서기 전에는 꼭 한 번 더 살피게 됐다. 그 버릇을 남긴 날이 떠오른다.","answers":{"rupture.shortage":"바닥난 곡식을 다시 셌다","rupture.flood":"물에 잠긴 길을 새로 찾았다","rupture.quarrel":"갈라선 두 집을 오가며 말렸다"}},"work":{"promptText":"해가 기울면 어른들의 손이 늘 모자랐다. 처음엔 시키는 일만 했지만, 어느새 사람들이 먼저 이름을 불렀다. 가장 오래 손에 익은 일이 남아 있다.","answers":{"work.pathfinder":"길과 발자국부터 살폈다","work.mender":"부러진 도구를 고쳐 썼다","work.helper":"집집을 오가며 말을 풀었다"}}},"scenes":{"slice.opening.market_call":{"eyebrow":"갈대둑 · 아침 장터","title":"창고 앞에서 터진 고함","body":"아침 장터 냄새가 가시기도 전에 곡물창고 앞에서 고함이 터진다. 자루 수와 장부가 맞지 않는다. 오늘 몫을 다시 세자는 사람과 빈손으로 돌아갈 수는 없다는 사람이 서로 목소리를 높인다.","continueLabel":"어떻게 할까?","choices":{"step_into_square":"사이에 들어 사정을 듣는다","hang_back_and_listen":"뒤에서 말부터 들어 본다"},"outcomes":{"released":"당장 주먹질로 번질 기세는 꺾였다. 관리인이 사람들 눈을 피해 당신을 부른다. 따로 할 말이 있는 모양이다.","listened_first":"뒤에 서서 듣고 있자 엇갈린 말 사이로 사정이 보인다. 누가 곡식을 걱정하고 누가 장부를 의심하는지 알 만해졌다. 관리인이 당신을 알아보고 조용히 손짓한다."}},"slice.social.steward_request":{"eyebrow":"갈대둑 · 창고 뒤편","title":"관리인의 부탁","body":"관리인은 당신을 창고 뒤로 데려가 목소리를 낮춘다. 오늘 식량을 내보내기 전에 옛 제방길을 한번 봐 달란다. 밤새 비가 내려 나루 쪽 물살이 세졌고, 지름길을 다녀온 사람도 아직 없다.","continueLabel":"어떻게 맡을까?","choices":{"accept_errand":"제방길을 살펴보겠다고 한다","set_terms":"먼저 볼 곳을 짚어 달라 한다"},"outcomes":{"entrusted":"관리인은 짧게 고개를 숙인다. 길이 괜찮은지, 무너진 곳은 없는지만 보고 오면 된다고 한다.","terms_set":"“무너진 곳부터 봐 줘. 끝까지 가겠다고 무리할 필요는 없어.” 관리인은 당부를 마치고 길을 내준다."}},"slice.relationship.millkeeper_ledger":{"eyebrow":"갈대둑 · 방앗간","title":"돌아오면 들려줘","body":"길을 나서려는데 방앗간지기가 소매를 붙든다. “제방 쪽이 어땠는지, 돌아오면 꼭 들려줘.” 웃는 입과 달리 눈빛은 진지하다. 머지않아 그 길로 곡식을 실어야 한다.","continueLabel":"뭐라고 답할까?","choices":{"promise_return":"돌아와 직접 알려 주겠다고 한다","decline_promise":"장담은 못 한다고 솔직히 말한다"},"outcomes":{"promise_recorded":"방앗간지기는 그제야 소매를 놓는다. 별것 아닌 약속 하나가 돌아올 이유가 되었다.","no_promise":"잠깐 아쉬운 얼굴을 하더니 고개를 끄덕인다. 빚진 약속은 없지만, 그 말은 마음 한구석에 남는다."}},"slice.travel.leave_settlement":{"eyebrow":"마을 밖 · 옛 제방길","title":"마지막 돌표식 너머","body":"마을 끝의 마지막 돌표식을 넘자 바람이 한층 거칠어진다. 강물은 제방 한쪽을 갉아먹고, 반대편의 키 큰 풀은 길 가장자리를 삼키고 있다. 허리춤 식량주머니도 묵직하진 않다.","continueLabel":"어느 길로 갈까?","choices":{"take_old_levee":"한 끼를 먹고 제방길로 바로 간다","wait_for_ferry":"나룻배를 기다려 식량을 아낀다"},"outcomes":{"levee_reached":"한 끼를 비우고 옛 제방 위에 올라선다. 바람이 정면으로 부딪힌다. 이제부터는 발밑과 풀숲을 함께 봐야 한다.","ferry_delay":"식량은 아꼈다. 대신 나룻배를 기다리는 사이 해가 높아졌고, 제방에 닿았을 때는 아침 시간이 제법 지나 있었다."}},"slice.ecology.weedle_crossing":{"eyebrow":"옛 제방길 · 풀숲","title":"길을 건너는 뿔충이","body":"앞쪽 풀이 낮게 출렁인다. 뿔충이 몇 마리가 둑을 가로질러 천천히 움직인다. 잎을 문 녀석 뒤로 몸을 세운 녀석도 보인다. 성급히 다가가면 무리 전체를 놀라게 할 수 있다.","continueLabel":"어떻게 지나갈까?","choices":{"give_space":"물러서서 지나가길 기다린다","read_signs":"흔적을 읽어 이동 방향을 본다 · 감각+추적"},"outcomes":{"observed":"거리를 두고 기다리자 뿔충이들이 차례로 풀숲 속으로 사라진다. 막혔던 길이 다시 열린다.","setback":"너무 가까이 다가가자 앞쪽 뿔충이가 몸을 세운다. 급히 물러나 한참을 기다린 뒤에야 길을 지나갈 수 있었다.","partial":"흔적은 읽었지만 판단이 늦었다. 몇 번이나 멈춰 주변을 살핀 끝에 무리를 피해 간다.","full":"잘린 잎과 눌린 풀이 한 방향으로 이어진다. 뿔충이들이 제방 아래 먹이터와 둑 위를 오간다는 걸 알아챘다.","exceptional":"눌린 풀 사이로 오래된 길 하나가 더 보인다. 무리가 늘 비켜 다닌 자리 덕분에, 사람 하나가 조용히 빠져나갈 틈까지 찾았다."}},"slice.mixed.orchard_boundary":{"eyebrow":"방풍림 과수원 · 경계","title":"날갯소리 아래의 지름길","body":"지름길은 과수원을 두른 방풍림 안쪽으로 이어진다. 갈라진 나무껍질엔 꼬렛의 이빨자국이 남아 있고, 머리 위에서는 독침붕 날갯소리가 끊이지 않는다. 그때 과수원지기가 길 한가운데로 나와 말없이 당신을 바라본다.","continueLabel":"어느 쪽으로 갈까?","choices":{"protect_windbreak":"방풍림 바깥길로 돌아간다","take_shortcut":"안쪽 지름길을 쓰겠다고 한다"},"outcomes":{"windbreak_protected":"조금 멀리 돌아가자 독침붕 무리와 자연스레 거리가 벌어진다. 과수원지기도 굳었던 표정을 풀고 길 끝을 가리켜 준다.","shortcut_taken":"시간은 아꼈지만 과수원지기의 표정이 차갑게 굳는다. 안쪽에서 꼬렛이 달아나고, 머리 위 날갯소리는 한동안 뒤를 따른다."}},"slice.ending.return_crossroads":{"eyebrow":"해질녘 · 갈대둑","title":"다시 보이는 굴뚝 연기","body":"해가 기울자 갈대둑 굴뚝의 연기가 시야에 들어온다. 신발에는 제방 진흙이 말라붙었고, 머릿속에는 길의 상태와 풀숲에서 본 것이 차곡차곡 남아 있다. 방앗간지기와 관리인에게 전할 말도 생겼다.","continueLabel":"마을로 들어간다","choices":{"return_with_account":"오늘 본 것을 전한다"},"outcomes":{"ending_ready":"방앗간지기는 하던 일을 멈추고 끝까지 듣는다. 짧은 길에서 얻은 이야기가 내일 제방을 건널 사람들의 준비가 된다."}}},"relationshipLabels":{"reedbank.steward":"갈대둑 관리인","reedbank.millkeeper":"방앗간지기","orchard.keeper":"과수원지기"},"relationshipStateLabels":{"entrusted":"부탁을 맡긴 사이","terms_set":"조건을 나눈 사이","expects_return":"귀환 소식을 기다림","no_promise":"약속 없이 헤어짐","route_respected":"경계를 존중함","route_strained":"사이가 틀어짐"}}
+{
+  "schemaVersion": "p8-slice-locale-v1",
+  "locale": "ko-KR",
+  "contentPackId": "p8.reedbank-slice",
+  "contentPackVersion": "1",
+  "originLabels": {
+    "river_household": "강가 집안",
+    "storehouse_household": "곡물창고 집안",
+    "orchard_household": "과수원 집안",
+    "repair_household": "수선공 집안"
+  },
+  "practiceLabels": {
+    "route_guide": "길잡이",
+    "quartermaster": "살림지기",
+    "field_mender": "수선공",
+    "go_between": "중재자"
+  },
+  "competenceLabels": {
+    "tracking": "추적",
+    "inventory": "물자 관리",
+    "repair": "수선",
+    "mediation": "중재",
+    "first_aid": "응급처치",
+    "climbing": "등반",
+    "foraging": "채집"
+  },
+  "localityLabels": {
+    "reedbank-settlement": "갈대둑 마을",
+    "old-levee": "옛 제방길",
+    "windbreak-orchard": "방풍림 과수원"
+  },
+  "speciesLabels": {
+    "13": "뿔충이",
+    "15": "독침붕",
+    "19": "꼬렛"
+  },
+  "specializations": {
+    "path_reader": {
+      "label": "길눈 밝은 자",
+      "description": "발자국과 눌린 풀, 물길의 모양을 먼저 봅니다. 낯선 길에서도 위험을 한발 앞서 알아챕니다."
+    },
+    "steady_hand": {
+      "label": "든든한 일손",
+      "description": "손에 쥔 도구와 몸을 믿습니다. 일이 꼬여도 끝까지 버티며 당장 필요한 해답을 만들어 냅니다."
+    },
+    "field_eye": {
+      "label": "들판 살피는 눈",
+      "description": "풀빛과 나무껍질, 바람이 바뀌는 순간을 잘 봅니다. 먹을 것과 쓸 만한 재료를 남보다 먼저 찾아냅니다."
+    }
+  },
+  "prompts": {
+    "home": {
+      "promptText": "강물이 둑 아래까지 차오른 새벽이었다. 사람들이 잠에서 깨기도 전에 몸이 먼저 움직였다. 그날 가장 먼저 달려간 곳이 아직 선명하다.",
+      "answers": {
+        "home.storehouse": "곡식 자루부터 옮겼다",
+        "home.ferry": "나루터 사람들을 불렀다",
+        "home.orchard": "어린 나무를 묶어 세웠다"
+      }
+    },
+    "rupture": {
+      "promptText": "한번 크게 곤란을 겪고 나면 몸이 먼저 기억한다. 그 뒤로 길을 나서기 전에는 꼭 한 번 더 살피게 됐다. 그 버릇을 남긴 날이 떠오른다.",
+      "answers": {
+        "rupture.shortage": "바닥난 곡식을 다시 셌다",
+        "rupture.flood": "물에 잠긴 길을 새로 찾았다",
+        "rupture.quarrel": "갈라선 두 집을 오가며 말렸다"
+      }
+    },
+    "work": {
+      "promptText": "해가 기울면 어른들의 손이 늘 모자랐다. 처음엔 시키는 일만 했지만, 어느새 사람들이 먼저 이름을 불렀다. 가장 오래 손에 익은 일이 남아 있다.",
+      "answers": {
+        "work.pathfinder": "길과 발자국부터 살폈다",
+        "work.mender": "부러진 도구를 고쳐 썼다",
+        "work.helper": "집집을 오가며 말을 풀었다"
+      }
+    }
+  },
+  "scenes": {
+    "slice.opening.market_call": {
+      "eyebrow": "갈대둑 · 아침 장터",
+      "title": "창고 앞에서 터진 고함",
+      "body": "볶은 곡식 냄새가 장터에 남아 있는데, 창고 앞에서는 자루가 다시 바닥에 내려앉는다. 장부에 적힌 수와 실제 자루 수가 하나 맞지 않는다. 한쪽은 오늘 몫을 전부 다시 세자고 하고, 다른 쪽은 빈손으로 집에 돌아갈 수 없다며 자루를 붙든다. 목소리가 높아질수록 주변 손도 하나둘 멈춘다. 지금 풀지 못하면 오늘 식량을 나누는 일 자체가 밀릴 판이다.",
+      "continueLabel": "먼저 움직인다",
+      "choices": {
+        "step_into_square": "사이에 들어 사정을 듣는다",
+        "hang_back_and_listen": "뒤에서 말부터 들어 본다"
+      },
+      "outcomes": {
+        "released": "두 사람 사이에 서서 자루와 장부를 차례로 확인하자 주먹부터 나갈 기세는 꺾인다. 관리인이 사람들 눈을 피해 창고 뒤를 가리킨다. 이 소동과는 다른 부탁이 있는 모양이다.",
+        "listened_first": "한발 물러서 끝까지 듣자 엇갈린 말이 갈라진다. 누가 오늘 먹을 곡식을 걱정하고, 누가 빠진 자루를 의심하는지 보인다. 관리인은 당신이 상황을 읽은 걸 확인하듯 조용히 창고 뒤로 손짓한다."
+      }
+    },
+    "slice.social.steward_request": {
+      "eyebrow": "갈대둑 · 창고 뒤편",
+      "title": "관리인의 부탁",
+      "body": "창고 뒤로 돌아오자 장터 소리가 벽 너머로 낮아진다. 관리인은 젖은 제방 쪽을 턱으로 가리킨다. 밤새 비가 내려 나루의 물살이 세졌고, 옛 제방 지름길을 다녀온 사람도 아직 없다. 오늘 곡식을 밖으로 보내기 전에 무너진 곳이 있는지, 사람이 지나갈 만한 폭이 남았는지만 확인해 달라는 부탁이다.",
+      "continueLabel": "부탁을 받는다",
+      "choices": {
+        "accept_errand": "제방길을 살펴보겠다고 한다",
+        "set_terms": "먼저 볼 곳을 짚어 달라 한다"
+      },
+      "outcomes": {
+        "entrusted": "관리인은 짧게 고개를 숙인다. 길 끝까지 억지로 밀고 갈 필요는 없고, 사람이 지나갈 수 있는지 확인한 만큼만 전해 달라고 한다.",
+        "terms_set": "“무너진 곳부터 봐 줘. 끝까지 가겠다고 무리할 필요는 없어.” 관리인은 젖은 둑과 나루 쪽을 손가락으로 짚고 길을 내준다."
+      }
+    },
+    "slice.relationship.millkeeper_ledger": {
+      "eyebrow": "갈대둑 · 방앗간",
+      "title": "돌아오면 들려줘",
+      "body": "길을 나서려는데 방앗간지기가 밀가루 묻은 손으로 소매 끝을 붙든다. “제방 쪽이 어땠는지, 돌아오면 꼭 들려줘.” 웃는 입과 달리 눈은 제방 쪽을 향해 있다. 곧 그 길로 곡식을 실어야 하니, 당신이 보고 오는 진흙 한 곳과 무너진 턱 하나가 내일 수레를 보낼지 말지를 정하게 된다.",
+      "continueLabel": "약속을 남긴다",
+      "choices": {
+        "promise_return": "돌아와 직접 알려 주겠다고 한다",
+        "decline_promise": "장담은 못 한다고 솔직히 말한다"
+      },
+      "outcomes": {
+        "promise_recorded": "방앗간지기는 그제야 소매를 놓는다. 별것 아닌 말 한마디가, 길 끝에서 다시 마을 쪽으로 발을 돌릴 이유 하나를 더 만든다.",
+        "no_promise": "방앗간지기는 잠깐 입을 다물었다가 고개를 끄덕인다. 빚진 약속은 없지만, 제방으로 곡식을 보내야 한다는 사정은 마음 한구석에 남는다."
+      }
+    },
+    "slice.travel.leave_settlement": {
+      "eyebrow": "마을 밖 · 옛 제방길",
+      "title": "마지막 돌표식 너머",
+      "body": "마을 끝의 마지막 돌표식을 넘자 바람이 몸을 옆으로 민다. 강물은 제방 한쪽 흙을 갉아 검은 단면을 드러냈고, 반대편 키 큰 풀은 사람 한 명이 지날 폭까지 길을 먹어 들어왔다. 허리춤 식량은 넉넉하지 않다. 지금 한 끼를 써서 바로 제방에 오르면 시간을 벌 수 있고, 나룻배를 기다리면 식량은 남지만 아침의 안전한 시간을 잃는다.",
+      "continueLabel": "제방으로 나선다",
+      "choices": {
+        "take_old_levee": "한 끼를 먹고 제방길로 바로 간다",
+        "wait_for_ferry": "나룻배를 기다려 식량을 아낀다"
+      },
+      "outcomes": {
+        "levee_reached": "한 끼를 비우고 옛 제방 위에 올라선다. 바람이 정면으로 부딪히고 젖은 흙이 발밑에서 조금씩 밀린다. 이제부터는 길의 폭과 풀숲 움직임을 함께 봐야 한다.",
+        "ferry_delay": "식량은 남겼다. 대신 나룻배를 기다리는 동안 해가 높아졌다. 제방에 닿았을 때는 젖은 흙이 조금 말랐지만, 돌아올 때 쓸 수 있는 낮 시간도 그만큼 줄었다."
+      }
+    },
+    "slice.ecology.weedle_crossing": {
+      "eyebrow": "옛 제방길 · 풀숲",
+      "title": "길을 건너는 뿔충이",
+      "body": "앞쪽 풀이 무릎 높이에서 차례로 눕는다. 뿔충이 몇 마리가 잎을 문 채 제방을 가로지르고, 뒤쪽 한 마리는 몸을 세워 길 위의 움직임을 살핀다. 무리 사이로 억지로 발을 넣으면 가장 가까운 녀석뿐 아니라 뒤따르는 개체까지 한꺼번에 놀랄 수 있다. 반대로 잘린 잎과 눌린 풀을 보면 어느 쪽으로 빠져나갈지 먼저 읽을 여지가 있다.",
+      "continueLabel": "길을 비운다",
+      "choices": {
+        "give_space": "물러서서 지나가길 기다린다",
+        "read_signs": "흔적을 읽어 이동 방향을 본다 · 감각+추적"
+      },
+      "outcomes": {
+        "observed": "거리를 두고 기다리자 앞선 뿔충이부터 차례로 풀숲 안으로 사라진다. 마지막 몸통이 잎 뒤로 가린 뒤에야 막혔던 길이 다시 열린다.",
+        "setback": "발을 너무 빨리 들이자 앞쪽 뿔충이가 몸을 세우고 길이 다시 막힌다. 급히 물러나 한참을 기다린 뒤에야 무리가 풀숲으로 빠진다.",
+        "partial": "흔적은 찾았지만 방향을 늦게 읽었다. 몇 번이나 걸음을 멈추고 몸을 낮춘 끝에 무리가 비운 틈을 따라 지나간다.",
+        "full": "잘린 잎과 눌린 풀이 한 방향으로 이어진다. 뿔충이들이 제방 아래 먹이터와 둑 위를 오가는 선이 보이자, 그 선을 건드리지 않고 지나갈 폭도 함께 읽힌다.",
+        "exceptional": "새로 눌린 풀 아래로 오래된 빈 틈 하나가 겹쳐 있다. 뿔충이들이 반복해서 비켜 다닌 자리다. 무리의 앞을 자르지 않고 사람 하나가 조용히 빠져나갈 길까지 찾아낸다."
+      }
+    },
+    "slice.mixed.orchard_boundary": {
+      "eyebrow": "방풍림 과수원 · 경계",
+      "title": "날갯소리 아래의 지름길",
+      "body": "옛 제방의 바람이 방풍림 앞에서 뚝 끊긴다. 붉은 천을 묶은 말뚝 안쪽, 열두어 걸음 앞에서 낮고 굵은 날갯소리가 가지 사이를 가른다. 독침붕 한 마리가 공중에 몸을 세우고 두 앞다리 침을 길 쪽으로 모은 채 경계선을 가로지른다. 돌담 아래의 꼬렛은 썩은 과실 냄새도 버리고 틈 속으로 몸을 숨긴다.\n\n안쪽 흙길로 발끝을 돌리자 독침붕이 고도를 낮춰 여덟 걸음 남짓까지 직선으로 들어온다. 머리와 두 침이 먼저 방향을 잡고 복부가 뒤따른다. 한 걸음 물러서자 다섯 걸음쯤 앞에서 몸을 꺾어 위로 치솟고, 날개 바람에 마른 잎이 얼굴 높이까지 튄다. 더 안쪽에서는 두 번째 진동음이 겹친다. 한 마리만 보고 빈틈으로 뛰어들 수 있는 길이 아니다.\n\n우회로 저편의 과수원지기가 막대로 나무를 세 번 두드리고, 잠깐 쉰 뒤 두 번 더 친다. 다른 일손이 바구니를 내려놓는다. “밖으로 돌면 늦어도 길은 이어지오.” 짧은 창고길은 독침붕의 경고선 안쪽을 스치고, 돌담을 끼는 우회로는 크게 돈다. 방풍림을 베면 제방 바람이 어린 과수를 때리고, 그대로 두면 사람의 짐길이 길어진다. 이제 몇 분을 아끼는 일이 누구의 위험과 노동을 늘리는지 눈앞에서 보인다.",
+      "continueLabel": "길을 정한다",
+      "choices": {
+        "protect_windbreak": "돌담을 끼고 방풍림 바깥으로 돌아간다",
+        "take_shortcut": "경고선을 넘어 안쪽 지름길로 시간을 줄인다"
+      },
+      "outcomes": {
+        "windbreak_protected": "질고 먼 길을 택하자 독침붕의 날갯소리가 등 뒤로 밀린다. 과수원지기는 처진 방풍림 가지를 베지 않고 끈으로 들어 올린다. 당신이 반대쪽을 잡아 주자 그는 다음 붉은 말뚝과, 소리가 다시 굵어질 때 물러설 방향까지 먼저 알려 준다. 오래 걸렸지만 방풍림과 작업선은 그대로 남았다.",
+        "shortcut_taken": "지름길에 발을 넣자 멀어졌던 날갯소리가 다시 굵어진다. 과수원지기는 저편 일손에게 세 번, 쉬고 두 번 막대 신호를 보내 작업을 멈추게 한다. 시간은 줄었지만, 그는 당신이 빠져나온 뒤 돌담 너머의 세세한 길을 더 말해 주지 않는다. 아낀 시간만큼 다른 사람의 작업과 신뢰를 깎아 쓴 셈이다."
+      }
+    },
+    "slice.ending.return_crossroads": {
+      "eyebrow": "해질녘 · 갈대둑",
+      "title": "다시 보이는 굴뚝 연기",
+      "body": "해가 기울자 갈대둑 굴뚝의 연기가 강바람에 눕는다. 신발에는 제방 진흙이 두 겹으로 말라붙었고, 귀에는 방풍림에서 낮게 울리던 독침붕 날갯소리가 아직 남아 있다. 뿔충이가 비운 길, 과수원의 붉은 말뚝, 사람이 돌아가야 했던 우회로까지 오늘 본 것은 전부 내일 누군가의 준비가 될 수 있다. 방앗간지기와 관리인에게 가져갈 것은 전리품보다 길의 상태와 살아서 돌아온 기억이다.",
+      "continueLabel": "마을로 들어간다",
+      "choices": {
+        "return_with_account": "오늘 본 것을 전한다"
+      },
+      "outcomes": {
+        "ending_ready": "방앗간지기는 하던 손을 멈추고 제방과 방풍림 이야기를 끝까지 듣는다. 어디서 기다려야 했고 어느 길이 돌아가야 했는지 전해지자, 짧은 원정에서 얻은 기억이 내일 길을 나설 사람들의 준비가 된다."
+      }
+    }
+  },
+  "relationshipLabels": {
+    "reedbank.steward": "갈대둑 관리인",
+    "reedbank.millkeeper": "방앗간지기",
+    "orchard.keeper": "과수원지기"
+  },
+  "relationshipStateLabels": {
+    "entrusted": "부탁을 맡긴 사이",
+    "terms_set": "조건을 나눈 사이",
+    "expects_return": "귀환 소식을 기다림",
+    "no_promise": "약속 없이 헤어짐",
+    "route_respected": "경계를 존중함",
+    "route_strained": "사이가 틀어짐"
+  }
+}
