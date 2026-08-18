@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "status": "pass",
+  "characters": 5533,
+  "paragraphs": 18,
+  "target_characters": 5200,
+  "target_paragraphs": 18,
+  "failures": [],
+  "duplicate_samples": [],
+  "checked_at": "2026-08-18T07:40:00+00:00",
+  "model_qa_notes": [
+    "과수원지기의 장비·장화·바구니·운반 횟수·작업 중단으로 독침붕 경계가 생업 비용을 만드는 과정을 구체화했다.",
+    "방풍림이 제방 바람을 막는 생활 기반이어서 단순 제거할 수 없음을 나무의 움직임과 상처로 보여 주었다.",
+    "protect_windbreak / take_shortcut을 선악 설문이 아니라 시간·안전·다른 일손의 작업·향후 정보 관계의 trade-off로 제시했다.",
+    "기존 route_respected / route_strained 및 사회적 비용의 의미를 보존하고 직접 전투·전리품·미검증 둥지 지식은 발명하지 않았다."
+  ],
+  "worker": "chatgpt"
+}
