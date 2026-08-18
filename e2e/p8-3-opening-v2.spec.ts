@@ -1,8 +1,11 @@
 import { expect, test } from '@playwright/test';
 
+const LOCALE_KEY = 'pokemon-ancient-trpg.locale.v1';
+
 test.use({ viewport: { width: 390, height: 844 } });
 
 test('opening V2 is a standalone full-screen game surface at 390x844', async ({ page, browserName }) => {
+  await page.addInitScript(({ key }) => window.localStorage.setItem(key, 'ko-KR'), { key: LOCALE_KEY });
   await page.goto('/');
 
   const opening = page.getByTestId('opening-v2');
@@ -10,6 +13,8 @@ test('opening V2 is a standalone full-screen game surface at 390x844', async ({ 
   await expect(page.locator('main.shell')).toHaveCount(0);
   await expect(opening.locator('.panel')).toHaveCount(0);
   await expect(opening.locator('.hero-panel')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: '고대 포켓몬 TRPG' })).toBeVisible();
+  await expect(page.getByRole('button', { name: '새 여정' })).toBeVisible();
 
   const art = opening.locator('.opening-v2__art');
   await expect(art).toBeVisible();
