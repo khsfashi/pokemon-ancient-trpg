@@ -43,6 +43,7 @@ import {
   saveP8PortraitId,
   type P8PortraitId,
 } from './ProfileHud';
+import { OpeningV2 } from './v2/OpeningV2';
 
 const session = new P8BrowserSession();
 
@@ -308,6 +309,21 @@ export function App() {
       return;
     }
     await continueFromCheckpoint();
+  }
+
+  const showOpeningV2 = mode === 'landing' || (presentedSnapshot.authority === null && mode === 'play');
+  if (showOpeningV2) {
+    return (
+      <OpeningV2
+        locale={locale}
+        canResume={presentedSnapshot.canResume}
+        busy={busy}
+        error={error}
+        onLocaleChange={setLocale}
+        onStart={beginCreation}
+        onResume={() => { void resumeRun(); }}
+      />
+    );
   }
 
   let body;
