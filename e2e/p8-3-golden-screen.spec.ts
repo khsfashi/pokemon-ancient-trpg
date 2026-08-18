@@ -33,7 +33,7 @@ async function reachWindbreak(page: Page): Promise<void> {
   await expect(page.getByRole('heading', { name: '날갯소리 아래의 지름길' })).toBeVisible();
 }
 
-test('windbreak golden screen is scene-first, raster-authored and phone-contained', async ({ page }, testInfo) => {
+test('windbreak golden screen is scene-first, raster-authored and phone-contained', async ({ page }) => {
   await reachWindbreak(page);
 
   const viewport = page.viewportSize();
@@ -98,8 +98,8 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   expect(geometry.iconBackgrounds.every((value) => value !== 'none')).toBe(true);
   expect(geometry.retiredGlyphContents.every((value) => value === 'none')).toBe(true);
 
-  await testInfo.attach('windbreak-390x844', {
-    body: await page.screenshot({ fullPage: false }),
-    contentType: 'image/png',
+  await page.screenshot({
+    path: 'test-results/p8-3-windbreak-golden-screen-390x844.png',
+    fullPage: false,
   });
 });
