@@ -3,6 +3,7 @@ import { App } from './app/App';
 import './app/app.css';
 import './app/motion.css';
 import './app/illustration.css';
+import './app/p8_3_theme.css';
 import { registerAppServiceWorker } from './platform/serviceWorker';
 
 const root = document.getElementById('app');
