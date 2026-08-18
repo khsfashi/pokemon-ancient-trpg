@@ -1,6 +1,11 @@
 {
   "fixture_schema_version": 1,
   "oracle_path": "src/generated/p8-slice-pack.json",
+  "content_pack": {
+    "content_pack_id": "p8.reedbank-slice",
+    "content_pack_version": "1",
+    "content_digest_sha256": "d981fb23af5a8f25a5c2a5a09af1a4e0b7378e2fd65e980ee754691c17dfc0b8"
+  },
   "event_id": "slice.mixed.orchard_boundary",
   "resolution_kind": "direct",
   "rng_draw_count": 0,
