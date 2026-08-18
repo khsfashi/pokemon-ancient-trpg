@@ -2,10 +2,12 @@ import type { P8AuthorityState } from '../domain/p8Authority';
 import {
   deriveP8PreparationProjection,
   type P8PreparationActionId,
+  type P8PreparationActionView,
   type P8PreparationBlockedReason,
 } from '../domain/p8Preparation';
 import { deriveP8SurvivalPressure } from '../domain/p8Survival';
 import type { P8Locale } from '../ui/p8Localization';
+import './preparation.css';
 
 interface PreparationPanelProps {
   readonly authority: P8AuthorityState;
@@ -14,11 +16,28 @@ interface PreparationPanelProps {
   readonly onAction: (actionId: P8PreparationActionId) => void;
 }
 
+type PreparationStageId = 'prepare' | 'risk' | 'recover' | 'improve' | 'resupply';
+
+interface PreparationStageDefinition {
+  readonly stageId: PreparationStageId;
+  readonly actionIds: readonly P8PreparationActionId[];
+  readonly completion: 'all' | 'any';
+}
+
+const STAGES = [
+  { stageId: 'prepare', actionIds: ['gather.repair-stock', 'forage.bank-edge'], completion: 'all' },
+  { stageId: 'risk', actionIds: ['hunt.rattata-storetrail', 'flee.rattata-storetrail'], completion: 'any' },
+  { stageId: 'recover', actionIds: ['camp.rest-and-treat'], completion: 'all' },
+  { stageId: 'improve', actionIds: ['repair.wet-route-gear'], completion: 'all' },
+  { stageId: 'resupply', actionIds: ['trade.provision-for-remedy'], completion: 'all' },
+] as const satisfies readonly PreparationStageDefinition[];
+
 const COPY = {
   'en-US': {
-    eyebrow: 'A short expedition after the return',
-    title: 'Prepare, risk the road, recover, return',
-    body: 'Pack what you can carry, step back onto the old levee, decide whether the Rattata signs are worth the risk, make camp, and return to Reedbank to improve and resupply. Each opportunity is bounded to this expedition.',
+    eyebrow: 'Expedition preparation',
+    title: 'Prepare → risk → return → improve',
+    loopSummary: 'Pack → risk → return → improve → resupply',
+    body: 'Pack what you can carry, then decide whether the Rattata signs are worth the risk. Only the decision that matters now stays open. Finished steps become expedition history; later steps stay locked until the road, recovery and equipment requirements are actually satisfied.',
     progress: 'Expedition loop',
     location: 'Current place',
     settlement: 'Reedbank Settlement',
@@ -27,9 +46,28 @@ const COPY = {
     vitality: 'Vitality',
     fatigue: 'Fatigue',
     injuries: 'Injuries',
-    ready: 'You have returned, recovered, improved your gear, and resupplied. The next departure is ready.',
-    notReady: 'Finish the remaining field steps before the next departure.',
+    readyBadge: 'Departure ready',
+    ready: 'The next departure is ready. The route knowledge, repaired guard and replacement remedy are now real saved advantages for the next expedition.',
+    notReady: 'Clear the active gate before the next expedition can be considered ready.',
     complete: 'Done',
+    active: 'NOW',
+    locked: 'LOCKED',
+    stageComplete: 'CLEARED',
+    choose: 'Current decision',
+    stages: {
+      prepare: 'Pack',
+      risk: 'Risk',
+      recover: 'Recover',
+      improve: 'Improve',
+      resupply: 'Resupply',
+    },
+    rewards: {
+      title: 'What this expedition changed',
+      route: 'Rattata store-trail route marked',
+      gear: 'Hide buckler reinforced and equipped',
+      remedy: 'Remedy reserve rebuilt by local barter',
+      departure: 'Next departure requirements satisfied',
+    },
     gather: {
       label: 'Pack repair stock before leaving',
       detail: 'Bundle ordinary reed fibre, dry wood and cordage for repairs. Materials +1.',
@@ -40,29 +78,30 @@ const COPY = {
     },
     hunt: {
       label: 'Follow the Rattata signs onto the old levee',
-      detail: 'Travel out, spend bait, and follow the store-trail. You may salvage abandoned cordage and hide scraps, but the rough pursuit costs Vitality, Fatigue and one Injury. No Pokémon body parts are harvested.',
+      detail: 'Spend bait and pursue the store-trail. Mundane salvage is possible, but the rough chase costs Vitality, Fatigue and one Injury. Nothing is harvested from Rattata.',
     },
     flee: {
       label: 'Take the old levee, then back away',
-      detail: 'Travel out but give up the salvage when the Rattata trail turns dangerous. You gain nothing and take only a little Fatigue.',
+      detail: 'Enter the route but abandon the salvage when the Rattata trail becomes dangerous. You gain nothing and keep the consequence to light Fatigue.',
     },
     rest: {
       label: 'Make camp, treat wounds, and return',
-      detail: 'Spend one Provision. If injured, spend one Remedy too. Recover up to 2 Vitality, reduce Fatigue by one stage, treat one Injury, then walk back to Reedbank.',
+      detail: 'Spend one Provision. If injured, spend one Remedy too. Recover, then physically return to Reedbank before workshop actions unlock.',
     },
     repair: {
       label: 'Reinforce the hide buckler back home',
-      detail: 'Spend one Material and switch from the sting veil to the heavier hide buckler. Defense rises, but Load becomes less forgiving.',
+      detail: 'Spend one Material and replace the sting veil with the heavier hide buckler. This is a saved equipment change, not flavor text.',
     },
     trade: {
-      label: 'Barter for remedies before departing again',
-      detail: 'In Reedbank, exchange food directly instead of using universal money. Provisions -1, Remedies +1.',
+      label: 'Barter for a remedy before departing again',
+      detail: 'Exchange food directly in Reedbank. Provisions -1 · Remedies +1. Completing this gate finishes the preparation loop.',
     },
   },
   'ko-KR': {
-    eyebrow: '귀환 뒤의 짧은 원정',
+    eyebrow: '원정 준비',
     title: '챙기고, 나가고, 버티고, 다시 돌아온다',
-    body: '갈대둑에서 짐을 꾸린 뒤 다시 옛 제방으로 나섭니다. 꼬렛의 흔적을 보고도 밀고 들어갈지, 빈손으로 물러날지 고른 다음 길에서 야영해 몸을 추스릅니다. 다시 마을로 돌아오면 장비를 손보고 부족한 물자를 맞바꿀 수 있습니다. 이번 원정의 기회는 모두 한 번뿐입니다.',
+    loopSummary: '챙긴다 → 위험을 감수한다 → 돌아온다 → 강해진다',
+    body: '짐을 챙긴 뒤 위험을 감수해 길로 나가고, 돌아오면 몸과 장비를 추슬러 다음 원정을 준비합니다. 지금 필요한 결정만 열리고, 끝낸 단계는 원정 기록으로 남으며 다음 단계는 길·회복·장비 조건을 실제로 갖추기 전까지 잠겨 있습니다.',
     progress: '원정 진행',
     location: '현재 자리',
     settlement: '갈대둑 마을',
@@ -71,36 +110,55 @@ const COPY = {
     vitality: '활력',
     fatigue: '피로',
     injuries: '부상',
+    readyBadge: '재출발 준비 완료',
     ready: '몸과 짐을 추슬렀고 장비도 손봤습니다. 다음 길을 나설 준비가 끝났습니다.',
-    notReady: '아직 이번 원정에서 마쳐야 할 일이 남아 있습니다.',
+    notReady: '현재 열린 관문을 넘어야 다음 출발 준비가 이어집니다.',
     complete: '완료',
+    active: '지금',
+    locked: '잠김',
+    stageComplete: '통과',
+    choose: '현재 선택',
+    stages: {
+      prepare: '짐 꾸리기',
+      risk: '위험 선택',
+      recover: '회복·귀환',
+      improve: '장비 개선',
+      resupply: '재보급',
+    },
+    rewards: {
+      title: '이번 원정에서 남은 것',
+      route: '꼬렛 창고길의 안전 표식 확보',
+      gear: '가죽 버클러 보강·착용',
+      remedy: '마을 물물교환으로 치료물자 보충',
+      departure: '다음 출발 조건 충족',
+    },
     gather: {
       label: '떠나기 전에 수선재를 챙긴다',
       detail: '갈대 섬유와 마른 나뭇가지, 끈으로 쓸 재료를 묶어 넣습니다. 작업재료 +1.',
     },
     forage: {
       label: '물가에서 먹을거리를 더 챙긴다',
-      detail: '포켓몬을 재료로 삼지 않고, 사람이 먹을 수 있는 풀뿌리와 보존식을 챙깁니다. 식량 +1.',
+      detail: '포켓몬을 재료로 삼지 않고 사람이 먹을 수 있는 풀뿌리와 보존식을 챙깁니다. 식량 +1.',
     },
     hunt: {
-      label: '꼬렛 흔적을 따라 옛 제방까지 들어간다',
-      detail: '길을 나서 식량을 미끼로 쓰며 흔적을 쫓습니다. 버려진 끈과 가죽 조각을 건질 수 있지만, 거친 추적 때문에 활력과 피로가 깎이고 부상 하나를 입습니다. 꼬렛의 몸에서 재료를 뜯어내지는 않습니다.',
+      label: '꼬렛 흔적을 따라 옛 제방까지 밀고 들어간다',
+      detail: '식량을 미끼로 쓰며 창고길 흔적을 쫓습니다. 버려진 끈과 가죽 조각을 건질 수 있지만 활력·피로·부상을 감수합니다. 꼬렛의 몸에서 재료를 뜯지는 않습니다.',
     },
     flee: {
-      label: '옛 제방까지 갔다가 꼬렛 흔적에서 물러난다',
-      detail: '길은 나서되 위험이 커지기 전에 회수할 물건을 포기하고 돌아설 준비를 합니다. 얻는 것은 없지만 가벼운 피로만 남습니다.',
+      label: '옛 제방까지 갔다가 위험 앞에서 물러난다',
+      detail: '길에는 들어가되 회수할 물건을 포기하고 위험을 피합니다. 얻는 것은 없지만 결과는 가벼운 피로로 줄어듭니다.',
     },
     rest: {
       label: '길에서 야영해 상처를 돌보고 돌아온다',
-      detail: '식량 하나를 먹고 쉽니다. 다쳤다면 치료물자 하나도 사용합니다. 활력은 최대 2 회복하고, 피로는 한 단계 낮추며, 부상 하나를 치료한 뒤 갈대둑으로 돌아옵니다.',
+      detail: '식량 하나를 먹고, 다쳤다면 치료물자 하나도 씁니다. 몸을 추스른 뒤 실제로 갈대둑에 돌아와야 작업대 단계가 열립니다.',
     },
     repair: {
-      label: '돌아온 뒤 가죽 버클러를 손봐 착용한다',
-      detail: '작업재료 하나를 써 버클러의 끈과 가장자리를 보강합니다. 독침 방호면 대신 더 든든한 방패를 들지만 짐은 무거워집니다.',
+      label: '돌아온 뒤 가죽 버클러를 보강해 착용한다',
+      detail: '작업재료 하나를 써 끈과 가장자리를 손봅니다. 독침 방호면 대신 버클러를 드는 변화가 저장되며 방어 준비도가 실제로 달라집니다.',
     },
     trade: {
       label: '다음 출발 전에 치료물자를 맞바꾼다',
-      detail: '갈대둑에서 어디서나 통하는 돈 대신 서로 필요한 것을 직접 바꿉니다. 식량 -1 · 치료물자 +1.',
+      detail: '갈대둑에서 어디서나 통하는 돈 대신 서로 필요한 것을 직접 바꿉니다. 식량 -1 · 치료물자 +1. 이 관문을 넘으면 준비 루프가 끝납니다.',
     },
   },
 } as const;
@@ -110,10 +168,10 @@ function blockedText(locale: P8Locale, reason: P8PreparationBlockedReason | null
   const korean: Record<P8PreparationBlockedReason, string> = {
     'return-required': '첫 여정을 마치고 갈대둑으로 돌아온 뒤 시작할 수 있습니다.',
     'already-complete': '이번 원정에서는 이미 결정을 내렸습니다.',
-    'route-preparation-required': '먼저 수선재와 식량을 챙겨야 길로 나설 수 있습니다.',
+    'route-preparation-required': '먼저 수선재와 식량을 챙겨야 길로 나갈 수 있습니다.',
     'encounter-resolution-required': '먼저 꼬렛 흔적에서 추적할지 물러날지 결정해야 합니다.',
     'camp-recovery-required': '옛 제방에서 야영해 몸을 추스르고 돌아와야 합니다.',
-    'gear-improvement-required': '돌아온 장비를 먼저 손봐야 물자 교환까지 마칠 수 있습니다.',
+    'gear-improvement-required': '돌아온 장비를 먼저 손봐야 재보급 단계가 열립니다.',
     'settlement-required': '갈대둑 마을에 있을 때 할 수 있습니다.',
     'field-route-required': '옛 제방에 나가 있을 때 할 수 있습니다.',
     'materials-required': '작업재료가 1 이상 필요합니다.',
@@ -158,18 +216,58 @@ function locationLabel(authority: P8AuthorityState, locale: P8Locale): string {
   return COPY[locale].settlement;
 }
 
+function actionMap(actions: readonly P8PreparationActionView[]): ReadonlyMap<P8PreparationActionId, P8PreparationActionView> {
+  return new Map(actions.map((action) => [action.actionId, action]));
+}
+
+function stageIsComplete(stage: PreparationStageDefinition, actions: ReadonlyMap<P8PreparationActionId, P8PreparationActionView>): boolean {
+  const results = stage.actionIds.map((actionId) => actions.get(actionId)?.completed === true);
+  return stage.completion === 'all' ? results.every(Boolean) : results.some(Boolean);
+}
+
 export function P8PreparationPanel({ authority, locale, busy, onAction }: PreparationPanelProps) {
   const projection = deriveP8PreparationProjection(authority);
   if (!projection.unlocked) return null;
   const pressure = deriveP8SurvivalPressure(authority);
   const copy = COPY[locale];
+  const byAction = actionMap(projection.actions);
+  const firstIncompleteStage = STAGES.findIndex((stage) => !stageIsComplete(stage, byAction));
+  const activeStageIndex = firstIncompleteStage < 0 ? STAGES.length : firstIncompleteStage;
+  const activeStage = activeStageIndex < STAGES.length ? STAGES[activeStageIndex]! : null;
 
   return (
-    <div class="summary-block preparation-panel" data-preparation-complete={projection.complete ? 'true' : 'false'} data-preparation-locality={authority.world.currentLocality}>
+    <div
+      class="summary-block preparation-panel"
+      data-preparation-complete={projection.complete ? 'true' : 'false'}
+      data-preparation-locality={authority.world.currentLocality}
+      data-preparation-active-stage={activeStage?.stageId ?? 'ready'}
+    >
       <p class="eyebrow">{copy.eyebrow}</p>
       <h2>{copy.title}</h2>
-      <p class="muted">{copy.body}</p>
-      <div class="ending-grid">
+      <p class="preparation-loop-summary">{copy.loopSummary}</p>
+      <p class="muted preparation-intro">{copy.body}</p>
+
+      <div class="prep-stage-track" aria-label={copy.progress}>
+        {STAGES.map((stage, index) => {
+          const completed = stageIsComplete(stage, byAction);
+          const active = index === activeStageIndex;
+          const stateLabel = completed ? copy.stageComplete : active ? copy.active : copy.locked;
+          return (
+            <div
+              key={stage.stageId}
+              class={`prep-stage${completed ? ' completed' : active ? ' active' : ' locked'}`}
+              data-preparation-stage={stage.stageId}
+              data-stage-state={completed ? 'completed' : active ? 'active' : 'locked'}
+            >
+              <span>{index + 1}</span>
+              <strong>{copy.stages[stage.stageId]}</strong>
+              <small>{stateLabel}</small>
+            </div>
+          );
+        })}
+      </div>
+
+      <div class="ending-grid preparation-vitals">
         <div><span>{copy.progress}</span><strong>{projection.completedActions}/{projection.totalActions}</strong></div>
         <div><span>{copy.location}</span><strong>{locationLabel(authority, locale)}</strong></div>
         <div><span>{copy.load}</span><strong>{projection.currentLoad}/{projection.ordinaryTravelCeiling}</strong></div>
@@ -177,28 +275,67 @@ export function P8PreparationPanel({ authority, locale, busy, onAction }: Prepar
         <div><span>{copy.fatigue}</span><strong>{pressure.fatigueStage}/{pressure.fatigueLimit}</strong></div>
         <div><span>{copy.injuries}</span><strong>{pressure.injuries}</strong></div>
       </div>
-      <div class="choice-stack">
-        {projection.actions.map((action) => {
-          const text = actionCopy(locale, action.actionId);
-          const blocked = blockedText(locale, action.blockedReason);
+
+      <div class="prep-gate-list" aria-live="polite">
+        {STAGES.map((stage, index) => {
+          const completed = stageIsComplete(stage, byAction);
+          const active = index === activeStageIndex;
+          const state = completed ? 'completed' : active ? 'active' : 'locked';
+          const stageActions = stage.actionIds.map((actionId) => byAction.get(actionId)!).filter(Boolean);
           return (
-            <button
-              type="button"
-              class="choice"
-              data-preparation-action={action.actionId}
-              key={action.actionId}
-              disabled={busy || !action.available}
-              onClick={() => onAction(action.actionId)}
+            <section
+              key={stage.stageId}
+              class={`prep-active-gate prep-gate-section ${state}`}
+              data-preparation-gate={stage.stageId}
+              data-gate-state={state}
             >
-              <strong>{text.label}</strong>
-              <span>{text.detail}</span>
-              {action.completed && <span class="tag">{copy.complete}</span>}
-              {!action.completed && blocked !== null && <span class="muted">{blocked}</span>}
-            </button>
+              <div class="prep-active-heading">
+                <span>{active ? copy.choose : completed ? copy.stageComplete : copy.locked}</span>
+                <strong>{copy.stages[stage.stageId]}</strong>
+              </div>
+              <div class="choice-stack preparation-choice-stack">
+                {stageActions.map((action) => {
+                  const text = actionCopy(locale, action.actionId);
+                  const blocked = blockedText(locale, action.blockedReason);
+                  const disabled = busy || !active || !action.available || action.completed;
+                  return (
+                    <button
+                      type="button"
+                      class="choice"
+                      data-preparation-action={action.actionId}
+                      data-action-stage-state={state}
+                      key={action.actionId}
+                      disabled={disabled}
+                      onClick={() => onAction(action.actionId)}
+                    >
+                      <strong>{text.label}</strong>
+                      {active && <span>{text.detail}</span>}
+                      {!active && completed && <span class="muted prep-gate-state-note">{copy.complete}</span>}
+                      {!active && !completed && blocked !== null && <span class="muted prep-gate-state-note">{blocked}</span>}
+                      {active && blocked !== null && <span class="muted prep-blocked-reason">{blocked}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
           );
         })}
       </div>
-      <div class="contract-note">{projection.departureReady ? copy.ready : copy.notReady}</div>
+
+      {projection.complete && (
+        <section class="prep-reward-ledger" aria-label={copy.rewards.title}>
+          <h3>{copy.rewards.title}</h3>
+          <div><span>◆</span><strong>{copy.rewards.route}</strong></div>
+          <div><span>■</span><strong>{copy.rewards.gear}</strong></div>
+          <div><span>+</span><strong>{copy.rewards.remedy}</strong></div>
+          <div class="departure"><span>▶</span><strong>{copy.rewards.departure}</strong></div>
+        </section>
+      )}
+
+      <div class={`contract-note preparation-ready-note${projection.departureReady ? ' ready' : ''}`}>
+        {projection.departureReady && <strong class="preparation-ready-badge">{copy.readyBadge}</strong>}
+        <span>{projection.departureReady ? copy.ready : copy.notReady}</span>
+      </div>
     </div>
   );
 }

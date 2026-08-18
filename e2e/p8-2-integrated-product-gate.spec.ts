@@ -66,12 +66,8 @@ async function assertPhoneGeometry(page: Page): Promise<void> {
   expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.viewportWidth);
 }
 
-test('Batch 10 integrated first-play survives one Korean-to-English run, preparation loop, and full reload on phone', async ({ page, browserName }) => {
-  // The dedicated motion spec owns animated skip/transition timing. This longitudinal
-  // product gate uses reduced motion so both engines can prove the entire combined
-  // first-play state without spending runtime on presentation delays.
+test('Batch 10 integrated first-play survives one Korean-to-English run, gated preparation loop, and full reload on phone', async ({ page, browserName }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  // Seed only a fresh profile: every reload below must prove the user's persisted locale rather than rewrite it.
   await page.addInitScript(({ key }) => {
     if (window.localStorage.getItem(key) === null) window.localStorage.setItem(key, 'ko-KR');
   }, { key: LOCALE_KEY });
@@ -85,8 +81,6 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
   await chooseFirstFormativeAnswer(page);
   await page.getByRole('button', { name: '강점 고르기' }).click();
 
-  // Keep the native-Korean creation proof in the same run, then continue in English
-  // so the long route can reuse stable authored scene/consequence labels.
   await page.getByRole('button', { name: 'English' }).click();
   const portraitGroup = page.getByRole('radiogroup', { name: 'Choose your portrait' });
   await expect(portraitGroup).toBeVisible();
@@ -106,8 +100,6 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
   await expect(openingIllustration.locator('img.scene-illustration-image')).toBeVisible();
   await assertPhoneGeometry(page);
 
-  // A pending first scene, selected portrait and presentation locale must survive a
-  // real browser reload before the route begins advancing.
   await page.reload();
   await page.getByRole('button', { name: 'Continue journey' }).click();
   await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
@@ -121,25 +113,34 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
 
   let panel = page.locator('.preparation-panel');
   await expect(panel).toHaveAttribute('data-preparation-locality', 'reedbank-settlement');
+  await expect(panel).toHaveAttribute('data-preparation-active-stage', 'prepare');
+  await expect(panel.locator('[data-preparation-stage="prepare"]')).toHaveAttribute('data-stage-state', 'active');
+
   await panel.locator('[data-preparation-action="gather.repair-stock"]').click();
   await panel.locator('[data-preparation-action="forage.bank-edge"]').click();
+  await expect(panel).toHaveAttribute('data-preparation-active-stage', 'risk');
   await panel.locator('[data-preparation-action="hunt.rattata-storetrail"]').click();
   await expect(panel).toHaveAttribute('data-preparation-locality', 'old-levee');
+  await expect(panel).toHaveAttribute('data-preparation-active-stage', 'recover');
   await expect(stat(panel, 'Vitality')).toHaveText('5/6');
   await expect(stat(panel, 'Fatigue')).toHaveText('2/2');
   await expect(stat(panel, 'Injuries')).toHaveText('1');
 
-  // The dangerous field checkpoint is part of the product flow, not an isolated unit.
   await page.reload();
   await page.getByRole('button', { name: 'Continue journey' }).click();
   panel = page.locator('.preparation-panel');
   await expect(panel).toHaveAttribute('data-preparation-locality', 'old-levee');
+  await expect(panel).toHaveAttribute('data-preparation-active-stage', 'recover');
   await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
   await panel.locator('[data-preparation-action="camp.rest-and-treat"]').click();
+  await expect(panel).toHaveAttribute('data-preparation-active-stage', 'improve');
   await panel.locator('[data-preparation-action="repair.wet-route-gear"]').click();
+  await expect(panel).toHaveAttribute('data-preparation-active-stage', 'resupply');
   await panel.locator('[data-preparation-action="trade.provision-for-remedy"]').click();
   await expect(panel).toHaveAttribute('data-preparation-complete', 'true');
+  await expect(panel).toHaveAttribute('data-preparation-active-stage', 'ready');
   await expect(stat(panel, 'Expedition loop')).toHaveText('6/6');
+  await expect(panel.locator('.prep-reward-ledger')).toBeVisible();
 
   const beforeReload = await readIntegratedSaveProof(page);
   expect(beforeReload).toMatchObject({
@@ -156,12 +157,11 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
     pokemonLinkedSalvage: true,
   });
 
-  // Equipment/readiness, resources, survival pressure, progression flags, portrait,
-  // and the completed preparation loop must all reconstruct identically after reload.
   await page.reload();
   await page.getByRole('button', { name: 'Continue journey' }).click();
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
   await expect(page.locator('.preparation-panel')).toHaveAttribute('data-preparation-complete', 'true');
+  await expect(page.locator('.preparation-panel')).toHaveAttribute('data-preparation-active-stage', 'ready');
   await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
   await expect(page.locator('.expedition-hud').getByText('Attack', { exact: true })).toBeVisible();
   await expect(page.locator('.expedition-hud').getByText('Defense', { exact: true })).toBeVisible();
@@ -169,18 +169,20 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
   expect(await readIntegratedSaveProof(page)).toEqual(beforeReload);
 
   await page.getByRole('button', { name: '한국어' }).click();
-  await expect(page.getByText('챙기고, 나가고, 버티고, 다시 돌아온다', { exact: true })).toBeVisible();
-  await expect(page.getByText('몸과 짐을 추슬렀고 장비도 손봤습니다. 다음 길을 나설 준비가 끝났습니다.', { exact: true })).toBeVisible();
+  await expect(page.getByText('챙긴다 → 위험을 감수한다 → 돌아온다 → 강해진다', { exact: true })).toBeVisible();
+  await expect(page.getByText(/재출발 준비 완료/)).toBeVisible();
+  await expect(page.getByText('이번 원정에서 남은 것', { exact: true })).toBeVisible();
   await expect(page.locator('.expedition-hud').getByText('피로(스태미나) · 1/2', { exact: true })).toBeVisible();
   await assertPhoneGeometry(page);
 
-  console.log('P8_2_BATCH10_INTEGRATED_PRODUCT_GATE', JSON.stringify({
+  console.log('P8_3_GATED_PREPARATION_PRODUCT_GATE', JSON.stringify({
     browserName,
     viewport: '390x844',
     localeStart: 'ko-KR',
     localeEnd: 'ko-KR',
     transitionSeq: beforeReload.transitionSeq,
     preparationComplete: beforeReload.prepComplete,
+    preparationStage: 'ready',
     guard: beforeReload.guard,
     companions: 0,
   }));
