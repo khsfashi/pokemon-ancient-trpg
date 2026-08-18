@@ -32,8 +32,18 @@ func _run() -> void:
 	get_root().add_child(main)
 	await process_frame
 	await process_frame
-	await RenderingServer.frame_post_draw
 
+	# A Godot process can survive a dependent script parse failure. Treat an unloaded
+	# main script or missing runtime nodes as a hard capture failure rather than allowing
+	# a blank/root-only viewport to become false-positive owner evidence.
+	if main.get_script() == null or not main.has_method("_on_start_pressed"):
+		_fail("main scene script failed to load; refusing to capture false owner evidence", 4)
+		return
+	if main.find_child("SurfaceRoot", true, false) == null or main.find_child("TransitionOverlay", true, false) == null:
+		_fail("main scene did not build the required runtime nodes", 4)
+		return
+
+	await RenderingServer.frame_post_draw
 	var opening_path := "%s/opening.png" % CAPTURE_DIR
 	var opening_size := _capture_current_viewport(opening_path)
 	if opening_size != EXPECTED_SIZE:
