@@ -1,0 +1,89 @@
+{
+  "fixture_schema_version": 1,
+  "oracle_path": "src/generated/p8-slice-pack.json",
+  "event_id": "slice.mixed.orchard_boundary",
+  "resolution_kind": "direct",
+  "rng_draw_count": 0,
+  "choices": {
+    "protect_windbreak": {
+      "outcome_id": "windbreak_protected",
+      "transition": {
+        "command_id": "p2.world.commit_locality_transition",
+        "from_locality": "old-levee",
+        "route_ref": "old-levee-orchard",
+        "to_locality": "windbreak-orchard"
+      },
+      "relationship": {
+        "command_id": "p2.world.commit_relationship_state",
+        "cause_id": "slice.mixed.orchard_boundary",
+        "relationship_ref": "orchard.keeper",
+        "state_id": "route_respected"
+      },
+      "encounters": [
+        {
+          "command_id": "p4.encounter.record_direct_interaction",
+          "encounter_ref": "beedrill.windbreak",
+          "route_ref": "old-levee",
+          "species_id": 15
+        },
+        {
+          "command_id": "p4.encounter.record_direct_interaction",
+          "encounter_ref": "rattata.storetrail",
+          "route_ref": "old-levee",
+          "species_id": 19
+        }
+      ],
+      "p5_effects": [
+        {
+          "operation": "narrative.flag.set",
+          "ref": "slice.mixed_resolved"
+        }
+      ]
+    },
+    "take_shortcut": {
+      "outcome_id": "shortcut_taken",
+      "transition": {
+        "command_id": "p2.world.commit_locality_transition",
+        "from_locality": "old-levee",
+        "route_ref": "old-levee-orchard",
+        "to_locality": "windbreak-orchard"
+      },
+      "relationship": {
+        "command_id": "p2.world.commit_relationship_state",
+        "cause_id": "slice.mixed.orchard_boundary",
+        "relationship_ref": "orchard.keeper",
+        "state_id": "route_strained"
+      },
+      "encounters": [
+        {
+          "command_id": "p4.encounter.record_direct_interaction",
+          "encounter_ref": "beedrill.windbreak",
+          "route_ref": "old-levee",
+          "species_id": 15
+        },
+        {
+          "command_id": "p4.encounter.record_direct_interaction",
+          "encounter_ref": "rattata.storetrail",
+          "route_ref": "old-levee",
+          "species_id": 19
+        }
+      ],
+      "p5_effects": [
+        {
+          "operation": "narrative.flag.set",
+          "ref": "slice.mixed_resolved"
+        },
+        {
+          "amount": 1,
+          "operation": "narrative.counter.add",
+          "ref": "slice.social_cost"
+        }
+      ]
+    }
+  },
+  "save_envelope_contract": {
+    "save_schema_version": 1,
+    "architecture_contract_version": "p7-architecture-v1",
+    "p5_contract_version": "p5-event-contract-v1"
+  }
+}
