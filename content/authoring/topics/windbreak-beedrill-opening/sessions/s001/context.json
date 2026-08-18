@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "topic": {
+    "topic_id": "windbreak-beedrill-opening",
+    "title": "방풍림 독침붕 조우 — 오프닝 서술 파일럿",
+    "brief": "P8 현재 방풍림 과수원 경계 장면을 서술 팩토리의 첫 실전 파일럿으로 다시 쓴다. 옛 제방길에서 방풍림 과수원 경계로 접근하는 과정, 독침붕의 영역 징후, 실제 독침붕의 자세·날개 진동음·침의 방향·거리·비행 궤적·수풀과 과수원의 반응·인간의 동선 선택을 구체적으로 묘사한다. 과수원지기의 태도와 생업이 독침붕 생태 때문에 어떻게 달라지는지도 자연스럽게 드러낸다. 기존 protect_windbreak / take_shortcut 선택 의미와 관계 결과를 존중하며 새로운 지역 공통 법·기관·종 전체의 미검증 습성은 발명하지 않는다."
+  },
+  "session": {
+    "session_id": "s001",
+    "title": "바람이 멎는 경계",
+    "purpose": "옛 제방길에서 방풍림 과수원 경계로 접근하며 독침붕을 직접 보여주기 전에 영역 징후와 길의 위험을 체감시킨다. 바람, 잎, 벌레 소리, 과수의 상처, 사람의 이동 흔적을 통해 독침붕 존재가 인간 동선과 생업에 이미 영향을 주고 있음을 자연스럽게 드러낸다.",
+    "target_chars": 4800,
+    "target_paragraphs": 16,
+    "dependencies": [],
+    "continuity_focus": [
+      "old-levee-to-orchard geography",
+      "warning signs before direct sighting",
+      "human route adaptations"
+    ],
+    "status": "ready",
+    "revision": 1,
+    "owner_review": "pending",
+    "owner_feedback": ""
+  },
+  "canon_and_style": "===== durable context sources (unchanged from topic) =====\ncontent/p8/vertical-slice.source.json\ncontent/p8/vertical-slice.ko-KR.json\ndocs/P8_VERTICAL_SLICE_CONTRACT.md\ndocs/P4_PILOT_FULL_SCHEMA_DOSSIERS.md :: ## 4. #015 Beedrill / 독침붕\ndocs/P8_3_AUTHORING_CANON_DIGEST.md\ndocs/P8_3_NARRATIVE_AUTHORING_FACTORY.md\ndocs/P8_3_PIXEL_ART_AND_TYPOGRAPHY_DIRECTION.md\n\n===== canon and scene constraints used for this session =====\n- 배경은 지역 국가·표준 도로·트레이너 제도·공통 화폐가 성립하기 전의 proto-Kanto다. 포켓몬은 인간 사회에 완전히 길들여진 일상 도구가 아니라, 강력한 야생 생물/환경력으로 취급한다.\n- 인간만으로도 준비, 장비, 관찰, 후퇴, 채집, 수선, 물물교환, 길 지식으로 모험이 성립해야 한다. 일반 판타지 마법/직업 체계를 끼워 넣지 않는다.\n- 길은 안전한 도로가 아니라 사람들이 반복해서 살아남으며 기억한 통로다. 지역 생활·생업·동선이 포켓몬의 영역과 생태에 맞춰 달라진다.\n- 한국어는 번역투를 피하고 플레이 가능한 호흡으로 쓴다. 장식적 설명보다 공간, 거리, 동작, 감각, 물리적 인과와 선택 판단에 필요한 정보를 앞세운다.\n- 고해상도 픽셀/중세·전근대 비주얼로 옮길 수 있는 명확한 장면 비트를 유지한다.\n- 현재 runtime의 orchard boundary는 old-levee에서 windbreak orchard로 이어진다. 이후 선택 ID `protect_windbreak`와 `take_shortcut`의 의미/결과 authority를 바꾸지 않는다.\n- 현재 한국어 장면은 방풍림 안쪽 지름길, 꼬렛 이빨자국, 독침붕 날갯소리, 과수원지기의 제지를 짧게 설명하는 수준이며 파일럿은 이를 구체적 현장 체험으로 확장한다.\n- #015 독침붕은 Bug/Poison, 약 1.0m/29.5kg. 위협의 핵심은 둥지/영역 방어와 격앙 시 집단 압박이다. 모든 독침붕이 무차별 공격한다고 일반화하지 않는다.\n- 비행 개체이며 앞다리 침과 복부 침을 가진다. 위협은 반복적인 근접 접근, 비행 고도/각도 변화, 여러 개체가 있을 때의 노출 창과 경로 압박으로 읽혀야 한다. 독의 정확한 의학적 강도는 확정하지 않는다.\n- 둥지 중심의 식생/차폐 환경을 사용할 수 있으나 정확한 먹이·계절 습성을 발명하지 않는다. 경고 접근과 활동 흔적은 관찰 가능하고, 일찍 물러나 거리를 벌리는 것은 합리적 대응이다.\n- 독침붕을 일반적인 전리품/재료 공급원으로 만들지 않는다. 한 마리를 쓰러뜨렸다고 영역 전체가 해결되었다고 처리하지 않는다.\n- s001의 경계: 독침붕 본체를 선명하게 직접 제시하기 전에 영역 징후와 인간/동물의 경로 적응을 체감시킨다. 자세·침 방향·정확한 비행 벡터를 본격적으로 보여주는 일은 s002에 남긴다.\n",
+  "continuity_ledger": {
+    "schema_version": 2,
+    "facts": [],
+    "unresolved_hooks": [
+      "독침붕의 영역 징후가 과수원 경계의 인간 동선과 어떻게 연결되는지 세션에서 구체화한다.",
+      "protect_windbreak / take_shortcut 선택의 기존 관계 결과를 유지한다."
+    ],
+    "updated_at": "2026-08-18T06:20:00+00:00"
+  },
+  "dependency_summaries": [],
+  "full_dependency_text": [],
+  "context_sha256": "b51d5e3b894dd1075b4fd87a340e1a1894d1d01ca40c7072d4f55b8255e61bb3"
+}
