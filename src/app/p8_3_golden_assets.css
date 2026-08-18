@@ -1,67 +1,184 @@
-/* Asset binding corrections for the owner-review golden screen.
- * Kept separate from the hierarchy stylesheet so the experimental one-screen
- * layout remains easy to remove or promote after owner review.
- */
+/* Dedicated owner-review asset/hud surface for the one windbreak golden screen.
+ * The standard expedition HUD remains untouched for every other screen. */
 
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-art.compact {
-  background-image: none;
-}
-
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-art.compact > * {
-  display: initial;
-}
-
-/* Keep the 78px strip readable at 390px: identity + vitality own most of the
- * width; fatigue/injury share a compact column and provisions is icon/value only. */
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-identity {
-  flex-basis: 100px;
-}
-
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row {
-  flex-basis: 74px;
-}
-
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid {
-  flex-basis: 46px;
-}
-
-/* Deep stats do not consume any persistent golden-screen HUD pixels. The
- * underlying profile implementation is preserved for the other presentation
- * surfaces and can be promoted to its own surface after owner approval. */
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details {
+.golden-hud-surface {
   display: none;
 }
 
-/* Batch 03 used typographic glyphs as temporary compact affordances. They are
- * explicitly suppressed on the golden screen: the four decision-critical HUD
- * concepts below are backed by authored raster sprites instead. */
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span::before,
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid > div::before,
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .readiness-strip > div::before {
-  content: none;
-  display: none;
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud {
+  display: block;
+  width: 100%;
+  min-height: 76px;
+  height: 76px;
+  max-height: 76px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 2px solid #674929;
+  border-radius: 0;
+  background: #17130f;
+  box-shadow: none;
 }
 
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .vitality-block > div:first-child > span {
-  background-image: url('../assets/p8-golden/hud-vitality.png');
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .hud-primary-row,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .hud-chip-row,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .readiness-strip,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .resource-grid,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .profile-details {
+  display: none !important;
 }
 
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span:nth-child(1) {
-  background-image: url('../assets/p8-golden/hud-stamina.png');
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .golden-hud-surface {
+  display: grid;
+  grid-template-columns: 98px minmax(118px, 1fr) 76px 44px;
+  gap: 4px;
+  align-items: center;
+  width: 100%;
+  height: 74px;
+  padding: 6px 7px;
+  color: #e7d6b2;
+  background: #17130f;
+  font-family: var(--p83-pixel-display);
 }
 
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span:nth-child(3) {
-  background-image: url('../assets/p8-golden/hud-injury.png');
+.golden-hud-identity {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
 }
 
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid > div:first-child {
-  background-image: url('../assets/p8-golden/hud-provisions.png');
+.golden-hud-identity .portrait-art.compact {
+  width: 42px;
+  height: 52px;
+  border: 1px solid #735330;
+  border-radius: 0;
+  background: #201b15;
+  box-shadow: none;
 }
 
-/* The inherited P8.3 theme caps all illustrations at 25svh. Golden review needs
- * the scene to own 240–280px, so opt this one scene out rather than loosening the
- * global rule. flex-shrink: 0 prevents the narrative/choice column from stealing
- * the visual-primary scene height. */
+.golden-hud-identity > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.golden-hud-identity strong,
+.golden-hud-identity span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.golden-hud-identity strong {
+  color: #e7d2a4;
+  font-size: 10px;
+  line-height: 1.1;
+}
+
+.golden-hud-identity span {
+  color: #aa8c5f;
+  font-size: 8px;
+  line-height: 1.15;
+}
+
+.golden-hud-vitality {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 3px 5px;
+}
+
+.golden-hud-value-row {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  gap: 4px;
+  align-items: center;
+  min-width: 0;
+}
+
+.golden-hud-value-row span {
+  overflow: hidden;
+  color: #bca983;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.golden-hud-value-row strong {
+  color: #efd7a1;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.golden-hud-track {
+  height: 7px;
+  overflow: hidden;
+  border: 1px solid #4b3320;
+  background: #090807;
+}
+
+.golden-hud-track span {
+  display: block;
+  height: 100%;
+  background: #a13b32;
+}
+
+.golden-hud-pressure {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.golden-hud-pressure > div {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 4px;
+  align-items: center;
+  min-height: 27px;
+  padding: 2px 3px;
+  border-left: 1px solid #4b3824;
+}
+
+.golden-hud-pressure span {
+  overflow: hidden;
+  color: #c8b590;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.golden-hud-pressure .warning span {
+  color: #efa47e;
+}
+
+.golden-hud-resource {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  min-height: 54px;
+  padding: 4px 2px;
+  border-left: 1px solid #4b3824;
+}
+
+.golden-hud-resource strong {
+  color: #e6c777;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.golden-hud-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+/* Golden artwork is a real decoded 384x276 PNG. Opt only this scene out of the
+ * inherited global illustration height cap. */
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'] {
   flex: 0 0 264px;
   height: 264px;
