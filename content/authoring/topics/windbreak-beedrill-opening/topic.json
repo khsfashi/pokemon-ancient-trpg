@@ -1,0 +1,27 @@
+{
+  "schema_version": 2,
+  "topic_id": "windbreak-beedrill-opening",
+  "title": "방풍림 독침붕 조우 — 오프닝 서술 파일럿",
+  "brief": "P8 현재 방풍림 과수원 경계 장면을 서술 팩토리의 첫 실전 파일럿으로 다시 쓴다. 옛 제방길에서 방풍림 과수원 경계로 접근하는 과정, 독침붕의 영역 징후, 실제 독침붕의 자세·날개 진동음·침의 방향·거리·비행 궤적·수풀과 과수원의 반응·인간의 동선 선택을 구체적으로 묘사한다. 과수원지기의 태도와 생업이 독침붕 생태 때문에 어떻게 달라지는지도 자연스럽게 드러낸다. 기존 protect_windbreak / take_shortcut 선택 의미와 관계 결과를 존중하며 새로운 지역 공통 법·기관·종 전체의 미검증 습성은 발명하지 않는다.",
+  "profile": "encounter_arc",
+  "target_total_chars": 16000,
+  "worker_preference": "auto",
+  "context_files": [
+    "content/p8/vertical-slice.source.json",
+    "content/p8/vertical-slice.ko-KR.json",
+    "docs/P8_VERTICAL_SLICE_CONTRACT.md"
+  ],
+  "context_sections": [
+    {
+      "path": "docs/P4_PILOT_FULL_SCHEMA_DOSSIERS.md",
+      "start_marker": "## 4. #015 Beedrill / 독침붕",
+      "end_marker": "## 5. #131 Lapras / 라프라스"
+    }
+  ],
+  "status": "authoring",
+  "owner_review": "pending",
+  "source_issue_number": 130,
+  "applied_request_keys": [],
+  "created_at": "2026-08-18T06:20:00+00:00",
+  "updated_at": "2026-08-18T06:20:00+00:00"
+}
