@@ -96,6 +96,7 @@ const TEXT = {
     provisions: '식량',
     remedies: '치료물자',
     materials: '작업재료',
+    inventory: '가방',
     load: '하중',
     comfortable: '적정',
     burdened: '과적',
@@ -110,6 +111,8 @@ const TEXT = {
     companions: '동행 포켓몬',
     emptySlot: '빈 자리',
     details: '장비·능력치·생존 상태',
+    goldenDetails: '상세',
+    goldenDetailsClose: '닫기',
     attributes: '능력치',
     competences: '익힌 솜씨',
     danger: '위험 기준',
@@ -134,6 +137,7 @@ const TEXT = {
     provisions: 'Provisions',
     remedies: 'Remedies',
     materials: 'Materials',
+    inventory: 'Inventory',
     load: 'Load',
     comfortable: 'comfortable',
     burdened: 'burdened',
@@ -148,6 +152,8 @@ const TEXT = {
     companions: 'Pokémon companions',
     emptySlot: 'Empty slot',
     details: 'Gear, attributes, and survival details',
+    goldenDetails: 'Details',
+    goldenDetailsClose: 'Close',
     attributes: 'Attributes',
     competences: 'Practiced skills',
     danger: 'Danger rules',
@@ -376,8 +382,21 @@ export function P8ExpeditionHud({ authority, portraitId, locale }: { readonly au
       </div>
 
       <details class="profile-details">
-        <summary>{text.details}</summary>
+        <summary>
+          <span class="profile-details-label">{text.details}</span>
+          <span class="golden-details-label">{text.goldenDetails}</span>
+          <span class="golden-details-close-label">{text.goldenDetailsClose}</span>
+        </summary>
         <div class="profile-details-body">
+          <section>
+            <h2>{text.inventory}</h2>
+            <div class="resource-grid">
+              <div><span>{text.provisions}</span><strong>{authority.survival.resourcePools.provisions}</strong></div>
+              <div><span>{text.remedies}</span><strong>{authority.survival.resourcePools.remedies}</strong></div>
+              <div><span>{text.materials}</span><strong>{authority.survival.resourcePools.materials}</strong></div>
+              <div><span>{text.load}</span><strong>{profile.currentLoad}/{profile.comfortableLoad}</strong></div>
+            </div>
+          </section>
           <section class="equipment-section">
             <h2>{text.equipment}</h2>
             <div class="equipment-slot-grid">

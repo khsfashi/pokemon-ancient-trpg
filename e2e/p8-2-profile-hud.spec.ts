@@ -30,7 +30,7 @@ test('chooses a cosmetic portrait and keeps a persistent expedition HUD across s
   const primary = hud.locator('.hud-primary-row');
   const chips = hud.locator('.hud-chip-row');
   const readiness = hud.locator('.readiness-strip');
-  const resources = hud.locator('.resource-grid');
+  const resources = hud.locator(':scope > .resource-grid');
   await expect(hud).toBeVisible();
   await expect(primary.locator('.portrait-herbalist')).toBeVisible();
   await expect(primary.getByText('Vitality', { exact: true })).toBeVisible();

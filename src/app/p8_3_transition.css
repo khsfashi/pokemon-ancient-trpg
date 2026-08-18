@@ -4,6 +4,7 @@
 
 .scene-stage {
   isolation: isolate;
+  overflow-x: clip;
 }
 
 .scene-stage::after {

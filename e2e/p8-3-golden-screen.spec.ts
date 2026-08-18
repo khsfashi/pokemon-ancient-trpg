@@ -41,6 +41,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
 
   const hud = page.locator('.expedition-hud');
   const goldenHud = hud.locator('.golden-hud-surface');
+  const detailSurface = hud.locator('.profile-details');
   const illustration = page.locator('.scene-illustration[data-resource-id="p8.illustration.orchard.windbreak-boundary"]');
   const choices = page.locator('.choice-stack button.choice:not([disabled])');
 
@@ -56,8 +57,9 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   await expect(hud.locator('.hud-primary-row')).toBeHidden();
   await expect(hud.locator('.hud-chip-row')).toBeHidden();
   await expect(hud.locator('.readiness-strip')).toBeHidden();
-  await expect(hud.locator('.resource-grid')).toBeHidden();
-  await expect(hud.locator('.profile-details')).toBeHidden();
+  await expect(hud.locator(':scope > .resource-grid')).toBeHidden();
+  await expect(detailSurface.locator('summary')).toBeVisible();
+  await expect(detailSurface).not.toHaveAttribute('open', '');
 
   const goldenHudText = await goldenHud.innerText();
   for (const forbidden of ['공격', '방어', '현장', '하중', '사망', '◇', '■', '▧', '+']) {
@@ -67,6 +69,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   const raster = illustration.locator('img.scene-illustration-image');
   await expect(raster).toBeVisible();
 
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   const geometry = await page.evaluate(() => {
     const hud = document.querySelector<HTMLElement>('.expedition-hud')!;
     const goldenHud = document.querySelector<HTMLElement>('.golden-hud-surface')!;
@@ -74,7 +77,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
     const portraitParts = [...portrait.children] as SVGElement[];
     const illustration = document.querySelector<HTMLElement>('.scene-illustration[data-resource-id="p8.illustration.orchard.windbreak-boundary"]')!;
     const narrative = document.querySelector<HTMLElement>('.narrative-copy')!;
-    const choiceButtons = [...document.querySelectorAll<HTMLElement>('.choice-stack button.choice:not([disabled])')];
+    const choiceButtons = [...document.querySelectorAll<HTMLElement>('.choice-stack button.choice')];
     const raster = illustration.querySelector<HTMLImageElement>('img.scene-illustration-image')!;
     const icons = [...goldenHud.querySelectorAll<HTMLImageElement>('img.golden-hud-icon')];
     const lastChoice = choiceButtons.at(-1)!.getBoundingClientRect();
@@ -101,6 +104,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
       })),
     };
   });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
 
   expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.innerWidth);
   expect(geometry.hudHeight).toBeGreaterThanOrEqual(60);
@@ -124,4 +128,32 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
     path: 'test-results/p8-3-windbreak-golden-screen-390x844.png',
     fullPage: false,
   });
+
+  const sceneTitle = page.getByRole('heading', { name: '날갯소리 아래의 지름길' });
+  const scrollBeforeDetail = await page.evaluate(() => window.scrollY);
+  await detailSurface.locator('summary').click();
+  await expect(detailSurface).toHaveAttribute('open', '');
+  await expect(detailSurface.getByRole('heading', { name: '가방' })).toBeVisible();
+  await expect(detailSurface.getByRole('heading', { name: '착용 장비' })).toBeVisible();
+  await expect(detailSurface.getByRole('heading', { name: '능력치' })).toBeVisible();
+  await expect(detailSurface.getByRole('heading', { name: '위험 기준' })).toBeVisible();
+  await detailSurface.locator('summary').click();
+  await expect(detailSurface).not.toHaveAttribute('open', '');
+  await expect(sceneTitle).toBeVisible();
+  await expect(choices).toHaveCount(2);
+  expect(await page.evaluate(() => window.scrollY)).toBe(scrollBeforeDetail);
+
+  await page.reload();
+  await page.getByRole('button', { name: '여정 이어하기' }).click();
+  await expect(sceneTitle).toBeVisible();
+  const restoredDetailSurface = page.locator('.profile-details');
+  await restoredDetailSurface.locator('summary').click();
+  await expect(restoredDetailSurface.getByRole('heading', { name: '착용 장비' })).toBeVisible();
+  await page.screenshot({
+    path: 'test-results/p8-3-windbreak-detail-after-reload-390x844.png',
+    fullPage: false,
+  });
+  await restoredDetailSurface.locator('summary').click();
+  await expect(sceneTitle).toBeVisible();
+  await expect(page.locator('.choice-stack button.choice:not([disabled])')).toHaveCount(2);
 });

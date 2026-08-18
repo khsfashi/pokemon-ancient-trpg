@@ -13,7 +13,7 @@
   max-height: 76px;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
   border: 0;
   border-bottom: 2px solid #674929;
   border-radius: 0;
@@ -24,9 +24,75 @@
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .hud-primary-row,
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .hud-chip-row,
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .readiness-strip,
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .resource-grid,
-.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .profile-details {
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .expedition-hud > .resource-grid {
   display: none !important;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details {
+  position: fixed;
+  z-index: 60;
+  right: 10px;
+  bottom: max(7px, env(safe-area-inset-bottom));
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #e8dcc7;
+  font-family: var(--p83-pixel-display);
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details summary {
+  min-width: 88px;
+  min-height: 38px;
+  padding: 9px 12px;
+  border: 1px solid #73532f;
+  color: #ead7ae;
+  background: #17120e;
+  box-shadow: inset 0 0 0 1px #322517;
+  text-align: center;
+  list-style: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details summary::-webkit-details-marker,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details .profile-details-label {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details .golden-details-label {
+  display: inline;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details[open] .golden-details-label {
+  display: none;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details[open] .golden-details-close-label {
+  display: inline;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details[open] {
+  top: 86px;
+  right: 10px;
+  bottom: 8px;
+  left: 10px;
+  width: auto;
+  overflow-y: auto;
+  border: 2px solid #674929;
+  background: #1a1612;
+  box-shadow: 0 0 0 100vmax rgb(6 5 4 / 72%);
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details[open] summary {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  border-width: 0 0 1px;
+  background: #211a14;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details[open] .profile-details-body {
+  padding: 10px;
 }
 
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .golden-hud-surface {

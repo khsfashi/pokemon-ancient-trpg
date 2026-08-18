@@ -167,6 +167,11 @@
   user-select: none;
 }
 
+.golden-details-label,
+.golden-details-close-label {
+  display: none;
+}
+
 .profile-details-body {
   display: grid;
   gap: 0.85rem;
