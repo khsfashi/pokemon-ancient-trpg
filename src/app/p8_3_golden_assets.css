@@ -11,6 +11,27 @@
   display: initial;
 }
 
+/* Keep the 78px strip readable at 390px: identity + vitality own most of the
+ * width; fatigue/injury share a compact column and provisions is icon/value only. */
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .portrait-identity {
+  flex-basis: 100px;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row {
+  flex-basis: 74px;
+}
+
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid {
+  flex-basis: 46px;
+}
+
+/* Deep stats do not consume any persistent golden-screen HUD pixels. The
+ * underlying profile implementation is preserved for the other presentation
+ * surfaces and can be promoted to its own surface after owner approval. */
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .profile-details {
+  display: none;
+}
+
 /* Batch 03 used typographic glyphs as temporary compact affordances. They are
  * explicitly suppressed on the golden screen: the four decision-critical HUD
  * concepts below are backed by authored raster sprites instead. */
@@ -49,9 +70,15 @@
 }
 
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'] .scene-illustration-image {
+  position: relative;
+  z-index: 1;
+  display: block;
   width: 100%;
   height: 100%;
+  opacity: 1;
+  visibility: visible;
   object-fit: cover;
+  filter: none;
   image-rendering: pixelated;
 }
 
