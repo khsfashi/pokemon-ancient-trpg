@@ -4,7 +4,9 @@ const LayerCanvasScript = preload("res://scripts/layer_canvas.gd")
 const SpikeRuntimeScript = preload("res://scripts/spike_runtime.gd")
 const LOCAL_BEEDRILL_PATH := "res://local_assets/pokemon/beedrill.png"
 
-var runtime: SpikeRuntime
+# Avoid editor-generated global class cache as a runtime prerequisite. The spike must
+# parse and boot from a clean checkout using only explicit preloads.
+var runtime
 var surface_root: Control
 var transition_overlay: ColorRect
 var result_label: Label
@@ -35,8 +37,8 @@ func _build_transition_overlay() -> void:
 
 func _show_opening_surface() -> void:
 	_clear_surface()
-	var background := LayerCanvasScript.new() as SpikeLayerCanvas
-	background.layer_kind = SpikeLayerCanvas.LayerKind.BACKGROUND
+	var background = LayerCanvasScript.new()
+	background.layer_kind = LayerCanvasScript.LayerKind.BACKGROUND
 	surface_root.add_child(background)
 	_full_rect(background)
 
@@ -91,16 +93,16 @@ func _show_opening_surface() -> void:
 
 func _show_event_surface() -> void:
 	_clear_surface()
-	_add_world_layer(SpikeLayerCanvas.LayerKind.BACKGROUND, 0)
-	_add_world_layer(SpikeLayerCanvas.LayerKind.MIDGROUND, 10)
-	_add_world_layer(SpikeLayerCanvas.LayerKind.HUMAN, 20)
+	_add_world_layer(LayerCanvasScript.LayerKind.BACKGROUND, 0)
+	_add_world_layer(LayerCanvasScript.LayerKind.MIDGROUND, 10)
+	_add_world_layer(LayerCanvasScript.LayerKind.HUMAN, 20)
 	_add_pokemon_layer()
-	_add_world_layer(SpikeLayerCanvas.LayerKind.FOREGROUND, 40)
+	_add_world_layer(LayerCanvasScript.LayerKind.FOREGROUND, 40)
 	_add_event_hud()
 	_add_event_panel()
 
 func _add_world_layer(kind: int, layer_z: int) -> void:
-	var layer := LayerCanvasScript.new() as SpikeLayerCanvas
+	var layer = LayerCanvasScript.new()
 	layer.layer_kind = kind
 	layer.z_index = layer_z
 	surface_root.add_child(layer)
@@ -228,7 +230,7 @@ func _on_start_pressed() -> void:
 	_fade_to(Callable(self, "_show_event_surface"))
 
 func _on_choice_pressed(choice_id: String) -> void:
-	var resolution := runtime.resolve_choice(choice_id)
+	var resolution = runtime.resolve_choice(choice_id)
 	for button in choice_buttons:
 		button.disabled = true
 	var relationship: Dictionary = resolution["relationship"]
