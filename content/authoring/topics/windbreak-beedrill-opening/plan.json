@@ -1,0 +1,63 @@
+{
+  "topic_id": "windbreak-beedrill-opening",
+  "title": "방풍림 독침붕 조우 — 오프닝 서술 파일럿",
+  "sessions": [
+    {
+      "session_id": "s001",
+      "title": "바람이 멎는 경계",
+      "purpose": "옛 제방길에서 방풍림 과수원 경계로 접근하며 독침붕을 직접 보여주기 전에 영역 징후와 길의 위험을 체감시킨다. 바람, 잎, 벌레 소리, 과수의 상처, 사람의 이동 흔적을 통해 독침붕 존재가 인간 동선과 생업에 이미 영향을 주고 있음을 자연스럽게 드러낸다.",
+      "target_chars": 4800,
+      "target_paragraphs": 16,
+      "dependencies": [],
+      "continuity_focus": [
+        "old-levee-to-orchard geography",
+        "warning signs before direct sighting",
+        "human route adaptations"
+      ],
+      "status": "ready",
+      "revision": 1,
+      "owner_review": "pending",
+      "owner_feedback": ""
+    },
+    {
+      "session_id": "s002",
+      "title": "침끝이 길을 막는 순간",
+      "purpose": "독침붕을 실제로 시야에 넣고 위협을 물리적으로 읽을 수 있게 한다. 비행 높이와 거리, 날개 진동음의 변화, 앞다리 침과 복부 침의 방향, 몸의 회전, 접근 벡터, 수풀과 작은 동물의 반응을 명확히 묘사한다. 플레이어가 왜 멈추거나 우회하거나 방풍림을 지키는 선택을 고려해야 하는지 장면 자체로 이해하게 한다.",
+      "target_chars": 5600,
+      "target_paragraphs": 19,
+      "dependencies": ["s001"],
+      "continuity_focus": [
+        "full:s001",
+        "Beedrill posture and attack vector",
+        "distance and viable counterplay",
+        "orchard boundary terrain"
+      ],
+      "status": "ready",
+      "revision": 1,
+      "owner_review": "pending",
+      "owner_feedback": ""
+    },
+    {
+      "session_id": "s003",
+      "title": "과수원지기의 길과 대가",
+      "purpose": "독침붕 위협이 끝난 뒤 과수원지기와 인간 생업의 대응을 통해 포켓몬 생태가 생활 방식과 길 선택을 어떻게 바꾸는지 보여준다. 기존 protect_windbreak / take_shortcut 선택의 의미와 관계 결과를 보존하면서, 선택이 단순 도덕 문항이 아니라 시간·안전·생업·향후 관계를 저울질하는 행동으로 읽히게 한다.",
+      "target_chars": 5200,
+      "target_paragraphs": 18,
+      "dependencies": ["s001", "s002"],
+      "continuity_focus": [
+        "full:s002",
+        "orchard keeper relationship consequence",
+        "protect_windbreak versus take_shortcut",
+        "human livelihood shaped by Pokémon ecology"
+      ],
+      "status": "ready",
+      "revision": 1,
+      "owner_review": "pending",
+      "owner_feedback": ""
+    }
+  ],
+  "schema_version": 2,
+  "planner_worker": "chatgpt",
+  "created_at": "2026-08-18T06:20:00+00:00",
+  "updated_at": "2026-08-18T06:20:00+00:00"
+}
