@@ -1,0 +1,148 @@
+name: Narrative Authoring Queue
+
+on:
+  issues:
+    types: [opened, reopened, edited, labeled]
+
+concurrency:
+  group: narrative-authoring-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  author:
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      startsWith(github.event.issue.title, '[authoring]')
+    runs-on: [self-hosted]
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Resolve authoring request
+        id: request
+        shell: pwsh
+        run: |
+          $info = python tools/narrative_authoring.py request-info --event "$env:GITHUB_EVENT_PATH" | ConvertFrom-Json
+          "topic_id=$($info.topic_id)" >> $env:GITHUB_OUTPUT
+          "branch=$($info.branch)" >> $env:GITHUB_OUTPUT
+          "issue_number=$($info.issue_number)" >> $env:GITHUB_OUTPUT
+
+      - name: Checkout durable topic branch
+        shell: pwsh
+        env:
+          AUTHORING_BRANCH: ${{ steps.request.outputs.branch }}
+        run: |
+          git config user.name "pokemon-ancient-trpg-authoring-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git fetch origin --prune
+          git ls-remote --exit-code --heads origin "$env:AUTHORING_BRANCH" *> $null
+          if ($LASTEXITCODE -eq 0) {
+            git checkout -B "$env:AUTHORING_BRANCH" "origin/$env:AUTHORING_BRANCH"
+          } else {
+            git checkout -B "$env:AUTHORING_BRANCH" origin/main
+          }
+
+      - name: Check local Codex worker
+        shell: pwsh
+        run: |
+          codex --version
+
+      - name: Run bounded authoring units and persist every unit
+        id: worker
+        shell: pwsh
+        env:
+          AUTHORING_BRANCH: ${{ steps.request.outputs.branch }}
+          AUTHORING_TOPIC: ${{ steps.request.outputs.topic_id }}
+        run: |
+          $terminal = "blocked"
+          for ($i = 1; $i -le 64; $i++) {
+            python tools/narrative_authoring.py advance-one --event "$env:GITHUB_EVENT_PATH"
+            $code = $LASTEXITCODE
+
+            git add -- "content/authoring/topics/$env:AUTHORING_TOPIC"
+            git diff --cached --quiet
+            if ($LASTEXITCODE -ne 0) {
+              git commit -m "Author $env:AUTHORING_TOPIC unit $i"
+              git push origin "HEAD:$env:AUTHORING_BRANCH"
+            }
+
+            if ($code -eq 0) {
+              continue
+            } elseif ($code -eq 10) {
+              $terminal = "complete"
+              break
+            } elseif ($code -eq 20) {
+              $terminal = "awaiting_chatgpt"
+              break
+            } else {
+              $terminal = "blocked"
+              break
+            }
+          }
+          "result=$terminal" >> $env:GITHUB_OUTPUT
+
+      - name: Comment queue status
+        uses: actions/github-script@v8
+        env:
+          RESULT: ${{ steps.worker.outputs.result }}
+          TOPIC: ${{ steps.request.outputs.topic_id }}
+          BRANCH: ${{ steps.request.outputs.branch }}
+        with:
+          script: |
+            const result = process.env.RESULT;
+            const topic = process.env.TOPIC;
+            const branch = process.env.BRANCH;
+            let body;
+            if (result === 'complete') {
+              body = `Narrative authoring topic \`${topic}\` completed its planned Codex sessions on branch \`${branch}\`. The branch is ready for owner review/assembly; individual sessions remain independently revisable.`;
+            } else if (result === 'awaiting_chatgpt') {
+              body = `Narrative authoring topic \`${topic}\` stopped cleanly at a provider handoff on branch \`${branch}\`. Completed sessions are already pushed. The pending unit is marked \`awaiting_chatgpt\`. In ChatGPT, use \`@GitHub pokemon-ancient-trpg ${topic} 서술 이어서 진행해줘\`; the same stable session must be completed rather than replanned.`;
+            } else {
+              body = `Narrative authoring topic \`${topic}\` is blocked on branch \`${branch}\`. Completed units were pushed before the blocker. Inspect the topic/session status and diagnostic file before retrying.`;
+            }
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
+      - name: Open topic PR when all planned sessions complete
+        if: steps.worker.outputs.result == 'complete'
+        uses: actions/github-script@v8
+        env:
+          TOPIC: ${{ steps.request.outputs.topic_id }}
+          BRANCH: ${{ steps.request.outputs.branch }}
+        with:
+          script: |
+            const head = process.env.BRANCH;
+            const existing = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${head}`,
+              base: 'main',
+            });
+            if (existing.data.length === 0) {
+              await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `Narrative authoring: ${process.env.TOPIC}`,
+                head,
+                base: 'main',
+                draft: true,
+                body: `Generated through the P8.3 bounded narrative authoring factory. Review session artifacts individually before accepting runtime assembly. Source queue: #${context.issue.number}.`,
+              });
+            }
