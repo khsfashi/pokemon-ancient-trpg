@@ -38,6 +38,7 @@ jobs:
           "topic_id=$($info.topic_id)" >> $env:GITHUB_OUTPUT
           "branch=$($info.branch)" >> $env:GITHUB_OUTPUT
           "issue_number=$($info.issue_number)" >> $env:GITHUB_OUTPUT
+          "mode=$($info.mode)" >> $env:GITHUB_OUTPUT
 
       - name: Checkout durable topic branch
         shell: pwsh
@@ -99,6 +100,9 @@ jobs:
             } elseif ($code -eq 20) {
               $terminal = "awaiting_chatgpt"
               break
+            } elseif ($code -eq 25) {
+              $terminal = "continuity_review"
+              break
             } else {
               $terminal = "blocked"
               break
@@ -119,11 +123,13 @@ jobs:
             const branch = process.env.BRANCH;
             let body;
             if (result === 'complete') {
-              body = `Narrative authoring topic \`${topic}\` completed its planned Codex sessions on branch \`${branch}\`. The branch is ready for owner review/assembly; individual sessions remain independently revisable.`;
+              body = `Narrative authoring topic \`${topic}\` completed all currently planned/revised sessions on branch \`${branch}\`. It is ready for owner review/assembly.`;
             } else if (result === 'awaiting_chatgpt') {
-              body = `Narrative authoring topic \`${topic}\` stopped cleanly at a provider handoff on branch \`${branch}\`. Completed sessions are already pushed. The pending unit is marked \`awaiting_chatgpt\`. In ChatGPT, use \`@GitHub pokemon-ancient-trpg ${topic} 서술 이어서 진행해줘\`; the same stable session must be completed rather than replanned.`;
+              body = `Narrative authoring topic \`${topic}\` stopped cleanly at a provider handoff on branch \`${branch}\`. Completed sessions are already pushed. The pending plan/session is marked for ChatGPT. In ChatGPT, use \`@GitHub pokemon-ancient-trpg ${topic} 서술 이어서 진행해줘\`; continue the same stable unit rather than replanning it.`;
+            } else if (result === 'continuity_review') {
+              body = `Narrative authoring topic \`${topic}\` has one or more downstream sessions marked \`continuity_review\` on branch \`${branch}\` after an upstream revision. Existing downstream prose is preserved. Review only the affected dependencies, or edit the queue request with \`"cascade": true\` if those sessions should be regenerated automatically.`;
             } else {
-              body = `Narrative authoring topic \`${topic}\` is blocked on branch \`${branch}\`. Completed units were pushed before the blocker. Inspect the topic/session status and diagnostic file before retrying.`;
+              body = `Narrative authoring topic \`${topic}\` is blocked on branch \`${branch}\`. Completed units were pushed before the blocker. Inspect \`topic.json\`, the pending session status, and \`last-worker-diagnostic.txt\`; an edited/reopened queue request can resume after the cause is fixed.`;
             }
             await github.rest.issues.createComment({
               owner: context.repo.owner,
