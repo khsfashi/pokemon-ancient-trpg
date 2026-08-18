@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "status": "pass",
+  "characters": 4802,
+  "paragraphs": 16,
+  "target_characters": 4800,
+  "target_paragraphs": 16,
+  "failures": [],
+  "duplicate_samples": [],
+  "checked_at": "2026-08-18T07:31:00+00:00",
+  "model_qa_notes": [
+    "독침붕 본체를 직접 보여주지 않아 s002의 직접 조우 범위를 침범하지 않았다.",
+    "바람·진동음·잎과 가지·과실 냄새·꼬렛 흔적·사람 발자국과 표식으로 경계의 물리적 증거를 단계적으로 제시했다.",
+    "사람의 우회 노동과 방풍림 보존을 함께 보여 주어 포켓몬 생태가 생업 동선을 바꾸는 이유를 설명문 대신 현장 흔적으로 전달했다.",
+    "기존 protect_windbreak / take_shortcut 선택 ID나 authority 결과를 변경하지 않았다."
+  ],
+  "worker": "chatgpt"
+}

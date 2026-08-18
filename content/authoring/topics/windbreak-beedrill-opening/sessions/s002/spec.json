@@ -1,0 +1,21 @@
+{
+  "session_id": "s002",
+  "title": "침끝이 길을 막는 순간",
+  "purpose": "독침붕을 실제로 시야에 넣고 위협을 물리적으로 읽을 수 있게 한다. 비행 높이와 거리, 날개 진동음의 변화, 앞다리 침과 복부 침의 방향, 몸의 회전, 접근 벡터, 수풀과 작은 동물의 반응을 명확히 묘사한다. 플레이어가 왜 멈추거나 우회하거나 방풍림을 지키는 선택을 고려해야 하는지 장면 자체로 이해하게 한다.",
+  "target_chars": 5600,
+  "target_paragraphs": 19,
+  "dependencies": ["s001"],
+  "continuity_focus": [
+    "full:s001",
+    "Beedrill posture and attack vector",
+    "distance and viable counterplay",
+    "orchard boundary terrain"
+  ],
+  "status": "completed",
+  "revision": 1,
+  "owner_review": "pending",
+  "owner_feedback": "",
+  "worker": "chatgpt",
+  "completed_at": "2026-08-18T07:36:00+00:00",
+  "updated_at": "2026-08-18T07:36:00+00:00"
+}

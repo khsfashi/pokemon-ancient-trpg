@@ -1,0 +1,20 @@
+{
+  "session_id": "s001",
+  "title": "바람이 멎는 경계",
+  "purpose": "옛 제방길에서 방풍림 과수원 경계로 접근하며 독침붕을 직접 보여주기 전에 영역 징후와 길의 위험을 체감시킨다. 바람, 잎, 벌레 소리, 과수의 상처, 사람의 이동 흔적을 통해 독침붕 존재가 인간 동선과 생업에 이미 영향을 주고 있음을 자연스럽게 드러낸다.",
+  "target_chars": 4800,
+  "target_paragraphs": 16,
+  "dependencies": [],
+  "continuity_focus": [
+    "old-levee-to-orchard geography",
+    "warning signs before direct sighting",
+    "human route adaptations"
+  ],
+  "status": "completed",
+  "revision": 1,
+  "owner_review": "pending",
+  "owner_feedback": "",
+  "updated_at": "2026-08-18T07:33:00+00:00",
+  "worker": "chatgpt",
+  "completed_at": "2026-08-18T07:33:00+00:00"
+}

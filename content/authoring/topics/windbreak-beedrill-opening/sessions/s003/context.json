@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "topic": {
+    "topic_id": "windbreak-beedrill-opening",
+    "title": "방풍림 독침붕 조우 — 오프닝 서술 파일럿",
+    "brief": "P8 현재 방풍림 과수원 경계 장면을 서술 팩토리의 첫 실전 파일럿으로 다시 쓴다. 옛 제방길에서 방풍림 과수원 경계로 접근하는 과정, 독침붕의 영역 징후, 실제 독침붕의 자세·날개 진동음·침의 방향·거리·비행 궤적·수풀과 과수원의 반응·인간의 동선 선택을 구체적으로 묘사한다. 과수원지기의 태도와 생업이 독침붕 생태 때문에 어떻게 달라지는지도 자연스럽게 드러낸다. 기존 protect_windbreak / take_shortcut 선택 의미와 관계 결과를 존중하며 새로운 지역 공통 법·기관·종 전체의 미검증 습성은 발명하지 않는다."
+  },
+  "session": {
+    "session_id": "s003",
+    "title": "과수원지기의 길과 대가",
+    "purpose": "독침붕 위협이 끝난 뒤 과수원지기와 인간 생업의 대응을 통해 포켓몬 생태가 생활 방식과 길 선택을 어떻게 바꾸는지 보여준다. 기존 protect_windbreak / take_shortcut 선택의 의미와 관계 결과를 보존하면서, 선택이 단순 도덕 문항이 아니라 시간·안전·생업·향후 관계를 저울질하는 행동으로 읽히게 한다.",
+    "target_chars": 5200,
+    "target_paragraphs": 18,
+    "dependencies": ["s001", "s002"],
+    "continuity_focus": [
+      "full:s002",
+      "orchard keeper relationship consequence",
+      "protect_windbreak versus take_shortcut",
+      "human livelihood shaped by Pokémon ecology"
+    ],
+    "status": "ready",
+    "revision": 1,
+    "owner_review": "pending",
+    "owner_feedback": ""
+  },
+  "canon_and_style": "동일 topic의 durable context를 유지한다. proto-Kanto 전근대 배경, 인간 중심 생존/관찰/후퇴, 번역투 없는 한국어, 물리적 장면 비트, 독침붕의 영역 방어와 비행·침 위협, 미검증 습성/기관/전리품 발명 금지, 기존 choice ID와 authority 결과 보존 규칙은 s001~s002와 동일하다.",
+  "continuity_ledger": {
+    "schema_version": 2,
+    "facts": [
+      "옛 제방에서 방풍림 과수원 경계로 이어지는 짧은 창고길과 돌담 우회로가 갈린다.",
+      "붉은 천 말뚝은 독침붕의 경고 횡비행 범위를 관찰해 옮기는 사람의 위험 표식이다.",
+      "독침붕은 약 열두 걸음에서 경계를 횡단하고 지름길 쪽 움직임에는 약 여덟 걸음까지 직선 경고 접근하며, 후퇴하면 약 다섯 걸음 앞에서 급상승해 거리를 되찾는다.",
+      "돌담과 굵은 나무는 실제 가림막이 되고 거리 확보는 직선 접근을 경계 횡비행으로 완화한다.",
+      "두 번째 날개 진동이 겹쳐 한 개체만 보고 움직이는 대응은 위험하다.",
+      "과수원 사람과 꼬렛 등 작은 동물은 독침붕 경계에 맞춰 이동 경로를 바꾼다."
+    ],
+    "unresolved_hooks": [
+      "protect_windbreak / take_shortcut 선택의 기존 관계 결과를 유지한다.",
+      "과수원지기의 생업 비용과 방풍림 보존 이유를 s003에서 구체화한다."
+    ],
+    "updated_at": "2026-08-18T07:37:00+00:00"
+  },
+  "dependency_summaries": [
+    {
+      "session_id": "s001",
+      "revision": 1,
+      "summary": "독침붕을 직접 보여주기 전 제방→방풍림 경계, 붉은 말뚝과 우회 동선, 꼬렛과 작은 동물의 회피, 인간의 노동 경로 변화를 구축했다."
+    },
+    {
+      "session_id": "s002",
+      "revision": 1,
+      "summary": "독침붕의 실제 자세·침 방향·거리·경고 접근·급상승·복수 날개 진동과 돌담/후퇴 counterplay를 구축했다. 지름길은 경고선과 겹치고 우회로는 안전 폭 바깥으로 이어진다."
+    }
+  ],
+  "full_dependency_text": [
+    "===== FULL DEPENDENCY s002 =====\nChatGPT worker consumed the complete durable dependency at content/authoring/topics/windbreak-beedrill-opening/sessions/s002/draft.ko-KR.md verbatim while authoring this session; that file remains the continuity source of truth."
+  ]
+}

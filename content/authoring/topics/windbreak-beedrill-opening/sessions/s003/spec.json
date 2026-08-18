@@ -1,0 +1,21 @@
+{
+  "session_id": "s003",
+  "title": "과수원지기의 길과 대가",
+  "purpose": "독침붕 위협이 끝난 뒤 과수원지기와 인간 생업의 대응을 통해 포켓몬 생태가 생활 방식과 길 선택을 어떻게 바꾸는지 보여준다. 기존 protect_windbreak / take_shortcut 선택의 의미와 관계 결과를 보존하면서, 선택이 단순 도덕 문항이 아니라 시간·안전·생업·향후 관계를 저울질하는 행동으로 읽히게 한다.",
+  "target_chars": 5200,
+  "target_paragraphs": 18,
+  "dependencies": ["s001", "s002"],
+  "continuity_focus": [
+    "full:s002",
+    "orchard keeper relationship consequence",
+    "protect_windbreak versus take_shortcut",
+    "human livelihood shaped by Pokémon ecology"
+  ],
+  "status": "completed",
+  "revision": 1,
+  "owner_review": "pending",
+  "owner_feedback": "",
+  "worker": "chatgpt",
+  "completed_at": "2026-08-18T07:41:00+00:00",
+  "updated_at": "2026-08-18T07:41:00+00:00"
+}
