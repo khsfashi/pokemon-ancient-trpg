@@ -1,0 +1,50 @@
+name: P8.3 Golden Screen Review
+
+on:
+  pull_request:
+    paths:
+      - 'src/app/p8_3_golden_screen.css'
+      - 'src/app/p8_3_golden_assets.css'
+      - 'src/assets/p8-golden/**'
+      - 'src/resources/p8Illustrations.ts'
+      - 'src/main.tsx'
+      - 'public/illustrations/windbreak-orchard.png'
+      - 'e2e/p8-3-golden-screen.spec.ts'
+      - '.github/workflows/p8-3-golden-screen-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  golden-screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install from committed lockfile
+        run: npm ci
+
+      - name: Typecheck and production build
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Capture 390x844 owner-review screen
+        run: npx playwright test e2e/p8-3-golden-screen.spec.ts --project=phone-chromium
+
+      - name: Upload owner-review screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-3-windbreak-golden-screen-390x844
+          path: test-results/
+          if-no-files-found: error
+          retention-days: 14
