@@ -11,6 +11,16 @@
   display: initial;
 }
 
+/* Batch 03 used typographic glyphs as temporary compact affordances. They are
+ * explicitly suppressed on the golden screen: the four decision-critical HUD
+ * concepts below are backed by authored raster sprites instead. */
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .hud-chip-row > span::before,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .resource-grid > div::before,
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .readiness-strip > div::before {
+  content: none;
+  display: none;
+}
+
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .vitality-block > div:first-child > span {
   background-image: url('../assets/p8-golden/hud-vitality.png');
 }
@@ -27,8 +37,15 @@
   background-image: url('../assets/p8-golden/hud-provisions.png');
 }
 
+/* The inherited P8.3 theme caps all illustrations at 25svh. Golden review needs
+ * the scene to own 240–280px, so opt this one scene out rather than loosening the
+ * global rule. flex-shrink: 0 prevents the narrative/choice column from stealing
+ * the visual-primary scene height. */
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'] {
+  flex: 0 0 264px;
   height: 264px;
+  min-height: 264px;
+  max-height: none;
 }
 
 .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'] .scene-illustration-image {
@@ -48,7 +65,9 @@
 
 @media (max-height: 800px) {
   .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary'] {
+    flex-basis: 244px;
     height: 244px;
+    min-height: 244px;
   }
 
   .shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .panel:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .narrative-copy {
