@@ -92,14 +92,14 @@ describe('P8.2 coherent survival preparation loop', () => {
     expect(state.events.narrativeFlags['slice.prep.rattata_linked_salvage']).toBe(true);
 
     const hurt = deriveP8SurvivalPressure(state);
-    expect(hurt).toMatchObject({ vitalityCurrent: 4, vitalityMax: 5, fatigueStage: 2, injuries: 1 });
+    expect(hurt).toMatchObject({ vitalityCurrent: 4, vitalityMax: 5, fatigueStage: 2, fatigueLimit: 2, injuries: 1 });
     const injuredLoad = deriveP8EquipmentProjection(state.character, state.survival, hurt.injuries);
     expect(injuredLoad.comfortableLoad).toBe(4);
 
     state = apply(state, 'camp.rest-and-treat');
     expect(state.world.currentLocality).toBe('reedbank-settlement');
     expect(state.survival.resourcePools).toEqual({ provisions: 1, remedies: 0, materials: 2 });
-    expect(deriveP8SurvivalPressure(state)).toMatchObject({ vitalityCurrent: 5, fatigueStage: 0, injuries: 0 });
+    expect(deriveP8SurvivalPressure(state)).toMatchObject({ vitalityCurrent: 5, fatigueStage: 1, fatigueLimit: 2, injuries: 0 });
     expect(state.events.narrativeFlags['slice.prep.camp_recovered']).toBe(true);
     expect(state.events.narrativeFlags['slice.prep.returned_from_field_loop']).toBe(true);
 
@@ -193,6 +193,7 @@ describe('P8.2 coherent survival preparation loop', () => {
 
     state = apply(state, 'camp.rest-and-treat');
     expect(state.world.currentLocality).toBe('reedbank-settlement');
+    expect(deriveP8SurvivalPressure(state)).toMatchObject({ fatigueStage: 0, fatigueLimit: 2 });
     expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'repair.wet-route-gear')).toMatchObject({ available: true });
     expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'trade.provision-for-remedy')).toMatchObject({
       available: false,
