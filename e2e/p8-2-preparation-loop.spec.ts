@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 
 const LOCALE_KEY = 'pokemon-ancient-trpg.locale.v1';
 
@@ -29,13 +29,17 @@ async function reachReturnSummary(page: Page): Promise<void> {
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
 }
 
+function stat(panel: Locator, label: string): Locator {
+  return panel.locator('.ending-grid > div').filter({ has: panel.page().getByText(label, { exact: true }) }).locator('strong');
+}
+
 test('completes and persists the survival risk-recovery loop on a phone surface', async ({ page }) => {
   await reachReturnSummary(page);
 
   const panel = page.locator('.preparation-panel');
   await expect(panel).toBeVisible();
   await expect(panel.getByText('Expedition loop', { exact: true })).toBeVisible();
-  await expect(panel.getByText('0/6', { exact: true })).toBeVisible();
+  await expect(stat(panel, 'Expedition loop')).toHaveText('0/6');
   await expect(panel.getByText(/decide whether the Rattata signs are worth the risk/i)).toBeVisible();
 
   const gather = panel.locator('[data-preparation-action="gather.repair-stock"]');
@@ -50,25 +54,26 @@ test('completes and persists the survival risk-recovery loop on a phone surface'
   await expect(repair).toBeDisabled();
   await gather.click();
   await forage.click();
-  await expect(panel.getByText('2/6', { exact: true })).toBeVisible();
+  await expect(stat(panel, 'Expedition loop')).toHaveText('2/6');
 
   await expect(hunt).toBeEnabled();
   await expect(flee).toBeEnabled();
   await hunt.click();
   await expect(flee).toBeDisabled();
-  await expect(panel.getByText('4/5', { exact: true })).toBeVisible();
-  await expect(panel.getByText('2/5', { exact: true })).toBeVisible();
-  await expect(panel.getByText('1', { exact: true })).toBeVisible();
+  await expect(stat(panel, 'Vitality')).toHaveText('4/5');
+  await expect(stat(panel, 'Fatigue')).toHaveText('2/5');
+  await expect(stat(panel, 'Injuries')).toHaveText('1');
 
   await repair.click();
   await expect(camp).toBeEnabled();
   await camp.click();
-  await expect(panel.getByText('5/5', { exact: true })).toBeVisible();
-  await expect(panel.getByText('0/5', { exact: true })).toBeVisible();
+  await expect(stat(panel, 'Vitality')).toHaveText('5/5');
+  await expect(stat(panel, 'Fatigue')).toHaveText('0/5');
+  await expect(stat(panel, 'Injuries')).toHaveText('0');
   await trade.click();
 
   await expect(panel).toHaveAttribute('data-preparation-complete', 'true');
-  await expect(panel.getByText('6/6', { exact: true })).toBeVisible();
+  await expect(stat(panel, 'Expedition loop')).toHaveText('6/6');
   await expect(panel.getByText(/next departure is ready/i)).toBeVisible();
   await expect(gather).toBeDisabled();
   await expect(forage).toBeDisabled();
