@@ -57,7 +57,7 @@ function descriptor(
     altKo,
     altEn,
     sourceKind: 'project_authored_original_svg' as const,
-    provenance: 'Original placeholder artwork authored for this repository; no copied game art or external media.',
+    provenance: 'Original project-authored SVG artwork for this repository; no copied game art or external media.',
     decodedBudgetBytes: FULL_SCENE_DECODED_BUDGET_BYTES,
   });
 }
