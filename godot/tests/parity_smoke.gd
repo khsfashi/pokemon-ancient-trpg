@@ -4,11 +4,13 @@ const SpikeRuntimeScript = preload("res://scripts/spike_runtime.gd")
 const SAVE_PATH := "user://p8_3_spike_roundtrip.json"
 
 func _init() -> void:
-	var runtime := SpikeRuntimeScript.new() as SpikeRuntime
+	# Keep this smoke runnable from a clean checkout without relying on
+	# editor-generated global class metadata. The preloaded script is the authority.
+	var runtime = SpikeRuntimeScript.new()
 	assert(runtime.event_id() == "slice.mixed.orchard_boundary")
 	assert(runtime.available_choice_ids() == ["protect_windbreak", "take_shortcut"])
 
-	var protect := runtime.resolve_choice("protect_windbreak")
+	var protect = runtime.resolve_choice("protect_windbreak")
 	assert(protect["resolution_kind"] == "direct")
 	assert(protect["rng_draw_count"] == 0)
 	assert(protect["outcome_id"] == "windbreak_protected")
@@ -17,7 +19,7 @@ func _init() -> void:
 	assert(protect["encounters"][0]["species_id"] == 15)
 	assert(protect["p5_effects"].size() == 1)
 
-	var shortcut := runtime.resolve_choice("take_shortcut")
+	var shortcut = runtime.resolve_choice("take_shortcut")
 	assert(shortcut["resolution_kind"] == "direct")
 	assert(shortcut["rng_draw_count"] == 0)
 	assert(shortcut["outcome_id"] == "shortcut_taken")
@@ -27,7 +29,7 @@ func _init() -> void:
 	assert(shortcut["p5_effects"][1]["ref"] == "slice.social_cost")
 	assert(shortcut["p5_effects"][1]["amount"] == 1)
 
-	var round_trip := runtime.save_round_trip(SAVE_PATH, shortcut)
+	var round_trip = runtime.save_round_trip(SAVE_PATH, shortcut)
 	assert(round_trip["save_schema_version"] == 1)
 	assert(round_trip["architecture_contract_version"] == "p7-architecture-v1")
 	assert(round_trip["p5_contract_version"] == "p5-event-contract-v1")
