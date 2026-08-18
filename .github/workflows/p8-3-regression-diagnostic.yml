@@ -1,9 +1,7 @@
 name: P8.3 Regression Diagnostic
 
 on:
-  push:
-    branches:
-      - p8-3/golden-screen-windbreak
+  pull_request:
     paths:
       - 'src/**'
       - 'e2e/**'
