@@ -40,33 +40,41 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   expect(viewport).toEqual({ width: 390, height: 844 });
 
   const hud = page.locator('.expedition-hud');
+  const goldenHud = hud.locator('.golden-hud-surface');
   const illustration = page.locator('.scene-illustration[data-resource-id="p8.illustration.orchard.windbreak-boundary"]');
   const choices = page.locator('.choice-stack button.choice:not([disabled])');
 
   await expect(hud).toBeVisible();
+  await expect(goldenHud).toBeVisible();
+  await expect(goldenHud.locator('img.golden-hud-icon')).toHaveCount(4);
   await expect(illustration).toHaveAttribute('data-media-state', 'loaded');
   await expect(choices).toHaveCount(2);
+
+  // Existing deep/stat-heavy HUD remains implemented for its existing surfaces,
+  // but it must not consume persistent pixels in the golden gameplay hierarchy.
+  await expect(hud.locator('.hud-primary-row')).toBeHidden();
+  await expect(hud.locator('.hud-chip-row')).toBeHidden();
   await expect(hud.locator('.readiness-strip')).toBeHidden();
-  await expect(hud.locator('.resource-grid > div').nth(1)).toBeHidden();
-  await expect(hud.locator('.resource-grid > div').nth(2)).toBeHidden();
+  await expect(hud.locator('.resource-grid')).toBeHidden();
   await expect(hud.locator('.profile-details')).toBeHidden();
+
+  const goldenHudText = await goldenHud.innerText();
+  for (const forbidden of ['공격', '방어', '현장', '하중', '사망', '◇', '■', '▧', '+']) {
+    expect(goldenHudText).not.toContain(forbidden);
+  }
 
   const raster = illustration.locator('img.scene-illustration-image');
   await expect(raster).toBeVisible();
 
   const geometry = await page.evaluate(() => {
     const hud = document.querySelector<HTMLElement>('.expedition-hud')!;
+    const goldenHud = document.querySelector<HTMLElement>('.golden-hud-surface')!;
     const illustration = document.querySelector<HTMLElement>('.scene-illustration[data-resource-id="p8.illustration.orchard.windbreak-boundary"]')!;
     const narrative = document.querySelector<HTMLElement>('.narrative-copy')!;
     const choiceButtons = [...document.querySelectorAll<HTMLElement>('.choice-stack button.choice:not([disabled])')];
     const raster = illustration.querySelector<HTMLImageElement>('img.scene-illustration-image')!;
-    const vitalityIconHost = document.querySelector<HTMLElement>('.vitality-block > div:first-child > span')!;
-    const staminaIconHost = document.querySelector<HTMLElement>('.hud-chip-row > span:nth-child(1)')!;
-    const injuryIconHost = document.querySelector<HTMLElement>('.hud-chip-row > span:nth-child(3)')!;
-    const provisionsIconHost = document.querySelector<HTMLElement>('.resource-grid > div:first-child')!;
+    const icons = [...goldenHud.querySelectorAll<HTMLImageElement>('img.golden-hud-icon')];
     const lastChoice = choiceButtons.at(-1)!.getBoundingClientRect();
-    const authoredIconHosts = [vitalityIconHost, staminaIconHost, injuryIconHost, provisionsIconHost];
-    const retiredGlyphHosts = [staminaIconHost, injuryIconHost, provisionsIconHost];
     return {
       scrollWidth: document.documentElement.scrollWidth,
       innerWidth: window.innerWidth,
@@ -81,8 +89,12 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
       rasterVisibility: getComputedStyle(raster).visibility,
       rasterRendering: getComputedStyle(raster).imageRendering,
       narrativeFont: getComputedStyle(narrative).fontFamily,
-      iconBackgrounds: authoredIconHosts.map((node) => getComputedStyle(node).backgroundImage),
-      retiredGlyphContents: retiredGlyphHosts.map((node) => getComputedStyle(node, '::before').content),
+      iconGeometry: icons.map((icon) => ({
+        width: icon.naturalWidth,
+        height: icon.naturalHeight,
+        rendering: getComputedStyle(icon).imageRendering,
+        visible: getComputedStyle(icon).display !== 'none' && Number.parseFloat(getComputedStyle(icon).opacity) > 0,
+      })),
     };
   });
 
@@ -100,8 +112,8 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   expect(geometry.rasterVisibility).toBe('visible');
   expect(geometry.rasterRendering).toBe('pixelated');
   expect(geometry.narrativeFont).not.toContain('NeoDunggeunmo');
-  expect(geometry.iconBackgrounds.every((value) => value !== 'none')).toBe(true);
-  expect(geometry.retiredGlyphContents.every((value) => value === 'none')).toBe(true);
+  expect(geometry.iconGeometry).toHaveLength(4);
+  expect(geometry.iconGeometry.every((icon) => icon.width === 20 && icon.height === 20 && icon.rendering === 'pixelated' && icon.visible)).toBe(true);
 
   await page.screenshot({
     path: 'test-results/p8-3-windbreak-golden-screen-390x844.png',
