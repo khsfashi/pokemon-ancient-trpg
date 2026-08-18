@@ -90,9 +90,10 @@ Materialization is explicit and local:
 
 ```bash
 python tools/materialize_p8_3_beedrill.py
+godot --headless --path godot --import
 ```
 
-That command resolves the already-frozen P6 source map and exact PokéRogue asset commit, downloads only the pinned `15.png` atlas + `15.json` frame metadata, validates PNG dimensions/frame bounds through the existing P6 production-import code, computes SHA-256 evidence and writes only to the ignored boundary:
+The first command resolves the already-frozen P6 source map and exact PokéRogue asset commit, downloads only the pinned `15.png` atlas + `15.json` frame metadata, validates PNG dimensions/frame bounds through the existing P6 production-import code, computes SHA-256 evidence and writes only to the ignored boundary:
 
 ```text
 godot/local_assets/pokemon/beedrill/15.png
@@ -100,7 +101,7 @@ godot/local_assets/pokemon/beedrill/15.json
 godot/local_assets/pokemon/beedrill/provenance.json
 ```
 
-The public repository remains metadata-only for rights-bound Pokémon media. Do not git-add `godot/local_assets`.
+The explicit Godot import after materialization is required so a fresh local P6 PNG receives its normal Godot import cache before `ResourceLoader` and the owner capture use it. The public repository remains metadata-only for rights-bound Pokémon media. Do not git-add `godot/local_assets`.
 
 `pokemon_encounter_sprite.gd` decodes one atlas texture for the encounter and reuses it while advancing `Sprite2D.region_rect`; it does not create one derived Pokémon image per reveal/animation state and does not decode one texture per frame. The node keeps nearest filtering and respects the atlas `sourceSize` / `spriteSourceSize` placement metadata so trimmed frames share a stable presentation box.
 
@@ -128,9 +129,10 @@ The spike save adapter writes the same outer SaveEnvelope V1 field contract to l
 
 ## Automated validation
 
-The PR workflow uses the pinned official Godot `4.6.3-stable` Linux build and keeps logic/parity checks headless:
+The PR workflow uses the pinned official Godot `4.6.3-stable` Linux build and explicitly imports retained resources before the logic/parity checks:
 
 ```bash
+godot --headless --path godot --import
 godot --headless --path godot --quit-after 2
 godot --headless --path godot --script res://tests/parity_smoke.gd
 godot --headless --path godot --script res://tests/visual_contract_smoke.gd
@@ -150,6 +152,8 @@ python tools/materialize_p8_3_beedrill.py --self-test
 
 The workflow separately invokes `owner_evidence_capture.gd` under Xvfb **without rights-bound Pokémon media** and with `--allow-missing-p6`. It validates that the capture path uses a real renderer, emits 390×844 PNGs and refuses to label that CI result as owner evidence. Screenshots are not uploaded; only the metadata-only harness manifest/log is retained.
 
+The workflow also rejects `SCRIPT ERROR`, parse/compile errors, failed script loads and runtime `ERROR` logs instead of trusting the Godot process exit code by itself. `visual_contract_smoke.gd` records failures and cannot print its PASS marker after an assertion fails.
+
 Automated import/boot/capture-harness success is necessary but **not** visual approval.
 
 ## Local validation / owner capture
@@ -160,6 +164,7 @@ From the repository root:
 
 ```bash
 python tools/materialize_p8_3_beedrill.py
+godot --headless --path godot --import
 godot --headless --path godot --script res://tests/parity_smoke.gd
 godot --headless --path godot --script res://tests/visual_contract_smoke.gd
 godot --path godot --script res://tests/owner_evidence_capture.gd
@@ -173,7 +178,7 @@ godot/captures/owner-evidence/windbreak-beedrill.png
 godot/captures/owner-evidence/manifest.json
 ```
 
-The command fails instead of producing owner evidence when the pinned local P6 atlas/metadata are missing or when the Beedrill adapter cannot render multiple frames. The manifest may say `owner_evidence_candidate=true` only after the real local P6 node loaded successfully; that flag still does **not** substitute for human visual approval.
+The command fails instead of producing owner evidence when the pinned local P6 atlas/metadata are missing, have not been imported, or when the Beedrill adapter cannot render multiple frames. The manifest may say `owner_evidence_candidate=true` only after the real local P6 node loaded successfully; that flag still does **not** substitute for human visual approval.
 
 You can also open the project normally:
 
@@ -212,6 +217,7 @@ Continue only the bounded P8.3 Godot architecture spike. Do not port the rest of
 
 1. Use Godot 4.6.x and run:
    python tools/materialize_p8_3_beedrill.py
+   godot --headless --path godot --import
    godot --headless --path godot --script res://tests/parity_smoke.gd
    godot --headless --path godot --script res://tests/visual_contract_smoke.gd
    Fix only real P6/GDScript/project errors; do not weaken assertions or change fixture IDs/outcomes.
