@@ -230,9 +230,6 @@ export function P8PreparationPanel({ authority, locale, busy, onAction }: Prepar
   const firstIncompleteStage = STAGES.findIndex((stage) => !stageIsComplete(stage, byAction));
   const activeStageIndex = firstIncompleteStage < 0 ? STAGES.length : firstIncompleteStage;
   const activeStage = activeStageIndex < STAGES.length ? STAGES[activeStageIndex]! : null;
-  const activeActions = activeStage === null
-    ? []
-    : activeStage.actionIds.map((actionId) => byAction.get(actionId)!).filter(Boolean);
 
   return (
     <div
@@ -274,34 +271,51 @@ export function P8PreparationPanel({ authority, locale, busy, onAction }: Prepar
         <div><span>{copy.injuries}</span><strong>{pressure.injuries}</strong></div>
       </div>
 
-      {activeStage !== null && (
-        <section class="prep-active-gate" aria-live="polite">
-          <div class="prep-active-heading">
-            <span>{copy.choose}</span>
-            <strong>{copy.stages[activeStage.stageId]}</strong>
-          </div>
-          <div class="choice-stack preparation-choice-stack">
-            {activeActions.map((action) => {
-              const text = actionCopy(locale, action.actionId);
-              const blocked = blockedText(locale, action.blockedReason);
-              return (
-                <button
-                  type="button"
-                  class="choice"
-                  data-preparation-action={action.actionId}
-                  key={action.actionId}
-                  disabled={busy || !action.available}
-                  onClick={() => onAction(action.actionId)}
-                >
-                  <strong>{text.label}</strong>
-                  <span>{text.detail}</span>
-                  {blocked !== null && <span class="muted prep-blocked-reason">{blocked}</span>}
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      )}
+      <div class="prep-gate-list" aria-live="polite">
+        {STAGES.map((stage, index) => {
+          const completed = stageIsComplete(stage, byAction);
+          const active = index === activeStageIndex;
+          const state = completed ? 'completed' : active ? 'active' : 'locked';
+          const stageActions = stage.actionIds.map((actionId) => byAction.get(actionId)!).filter(Boolean);
+          return (
+            <section
+              key={stage.stageId}
+              class={`prep-active-gate prep-gate-section ${state}`}
+              data-preparation-gate={stage.stageId}
+              data-gate-state={state}
+            >
+              <div class="prep-active-heading">
+                <span>{active ? copy.choose : completed ? copy.stageComplete : copy.locked}</span>
+                <strong>{copy.stages[stage.stageId]}</strong>
+              </div>
+              <div class="choice-stack preparation-choice-stack">
+                {stageActions.map((action) => {
+                  const text = actionCopy(locale, action.actionId);
+                  const blocked = blockedText(locale, action.blockedReason);
+                  const disabled = busy || !active || !action.available || action.completed;
+                  return (
+                    <button
+                      type="button"
+                      class="choice"
+                      data-preparation-action={action.actionId}
+                      data-action-stage-state={state}
+                      key={action.actionId}
+                      disabled={disabled}
+                      onClick={() => onAction(action.actionId)}
+                    >
+                      <strong>{text.label}</strong>
+                      {active && <span>{text.detail}</span>}
+                      {!active && completed && <span class="muted prep-gate-state-note">{copy.complete}</span>}
+                      {!active && !completed && blocked !== null && <span class="muted prep-gate-state-note">{blocked}</span>}
+                      {active && blocked !== null && <span class="muted prep-blocked-reason">{blocked}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
+      </div>
 
       {projection.complete && (
         <section class="prep-reward-ledger" aria-label={copy.rewards.title}>
