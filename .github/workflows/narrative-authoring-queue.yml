@@ -54,10 +54,15 @@ jobs:
             git checkout -B "$env:AUTHORING_BRANCH" origin/main
           }
 
-      - name: Check local Codex worker
+      - name: Report local Codex worker availability
         shell: pwsh
         run: |
-          codex --version
+          $codex = Get-Command codex -ErrorAction SilentlyContinue
+          if ($null -eq $codex) {
+            Write-Warning "Codex CLI is not installed/on PATH; the orchestrator will persist a blocked unit instead of losing prior work."
+          } else {
+            codex --version
+          }
 
       - name: Run bounded authoring units and persist every unit
         id: worker
