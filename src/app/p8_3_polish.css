@@ -19,8 +19,23 @@
   --p83-pixel-body: 'P83 NeoDunggeunmo Pro', 'P83 NeoDunggeunmo', ui-sans-serif, system-ui, sans-serif;
 }
 
+.language-switcher {
+  min-height: 44px;
+}
+
 .language-switcher::before {
   content: '◆  고대 기행';
+}
+
+.language-switcher button {
+  min-height: 44px;
+}
+
+/* Keep only the prose viewport bounded. The whole play panel must remain able to
+   grow so illustration/choice controls never sit inside a clipped hit-test area. */
+.expedition-hud + .scene-stage .panel {
+  max-height: none;
+  overflow: visible;
 }
 
 /* Keep compact affordances monochrome/pixel-like until authored HUD sprites replace them. */
