@@ -17,6 +17,3 @@ window/stretch/scale_mode="integer"
 [rendering]
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-
-[gui]
-theme/default_font_multichannel_signed_distance_field=true
