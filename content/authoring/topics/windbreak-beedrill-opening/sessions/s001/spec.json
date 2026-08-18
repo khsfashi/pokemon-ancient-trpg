@@ -10,9 +10,11 @@
     "warning signs before direct sighting",
     "human route adaptations"
   ],
-  "status": "awaiting_chatgpt",
+  "status": "completed",
   "revision": 1,
   "owner_review": "pending",
   "owner_feedback": "",
-  "updated_at": "2026-08-18T07:27:00+00:00"
+  "updated_at": "2026-08-18T07:33:00+00:00",
+  "worker": "chatgpt",
+  "completed_at": "2026-08-18T07:33:00+00:00"
 }
