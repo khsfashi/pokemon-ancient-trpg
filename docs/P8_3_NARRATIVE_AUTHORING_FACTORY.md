@@ -1,15 +1,15 @@
 # P8.3 Narrative Authoring Factory
 
-Status: **ACTIVE DESIGN / implementation target #128**
+Status: **ACTIVE / implementation target #128**
 
 ## 1. Purpose
 
-Narrative prose is a primary gameplay surface of Pokémon Ancient TRPG. The production system must preserve prose quality by refusing giant one-shot authoring jobs. A large topic is planned as many bounded authoring sessions. Each session is independently addressable, persisted, reviewable, replaceable, and continuity-auditable.
+Narrative prose is a primary gameplay surface of Pokémon Ancient TRPG. The production system preserves prose quality by refusing giant one-shot authoring jobs. A large topic is planned as many bounded authoring sessions. Each session is independently addressable, persisted, reviewable, replaceable and continuity-auditable.
 
 The factory is provider-agnostic. The same repository contract is used by:
 
 - a local Codex CLI worker on the owner's self-hosted runner; and
-- ChatGPT acting through GitHub when a session is handed off or the owner explicitly chooses chat authoring.
+- ChatGPT acting through GitHub when a plan/session is handed off or the owner explicitly chooses chat authoring.
 
 Provider identity never changes story/session identity.
 
@@ -17,59 +17,96 @@ Provider identity never changes story/session identity.
 
 GitHub is the durable queue and handoff boundary.
 
-1. The owner remotely creates an issue whose title begins with `[authoring]`.
-2. The issue contains a JSON request block describing the topic and brief.
-3. `narrative-authoring-queue.yml` runs on an owner-controlled self-hosted runner.
+1. The owner remotely creates or edits an issue whose title begins with `[authoring]`.
+2. The issue contains a JSON request describing topic, mode and context selectors.
+3. `narrative-authoring-queue.yml` runs on the owner's self-hosted runner.
 4. The runner checks out or creates `authoring/<topic-id>`.
-5. The local orchestrator plans the topic if necessary, then starts one **fresh** `codex exec --ephemeral` process per bounded session.
-6. Every completed planning/session unit is validated, committed, and pushed before the next unit begins.
-7. When all sessions finish, the branch is ready for assembly/review/PR.
-8. If Codex hits a recognized usage/rate/credit limit, the current stable session becomes `awaiting_chatgpt`. Previously completed work remains committed.
-9. A later ChatGPT `@GitHub` continuation reads that same authoring branch and finishes that same session contract instead of replanning it.
+5. The local orchestrator plans when needed and starts one **fresh** `codex exec --ephemeral` process per bounded unit.
+6. Every completed planning/session unit is validated, committed and pushed before the next unit begins.
+7. If Codex hits a recognized usage/rate/credit limit, the current unit becomes `awaiting_chatgpt`; previous units remain committed.
+8. ChatGPT can complete the **same** saved plan/session contract through GitHub rather than starting a parallel story.
+9. A completed topic gets a draft PR for owner review/assembly.
 
-The factory does **not** assume that a local process can spawn a normal ChatGPT web/mobile conversation. GitHub state is the explicit cross-product handoff.
+The factory does not assume that a local process can spawn a normal ChatGPT web/mobile conversation. GitHub state is the explicit cross-product handoff.
 
-## 3. Request format
+## 3. Request modes
 
-Example issue:
+### 3.1 New/continue topic
 
 ```text
 Title: [authoring] windbreak-beedrill-opening
 ```
-
-Body:
 
 ```json
 {
   "topic_id": "windbreak-beedrill-opening",
   "title": "방풍림 독침붕 첫 조우",
   "brief": "방풍림을 통과하다 독침붕의 영역에 들어선 초반 위기 장면을 작성한다.",
-  "target_total_chars": 24000,
+  "target_total_chars": 16000,
   "profile": "encounter_arc",
-  "worker": "auto"
+  "worker": "auto",
+  "mode": "author"
 }
 ```
 
-`worker` may be `auto`, `codex`, or `chatgpt`. `auto` prefers the local Codex worker and hands off rather than discarding state when Codex is unavailable.
+`worker` may be `auto`, `codex`, or `chatgpt`. `auto` prefers the local Codex worker and hands off rather than discarding state when Codex quota is unavailable.
+
+### 3.2 Revise one stable session
+
+Edit/reopen the same queue issue with a **new issue revision**:
+
+```json
+{
+  "topic_id": "windbreak-beedrill-opening",
+  "mode": "revise",
+  "session_id": "s002",
+  "feedback": "독침붕의 거리와 침의 방향, 나무와 풀의 반응이 더 선명해야 한다.",
+  "cascade": false
+}
+```
+
+`cascade: false` regenerates the target only and marks completed transitive dependents `continuity_review`. `cascade: true` archives and queues affected dependent sessions for re-authoring too.
+
+The orchestrator hashes issue number + issue update + title/body so the same request revision is applied only once even though a workflow may advance many units.
+
+### 3.3 Retry a technical blocker
+
+```json
+{
+  "topic_id": "windbreak-beedrill-opening",
+  "mode": "resume",
+  "session_id": "s003"
+}
+```
+
+Use after fixing a local Codex/auth/configuration problem. It does not silently reroll a completed unit.
 
 ## 4. Topic/session hierarchy
 
 ```text
 topic
   topic.json
+  plan-context.json
   plan.json
   continuity-ledger.json
   sessions/
     s001/
-    s002/
-    ...
+      spec.json
+      context.json
+      draft.ko-KR.md
+      summary.json
+      continuity.json
+      qa.json
+      revisions/
+        r001/...
+    s002/...
 ```
 
-Each session owns one coherent dramatic job. Session boundaries should occur at scene/beat boundaries, not arbitrary token cuts.
+Each session owns one coherent dramatic job. Session boundaries occur at scene/beat boundaries, not arbitrary token cuts.
 
 ## 5. Default size profiles
 
-The system optimizes for quality, not maximum output per request.
+The system optimizes for quality rather than maximum output per call.
 
 | profile | target Korean characters/session | typical paragraph count | intent |
 |---|---:|---:|---|
@@ -78,29 +115,63 @@ The system optimizes for quality, not maximum output per request.
 | `worldbuilding` | 4,500–7,500 | 12–28 | locality/faction/lore prose |
 | `microcopy` | 800–2,500 | variable | choices, UI narrative, creation prompts |
 
-Default hard ceiling: **8,000 player-facing Korean characters per authoring session** unless the topic contract explicitly overrides it.
+Default hard ceiling: **8,000 player-facing Korean characters per authoring session** unless a future measured profile explicitly revises the contract.
 
-A 200,000-character topic is therefore expected to become dozens of fresh sessions. The planner must not compress it into a handful of oversized calls merely to finish faster.
+A ~200,000-character topic is expected to become dozens of fresh sessions. The planner must not compress it into a handful of oversized calls merely to finish faster.
 
-## 6. Context bundle
+## 6. Context bundle and relevance budgets
 
-Each session receives a generated context bundle with bounded relevance layers:
+Every unit receives bounded, relevance-selected context. **Do not concatenate every prior document or story segment.**
 
-1. binding project/canon decisions relevant to the topic;
-2. Korean narrative style guide;
-3. pixel-art presentation direction where prose implies visual beats;
-4. topic brief and dramatic function;
+Layers:
+
+1. compact binding authoring canon digest;
+2. Korean narrative/style guide and pixel-art presentation direction;
+3. topic brief/dramatic function;
+4. explicit selected source/contract excerpts;
 5. current structured continuity ledger;
 6. summaries of dependency sessions;
-7. full dependency prose only when explicitly marked high relevance and within context budget;
-8. owner feedback / prohibited contradictions;
-9. exact target character, paragraph, scene-beat and output-schema requirements.
+7. full dependency prose only when the plan explicitly marks `full:<session-id>` high relevance;
+8. owner revision feedback;
+9. exact character/paragraph/beat/output-schema budget.
 
-Do not append all previous prose to every session. Context selection must be dependency-driven.
+### 6.1 Full context file
+
+Use `context_files` only for small/medium documents that are genuinely relevant as a whole.
+
+Initial hard safety limit: **40,000 characters per full context file**.
+
+### 6.2 Selected document section
+
+Large design/dossier documents should use `context_sections`:
+
+```json
+{
+  "context_sections": [
+    {
+      "path": "docs/P4_PILOT_FULL_SCHEMA_DOSSIERS.md",
+      "start_marker": "## 4. #015 Beedrill / 독침붕",
+      "end_marker": "## 5. #131 Lapras / 라프라스"
+    }
+  ]
+}
+```
+
+Initial selected-section ceiling: **30,000 characters**.
+
+This is the default way to feed a single Pokémon dossier out of a large multi-species file.
+
+### 6.3 Aggregate budget
+
+Initial base authoring-context ceiling: **100,000 characters**.
+
+Full prior-session prose included in one session is capped at **16,000 characters total**. If more history seems necessary, improve summaries/continuity structure instead of automatically increasing context.
+
+These thresholds are engineering quality controls and may be tuned from measured prose quality/context cost; they are not story rules.
 
 ## 7. Session artifacts
 
-A session directory contains:
+Minimum artifacts:
 
 ```text
 spec.json
@@ -111,87 +182,109 @@ continuity.json
 qa.json
 ```
 
-Minimum metadata:
+They carry:
 
-- stable topic ID and session ID;
+- stable topic/session IDs;
 - revision number;
-- worker/provider used;
+- worker/provider;
 - status;
 - dependency session IDs;
-- context manifest/hash where practical;
-- Korean prose;
+- exact context manifest/hash where practical;
+- player-facing Korean prose;
 - carry-forward summary;
 - continuity facts introduced/changed/resolved;
 - unresolved hooks;
-- event/choice/resource IDs where applicable;
-- deterministic QA result;
+- deterministic QA;
 - owner review state;
-- timestamps and commit provenance.
+- timestamps/commit provenance.
 
-Runtime/localized game packs are generated from accepted authoring artifacts; authoring provenance is not itself runtime authority.
+Runtime/localized game packs remain separate from authoring provenance.
 
 ## 8. State machine
 
 ```text
-planned -> ready -> running_codex -> completed
-                         |-> awaiting_chatgpt
-                         |-> blocked
+planning -> awaiting_chatgpt_plan -> authoring
+
+ready -> running_codex -> completed
+                    |-> awaiting_chatgpt
+                    |-> blocked
 
 awaiting_chatgpt -> running_chatgpt -> completed
-completed -> revision_requested -> ready
-completed -> continuity_review
+completed -> revision_requested -> completed
+completed dependent -> continuity_review
+continuity_review -> owner review / explicit cascade revision
 ```
 
 Partial model output never becomes `completed`.
 
 ## 9. Codex execution contract
 
-The local worker uses a fresh non-interactive process for each unit. The intended CLI form is based on current Codex CLI support for `codex exec`, `--ephemeral`, `--output-schema`, JSON event output, and last-message file output.
+Every local model unit is a fresh non-interactive process. The queue wraps Codex in a read-only sandbox and ignores user/project exec rules/config for the worker execution surface; only the repository orchestrator writes accepted files.
 
-Representative call:
+Representative underlying form:
 
 ```text
-codex exec --ephemeral --output-schema <schema> --output-last-message <tmp-json> -
+codex exec --sandbox read-only --ignore-user-config --ignore-rules \
+  --ephemeral --output-schema <schema> --output-last-message <tmp-json> -
 ```
 
-The prompt/context is sent through stdin. No prior Codex conversation is required for continuity; repository artifacts are the continuity source of truth.
+The prompt/context comes through stdin. Model conversation persistence is not required for story continuity.
 
-Recognized usage/rate/credit exhaustion is not a story failure. It transitions only the current unit to `awaiting_chatgpt` and exits cleanly after committing the handoff state.
-
-Authentication/configuration failures become `blocked` with diagnostics. Unknown worker failures remain `blocked`; they must not be misclassified as quota exhaustion.
+Recognized usage/rate/credit exhaustion is a provider handoff, not a story failure. Missing CLI/auth/configuration/unknown execution failures become explicit blockers with diagnostics and do not erase previously pushed units.
 
 ## 10. ChatGPT fallback contract
 
-When ChatGPT receives a GitHub continuation request for this repository it must, before planning new authoring work:
+Before inventing a new authoring unit, ChatGPT must inspect the topic branch/request for an existing `awaiting_chatgpt_plan` or `awaiting_chatgpt` unit.
 
-1. inspect issue #128 and active authoring branches/requests;
-2. prefer the oldest `awaiting_chatgpt` session over creating a replacement;
-3. read that session's `spec.json` and `context.json` plus only the declared dependencies;
-4. generate within the same character/paragraph/beat budget;
-5. write the same `draft.ko-KR.md`, `summary.json`, `continuity.json`, `qa.json` contract;
-6. preserve stable topic/session IDs and increment revision only when this is explicitly a revision;
-7. mark the same session complete so the local worker can continue with the next session later.
+### 10.1 Inspect pending handoff
 
-Switching worker must never reroll identities, events, choices, outcomes, continuity facts, or branch structure.
+Repository helper:
+
+```text
+python tools/narrative_authoring.py pending --topic <topic-id>
+```
+
+The output identifies pending kind/session and its saved context.
+
+### 10.2 Plan handoff
+
+ChatGPT produces JSON matching `authoring-plan.schema.json`, preserving topic ID, then applies the same normalization contract:
+
+```text
+python tools/narrative_authoring.py apply-plan-output \
+  --topic <topic-id> --input <plan.json> --worker chatgpt
+```
+
+When operating through the GitHub connector rather than a local checkout, ChatGPT must make the equivalent branch-file updates and preserve the exact normalized schema/state.
+
+### 10.3 Session handoff
+
+ChatGPT reads that session's `spec.json`, `context.json`, declared summaries/full-text dependencies, generates only that bounded unit, and supplies JSON matching `authoring-session-output.schema.json`:
+
+```text
+python tools/narrative_authoring.py apply-session-output \
+  --topic <topic-id> --session sNNN --input <output.json> --worker chatgpt
+```
+
+That shared persistence path runs the same deterministic QA and emits the same prose/summary/continuity/QA artifacts as Codex.
+
+Changing worker must never reroll identities, events, choices, outcomes, continuity facts or branch structure merely because quota ownership changed.
 
 ## 11. Isolated revision and dependency impact
 
-Owner feedback can target one session, for example:
+When one session is rejected:
 
-```text
-windbreak-beedrill-opening s007 다시. 독침붕 위협 묘사가 약함.
-```
+- preserve its stable ID;
+- archive previous current artifacts under `revisions/rNNN/`;
+- increment revision;
+- inject explicit owner feedback;
+- re-author only that session by default;
+- rebuild the topic continuity ledger from currently completed revision artifacts rather than leaving stale facts;
+- find transitive dependent sessions from declared dependencies;
+- mark completed affected dependents `continuity_review` without destroying their prose;
+- regenerate them only on explicit cascade or after targeted review determines it is necessary.
 
-The system then:
-
-- preserves `s007` identity;
-- increments its revision;
-- regenerates only `s007` by default;
-- recalculates its summary/continuity artifacts;
-- compares changed continuity facts against downstream dependency declarations;
-- marks affected later sessions `continuity_review`;
-- does not blindly regenerate unaffected later sessions;
-- supports an explicit cascade regeneration request when desired.
+This makes “session 07 was bad” a surgical operation rather than a reason to discard a 30-session topic.
 
 ## 12. Korean narrative quality contract
 
@@ -202,38 +295,42 @@ Player-facing prose must:
 - use mobile-friendly paragraph rhythm;
 - avoid abstract filler and repeated exposition;
 - establish concrete geography, time progression and physical causality;
-- make choices read like actions a person would take, not questionnaire labels;
+- make choices read like actions rather than questionnaire labels;
 - reveal mechanics through situation where possible instead of proof/test language;
-- preserve approved proto-Kanto/pre-modern setting constraints;
+- preserve approved proto-Kanto/pre-modern constraints;
 - avoid casual modern trainer/Poké Ball assumptions;
-- keep gameplay tension, state and decision pressure connected to the prose.
+- keep gameplay tension/state/decision pressure connected to prose.
 
-Pokémon presence requires specific physical/ecological description when relevant: posture, movement, sound, distance, body orientation, attack vector, nearby vegetation/animal response, human fear/knowledge and viable counterplay.
+Pokémon presence requires physical/ecological specificity when relevant: posture, movement, sound, distance, body orientation, threat vector, nearby vegetation/animal response, human fear/knowledge and viable counterplay.
 
-Benchmark example: a Beedrill in a windbreak forest should not merely be named. The player should understand where it is hovering, how its wings change the soundscape, where the forelimb stingers are aimed, what the surrounding brush is doing, whether it is guarding territory or preparing to close distance, and why the current route is dangerous.
+Benchmark example: a Beedrill in a windbreak forest should not merely be named. The player should understand where it is hovering, how its wings change the soundscape, where its forelimb/abdomen stingers are oriented, what vegetation is doing, whether it is warning or closing distance, and why each route choice carries risk.
 
 ## 13. Deterministic QA
 
 At minimum validate:
 
-- JSON/schema completeness;
-- stable IDs and dependency integrity;
-- character-count/paragraph-count bounds;
+- stable plan/session IDs and backward dependencies;
+- context selector existence/budgets;
+- character hard ceiling and minimum target envelope;
 - empty/placeholder/proof-language failures;
-- duplicate paragraph/repeated phrase heuristics;
-- Korean whitespace/punctuation basics;
-- continuity artifact shape;
-- status transition legality;
-- output present before `completed`.
+- duplicate paragraph heuristics;
+- required summary/continuity shape;
+- completed-state artifact presence;
+- `awaiting_chatgpt` context presence;
+- legal revision/handoff state.
 
-A separate model critic may be used for high-value prose but cannot replace deterministic validation or owner judgment.
+A later critic model may provide a separate qualitative pass for high-value scenes, but it never substitutes for deterministic validation or owner review.
 
 ## 14. Art-direction coupling
 
-Narrative authoring should call out visual beats suitable for illustration, but generated prose must not assume a painterly or modern-card presentation.
+Narrative authoring should identify illustration-worthy physical beats without assuming modern cards or painterly concept art.
 
-The binding visual target is **high-resolution pixel art that still communicates a strong medieval/pre-modern fantasy atmosphere**. See `docs/P8_3_PIXEL_ART_AND_TYPOGRAPHY_DIRECTION.md`.
+The binding target is **detailed/high-resolution pixel art that still communicates a strong medieval/pre-modern fantasy atmosphere**, so textual staging should translate into readable pixel composition: geography, threat direction, equipment, terrain, weather and light.
+
+See `docs/P8_3_PIXEL_ART_AND_TYPOGRAPHY_DIRECTION.md`.
 
 ## 15. P9 relationship
 
-This factory is intentionally established before P9 content multiplication. P9 may generate large quantities of authored content only through a bounded/reviewable process equivalent to this contract. The factory does not by itself unblock P9; P8.3 owner replay remains required.
+The factory is intentionally established and exercised before P9 multiplication. P9 may only scale authored content through a bounded/reviewable process equivalent to this contract.
+
+The factory itself does not unblock P9. P8.3 owner replay remains required after the UI/HUD/art/progression/opening remediation uses the accepted authoring pipeline.
