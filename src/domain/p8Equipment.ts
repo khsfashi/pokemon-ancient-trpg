@@ -131,7 +131,8 @@ export interface P8EquipmentProjection {
 }
 
 const FIELD_COMPETENCE_IDS = new Set(['tracking', 'inventory', 'repair', 'first_aid', 'climbing', 'foraging']);
-const projectionCache = new WeakMap<object, WeakMap<object, P8EquipmentProjection>>();
+const projectionCache = new WeakMap<object, WeakMap<object, Map<number, P8EquipmentProjection>>>();
+const MIN_COMFORTABLE_LOAD = 2;
 
 function fieldCompetenceBonus(competences: Readonly<Record<string, 1>>): 0 | 1 {
   for (const id of Object.keys(competences)) if (FIELD_COMPETENCE_IDS.has(id)) return 1;
@@ -141,9 +142,12 @@ function fieldCompetenceBonus(competences: Readonly<Record<string, 1>>): 0 | 1 {
 export function deriveP8EquipmentProjection(
   character: P8ReadinessCharacterView,
   survival: P8ReadinessSurvivalView,
+  injuryCount = 0,
 ): P8EquipmentProjection {
+  const normalizedInjuryCount = Math.max(0, Math.trunc(injuryCount));
   let bySurvival = projectionCache.get(character as object);
-  const cached = bySurvival?.get(survival as object);
+  const byInjury = bySurvival?.get(survival as object);
+  const cached = byInjury?.get(normalizedInjuryCount);
   if (cached !== undefined) return cached;
 
   assertP8EquipmentInventory(survival.equipment);
@@ -173,7 +177,10 @@ export function deriveP8EquipmentProjection(
     .map((itemId) => definitionById.get(itemId)!);
   const pooledResourceLoad = survival.resourcePools.provisions + survival.resourcePools.remedies + survival.resourcePools.materials;
   const currentLoad = equipmentLoad + pooledResourceLoad;
-  const comfortableLoad = 4 + character.attributes.strength;
+  const comfortableLoad = Math.max(
+    MIN_COMFORTABLE_LOAD,
+    4 + character.attributes.strength - normalizedInjuryCount,
+  );
   const projection = Object.freeze({
     attackReadiness: character.attributes.strength + attackEquipment,
     defenseReadiness: Math.max(character.attributes.endurance, character.attributes.agility) + defenseEquipment,
@@ -189,9 +196,14 @@ export function deriveP8EquipmentProjection(
   });
 
   if (bySurvival === undefined) {
-    bySurvival = new WeakMap<object, P8EquipmentProjection>();
+    bySurvival = new WeakMap<object, Map<number, P8EquipmentProjection>>();
     projectionCache.set(character as object, bySurvival);
   }
-  bySurvival.set(survival as object, projection);
+  let injuryMap = bySurvival.get(survival as object);
+  if (injuryMap === undefined) {
+    injuryMap = new Map<number, P8EquipmentProjection>();
+    bySurvival.set(survival as object, injuryMap);
+  }
+  injuryMap.set(normalizedInjuryCount, projection);
   return projection;
 }

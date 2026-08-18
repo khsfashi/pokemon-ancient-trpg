@@ -222,7 +222,7 @@ test('completes the phone zero-companion slice and resumes pending/committed sav
   await expect(endingGrid.getByText('0/3', { exact: true })).toBeVisible();
   await expect(page.getByText('Weedle')).toBeVisible();
   await expect(page.getByText('Beedrill')).toBeVisible();
-  await expect(page.getByText('Rattata')).toBeVisible();
+  await expect(page.getByText('Rattata', { exact: true })).toBeVisible();
 
   const saved = await page.evaluate(async () => {
     const { P8BrowserSession } = await import('/src/platform/p8BrowserSession.ts');

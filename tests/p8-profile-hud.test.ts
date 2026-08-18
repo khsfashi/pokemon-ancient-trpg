@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createInitialP8AuthorityState, P8CharacterCreationCatalog } from '../src/domain/p8Authority';
+import { applyP8SurvivalPressure } from '../src/domain/p8Survival';
 import {
   deriveP8ExpeditionProfile,
   isP8PortraitId,
@@ -26,7 +27,7 @@ function authority() {
 }
 
 describe('P8.2 expedition profile projection', () => {
-  it('uses the frozen P3 Vitality and D-028 Load formulas without creating another stamina authority', () => {
+  it('uses P3 Vitality/Fatigue stages and D-028 Load without creating component-local stamina authority', () => {
     const run = authority();
     const profile = deriveP8ExpeditionProfile(run);
 
@@ -34,14 +35,27 @@ describe('P8.2 expedition profile projection', () => {
     expect(profile.vitalityMax).toBe(7);
     expect(profile.vitalityCurrent).toBe(7);
     expect(profile.fatigueStage).toBe(0);
+    expect(profile.fatigueLimit).toBe(2);
     expect(profile.fearStage).toBe(0);
-    expect(profile.injuries).toEqual([]);
+    expect(profile.injuries).toBe(0);
 
     expect(run.character.attributes.strength).toBe(2);
     expect(profile.equipment.pooledResourceLoad).toBe(4);
     expect(profile.equipment.equipmentLoad).toBe(3);
     expect(profile.currentLoad).toBe(7);
     expect(profile.comfortableLoad).toBe(6);
+    expect(profile.burdened).toBe(true);
+  });
+
+  it('projects saved field pressure, clamps to the three-stage Fatigue contract, and reduces comfortable Load for Injuries', () => {
+    const pressured = applyP8SurvivalPressure(authority(), {
+      vitalityDelta: -2,
+      fatigueDelta: 3,
+      injuryDelta: 1,
+    });
+    const profile = deriveP8ExpeditionProfile(pressured);
+    expect(profile).toMatchObject({ vitalityCurrent: 5, vitalityMax: 7, fatigueStage: 2, fatigueLimit: 2, injuries: 1 });
+    expect(profile.comfortableLoad).toBe(5);
     expect(profile.burdened).toBe(true);
   });
 

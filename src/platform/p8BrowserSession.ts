@@ -1,5 +1,6 @@
 import { createInitialP8AuthorityState, p8AuthorityStateToJson, type P8AuthorityState, type P8CharacterCreationInput } from '../domain/p8Authority';
 import { p8AuthorityStateFromJson } from '../domain/p8AuthorityJson';
+import { commitP8PreparationAction, type P8PreparationActionId } from '../domain/p8Preparation';
 import { createP8SliceCharacter, P8_SLICE_CONTENT_IDENTITY, P8_SLICE_EVENT_CATALOG } from '../content/p8SliceContent';
 import { getP8SliceScene, P8_SLICE_SCENE_SEQUENCE, type P8ScenePresentation } from '../content/p8SlicePresentation';
 import { digestP8AuthorityState } from '../runtime/p8Canonical';
@@ -182,6 +183,15 @@ export class P8BrowserSession {
         ? {}
         : { checkOutcomeBand: resolved.resolvedPendingEvidence.completedCheckResult.outcomeBand }),
     });
+    await this.#persist();
+    return this.snapshot();
+  }
+
+  public async performPreparationAction(actionId: P8PreparationActionId): Promise<P8BrowserSessionSnapshot> {
+    const authority = this.#requireAuthority();
+    if (this.#pending !== null) throw new RangeError('cannot prepare while an event choice is pending');
+    this.#authority = commitP8PreparationAction(authority, actionId);
+    this.#lastResolution = null;
     await this.#persist();
     return this.snapshot();
   }
