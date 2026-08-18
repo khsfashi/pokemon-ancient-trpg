@@ -40,7 +40,7 @@ describe('P8 Batch 04 authority save restore', () => {
 });
 
 describe('P8 Batch 04 browser session integration', () => {
-  it('starts the owner-facing slice within comfortable Load instead of showing immediate overload', async () => {
+  it('starts the owner-facing slice with the complete preparation pack inside comfortable Load', async () => {
     const definition = P8_SLICE_REPLAYS.zeroCompanion;
     const store = new MemorySaveStore();
     const active = new P8BrowserSession({ saveStore: store, hashProvider: hash, now: fixedNow });
@@ -49,7 +49,8 @@ describe('P8 Batch 04 browser session integration', () => {
     const authority = snapshot.authority!;
     const profile = deriveP8ExpeditionProfile(authority);
 
-    expect(authority.survival.resourcePools).toEqual({ provisions: 1, remedies: 1, materials: 0 });
+    expect(authority.survival.resourcePools).toEqual({ provisions: 3, remedies: 1, materials: 0 });
+    expect(profile.currentLoad).toBe(7);
     expect(profile.currentLoad).toBeLessThanOrEqual(profile.comfortableLoad);
     expect(profile.burdened).toBe(false);
   });
@@ -96,7 +97,7 @@ describe('P8 Batch 04 browser session integration', () => {
     expect(snapshot.status).toBe('ended');
     expect(snapshot.authority?.pokemon.companionSlots).toEqual([null, null, null]);
     expect(snapshot.authority?.world.currentLocality).toBe('reedbank-settlement');
-    expect(snapshot.authority?.survival.resourcePools.provisions).toBe(0);
+    expect(snapshot.authority?.survival.resourcePools.provisions).toBe(2);
     expect(snapshot.authority?.events.narrativeFlags['slice.zero_companion_route_complete']).toBe(true);
   });
 
