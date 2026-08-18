@@ -1,0 +1,41 @@
+name: P8.3 Materialize Golden Raster
+
+on:
+  push:
+    branches:
+      - p8-3/golden-screen-windbreak
+    paths:
+      - 'tools/materialize-p8-3-golden-raster.mjs'
+      - 'tools/p8-3-golden-source/**'
+      - '.github/workflows/p8-3-materialize-golden-raster.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: p8-3/golden-screen-windbreak
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Materialize native and 2x review PNGs
+        run: node tools/materialize-p8-3-golden-raster.mjs
+
+      - name: Commit exact generated rasters
+        run: |
+          git add public/illustrations/windbreak-orchard.png docs/evidence/p8-3-golden-screen/windbreak-orchard-preview-2x.png
+          if git diff --cached --quiet; then
+            echo 'Raster output already exact; no commit required.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'P8.3: materialize exact windbreak raster evidence'
+          git push origin HEAD:p8-3/golden-screen-windbreak
