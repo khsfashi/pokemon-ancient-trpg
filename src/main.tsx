@@ -7,6 +7,7 @@ import './app/p8_3_theme.css';
 import './app/p8_3_polish.css';
 import './app/p8_3_transition.css';
 import './app/p8_3_golden_screen.css';
+import './app/p8_3_golden_assets.css';
 import { registerAppServiceWorker } from './platform/serviceWorker';
 
 const root = document.getElementById('app');
