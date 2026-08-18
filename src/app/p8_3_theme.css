@@ -1,5 +1,18 @@
-@import url('https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.601/neodgm/style.css');
-@import url('https://cdn.jsdelivr.net/gh/neodgm/neodgm-pro-webfont@1.020/neodgm_pro/style.css');
+@font-face {
+  font-family: 'NeoDunggeunmo';
+  src: url('https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@e0a715695c457d3f8ccd071f88cd71b376a5a23e/neodgm/neodgm.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NeoDunggeunmo Pro';
+  src: url('https://cdn.jsdelivr.net/gh/neodgm/neodgm-pro-webfont@1751c2981808869750c7df391c1d2b486e978f12/neodgm_pro/neodgm_pro.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 
 :root {
   --p83-pixel-display: 'NeoDunggeunmo', ui-monospace, monospace;
