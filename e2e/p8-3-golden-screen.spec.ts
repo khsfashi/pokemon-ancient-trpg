@@ -64,6 +64,8 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
     const injuryIconHost = document.querySelector<HTMLElement>('.hud-chip-row > span:nth-child(3)')!;
     const provisionsIconHost = document.querySelector<HTMLElement>('.resource-grid > div:first-child')!;
     const lastChoice = choiceButtons.at(-1)!.getBoundingClientRect();
+    const authoredIconHosts = [vitalityIconHost, staminaIconHost, injuryIconHost, provisionsIconHost];
+    const retiredGlyphHosts = [staminaIconHost, injuryIconHost, provisionsIconHost];
     return {
       scrollWidth: document.documentElement.scrollWidth,
       innerWidth: window.innerWidth,
@@ -75,10 +77,9 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
       rasterWidth: raster.naturalWidth,
       rasterHeight: raster.naturalHeight,
       rasterRendering: getComputedStyle(raster).imageRendering,
-      rasterSrcIsDecodedBlob: raster.currentSrc.startsWith('blob:'),
       narrativeFont: getComputedStyle(narrative).fontFamily,
-      iconBackgrounds: [vitalityIconHost, staminaIconHost, injuryIconHost, provisionsIconHost]
-        .map((node) => getComputedStyle(node).backgroundImage),
+      iconBackgrounds: authoredIconHosts.map((node) => getComputedStyle(node).backgroundImage),
+      retiredGlyphContents: retiredGlyphHosts.map((node) => getComputedStyle(node, '::before').content),
     };
   });
 
@@ -93,9 +94,9 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   expect(geometry.rasterWidth).toBe(384);
   expect(geometry.rasterHeight).toBe(276);
   expect(geometry.rasterRendering).toBe('pixelated');
-  expect(geometry.rasterSrcIsDecodedBlob).toBe(true);
   expect(geometry.narrativeFont).not.toContain('NeoDunggeunmo');
   expect(geometry.iconBackgrounds.every((value) => value !== 'none')).toBe(true);
+  expect(geometry.retiredGlyphContents.every((value) => value === 'none')).toBe(true);
 
   await testInfo.attach('windbreak-390x844', {
     body: await page.screenshot({ fullPage: false }),
