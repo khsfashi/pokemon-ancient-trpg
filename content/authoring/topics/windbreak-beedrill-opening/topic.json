@@ -18,10 +18,10 @@
       "end_marker": "## 5. #131 Lapras / 라프라스"
     }
   ],
-  "status": "awaiting_chatgpt",
+  "status": "authoring",
   "owner_review": "pending",
   "source_issue_number": 130,
   "applied_request_keys": [],
   "created_at": "2026-08-18T06:20:00+00:00",
-  "updated_at": "2026-08-18T07:27:00+00:00"
+  "updated_at": "2026-08-18T07:33:00+00:00"
 }
