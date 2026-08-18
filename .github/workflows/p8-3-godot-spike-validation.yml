@@ -84,6 +84,17 @@ jobs:
             "$RUNNER_TEMP/godot/godot" --version
           } 2>&1 | tee "$GITHUB_WORKSPACE/test-results/godot-spike/install.log"
 
+      - name: Import retained resources from clean checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          log=test-results/godot-spike/resource-import.log
+          godot --headless --path godot --import 2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot clean resource import emitted script/runtime errors' >&2
+            exit 1
+          fi
+
       - name: Boot bounded owner-review scene
         shell: bash
         run: |
