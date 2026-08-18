@@ -36,6 +36,7 @@ const COPY = {
   'en-US': {
     eyebrow: 'Expedition preparation',
     title: 'Prepare → risk → return → improve',
+    loopSummary: 'Pack → risk → return → improve → resupply',
     body: 'Pack what you can carry, then decide whether the Rattata signs are worth the risk. Only the decision that matters now stays open. Finished steps become expedition history; later steps stay locked until the road, recovery and equipment requirements are actually satisfied.',
     progress: 'Expedition loop',
     location: 'Current place',
@@ -45,6 +46,7 @@ const COPY = {
     vitality: 'Vitality',
     fatigue: 'Fatigue',
     injuries: 'Injuries',
+    readyBadge: 'Departure ready',
     ready: 'The next departure is ready. The route knowledge, repaired guard and replacement remedy are now real saved advantages for the next expedition.',
     notReady: 'Clear the active gate before the next expedition can be considered ready.',
     complete: 'Done',
@@ -98,6 +100,7 @@ const COPY = {
   'ko-KR': {
     eyebrow: '원정 준비',
     title: '챙기고, 나가고, 버티고, 다시 돌아온다',
+    loopSummary: '챙긴다 → 위험을 감수한다 → 돌아온다 → 강해진다',
     body: '짐을 챙긴 뒤 위험을 감수해 길로 나가고, 돌아오면 몸과 장비를 추슬러 다음 원정을 준비합니다. 지금 필요한 결정만 열리고, 끝낸 단계는 원정 기록으로 남으며 다음 단계는 길·회복·장비 조건을 실제로 갖추기 전까지 잠겨 있습니다.',
     progress: '원정 진행',
     location: '현재 자리',
@@ -107,6 +110,7 @@ const COPY = {
     vitality: '활력',
     fatigue: '피로',
     injuries: '부상',
+    readyBadge: '재출발 준비 완료',
     ready: '몸과 짐을 추슬렀고 장비도 손봤습니다. 다음 길을 나설 준비가 끝났습니다.',
     notReady: '현재 열린 관문을 넘어야 다음 출발 준비가 이어집니다.',
     complete: '완료',
@@ -240,6 +244,7 @@ export function P8PreparationPanel({ authority, locale, busy, onAction }: Prepar
     >
       <p class="eyebrow">{copy.eyebrow}</p>
       <h2>{copy.title}</h2>
+      <p class="preparation-loop-summary">{copy.loopSummary}</p>
       <p class="muted preparation-intro">{copy.body}</p>
 
       <div class="prep-stage-track" aria-label={copy.progress}>
@@ -328,7 +333,8 @@ export function P8PreparationPanel({ authority, locale, busy, onAction }: Prepar
       )}
 
       <div class={`contract-note preparation-ready-note${projection.departureReady ? ' ready' : ''}`}>
-        {projection.departureReady ? copy.ready : copy.notReady}
+        {projection.departureReady && <strong class="preparation-ready-badge">{copy.readyBadge}</strong>}
+        <span>{projection.departureReady ? copy.ready : copy.notReady}</span>
       </div>
     </div>
   );
