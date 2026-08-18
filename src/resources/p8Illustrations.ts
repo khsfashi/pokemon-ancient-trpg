@@ -9,6 +9,7 @@ import { ResourceRegistry, type ResourceDescriptor } from './ResourceRegistry';
 
 export type P8IllustrationSlot = 'event' | 'locality' | 'npc' | 'pokemon' | 'item' | 'equipment';
 export type P8IllustrationPlacement = 'hero' | 'inline';
+export type P8IllustrationFormat = 'svg' | 'png';
 
 export interface P8IllustrationDescriptor extends LoadableResourceDescriptor, ResourceDescriptor {
   readonly resourceId: string;
@@ -20,7 +21,7 @@ export interface P8IllustrationDescriptor extends LoadableResourceDescriptor, Re
   readonly fileName: string;
   readonly altKo: string;
   readonly altEn: string;
-  readonly sourceKind: 'project_authored_original_svg';
+  readonly sourceKind: 'project_authored_original_svg' | 'project_authored_original_raster';
   readonly provenance: string;
   readonly decodedBudgetBytes: number;
 }
@@ -37,7 +38,9 @@ function descriptor(
   placement: P8IllustrationPlacement,
   altKo: string,
   altEn: string,
+  format: P8IllustrationFormat = 'svg',
 ): P8IllustrationDescriptor {
+  const raster = format === 'png';
   return Object.freeze({
     resourceId,
     resource_id: resourceId,
@@ -50,14 +53,16 @@ function descriptor(
     availability: 'bundled_local',
     fallback_mode: 'generated_scene_card',
     fallback_resource_id: null,
-    output_format: 'svg',
+    output_format: format,
     slot,
     placement,
     fileName,
     altKo,
     altEn,
-    sourceKind: 'project_authored_original_svg' as const,
-    provenance: 'Original project-authored SVG artwork for this repository; no copied game art or external media.',
+    sourceKind: raster ? 'project_authored_original_raster' as const : 'project_authored_original_svg' as const,
+    provenance: raster
+      ? 'Original project-authored raster pixel artwork for the P8.3 windbreak golden-screen review; no copied game art or external media.'
+      : 'Original project-authored SVG artwork for this repository; no copied game art or external media.',
     decodedBudgetBytes: FULL_SCENE_DECODED_BUDGET_BYTES,
   });
 }
@@ -89,11 +94,12 @@ export const P8_ILLUSTRATIONS = Object.freeze([
   ),
   descriptor(
     'p8.illustration.orchard.windbreak-boundary',
-    'windbreak-orchard.svg',
+    'windbreak-orchard.png',
     'locality',
     'hero',
     '독침붕의 활동과 사람의 경계가 겹치는 방풍림 과수원',
     'The orchard windbreak where Beedrill activity meets a human boundary',
+    'png',
   ),
   descriptor(
     'p8.illustration.ending.reedbank-return',
@@ -110,7 +116,7 @@ const loader = new ResourceLoader<P8IllustrationDescriptor, BrowserImageResource
   getDescriptor: (resourceId) => registry.get(resourceId),
   resolveLocation: (entry): ResourceLocation => ({
     url: `${BASE_URL}illustrations/${entry.fileName}`,
-    mimeType: 'image/svg+xml',
+    mimeType: entry.output_format === 'png' ? 'image/png' : 'image/svg+xml',
   }),
   decoder: new BrowserImageDecoder<P8IllustrationDescriptor>(),
 });
