@@ -27,10 +27,17 @@ godot/
   scenes/main.tscn
   scripts/main.gd
   scripts/layer_canvas.gd
+  scripts/pixel_skin.gd
   scripts/spike_runtime.gd
   fixtures/orchard_boundary_fixture.json
   tests/parity_smoke.gd
-  assets/README.md
+  tests/visual_contract_smoke.gd
+  assets/
+    environment/
+    human/
+    foreground/
+    ui/
+    README.md
   local_assets/                  # ignored; rights-bound P6 media only
 ```
 
@@ -50,7 +57,24 @@ EnvironmentBackground
   -> TransitionOverlay
 ```
 
-`layer_canvas.gd` currently draws simple project-owned placeholder shapes only to prove z-order, occlusion and full-screen composition. They are **not owner-acceptance art**.
+The original code-drawn rectangle scaffold has now been removed from the player-facing path. `layer_canvas.gd` imports retained project-owned SVG resources instead:
+
+```text
+opening:
+  environment/opening_reedbank.svg
+  human/opening_traveler.svg
+  foreground/opening_brush.svg
+
+windbreak:
+  environment/orchard_far.svg
+  environment/orchard_mid.svg
+  human/orchard_keeper.svg
+  foreground/orchard_foliage.svg
+```
+
+These files deliberately contain no runtime labels and no Pokemon species art. They use grid-aligned/crisp primitives as a deterministic project-owned acceptance candidate while preserving layer separation and recomposability.
+
+The Godot Control layer now also uses a shared `pixel_skin.gd` for panel/button/focus treatment plus small retained HUD icons. Development-only labels and result IDs are no longer shown to the player; parity details are emitted to logs/tests instead.
 
 The Pokemon layer never draws or generates a substitute creature. It loads the locally materialized P6/D-036 Beedrill sprite only when this path exists:
 
@@ -80,44 +104,57 @@ The event is intentionally **not** converted to a roll/check in Godot. Its curre
 
 The spike save adapter writes the same outer SaveEnvelope V1 field contract to local JSON. Its `authoritative_state` currently contains only the bounded Godot spike projection; this is enough for a round-trip contract proof but is not presented as a full P7/P8 state port.
 
-## Local validation
+## Automated validation
+
+The PR workflow uses the pinned official Godot `4.6.3-stable` Linux build and runs three independent checks:
+
+```bash
+godot --headless --path godot --quit-after 2
+godot --headless --path godot --script res://tests/parity_smoke.gd
+godot --headless --path godot --script res://tests/visual_contract_smoke.gd
+```
+
+`visual_contract_smoke.gd` additionally requires that:
+
+- every retained layer/UI resource exists and imports as a Godot `Texture2D`;
+- world/human layers do not contain SVG `<text>` or embedded `<image>` data;
+- known Pokemon species names are not baked into project-owned environment/human/foreground art;
+- `PokemonLayer` and the local P6 Beedrill slot remain explicit;
+- the old developer-only `P8.3 GODOT ARCHITECTURE SPIKE` opening label cannot leak back into player-facing UI.
+
+Automated import/boot success is necessary but **not** visual approval.
+
+## Local validation / owner capture
 
 Godot 4.x must be installed locally.
 
-Run the deterministic parity/save smoke:
+Run:
 
 ```bash
 godot --headless --path godot --script res://tests/parity_smoke.gd
-```
-
-Expected terminal tail:
-
-```text
-P8.3 Godot parity smoke: PASS
-```
-
-Open the owner-review shell:
-
-```bash
+godot --headless --path godot --script res://tests/visual_contract_smoke.gd
 godot --editor --path godot
 ```
 
-Run the main scene at 390×844. The opening button must fade into the windbreak event. Both choice buttons must resolve to the pinned authoritative outcomes and disable after selection.
+Run the main scene at 390×844. The opening button must fade into the windbreak event. Both choice buttons must resolve to the pinned authoritative outcomes and disable after selection. The player-facing result copy must remain fiction-facing while the exact IDs remain available in parity logs.
 
 ## Required owner evidence before decision
 
-- [ ] 390×844 opening screenshot rendered by Godot.
+- [ ] 390×844 opening screenshot rendered by Godot from the retained opening layers.
 - [ ] 390×844 windbreak/Beedrill screenshot rendered by Godot with the real locally materialized P6 sprite.
-- [ ] `parity_smoke.gd` PASS output.
-- [ ] One save-envelope local JSON round-trip proof.
-- [ ] Visual confirmation that foreground foliage can occlude the independently composed Pokemon layer.
-- [ ] Transition/input feedback review.
+- [x] code-drawn environment/human scaffold removed from the player-facing path.
+- [x] retained project-owned opening/orchard/human/foreground layer files committed separately.
+- [x] reusable Godot pixel Control skin and compact HUD icon resources retained.
+- [x] deterministic parity/save smoke exists and is CI-gated.
+- [x] visual layer-separation/import smoke exists and is CI-gated.
+- [ ] Visual confirmation from the final P6 screenshot that foreground foliage occludes the independently composed Pokemon layer as intended.
+- [ ] Transition/input feedback owner review.
 - [ ] Android debug export/build proof if the local Godot Android toolchain is already available; do not weaken CI or add broad tooling merely to satisfy this optional spike evidence.
-- [ ] Reuse/port cost inventory completed in the PR.
+- [ ] Reuse/port cost inventory completed in the PR after the visual decision evidence is captured.
 
 ## Exact local Codex handoff
 
-Use this after pulling the spike branch. It deliberately asks for evidence/art replacement, not new architecture.
+Use this after pulling the spike branch. The remote branch already contains retained project-owned opening/orchard/human/foreground layers and a reusable UI skin, so local work should focus on real P6 composition and owner evidence rather than redesigning the architecture again.
 
 ```text
 Repository: khsfashi/pokemon-ancient-trpg
@@ -126,19 +163,19 @@ Issue: #139
 
 Continue only the bounded P8.3 Godot architecture spike. Do not port the rest of the campaign and do not modify authoritative TypeScript rules.
 
-1. Install/use an existing Godot 4.x editor/runtime if available; do not add C#, GDExtension or a JS bridge.
-2. Run:
+1. Use Godot 4.x and run:
    godot --headless --path godot --script res://tests/parity_smoke.gd
+   godot --headless --path godot --script res://tests/visual_contract_smoke.gd
    Fix only real GDScript/project errors; do not weaken assertions or change fixture IDs/outcomes.
-3. Materialize the approved P6/D-036 Beedrill encounter sprite through the repository's existing pinned provenance/resource workflow into:
+2. Materialize the approved P6/D-036 Beedrill encounter sprite through the repository's existing pinned provenance/resource workflow into:
    godot/local_assets/pokemon/beedrill.png
    Keep the binary untracked. Do not generate a Pokemon replacement.
-4. Replace the current code-drawn environment/human/UI layout scaffold with coherent project-owned/generated pixel-art layers only where needed for the two owner-review surfaces. Generate/export separate Pokemon-free environment far/mid/foreground layers, transparent human art and reusable UI pieces. Never generate a flattened finished screen and never bake Korean labels into raster UI.
-5. Keep runtime order:
+3. Open/run the existing retained layered Godot scene. Do not replace it with a flattened generated screenshot. Only make bounded composition tweaks required for the two owner-review surfaces.
+4. Keep runtime order:
    environment -> human -> P6 Pokemon -> foreground/weather -> Control UI -> transition overlay.
-6. Capture 390x844 opening and Beedrill screens rendered by Godot. Verify no web/article/card composition remains and that both choices are readable without scrolling the whole page.
-7. Exercise both authoritative choices and retain the parity smoke output. If Android export tooling is already configured, produce a debug build proof; otherwise record the missing local prerequisite without installing broad unrelated infrastructure.
-8. Commit only project-owned source layers, Godot scene/script changes and textual evidence. Do not commit godot/local_assets, editor cache, generated Pokemon media or secrets.
+5. Capture 390x844 opening and Beedrill screens rendered by Godot. Verify no web/article/card composition remains, both choices are readable, and the foreground layer visibly participates in depth/occlusion.
+6. Exercise both authoritative choices and retain parity smoke output. If Android export tooling is already configured, produce a debug build proof; otherwise record the missing local prerequisite without installing broad unrelated infrastructure.
+7. Commit only project-owned source layers, Godot scene/script changes and textual evidence. Do not commit godot/local_assets, editor cache, generated Pokemon media or secrets.
 
 Stop after the two-screen evidence is ready for owner review. Do not propagate to Slice B/C/D or start P9.
 ```
