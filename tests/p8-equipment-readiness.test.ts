@@ -32,7 +32,7 @@ function state() {
 }
 
 describe('P8.2 authoritative equipment and readiness', () => {
-  it('starts with five visible slot assignments and stays inside the D-028 ordinary travel ceiling', () => {
+  it('starts with five visible slot assignments and a complete expedition kit at comfortable Load', () => {
     const authority = state();
     const projection = deriveP8EquipmentProjection(authority.character, authority.survival);
 
@@ -47,8 +47,9 @@ describe('P8.2 authoritative equipment and readiness', () => {
     expect(projection.equipmentLoad).toBe(3);
     expect(projection.pooledResourceLoad).toBe(4);
     expect(projection.currentLoad).toBe(7);
-    expect(projection.comfortableLoad).toBe(5);
-    expect(projection.currentLoad).toBeLessThanOrEqual(projection.comfortableLoad + 2);
+    expect(projection.comfortableLoad).toBe(7);
+    expect(projection.burdened).toBe(false);
+    expect(projection.currentLoad).toBeLessThanOrEqual(projection.comfortableLoad);
     expect(projection.attackReadiness).toBe(3);
     expect(projection.defenseReadiness).toBe(3);
     expect(projection.fieldReadiness).toBe(7);
