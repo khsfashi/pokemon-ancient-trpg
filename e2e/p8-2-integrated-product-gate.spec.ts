@@ -90,9 +90,10 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, gated p
   await page.getByRole('button', { name: 'Set out' }).click();
 
   await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
-  await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
-  await expect(page.locator('.expedition-hud').getByText('Fatigue / stamina · 0/2', { exact: true })).toBeVisible();
-  await expect(page.locator('.expedition-hud').getByText('Attack', { exact: true })).toBeVisible();
+  const openingHud = page.locator('.expedition-hud');
+  await expect(openingHud.locator('.hud-primary-row .portrait-herbalist')).toBeVisible();
+  await expect(openingHud.getByText('Fatigue / stamina · 0/2', { exact: true })).toBeVisible();
+  await expect(openingHud.getByText('Attack', { exact: true })).toBeVisible();
   const openingIllustration = page.locator(
     '.scene-illustration[data-resource-id="p8.illustration.opening.reedbank-square"]',
   );
@@ -103,13 +104,13 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, gated p
   await page.reload();
   await page.getByRole('button', { name: 'Continue journey' }).click();
   await expect(page.getByRole('heading', { name: 'A Call Across the Square' })).toBeVisible();
-  await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
+  await expect(page.locator('.expedition-hud .hud-primary-row .portrait-herbalist')).toBeVisible();
 
   for (let index = 0; index < 6; index += 1) await resolveSceneAndContinue(page);
   await resolveSceneAndContinue(page, true);
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
   await expect(page.getByText('Returned without a companion: complete', { exact: false })).toBeVisible();
-  await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
+  await expect(page.locator('.expedition-hud .hud-primary-row .portrait-herbalist')).toBeVisible();
 
   let panel = page.locator('.preparation-panel');
   await expect(panel).toHaveAttribute('data-preparation-locality', 'reedbank-settlement');
@@ -131,7 +132,7 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, gated p
   panel = page.locator('.preparation-panel');
   await expect(panel).toHaveAttribute('data-preparation-locality', 'old-levee');
   await expect(panel).toHaveAttribute('data-preparation-active-stage', 'recover');
-  await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
+  await expect(page.locator('.expedition-hud .hud-primary-row .portrait-herbalist')).toBeVisible();
   await panel.locator('[data-preparation-action="camp.rest-and-treat"]').click();
   await expect(panel).toHaveAttribute('data-preparation-active-stage', 'improve');
   await panel.locator('[data-preparation-action="repair.wet-route-gear"]').click();
@@ -162,17 +163,18 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, gated p
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
   await expect(page.locator('.preparation-panel')).toHaveAttribute('data-preparation-complete', 'true');
   await expect(page.locator('.preparation-panel')).toHaveAttribute('data-preparation-active-stage', 'ready');
-  await expect(page.locator('.expedition-hud .portrait-herbalist')).toBeVisible();
-  await expect(page.locator('.expedition-hud').getByText('Attack', { exact: true })).toBeVisible();
-  await expect(page.locator('.expedition-hud').getByText('Defense', { exact: true })).toBeVisible();
-  await expect(page.locator('.expedition-hud').getByText('Field', { exact: true })).toBeVisible();
+  const restoredHud = page.locator('.expedition-hud');
+  await expect(restoredHud.locator('.hud-primary-row .portrait-herbalist')).toBeVisible();
+  await expect(restoredHud.getByText('Attack', { exact: true })).toBeVisible();
+  await expect(restoredHud.getByText('Defense', { exact: true })).toBeVisible();
+  await expect(restoredHud.getByText('Field', { exact: true })).toBeVisible();
   expect(await readIntegratedSaveProof(page)).toEqual(beforeReload);
 
   await page.getByRole('button', { name: '한국어' }).click();
   await expect(page.getByText('챙긴다 → 위험을 감수한다 → 돌아온다 → 강해진다', { exact: true })).toBeVisible();
   await expect(page.getByText(/재출발 준비 완료/)).toBeVisible();
   await expect(page.getByText('이번 원정에서 남은 것', { exact: true })).toBeVisible();
-  await expect(page.locator('.expedition-hud').getByText('피로(스태미나) · 1/2', { exact: true })).toBeVisible();
+  await expect(page.locator('.expedition-hud .hud-chip-row').getByText('피로(스태미나) · 1/2', { exact: true })).toBeVisible();
   await assertPhoneGeometry(page);
 
   console.log('P8_3_GATED_PREPARATION_PRODUCT_GATE', JSON.stringify({
