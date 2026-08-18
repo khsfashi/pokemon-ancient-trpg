@@ -12,20 +12,22 @@ export const P8_PREPARATION_ACTION_IDS = [
   'forage.bank-edge',
   'hunt.rattata-storetrail',
   'flee.rattata-storetrail',
-  'repair.wet-route-gear',
   'camp.rest-and-treat',
+  'repair.wet-route-gear',
   'trade.provision-for-remedy',
 ] as const;
 
 export type P8PreparationActionId = (typeof P8_PREPARATION_ACTION_IDS)[number];
-export type P8PreparationActionKind = 'gather' | 'forage' | 'hunt' | 'flee' | 'repair' | 'rest' | 'trade';
+export type P8PreparationActionKind = 'gather' | 'forage' | 'hunt' | 'flee' | 'rest' | 'repair' | 'trade';
 export type P8PreparationBlockedReason =
   | 'return-required'
   | 'already-complete'
   | 'route-preparation-required'
   | 'encounter-resolution-required'
-  | 'gear-improvement-required'
   | 'camp-recovery-required'
+  | 'gear-improvement-required'
+  | 'settlement-required'
+  | 'field-route-required'
   | 'materials-required'
   | 'provisions-required'
   | 'remedies-required'
@@ -78,17 +80,19 @@ const CAMP_RECOVERED_FLAG = 'slice.prep.camp_recovered';
 const GATHER_STEP_FLAG = 'slice.prep.step.gathered';
 const FORAGE_STEP_FLAG = 'slice.prep.step.foraged';
 const ENCOUNTER_STEP_FLAG = 'slice.prep.step.encounter_resolved';
-const REPAIR_STEP_FLAG = 'slice.prep.step.gear_improved';
 const CAMP_STEP_FLAG = 'slice.prep.step.camp_recovered';
+const REPAIR_STEP_FLAG = 'slice.prep.step.gear_improved';
 const TRADE_STEP_FLAG = 'slice.prep.step.resupplied';
 const PREPARATION_STEP_FLAGS = Object.freeze([
   GATHER_STEP_FLAG,
   FORAGE_STEP_FLAG,
   ENCOUNTER_STEP_FLAG,
-  REPAIR_STEP_FLAG,
   CAMP_STEP_FLAG,
+  REPAIR_STEP_FLAG,
   TRADE_STEP_FLAG,
 ]);
+const SETTLEMENT_LOCALITY = 'reedbank-settlement';
+const FIELD_LOCALITY = 'old-levee';
 
 const ACTIONS: readonly PreparationActionDefinition[] = Object.freeze([
   Object.freeze({
@@ -140,20 +144,20 @@ const ACTIONS: readonly PreparationActionDefinition[] = Object.freeze([
     survivalDelta: Object.freeze({ fatigueDelta: 1 }),
   }),
   Object.freeze({
+    actionId: 'camp.rest-and-treat',
+    kind: 'rest',
+    completionFlag: 'slice.prep.rested_field_camp',
+    stepFlag: CAMP_STEP_FLAG,
+    semanticFlags: Object.freeze([CAMP_RECOVERED_FLAG, 'slice.prep.field_camp_used', 'slice.prep.returned_from_field_loop']),
+    resourceDeltas: Object.freeze([{ poolId: 'provisions' as const, delta: -1 }]),
+  }),
+  Object.freeze({
     actionId: 'repair.wet-route-gear',
     kind: 'repair',
     completionFlag: 'slice.prep.repaired_wet_route_gear',
     stepFlag: REPAIR_STEP_FLAG,
     semanticFlags: Object.freeze([GEAR_SERVICED_FLAG, 'slice.prep.hide_buckler_equipped']),
     resourceDeltas: Object.freeze([{ poolId: 'materials' as const, delta: -1 }]),
-  }),
-  Object.freeze({
-    actionId: 'camp.rest-and-treat',
-    kind: 'rest',
-    completionFlag: 'slice.prep.rested_field_camp',
-    stepFlag: CAMP_STEP_FLAG,
-    semanticFlags: Object.freeze([CAMP_RECOVERED_FLAG, 'slice.prep.field_camp_used']),
-    resourceDeltas: Object.freeze([{ poolId: 'provisions' as const, delta: -1 }]),
   }),
   Object.freeze({
     actionId: 'trade.provision-for-remedy',
@@ -173,9 +177,8 @@ const actionById = new Map<P8PreparationActionId, PreparationActionDefinition>(
 );
 const projectionCache = new WeakMap<P8AuthorityState, P8PreparationProjection>();
 
-function isReturnedToReedbank(state: P8AuthorityState): boolean {
-  return state.events.narrativeFlags[ENDING_READY_FLAG] === true
-    && state.world.currentLocality === 'reedbank-settlement';
+function preparationUnlocked(state: P8AuthorityState): boolean {
+  return state.events.narrativeFlags[ENDING_READY_FLAG] === true;
 }
 
 function hasRattataStoretrailEvidence(state: P8AuthorityState): boolean {
@@ -204,16 +207,17 @@ function blockedReason(
   state: P8AuthorityState,
   action: PreparationActionDefinition,
 ): P8PreparationBlockedReason | null {
-  if (!isReturnedToReedbank(state)) return 'return-required';
+  if (!preparationUnlocked(state)) return 'return-required';
   if (stepCompleted(state, action.stepFlag)) return 'already-complete';
 
   switch (action.actionId) {
     case 'gather.repair-stock':
     case 'forage.bank-edge':
-      return null;
+      return state.world.currentLocality === SETTLEMENT_LOCALITY ? null : 'settlement-required';
     case 'hunt.rattata-storetrail':
     case 'flee.rattata-storetrail': {
       if (!stepCompleted(state, GATHER_STEP_FLAG) || !stepCompleted(state, FORAGE_STEP_FLAG)) return 'route-preparation-required';
+      if (state.world.currentLocality !== SETTLEMENT_LOCALITY) return 'settlement-required';
       if (!hasRattataStoretrailEvidence(state)) return 'rattata-sign-missing';
       if (action.actionId === 'hunt.rattata-storetrail') {
         const pressure = deriveP8SurvivalPressure(state);
@@ -223,17 +227,20 @@ function blockedReason(
       }
       return null;
     }
-    case 'repair.wet-route-gear':
-      if (!stepCompleted(state, ENCOUNTER_STEP_FLAG)) return 'encounter-resolution-required';
-      return state.survival.resourcePools.materials >= 1 ? null : 'materials-required';
     case 'camp.rest-and-treat': {
-      if (!stepCompleted(state, REPAIR_STEP_FLAG)) return 'gear-improvement-required';
+      if (!stepCompleted(state, ENCOUNTER_STEP_FLAG)) return 'encounter-resolution-required';
+      if (state.world.currentLocality !== FIELD_LOCALITY) return 'field-route-required';
       if (state.survival.resourcePools.provisions < 1) return 'provisions-required';
       const pressure = deriveP8SurvivalPressure(state);
       return pressure.injuries > 0 && state.survival.resourcePools.remedies < 1 ? 'remedies-required' : null;
     }
-    case 'trade.provision-for-remedy':
+    case 'repair.wet-route-gear':
       if (!stepCompleted(state, CAMP_STEP_FLAG)) return 'camp-recovery-required';
+      if (state.world.currentLocality !== SETTLEMENT_LOCALITY) return 'settlement-required';
+      return state.survival.resourcePools.materials >= 1 ? null : 'materials-required';
+    case 'trade.provision-for-remedy':
+      if (!stepCompleted(state, REPAIR_STEP_FLAG)) return 'gear-improvement-required';
+      if (state.world.currentLocality !== SETTLEMENT_LOCALITY) return 'settlement-required';
       return state.survival.resourcePools.provisions >= 1 ? null : 'provisions-required';
   }
 }
@@ -259,7 +266,7 @@ export function deriveP8PreparationProjection(state: P8AuthorityState): P8Prepar
   const complete = state.events.narrativeFlags[PREPARATION_COMPLETE_FLAG] === true
     || completedActions === PREPARATION_STEP_FLAGS.length;
   const projection = Object.freeze({
-    unlocked: isReturnedToReedbank(state),
+    unlocked: preparationUnlocked(state),
     complete,
     completedActions,
     totalActions: PREPARATION_STEP_FLAGS.length,
@@ -267,6 +274,7 @@ export function deriveP8PreparationProjection(state: P8AuthorityState): P8Prepar
     rattataRouteMarked: state.events.narrativeFlags[RATTATA_ROUTE_MARKED_FLAG] === true,
     campRecovered: state.events.narrativeFlags[CAMP_RECOVERED_FLAG] === true,
     departureReady: complete
+      && state.world.currentLocality === SETTLEMENT_LOCALITY
       && !pressure.incapacitated
       && !pressure.collapseRisk
       && readiness.currentLoad <= readiness.comfortableLoad + 2,
@@ -293,6 +301,22 @@ function actionCommands(
   deltas: readonly P8PreparationResourceDelta[],
 ): readonly P8DomainCommand[] {
   const commands: P8DomainCommand[] = [...resourceCommands(action.actionId, deltas)];
+  if (action.actionId === 'hunt.rattata-storetrail' || action.actionId === 'flee.rattata-storetrail') {
+    commands.push({
+      commandId: 'p2.world.commit_locality_transition',
+      fromLocality: SETTLEMENT_LOCALITY,
+      toLocality: FIELD_LOCALITY,
+      routeRef: 'p8.preparation.old-levee-expedition',
+    });
+  }
+  if (action.actionId === 'camp.rest-and-treat') {
+    commands.push({
+      commandId: 'p2.world.commit_locality_transition',
+      fromLocality: FIELD_LOCALITY,
+      toLocality: SETTLEMENT_LOCALITY,
+      routeRef: 'p8.preparation.camp-return',
+    });
+  }
   if (action.actionId === 'repair.wet-route-gear' && state.survival.equipment.equippedItemIds.guard !== 'hide.buckler') {
     commands.push({
       commandId: 'p3.inventory.set_equipment_slot',
