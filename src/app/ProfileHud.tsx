@@ -25,6 +25,10 @@ export type P8PortraitId = (typeof P8_PORTRAIT_IDS)[number];
 export const P8_PORTRAIT_STORAGE_KEY = 'pokemon-ancient-trpg.p8.portrait.v1';
 
 const ATTRIBUTE_IDS: readonly P8AttributeId[] = ['strength', 'endurance', 'agility', 'sense', 'intellect', 'will', 'presence'];
+const HUD_VITALITY_ICON_URL = new URL('../assets/p8-golden/hud-vitality.png', import.meta.url).href;
+const HUD_STAMINA_ICON_URL = new URL('../assets/p8-golden/hud-stamina.png', import.meta.url).href;
+const HUD_INJURY_ICON_URL = new URL('../assets/p8-golden/hud-injury.png', import.meta.url).href;
+const HUD_PROVISIONS_ICON_URL = new URL('../assets/p8-golden/hud-provisions.png', import.meta.url).href;
 
 const PORTRAIT_LABELS = {
   'ko-KR': {
@@ -300,15 +304,54 @@ export function P8PortraitIdentity({ portraitId, character, locale }: { readonly
 export function P8ExpeditionHud({ authority, portraitId, locale }: { readonly authority: P8AuthorityState; readonly portraitId: P8PortraitId; readonly locale: P8Locale }) {
   const text = TEXT[locale];
   const profile = useMemo(() => deriveP8ExpeditionProfile(authority), [authority]);
+  const specializationId = resolveP8SpecializationId(authority.character);
+  const specialization = specializationId === null ? null : P8_SLICE_SPECIALIZATIONS.find((item) => item.specializationId === specializationId) ?? null;
+  const identityLabel = specialization === null
+    ? labelP8PracticeLocalized(authority.character.practiceId, locale)
+    : localizeP8Specialization(specialization, locale).label;
+  const vitalityPercent = `${(profile.vitalityCurrent / profile.vitalityMax) * 100}%`;
+
   return (
     <aside class="expedition-hud" aria-label={text.profile}>
+      <div class="golden-hud-surface" data-golden-hud="windbreak" aria-label={`${text.profile} · ${identityLabel}`}>
+        <div class="golden-hud-identity">
+          <PortraitArtwork portraitId={portraitId} locale={locale} compact />
+          <div>
+            <strong>{identityLabel}</strong>
+            <span>{labelP8LocalityLocalized(authority.world.currentLocality, locale)}</span>
+          </div>
+        </div>
+        <div class="golden-hud-vitality">
+          <div class="golden-hud-value-row">
+            <img class="golden-hud-icon" src={HUD_VITALITY_ICON_URL} alt="" aria-hidden="true" />
+            <span>{text.vitality}</span>
+            <strong>{profile.vitalityCurrent}/{profile.vitalityMax}</strong>
+          </div>
+          <div class="golden-hud-track" aria-hidden="true"><span style={{ width: vitalityPercent }} /></div>
+        </div>
+        <div class="golden-hud-pressure">
+          <div class={profile.fatigueStage >= profile.fatigueLimit ? 'warning' : ''}>
+            <img class="golden-hud-icon" src={HUD_STAMINA_ICON_URL} alt="" aria-hidden="true" />
+            <span>{profile.fatigueStage}/{profile.fatigueLimit}</span>
+          </div>
+          <div class={profile.injuries > 0 ? 'warning' : ''}>
+            <img class="golden-hud-icon" src={HUD_INJURY_ICON_URL} alt="" aria-hidden="true" />
+            <span>{profile.injuries === 0 ? text.noInjury : profile.injuries}</span>
+          </div>
+        </div>
+        <div class="golden-hud-resource" aria-label={`${text.provisions} ${authority.survival.resourcePools.provisions}`}>
+          <img class="golden-hud-icon" src={HUD_PROVISIONS_ICON_URL} alt="" aria-hidden="true" />
+          <strong>{authority.survival.resourcePools.provisions}</strong>
+        </div>
+      </div>
+
       <div class="hud-primary-row">
         <P8PortraitIdentity portraitId={portraitId} character={authority.character} locale={locale} />
         <div class="hud-primary-stats">
           <div class="hud-location"><span>{text.locality}</span><strong>{labelP8LocalityLocalized(authority.world.currentLocality, locale)}</strong></div>
           <div class="vitality-block">
             <div><span>{text.vitality}</span><strong>{profile.vitalityCurrent}/{profile.vitalityMax}</strong></div>
-            <div class="vitality-track" aria-hidden="true"><span style={{ width: `${(profile.vitalityCurrent / profile.vitalityMax) * 100}%` }} /></div>
+            <div class="vitality-track" aria-hidden="true"><span style={{ width: vitalityPercent }} /></div>
           </div>
         </div>
       </div>
