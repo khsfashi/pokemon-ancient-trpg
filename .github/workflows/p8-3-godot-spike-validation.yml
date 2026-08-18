@@ -30,27 +30,63 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install pinned official Godot build
+      - name: Prepare retained runtime logs
+        shell: bash
+        run: mkdir -p test-results/godot-spike
+
+      - name: Install and verify pinned official Godot build
         shell: bash
         run: |
           set -euo pipefail
-          base_url="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable"
-          mkdir -p "$RUNNER_TEMP/godot"
-          cd "$RUNNER_TEMP/godot"
-          curl --fail --location --retry 3 --output "$GODOT_ARCHIVE" "$base_url/$GODOT_ARCHIVE"
-          curl --fail --location --retry 3 --output "$GODOT_ARCHIVE.sha256" "$base_url/$GODOT_ARCHIVE.sha256"
-          sha256sum --check "$GODOT_ARCHIVE.sha256"
-          unzip -q "$GODOT_ARCHIVE"
-          chmod +x "${GODOT_ARCHIVE%.zip}"
-          echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
-          ln -s "$RUNNER_TEMP/godot/${GODOT_ARCHIVE%.zip}" "$RUNNER_TEMP/godot/godot"
-          "$RUNNER_TEMP/godot/godot" --version
+          {
+            release_tag="${GODOT_VERSION}-stable"
+            base_url="https://github.com/godotengine/godot-builds/releases/download/${release_tag}"
+            metadata_url="https://api.github.com/repos/godotengine/godot-builds/releases/tags/${release_tag}"
+            mkdir -p "$RUNNER_TEMP/godot"
+            cd "$RUNNER_TEMP/godot"
+
+            curl --fail --location --retry 3 --output "$GODOT_ARCHIVE" "$base_url/$GODOT_ARCHIVE"
+            curl --fail --location --retry 3 \
+              --header 'Accept: application/vnd.github+json' \
+              --header 'X-GitHub-Api-Version: 2022-11-28' \
+              --output release.json \
+              "$metadata_url"
+
+            expected_sha="$(python3 - "$GODOT_ARCHIVE" <<'PY'
+          import json
+          import sys
+
+          asset_name = sys.argv[1]
+          with open("release.json", encoding="utf-8") as handle:
+              release = json.load(handle)
+
+          for asset in release.get("assets", []):
+              if asset.get("name") != asset_name:
+                  continue
+              digest = asset.get("digest") or ""
+              if not digest.startswith("sha256:"):
+                  raise SystemExit(f"missing sha256 digest metadata for {asset_name}")
+              print(digest.split(":", 1)[1])
+              break
+          else:
+              raise SystemExit(f"release asset not found: {asset_name}")
+          PY
+            )"
+            actual_sha="$(sha256sum "$GODOT_ARCHIVE" | awk '{print $1}')"
+            printf 'Godot archive sha256 expected=%s actual=%s\n' "$expected_sha" "$actual_sha"
+            test "$actual_sha" = "$expected_sha"
+
+            unzip -q "$GODOT_ARCHIVE"
+            chmod +x "${GODOT_ARCHIVE%.zip}"
+            ln -s "$RUNNER_TEMP/godot/${GODOT_ARCHIVE%.zip}" "$RUNNER_TEMP/godot/godot"
+            echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
+            "$RUNNER_TEMP/godot/godot" --version
+          } 2>&1 | tee "$GITHUB_WORKSPACE/test-results/godot-spike/install.log"
 
       - name: Boot bounded owner-review scene
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p test-results/godot-spike
           godot --headless --path godot --quit-after 2 2>&1 | tee test-results/godot-spike/main-scene-boot.log
 
       - name: Run deterministic parity and save smoke
