@@ -1,0 +1,70 @@
+name: P8.3 Godot Spike Validation
+
+on:
+  pull_request:
+    paths:
+      - 'godot/**'
+      - 'docs/P8_3_GODOT_ARCHITECTURE_SPIKE.md'
+      - 'PROJECT_STATUS.md'
+      - '.github/workflows/p8-3-godot-spike-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p8-3-godot-spike-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: '4.6.3'
+  GODOT_ARCHIVE: 'Godot_v4.6.3-stable_linux.x86_64.zip'
+
+jobs:
+  godot-spike:
+    name: Godot 4.6.3 parity + boot smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pinned official Godot build
+        shell: bash
+        run: |
+          set -euo pipefail
+          base_url="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable"
+          mkdir -p "$RUNNER_TEMP/godot"
+          cd "$RUNNER_TEMP/godot"
+          curl --fail --location --retry 3 --output "$GODOT_ARCHIVE" "$base_url/$GODOT_ARCHIVE"
+          curl --fail --location --retry 3 --output "$GODOT_ARCHIVE.sha256" "$base_url/$GODOT_ARCHIVE.sha256"
+          sha256sum --check "$GODOT_ARCHIVE.sha256"
+          unzip -q "$GODOT_ARCHIVE"
+          chmod +x "${GODOT_ARCHIVE%.zip}"
+          echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
+          ln -s "$RUNNER_TEMP/godot/${GODOT_ARCHIVE%.zip}" "$RUNNER_TEMP/godot/godot"
+          "$RUNNER_TEMP/godot/godot" --version
+
+      - name: Boot bounded owner-review scene
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/godot-spike
+          godot --headless --path godot --quit-after 2 2>&1 | tee test-results/godot-spike/main-scene-boot.log
+
+      - name: Run deterministic parity and save smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          godot --headless --path godot --script res://tests/parity_smoke.gd 2>&1 | tee test-results/godot-spike/parity-smoke.log
+          grep -F 'P8.3 Godot parity smoke: PASS' test-results/godot-spike/parity-smoke.log
+
+      - name: Upload Godot spike logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-3-godot-spike-runtime-logs
+          path: test-results/godot-spike
+          if-no-files-found: error
+          retention-days: 14
