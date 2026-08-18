@@ -30,27 +30,30 @@ async function reachReturnSummary(page: Page): Promise<void> {
 }
 
 function stat(panel: Locator, label: string): Locator {
-  return panel.locator('.ending-grid > div').filter({ has: panel.page().getByText(label, { exact: true }) }).locator('strong');
+  return panel.locator('.ending-grid > div').filter({ hasText: label }).locator('strong');
 }
 
-test('completes and persists the survival risk-recovery loop on a phone surface', async ({ page }) => {
+test('completes and persists the full settlement-travel-risk-camp-return loop on a phone surface', async ({ page }) => {
   await reachReturnSummary(page);
 
   const panel = page.locator('.preparation-panel');
   await expect(panel).toBeVisible();
+  await expect(panel).toHaveAttribute('data-preparation-locality', 'reedbank-settlement');
   await expect(panel.getByText('Expedition loop', { exact: true })).toBeVisible();
   await expect(stat(panel, 'Expedition loop')).toHaveText('0/6');
+  await expect(stat(panel, 'Current place')).toHaveText('Reedbank Settlement');
   await expect(panel.getByText(/decide whether the Rattata signs are worth the risk/i)).toBeVisible();
 
   const gather = panel.locator('[data-preparation-action="gather.repair-stock"]');
   const forage = panel.locator('[data-preparation-action="forage.bank-edge"]');
   const hunt = panel.locator('[data-preparation-action="hunt.rattata-storetrail"]');
   const flee = panel.locator('[data-preparation-action="flee.rattata-storetrail"]');
-  const repair = panel.locator('[data-preparation-action="repair.wet-route-gear"]');
   const camp = panel.locator('[data-preparation-action="camp.rest-and-treat"]');
+  const repair = panel.locator('[data-preparation-action="repair.wet-route-gear"]');
   const trade = panel.locator('[data-preparation-action="trade.provision-for-remedy"]');
 
   await expect(hunt).toBeDisabled();
+  await expect(camp).toBeDisabled();
   await expect(repair).toBeDisabled();
   await gather.click();
   await forage.click();
@@ -59,17 +62,25 @@ test('completes and persists the survival risk-recovery loop on a phone surface'
   await expect(hunt).toBeEnabled();
   await expect(flee).toBeEnabled();
   await hunt.click();
+  await expect(panel).toHaveAttribute('data-preparation-locality', 'old-levee');
+  await expect(stat(panel, 'Current place')).toHaveText('Old Levee');
   await expect(flee).toBeDisabled();
   await expect(stat(panel, 'Vitality')).toHaveText('4/5');
   await expect(stat(panel, 'Fatigue')).toHaveText('2/5');
   await expect(stat(panel, 'Injuries')).toHaveText('1');
-
-  await repair.click();
   await expect(camp).toBeEnabled();
+  await expect(repair).toBeDisabled();
+
   await camp.click();
+  await expect(panel).toHaveAttribute('data-preparation-locality', 'reedbank-settlement');
+  await expect(stat(panel, 'Current place')).toHaveText('Reedbank Settlement');
   await expect(stat(panel, 'Vitality')).toHaveText('5/5');
   await expect(stat(panel, 'Fatigue')).toHaveText('0/5');
   await expect(stat(panel, 'Injuries')).toHaveText('0');
+  await expect(repair).toBeEnabled();
+
+  await repair.click();
+  await expect(trade).toBeEnabled();
   await trade.click();
 
   await expect(panel).toHaveAttribute('data-preparation-complete', 'true');
@@ -79,8 +90,8 @@ test('completes and persists the survival risk-recovery loop on a phone surface'
   await expect(forage).toBeDisabled();
   await expect(hunt).toBeDisabled();
   await expect(flee).toBeDisabled();
-  await expect(repair).toBeDisabled();
   await expect(camp).toBeDisabled();
+  await expect(repair).toBeDisabled();
   await expect(trade).toBeDisabled();
 
   const saved = await page.evaluate(async () => {
@@ -92,6 +103,7 @@ test('completes and persists the survival risk-recovery loop on a phone surface'
     const pressure = deriveP8SurvivalPressure(authority);
     return {
       transitionSeq: resumed.transitionSeq.toString(),
+      locality: authority.world.currentLocality,
       pools: authority.survival.resourcePools,
       guard: authority.survival.equipment.equippedItemIds.guard,
       pressure,
@@ -101,12 +113,14 @@ test('completes and persists the survival risk-recovery loop on a phone surface'
       noPokemonHarvest: authority.events.narrativeFlags['slice.prep.no_pokemon_harvest'] === true,
       pokemonLinkedSalvage: authority.events.narrativeFlags['slice.prep.rattata_linked_salvage'] === true,
       routeMarked: authority.events.narrativeFlags['slice.prep.rattata_route_marked'] === true,
-      gearServiced: authority.events.narrativeFlags['slice.prep.gear_serviced'] === true,
       campRecovered: authority.events.narrativeFlags['slice.prep.camp_recovered'] === true,
+      returnedFromField: authority.events.narrativeFlags['slice.prep.returned_from_field_loop'] === true,
+      gearServiced: authority.events.narrativeFlags['slice.prep.gear_serviced'] === true,
     };
   });
 
   expect(saved.transitionSeq).toBe('7');
+  expect(saved.locality).toBe('reedbank-settlement');
   expect(saved.pools).toEqual({ provisions: 0, remedies: 1, materials: 1 });
   expect(saved.guard).toBe('hide.buckler');
   expect(saved.pressure).toMatchObject({ vitalityCurrent: 5, fatigueStage: 0, injuries: 0 });
@@ -116,16 +130,18 @@ test('completes and persists the survival risk-recovery loop on a phone surface'
   expect(saved.noPokemonHarvest).toBe(true);
   expect(saved.pokemonLinkedSalvage).toBe(true);
   expect(saved.routeMarked).toBe(true);
-  expect(saved.gearServiced).toBe(true);
   expect(saved.campRecovered).toBe(true);
+  expect(saved.returnedFromField).toBe(true);
+  expect(saved.gearServiced).toBe(true);
 
   await page.reload();
   await page.getByRole('button', { name: 'Continue journey' }).click();
   await expect(page.getByRole('heading', { name: 'Back at Reedbank' })).toBeVisible();
   await expect(page.locator('.preparation-panel')).toHaveAttribute('data-preparation-complete', 'true');
+  await expect(page.locator('.preparation-panel')).toHaveAttribute('data-preparation-locality', 'reedbank-settlement');
 
   await page.getByRole('button', { name: '한국어' }).click();
   await expect(page.getByText('챙기고, 나가고, 버티고, 다시 돌아온다', { exact: true })).toBeVisible();
-  await expect(page.getByText('몸과 짐을 추슬렀습니다. 다음 길을 나설 준비가 끝났습니다.', { exact: true })).toBeVisible();
+  await expect(page.getByText('몸과 짐을 추슬렀고 장비도 손봤습니다. 다음 길을 나설 준비가 끝났습니다.', { exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
