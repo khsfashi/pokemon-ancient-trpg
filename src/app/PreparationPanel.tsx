@@ -36,7 +36,7 @@ const COPY = {
   'en-US': {
     eyebrow: 'Expedition preparation',
     title: 'Prepare → risk → return → improve',
-    body: 'Only the decision that matters now stays open. Finished steps become expedition history; later steps stay locked until the road, recovery and equipment requirements are actually satisfied.',
+    body: 'Pack what you can carry, then decide whether the Rattata signs are worth the risk. Only the decision that matters now stays open. Finished steps become expedition history; later steps stay locked until the road, recovery and equipment requirements are actually satisfied.',
     progress: 'Expedition loop',
     location: 'Current place',
     settlement: 'Reedbank Settlement',
