@@ -28,9 +28,15 @@ func _init() -> void:
 		_require_layer_separation(path)
 
 	var main_source := FileAccess.get_file_as_string("res://scripts/main.gd")
+	var encounter_source := FileAccess.get_file_as_string("res://scripts/pokemon_encounter_sprite.gd")
 	_assert_true(not main_source.contains("P8.3 GODOT ARCHITECTURE SPIKE"), "developer spike label leaked into player-facing UI")
-	_assert_true(main_source.contains("LOCAL_BEEDRILL_PATH"), "P6 local Pokemon slot must remain explicit")
+	_assert_true(main_source.contains("LOCAL_BEEDRILL_ATLAS_PATH"), "P6 local Pokemon atlas slot must remain explicit")
+	_assert_true(main_source.contains("LOCAL_BEEDRILL_METADATA_PATH"), "P6 local Pokemon metadata slot must remain explicit")
+	_assert_true(main_source.contains("PokemonEncounterSpriteScript"), "direct encounter must use the bounded P6 atlas adapter")
 	_assert_true(main_source.contains("PokemonLayer"), "Pokemon must remain an independent runtime layer")
+	_assert_true(main_source.contains("LayerKind.FOREGROUND, 40"), "foreground occlusion layer must remain above Pokemon z=30")
+	_assert_true(encounter_source.contains("region_rect"), "P6 encounter atlas must select frame regions instead of drawing the full atlas")
+	_assert_true(encounter_source.contains("_atlas_texture"), "P6 encounter animation must reuse one decoded atlas texture")
 
 	print("P8.3 Godot visual contract smoke: PASS")
 	quit(0)
