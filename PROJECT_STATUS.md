@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-17 23:11 KST**
+Last operational handoff update: **2026-08-18 10:55 KST**
 
 This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts, owner-playtest contracts, and live GitHub state. If this file and live state disagree, reconcile this file before advancing.
 
@@ -21,7 +21,7 @@ For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, 
 - Exactly three visible companion slots; `0/3` remains a valid and fully playable complete run.
 - The human player must have a satisfying adventurer loop without a Pokémon companion: preparation, equipment, survival, exploration, gathering, repair, barter, risk management and return-to-settlement progression.
 - Pokémon remain the setting's defining world force, not generic fantasy monsters.
-- P5 deterministic event/state/RNG rules remain authoritative.
+- P3 survival/inventory rules and P5 deterministic event/state/RNG rules remain authoritative.
 - P6/P7 resource, cache, PWA, save and mobile performance boundaries remain binding unless explicitly revised with measured evidence.
 
 ## Phase status
@@ -37,7 +37,7 @@ P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
 P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
-P8.2 second owner remediation         BATCHES 04-08 IMPLEMENTED+VALIDATED / PR #124 READY / BATCH 09 NEXT AFTER MERGE / #118 / BLOCKING P9
+P8.2 second owner remediation         BATCHES 04-08 VALIDATED / BATCH 09 IMPLEMENTED IN PR #125 / FINAL CI GATE / #118 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
@@ -54,7 +54,22 @@ Implemented and validated work — do not repeat:
 - **PR #121 / Batch 05** — portrait selection, persistent expedition/profile HUD, Vitality/Fatigue/Fear/Injuries/resources/Load/locality/companions, danger semantics.
 - **PR #122 / Batch 06** — stable on-demand scene illustrations, existing P6 loader/cache reuse, missing-media fallback, first-run visual identities.
 - **PR #123 / Batch 07** — three formative memory scenes, concise action choices, second native-Korean pass, stable-ID/lifepath preservation, questionnaire/proof-language regression guards.
-- **PR #124 / Batch 08** — stable notable equipment IDs, five slots, D-028 carried Load integration, bounded Attack/Defense/Field readiness, cached derived projection, `p8-authority-v2` save migration, Korean equipment HUD. PR is validated and ready for review; merge before starting Batch 09 on `main`.
+- **PR #124 / Batch 08** — stable notable equipment IDs, five slots, D-028 carried Load integration, bounded Attack/Defense/Field readiness, cached derived projection, `p8-authority-v2` save migration, Korean equipment HUD.
+
+Batch 09 implementation in **PR #125** — do not duplicate:
+
+- bounded six-step settlement -> field risk -> camp -> return -> equipment improvement -> barter loop;
+- ordinary Materials and Provisions gathering before departure;
+- mutually exclusive Rattata-linked pursuit/withdrawal decision with no Pokémon body loot or kill XP;
+- real authoritative `reedbank-settlement -> old-levee -> reedbank-settlement` travel state;
+- saved P3 Vitality/Fatigue/Injury pressure projected into HUD/preparation UI;
+- P3 Fatigue uses the fixed `Ready/Tired/Exhausted` three-stage contract (`0..2`), not a Will-derived meter;
+- camp consumes Provisions and, when injured, Remedies; restores up to 2 Vitality, reduces Fatigue by one stage, treats one Injury, then returns to Reedbank;
+- Injury pressure reduces comfortable Load through the existing equipment projection;
+- equipment improvement spends Materials and equips the already-carried hide buckler;
+- local direct Provisions -> Remedies barter, no universal currency;
+- dangerous old-levee checkpoint and final loop state persist across reload/resume;
+- zero-companion viability and one-shot/bounded resource opportunities are regression-tested.
 
 Audits:
 
@@ -63,47 +78,22 @@ Audits:
 - `docs/P8_2_BATCH_06_AUDIT.md`
 - `docs/P8_2_BATCH_07_AUDIT.md`
 - `docs/P8_2_BATCH_08_AUDIT.md`
-
-### Batch 08 validation
-
-Dedicated workflow **`P8.2 Batch 08 Validation`** run **`32038047344`**: **PASS**.
-
-Verified:
-
-- strict TypeScript + full deterministic unit suite + production PWA build;
-- authoritative stable equipment inventory plus five slot assignments;
-- deterministic guard-item swap changes only declared readiness/effect surfaces while carried Load remains unchanged;
-- D-028 notable-item + pooled-resource Load accounting and cached projection reuse;
-- explicit `p8-authority-v1 -> p8-authority-v2` migration and v2 round-trip;
-- Chromium/WebKit phone HUD shows Attack/Defense/Field readiness, five equipped items and carried spare gear;
-- Korean equipment/readiness copy and 390px overflow acceptance;
-- P8 backup/save-resume compatibility and inherited zero-companion phone smoke;
-- inherited P8 Authority Runtime and P7 architecture validations remain green.
+- `docs/P8_2_BATCH_09_AUDIT.md`
 
 ## Exact next work
 
-### Batch 09 — medieval-fantasy farming / preparation loop — NEXT AFTER PR #124 MERGE
+### Finish Batch 09 — PR #125 final validation and merge
 
-```text
-settlement preparation
--> choose equipment/provisions
--> travel/explore
--> gather / forage / salvage / hunt when valid
--> encounter human/Pokémon/environmental risk
--> spend health/stamina/resources or gain materials/knowledge
--> return to settlement
--> repair / barter / craft / improve equipment / prepare again
-```
+Do not merge an intermediate green commit. The final PR head must pass the dedicated **`P8.2 Batch 09 Validation`** plus inherited P8/P7 authority/browser regressions. Record final-head run IDs/results in PR #125, then merge.
 
-Must include ordinary materials, provisions, repair/crafting input, barter/service reward, an equipment improvement choice, at least one Pokémon-linked opportunity justified by P4/D-021/D-028, and camp/rest/recovery. No generic kill-XP or automatic Pokémon loot.
+### Batch 10 — integrated automated + owner product gate — NEXT AFTER PR #125 MERGE
 
-### Batch 10 — integrated automated + owner product gate
-
-- Chromium + WebKit 390x844 full run;
+- Chromium + WebKit 390x844 complete run;
 - animation skip/advance/reduced-motion/transition safety;
-- portrait/profile/equipment/resources persistence;
+- portrait/profile/equipment/resources/survival persistence;
 - illustration fallback;
 - PWA offline pending-save regression;
+- Korean product-language pass across the combined first-play experience;
 - owner replay confirms the combined experience is ready for P9 multiplication.
 
 ## Architecture / performance guardrails
@@ -120,8 +110,9 @@ Must include ordinary materials, provisions, repair/crafting input, barter/servi
 
 ## Key rule compatibility
 
-- `Vitality 0` means **Incapacitated**, not automatic death.
-- Fatigue/Fear/Injuries remain existing P3 survival pressure state.
+- `Vitality Max = 4 + Endurance`; `Vitality 0` means **Incapacitated**, not automatic death.
+- Fatigue is `0 Ready / 1 Tired / 2 Exhausted`; it is not a second stamina-HP bar.
+- Fear and persistent named Injury architecture remain P3-owned; Batch 09 only bridges the pressure needed by this bounded slice through existing saved authority.
 - Equipment belongs to the D-028 individual-item + Load model; expand it rather than creating a parallel inventory.
 - Defeating/killing Pokémon grants no universal XP or generic loot.
 - Ordinary Pokémon do not scale with player equipment/progression.
@@ -148,6 +139,7 @@ browser tests         = Playwright
 Key references:
 
 - `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`
+- `docs/P8_2_BATCH_09_AUDIT.md`
 - `docs/PLAYTEST_REMEDIATION.md`
 - `docs/P8_EXIT_AUDIT.md`
 - `docs/P7_EXIT_AUDIT.md`
