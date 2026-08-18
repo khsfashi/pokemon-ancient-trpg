@@ -1,0 +1,153 @@
+name: P8 Integrated Validation
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'vite.config.ts'
+      - 'index.html'
+      - 'vercel.json'
+      - 'playwright*.config.ts'
+      - 'public/**'
+      - 'content/p8/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'e2e/**'
+      - 'tools/**'
+      - 'docs/P2_FIRST_REGION_CONTRACT.md'
+      - 'docs/P3_*CONTRACT.md'
+      - 'docs/P4_SPECIES_COVERAGE_MANIFEST.yaml'
+      - 'docs/P5_*'
+      - 'docs/P6_RESOURCE_MANIFEST.json'
+      - 'docs/P7_ARCHITECTURE_MANIFEST.json'
+      - 'docs/P8_VERTICAL_SLICE_MANIFEST.json'
+      - 'docs/P8_VERTICAL_SLICE_CONTRACT.md'
+      - 'docs/P8_IMPLEMENTATION_PLAN.md'
+      - 'docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md'
+      - 'docs/LOCALIZATION_CONTRACT.md'
+      - '.github/workflows/p8-integrated-validation.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'vite.config.ts'
+      - 'index.html'
+      - 'vercel.json'
+      - 'playwright*.config.ts'
+      - 'public/**'
+      - 'content/p8/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'e2e/**'
+      - 'tools/**'
+      - 'docs/P2_FIRST_REGION_CONTRACT.md'
+      - 'docs/P3_*CONTRACT.md'
+      - 'docs/P4_SPECIES_COVERAGE_MANIFEST.yaml'
+      - 'docs/P5_*'
+      - 'docs/P6_RESOURCE_MANIFEST.json'
+      - 'docs/P7_ARCHITECTURE_MANIFEST.json'
+      - 'docs/P8_VERTICAL_SLICE_MANIFEST.json'
+      - 'docs/P8_VERTICAL_SLICE_CONTRACT.md'
+      - 'docs/P8_IMPLEMENTATION_PLAN.md'
+      - 'docs/WORLD_CONTENT_AND_FACTION_CONTRACT.md'
+      - 'docs/LOCALIZATION_CONTRACT.md'
+      - '.github/workflows/p8-integrated-validation.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: p8-integrated-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: |
+            tools/requirements-p5-validation.txt
+            tools/requirements-p6-validation.txt
+
+      - name: Install contract validator dependencies
+        run: python -m pip install --disable-pip-version-check -r tools/requirements-p5-validation.txt -r tools/requirements-p6-validation.txt
+
+      - name: Validate frozen P5/P6 contracts and generated P7 pack
+        run: |
+          python tools/validate_p5_contract.py
+          python tools/validate_p6_resources.py
+          python tools/build_p7_runtime_pack.py --check
+
+      - name: Validate P8 authority, authored pack, and phone presentation
+        run: |
+          python tools/validate_p8_vertical_slice.py
+          python tools/check_p8_slice_pack.py
+          python tools/validate_p8_phone_presentation.py
+
+      - name: Upload normalized runtime-pack evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: p7-runtime-pack
+          path: src/generated/runtime-pack.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install from committed lockfile
+        run: npm ci
+
+      - name: Deterministic unit fixtures
+        run: npm run test
+
+      - name: Typecheck and production PWA build
+        run: npm run build
+
+      - name: Cache Playwright browser binaries
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Chromium/WebKit system dependencies and missing browsers
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Consolidated phone browser regression
+        run: >-
+          npx playwright test
+          e2e/resource-cache.spec.ts
+          e2e/browser-save.spec.ts
+          e2e/p8-phone-flow.spec.ts
+          e2e/p8-save-compat.spec.ts
+          e2e/p8-localization.spec.ts
+          e2e/p8-2-motion.spec.ts
+          e2e/p8-2-profile-hud.spec.ts
+          e2e/p8-2-illustrations.spec.ts
+          e2e/p8-2-korean-narrative.spec.ts
+          e2e/p8-2-preparation-loop.spec.ts
+          --project=phone-chromium
+          --project=phone-webkit
+
+      - name: Production Chromium/WebKit full-run and bilingual proof
+        run: npm run test:browser:p8-exit
+
+      - name: Inherited P7 physical PWA offline acceptance
+        run: npm run test:browser:pwa
+
+      - name: P8 pending-save physical origin-down acceptance
+        run: npm run test:browser:p8-pwa
