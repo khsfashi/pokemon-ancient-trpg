@@ -88,21 +88,36 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          godot --headless --path godot --quit-after 2 2>&1 | tee test-results/godot-spike/main-scene-boot.log
+          log=test-results/godot-spike/main-scene-boot.log
+          godot --headless --path godot --quit-after 2 2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot boot emitted script/runtime errors' >&2
+            exit 1
+          fi
 
       - name: Run deterministic parity and save smoke
         shell: bash
         run: |
           set -euo pipefail
-          godot --headless --path godot --script res://tests/parity_smoke.gd 2>&1 | tee test-results/godot-spike/parity-smoke.log
-          grep -F 'P8.3 Godot parity smoke: PASS' test-results/godot-spike/parity-smoke.log
+          log=test-results/godot-spike/parity-smoke.log
+          godot --headless --path godot --script res://tests/parity_smoke.gd 2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot parity smoke emitted script/runtime errors' >&2
+            exit 1
+          fi
+          grep -F 'P8.3 Godot parity smoke: PASS' "$log"
 
       - name: Run layered visual contract smoke
         shell: bash
         run: |
           set -euo pipefail
-          godot --headless --path godot --script res://tests/visual_contract_smoke.gd 2>&1 | tee test-results/godot-spike/visual-contract-smoke.log
-          grep -F 'P8.3 Godot visual contract smoke: PASS' test-results/godot-spike/visual-contract-smoke.log
+          log=test-results/godot-spike/visual-contract-smoke.log
+          godot --headless --path godot --script res://tests/visual_contract_smoke.gd 2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot visual contract smoke emitted script/runtime errors' >&2
+            exit 1
+          fi
+          grep -F 'P8.3 Godot visual contract smoke: PASS' "$log"
 
       - name: Validate local P6 materializer contract without network
         shell: bash
@@ -117,10 +132,14 @@ jobs:
           set -euo pipefail
           command -v xvfb-run
           rm -rf godot/captures/owner-evidence
+          log=test-results/godot-spike/owner-evidence-capture-harness.log
           xvfb-run -a godot --audio-driver Dummy --path godot --script res://tests/owner_evidence_capture.gd -- --allow-missing-p6 \
-            2>&1 | tee test-results/godot-spike/owner-evidence-capture-harness.log
-          grep -F 'P8.3 owner evidence capture harness: PASS owner_candidate=false p6_rendered=false frames=0' \
-            test-results/godot-spike/owner-evidence-capture-harness.log
+            2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot rendered capture harness emitted script/runtime errors' >&2
+            exit 1
+          fi
+          grep -F 'P8.3 owner evidence capture harness: PASS owner_candidate=false p6_rendered=false frames=0' "$log"
           python3 - <<'PY'
           from pathlib import Path
           import json
