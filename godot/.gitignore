@@ -1,0 +1,10 @@
+# Godot editor/import cache
+.godot/
+
+# Rights-bound Pokemon media is materialized locally from the pinned P6 source contract.
+# Never commit these binaries to the public repository without a separate rights decision.
+local_assets/
+
+# Owner evidence is retained separately only after review; local captures/builds stay untracked.
+captures/
+exports/
