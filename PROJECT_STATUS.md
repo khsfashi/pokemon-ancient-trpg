@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-18 23:56 KST**
+Last operational handoff update: **2026-08-19 00:41 KST**
 
 This file is the concise operational handoff. Durable authority remains in owner decisions/contracts and live GitHub state. If this file disagrees with live state, reconcile it before advancing.
 
@@ -87,18 +87,24 @@ Environment/background
 
 Never generate Pokémon into background/human art and never generate a complete flattened screen with Pokémon + UI + localized text baked together. Environment/human/UI project art must stay reusable and layered. Pokémon continues to use the pinned P6/D-036 provenance/resource path and the public repository remains metadata-only for rights-bound source media.
 
-PR #140 currently contains the remote-safe foundation:
+PR #140 now contains the remote-safe foundation **and the first retained player-facing layer pass**:
 
 - isolated `godot/` project with `viewport` + integer scaling;
-- opening and windbreak event scene shell;
+- exactly opening and windbreak event surfaces;
 - separated environment/human/Pokémon/foreground/UI/transition ownership;
 - P6 Beedrill local materialization slot with no generated fallback Pokémon;
-- a parity fixture copied from the current P8 slice pack;
+- parity fixture copied from the current P8 slice pack;
 - minimal GDScript direct-choice resolver and SaveEnvelope V1-shaped JSON round trip;
-- headless parity smoke script;
-- exact local Codex/Godot handoff in `docs/P8_3_GODOT_ARCHITECTURE_SPIKE.md`.
+- retained project-owned opening environment/traveler/foreground resources;
+- retained project-owned orchard far/mid/keeper/foreground resources;
+- reusable square pixel Control skin + compact vitality/fatigue/provisions HUD icons;
+- developer-only spike/result-ID text removed from the player-facing surfaces;
+- deterministic parity/save smoke plus layered visual-contract smoke;
+- exact local Godot/Codex owner-capture handoff in `docs/P8_3_GODOT_ARCHITECTURE_SPIKE.md`.
 
-Remote work must **not** claim a runtime PASS until an actual Godot executable runs the smoke. Next evidence is local: materialize the approved P6 Beedrill asset, run the headless parity smoke, replace layout-only art with retained layered project-owned art, capture the two 390×844 Godot screenshots, and obtain the owner architecture decision.
+Validated Godot head before this handoff passed the pinned official Godot `4.6.3-stable` workflow with clean boot, deterministic parity/save smoke, and the new retained-layer visual-contract smoke all green. The current final head must remain green before owner capture.
+
+**Next incomplete gate is no longer remote architecture scaffolding.** Materialize the approved P6 Beedrill asset locally, run the two Godot smokes, capture the 390×844 opening and real-Beedrill windbreak screenshots from the retained layers, confirm foreground occlusion/depth, and obtain the owner Godot-vs-web architecture decision. Do not port more gameplay screens first.
 
 ## What P8.2 already implemented — do not blindly repeat
 
@@ -241,7 +247,7 @@ web language           = strict TypeScript
 web presentation       = Preact 10.x only
 web save storage       = IndexedDB
 Godot spike save       = local JSON using SaveEnvelope V1 outer contract
-unit tests             = Vitest + bounded Godot headless parity smoke
+unit tests             = Vitest + bounded Godot headless parity/save + visual-contract smokes
 browser tests          = Playwright (existing web oracle only)
 local authoring        = Python stdlib orchestrator + Codex CLI
 remote authoring       = GitHub issues/actions + owner self-hosted runner
