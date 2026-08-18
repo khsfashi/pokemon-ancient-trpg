@@ -30,7 +30,7 @@ test('chooses a cosmetic portrait and keeps a persistent expedition HUD across s
   await expect(hud).toBeVisible();
   await expect(hud.locator('.portrait-herbalist')).toBeVisible();
   await expect(hud.getByText('Vitality', { exact: true })).toBeVisible();
-  await expect(hud.getByText('Fatigue / stamina · Ready', { exact: true })).toBeVisible();
+  await expect(hud.getByText('Fatigue / stamina · 0/2', { exact: true })).toBeVisible();
   await expect(hud.getByText('Fear · Steady', { exact: true })).toBeVisible();
   await expect(hud.getByText('Injuries · None', { exact: true })).toBeVisible();
   await expect(hud.getByText(/Load 7\/[5-7]/)).toBeVisible();
@@ -81,7 +81,7 @@ test('Korean HUD explains exertion, equipment readiness, and lethal-state rules 
 
   const hud = page.locator('.expedition-hud');
   await expect(hud.getByText('활력(체력)', { exact: true })).toBeVisible();
-  await expect(hud.getByText('피로(스태미나) · 정상', { exact: true })).toBeVisible();
+  await expect(hud.getByText('피로(스태미나) · 0/2', { exact: true })).toBeVisible();
   await expect(hud.getByText('하중 7/', { exact: false })).toBeVisible();
   await expect(hud.getByText('공격', { exact: true })).toBeVisible();
   await expect(hud.getByText('방어', { exact: true })).toBeVisible();
