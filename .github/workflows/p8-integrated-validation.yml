@@ -152,6 +152,14 @@ jobs:
           --project=phone-chromium
           --project=phone-webkit
 
+      - name: Upload P8.3 V2 opening owner-review screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-3-opening-v2-390x844
+          path: test-results/p8-3-opening-v2-390x844.png
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Production Chromium/WebKit full-run and bilingual proof
         run: npm run test:browser:p8-exit
 
