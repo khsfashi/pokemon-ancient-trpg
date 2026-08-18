@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "status": "pass",
+  "characters": 5782,
+  "paragraphs": 19,
+  "target_characters": 5600,
+  "target_paragraphs": 19,
+  "failures": [],
+  "duplicate_samples": [],
+  "checked_at": "2026-08-18T07:35:00+00:00",
+  "model_qa_notes": [
+    "독침붕의 자세·앞다리 침·복부 침·몸 회전·비행 고도와 거리 변화를 플레이어가 판단 가능한 순서로 제시했다.",
+    "열두 걸음→여덟 걸음→약 다섯 걸음의 경고 접근과 후퇴 반응을 구체화해 위험선과 viable counterplay를 설명문 없이 보여 주었다.",
+    "두 번째 날개 진동과 환경 반응을 추가하되 종 전체의 집단 행동 규칙으로 일반화하지 않았다.",
+    "돌담/굵은 줄기의 물리적 가림과 성긴 수풀의 한계를 구분했으며 직접 전투나 전리품 루프로 확장하지 않았다."
+  ],
+  "worker": "chatgpt"
+}
