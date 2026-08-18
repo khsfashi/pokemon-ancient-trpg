@@ -1,0 +1,40 @@
+name: Narrative Authoring Validation
+
+on:
+  pull_request:
+    paths:
+      - 'content/authoring/**'
+      - 'tools/narrative_authoring.py'
+      - 'tools/test_narrative_authoring.py'
+      - 'docs/P8_3_*'
+      - 'docs/DECISION_D037_*'
+      - '.github/workflows/narrative-authoring-*.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'content/authoring/**'
+      - 'tools/narrative_authoring.py'
+      - 'tools/test_narrative_authoring.py'
+      - 'docs/P8_3_*'
+      - 'docs/DECISION_D037_*'
+      - '.github/workflows/narrative-authoring-*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Compile orchestrator and tests
+        run: python -m py_compile tools/narrative_authoring.py tools/test_narrative_authoring.py
+      - name: Run orchestrator unit tests
+        run: python -m unittest tools/test_narrative_authoring.py -v
+      - name: Validate persisted authoring artifacts
+        run: python tools/narrative_authoring.py validate

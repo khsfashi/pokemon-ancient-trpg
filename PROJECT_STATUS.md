@@ -1,28 +1,31 @@
 # Project Status
 
-Last operational handoff update: **2026-08-18 12:05 KST**
+Last operational handoff update: **2026-08-18 14:20 KST**
 
-This file is the concise operational handoff. Durable authority remains in `docs/DECISIONS.md`, phase contracts, owner-playtest contracts, and live GitHub state. If this file and live state disagree, reconcile this file before advancing.
+This file is the concise operational handoff. Durable authority remains in owner decisions/contracts and live GitHub state. If this file disagrees with live state, reconcile it before advancing.
 
 ## Current continuation command
 
-The repository owner intentionally advances work with short requests such as:
+The owner intentionally advances work with short requests such as:
 
 ```text
 @GitHub pokemon-ancient-trpg 다음 작업 진행해줘
 ```
 
-For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, this file, live PR/issue state, active issue **#118**, and `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`, then finish the first incomplete unblocked P8.2 work.
+For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, this file, issue **#128**, issue **#118**, D-037 and the P8.3 contracts, then inspect live PR/CI state and continue the first incomplete P8.3 slice.
+
+Do **not** resume P9 merely because the former P8.2 automated gate was green. The final owner replay explicitly rejected the deployed product experience.
 
 ## Binding product direction
 
 - Unofficial, non-commercial Pokémon fan-made mobile text RPG/TRPG.
-- Pre-regional-civilization proto-Kanto with an iron-age / medieval-fantasy-like ordinary material baseline and narrow Pokémon-dependent technology/culture islands.
+- Pre-regional-civilization proto-Kanto; local craft/culture may be sophisticated while regional integration remains primitive.
 - Exactly three visible companion slots; `0/3` remains a valid and fully playable complete run.
-- The human player must have a satisfying adventurer loop without a Pokémon companion: preparation, equipment, survival, exploration, gathering, repair, barter, risk management and return-to-settlement progression.
-- Pokémon remain the setting's defining world force, not generic fantasy monsters.
-- P3 survival/inventory rules and P5 deterministic event/state/RNG rules remain authoritative.
-- P6/P7 resource, cache, PWA, save and mobile performance boundaries remain binding unless explicitly revised with measured evidence.
+- Human-only adventurer play must be satisfying through preparation, equipment, survival, exploration, gathering, repair, barter, risk management and return-to-settlement progression.
+- Pokémon remain the setting's defining world force, not generic fantasy monsters or names pasted onto a generic medieval RPG.
+- Narrative prose is now treated as a **primary gameplay production system**. Large content jobs must use bounded, reviewable authoring sessions rather than giant one-shot generation.
+- Visual direction is now a coherent **high-resolution pixel-art language that still reads strongly medieval/pre-modern**, including illustrations, portraits, Pokémon presentation, items/equipment, HUD icons and ornament.
+- Typography should visually belong to that pixel-game language while preserving multi-minute Korean reading comfort.
 
 ## Phase status
 
@@ -36,103 +39,137 @@ P5 Narrative world-event engine       COMPLETE
 P6 Resource/asset/provenance/budget   COMPLETE
 P7 Technical architecture / web-PWA   COMPLETE
 P8 First playable vertical slice      TECHNICAL COMPLETE
-P8.1 first owner remediation          BATCHES 01-03 COMPLETE / #114 CLOSED
-P8.2 second owner remediation         BATCHES 04-09 MERGED / BATCH 10 AUTOMATED GATE IMPLEMENTED / FINAL CI + OWNER REPLAY / #118 / BLOCKING P9
+P8.1 first owner remediation          COMPLETE / #114 CLOSED
+P8.2 second owner remediation         AUTOMATED GATE COMPLETE / OWNER REPLAY REJECTED / #118 OPEN
+P8.3 product-feel + authoring reset   ACTIVE / #128 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
 
-## P8.2 owner remediation
+## What P8.2 already implemented — do not blindly repeat
 
-Active issue: **#118 — Owner playtest expansion: visuals, motion, profile, equipment and adventurer loop**.
+- PR #120 / Batch 04 — progressive narrative reveal, tap isolation, rapid-submit guard, scene/travel transitions, reduced motion.
+- PR #121 / Batch 05 — portrait selection and expedition/profile HUD.
+- PR #122 / Batch 06 — stable on-demand scene illustrations and fallbacks.
+- PR #123 / Batch 07 — fiction-first creation and second Korean copy pass.
+- PR #124 / Batch 08 — equipment slots, Load integration and bounded readiness projection.
+- PR #125 / Batch 09 — bounded preparation/risk/camp/return/improvement/barter loop.
+- PR #126 — P8 runtime CI consolidation.
+- PR #127 / Batch 10 — integrated product-gate regression; final automated gate passed.
 
-The owner replay requires the first several minutes to look and move like a real game, read naturally in Korean, communicate player/survival state clearly, use illustrations for immersion, support equipment/preparation/progression at `0/3` companions, and still feel fundamentally Pokémon-shaped.
+The owner replay after #127 nevertheless rejected the product feel. Green browser tests are therefore **not sufficient evidence** for P8.3 exit.
 
-Implemented and merged — do not repeat:
+## Owner replay rejection — binding problems
 
-- **PR #120 / Batch 04** — progressive narrative reveal, tap-to-complete/advance isolation, rapid-submit guard, scene/travel transitions, reduced-motion parity.
-- **PR #121 / Batch 05** — portrait selection, persistent expedition/profile HUD, Vitality/Fatigue/Fear/Injuries/resources/Load/locality/companions, danger semantics.
-- **PR #122 / Batch 06** — stable on-demand scene illustrations, existing P6 loader/cache reuse, missing-media fallback, first-run visual identities.
-- **PR #123 / Batch 07** — three formative memory scenes, concise action choices, second native-Korean pass, stable-ID/lifepath preservation, questionnaire/proof-language regression guards.
-- **PR #124 / Batch 08** — stable notable equipment IDs, five slots, D-028 carried Load integration, bounded Attack/Defense/Field readiness, cached derived projection, `p8-authority-v2` save migration, Korean equipment HUD.
-- **PR #125 / Batch 09** — bounded settlement/field risk/camp/return/improvement/barter loop, real locality travel, persisted Vitality/Fatigue/Injury pressure, Rattata-linked salvage ethics, zero-companion progression.
-- **PR #126 / CI consolidation** — replaced the historical P7/P8/P8.2 workflow fan-out with one `P8 Integrated Validation` runtime gate while preserving contract, unit, build, Chromium/WebKit, save, PWA and offline coverage.
+1. First screen feels like a PowerPoint opening slide rather than a game.
+2. Korean prose remains tangled/non-native/translation-like; typography and line breaking are unattractive.
+3. HUD is scroll-heavy, text-only and not glanceable. `모험가 이야기` hierarchy/reference was not materially reflected. Important state needs icon language and a controlled narrative scroll region.
+4. Opening `Load 7/5 overloaded` is a bug/rules-mismatch candidate that must be audited.
+5. Transitions are too clean/modern/fast; scene art/text shadow layering can reduce text readability.
+6. Current imagery is too clean/modern/presentation-like.
+7. The prepare/risk/return/grow loop does not yet create compelling advancement motivation; choices lack sufficient requirements/gates and route/destination pressure.
+8. Pokémon ecology/threat is not vivid enough in prose. Physical posture, motion, sound, distance, environment reaction and danger must be concretely described.
+9. The first several minutes are not compelling enough to continue.
 
-Batch 09 authoritative behavior:
+## Active issue — #128 P8.3
 
-- bounded six-step settlement -> field risk -> camp -> return -> equipment improvement -> barter loop;
-- ordinary Materials and Provisions gathering before departure;
-- mutually exclusive Rattata-linked pursuit/withdrawal decision with no Pokémon body loot or kill XP;
-- real authoritative `reedbank-settlement -> old-levee -> reedbank-settlement` travel state;
-- saved P3 Vitality/Fatigue/Injury pressure projected into HUD/preparation UI;
-- P3 Fatigue uses the fixed `Ready/Tired/Exhausted` three-stage contract (`0..2`), not a Will-derived meter;
-- camp consumes Provisions and, when injured, Remedies; restores up to 2 Vitality, reduces Fatigue by one stage, treats one Injury, then returns to Reedbank;
-- Injury pressure reduces comfortable Load through the existing equipment projection;
-- equipment improvement spends Materials and equips the already-carried hide buckler;
-- local direct Provisions -> Remedies barter, no universal currency;
-- dangerous old-levee checkpoint and final loop state persist across reload/resume;
-- zero-companion viability and one-shot/bounded resource opportunities are regression-tested.
+Issue #128 owns both the product-feel reset and the reusable narrative production system.
 
-Audits:
+Binding decision: `docs/DECISION_D037_NARRATIVE_FACTORY_AND_PIXEL_ART.md`.
 
-- `docs/P8_2_BATCH_04_AUDIT.md`
-- `docs/P8_2_BATCH_05_AUDIT.md`
-- `docs/P8_2_BATCH_06_AUDIT.md`
-- `docs/P8_2_BATCH_07_AUDIT.md`
-- `docs/P8_2_BATCH_08_AUDIT.md`
-- `docs/P8_2_BATCH_09_AUDIT.md`
-- `docs/P8_2_BATCH_10_AUDIT.md`
-- `docs/CI_VALIDATION_CONSOLIDATION.md`
+Key contracts:
 
-## Exact next work
+- `docs/P8_3_NARRATIVE_AUTHORING_FACTORY.md`
+- `docs/P8_3_AUTHORING_CANON_DIGEST.md`
+- `docs/P8_3_PIXEL_ART_AND_TYPOGRAPHY_DIRECTION.md`
 
-### Batch 10 — integrated automated + owner product gate — ACTIVE
+### Narrative factory
 
-The Batch 10 branch adds one longitudinal Chromium/WebKit 390x844 acceptance that crosses the combined product surfaces in a single persisted journey:
+GitHub is the durable remote queue. The owner must be able to trigger work without touching the local terminal.
 
-- native-Korean remembered-scene creation;
-- non-default portrait selection and persistence;
-- opening illustration + persistent expedition HUD;
-- pending-event save/reload;
-- full seven-transition zero-companion run;
-- post-return gathering/foraging/Rattata risk/camp/repair/barter loop;
-- dangerous field-checkpoint reload;
-- hide-buckler equipment improvement;
-- resource/survival/equipment/derived-readiness persistence across final reload;
-- Korean completed-loop copy and mobile overflow proof.
+Target flow:
 
-It is included inside the existing **`P8 Integrated Validation`** job rather than creating a new expensive workflow. Existing motion, illustration-fallback, PWA/offline, resource-contract, save-compatibility and full-run gates remain in that same consolidated job.
+```text
+remote GitHub authoring request
+  -> owner self-hosted runner
+  -> local orchestrator
+  -> fresh Codex CLI process for planning/session unit
+  -> schema + deterministic QA
+  -> commit/push that unit immediately
+  -> next fresh session
+```
 
-**Next automation step:** the final PR head must pass `P8 Integrated Validation`. Do not accept an intermediate green commit.
+If Codex reaches a recognized usage/rate/credit limit:
 
-**Next human/product step after green CI:** run the deployed build and answer the eight Batch 10 owner replay questions in `docs/P8_2_BATCH_10_AUDIT.md`. Only an affirmative owner replay closes #118 and unblocks P9.
+```text
+current stable session -> awaiting_chatgpt
+completed prior sessions stay committed
+ChatGPT @GitHub continuation -> completes the same session ID/context
+local Codex may resume later at the next session
+```
 
-## Architecture / performance guardrails
+Provider changes never create a new story identity.
 
-- No per-frame event scans.
-- No gameplay transition triggered by animation completion alone.
-- Avoid per-character DOM trees for typewriter text; segment once/cache/reuse.
-- Prefer opacity/transform transitions; `will-change` only while needed.
-- Stable resource ID owns image cache identity; do not preload all 151 Pokémon media.
-- Missing optional media cannot change gameplay.
-- Derived Load/combat/HUD summaries update only on relevant authoritative state mutation and should be cached/reused.
-- Save schema changes require explicit versioning/migration coverage.
-- Rapid taps must not double-commit authoritative choices.
-- Batch 10 validation must remain inside the consolidated P8 runtime gate; do not reintroduce batch-per-workflow fan-out.
+Default authoring envelopes:
 
-## Key rule compatibility
+- ordinary scene: ~2,500–4,500 Korean characters;
+- connected encounter arc slice: ~4,000–6,500;
+- worldbuilding slice: ~4,500–7,500;
+- hard default ceiling: 8,000 player-facing Korean characters per session.
 
-- `Vitality Max = 4 + Endurance`; `Vitality 0` means **Incapacitated**, not automatic death.
-- Fatigue is `0 Ready / 1 Tired / 2 Exhausted`; it is not a second stamina-HP bar.
-- Fear and persistent named Injury architecture remain P3-owned; Batch 09 only bridges the pressure needed by this bounded slice through existing saved authority.
-- Equipment belongs to the D-028 individual-item + Load model; expand it rather than creating a parallel inventory.
-- Defeating/killing Pokémon grants no universal XP or generic loot.
-- Ordinary Pokémon do not scale with player equipment/progression.
-- Pokémon companions remain physical relational partners, never inventory.
+A ~200k-character topic should become many sessions. Context injection uses compact canon/style context + continuity ledger + dependency summaries; full prior prose is included only when dependency relevance requires it.
+
+A rejected individual session must be independently revisable while preserving its stable ID and auditing downstream continuity impact.
+
+### Pixel-art / typography direction
+
+The `모험가 이야기` reference means more than “pixel graphics”: **detailed/high-quality pixel graphics should still make the medieval-fantasy atmosphere immediately obvious**.
+
+Unify:
+
+- scene/key illustrations;
+- locality/travel art;
+- Pokémon presentation;
+- human portraits;
+- equipment/items/resources;
+- HUD icons/borders/ornament;
+- relevant effects.
+
+Avoid pixel Pokémon pasted over smooth painterly/vector/photographic scenes and avoid modern glass/card UI around medieval content.
+
+Initial font candidates for licensed evaluation:
+
+- NeoDunggeunmo / Neo둥근모 — HUD, buttons, headings, compact state;
+- NeoDunggeunmo Pro / Neo둥근모 Pro — longer Korean prose candidate.
+
+Both candidates require P6 provenance/version pinning and actual 390px phone readability tests before final adoption.
+
+## Exact P8.3 implementation sequence
+
+1. **Factory contract + schemas + local orchestrator skeleton + lightweight validation.**
+2. **Remote GitHub issue queue -> self-hosted runner -> local Codex worker**, with per-unit push and graceful failure state.
+3. **ChatGPT fallback/handoff implementation** for `awaiting_chatgpt` and plan/session completion using the same files.
+4. **Revision/dependency-impact commands** so one bad session can be regenerated without throwing away an entire topic.
+5. **Pilot topic** through multiple sessions; measure Korean quality, context size and handoff behavior.
+6. **UI/HUD/typography reset** toward game-like, icon-first, pixel-medieval presentation and controlled narrative scrolling.
+7. **Load 7/5 audit/fix** and other owner-replay usability defects.
+8. **Transition + high-resolution pixel illustration pipeline remediation**, including image/text layer separation and generated-art normalization/provenance.
+9. **Progression/gating loop reinforcement**: prepare -> risk -> return -> improve -> unlock with clearer conditions, route pressure and growth motivation.
+10. **Rewrite/regenerate the opening vertical slice through the new authoring factory.**
+11. New owner replay. Only a positive owner decision may close #118/#128 and unblock P9.
+
+## ChatGPT continuation rule for authoring
+
+When a ChatGPT `@GitHub` request mentions an authoring topic or generic continuation:
+
+- first inspect active #128 implementation PRs;
+- then inspect active `authoring/<topic-id>` branches/issues;
+- if a topic contains `awaiting_chatgpt_plan` or a session contains `awaiting_chatgpt`, finish that exact pending unit before inventing a new one;
+- preserve IDs, dependency structure, size budget and context bundle;
+- write the same authoring artifacts and QA metadata expected from Codex;
+- do not regenerate already accepted sessions unless the owner asked for revision/cascade.
 
 ## Core technical handoff
-
-Architecture contract: `p7-architecture-v1`.
 
 ```text
 primary target        = web/PWA
@@ -146,21 +183,10 @@ authoritative runtime = framework-independent pure TypeScript
 save storage          = IndexedDB
 unit tests            = Vitest
 browser tests         = Playwright
+local authoring       = Python stdlib orchestrator + Codex CLI
+remote authoring      = GitHub issues/actions + owner self-hosted runner
 ```
 
-Key references:
+Architecture/performance guardrails from P7/P8 remain binding: no per-frame event scans, no animation-owned gameplay commits, explicit save migration, bounded caches, stable resource IDs and no all-151 media preload.
 
-- `docs/P8_2_OWNER_PLAYTEST_EXPANSION_PLAN.md`
-- `docs/P8_2_BATCH_10_AUDIT.md`
-- `docs/P8_2_BATCH_09_AUDIT.md`
-- `docs/CI_VALIDATION_CONSOLIDATION.md`
-- `docs/PLAYTEST_REMEDIATION.md`
-- `docs/P8_EXIT_AUDIT.md`
-- `docs/P7_EXIT_AUDIT.md`
-- `docs/P6_EXIT_AUDIT.md`
-
-Roadmap remains:
-
-`#1 P0 -> #2 P1 -> #3 P2 -> #4 P3 -> #5 P4 -> #6 P5 -> #12 P6 -> #7 P7 -> #8 P8 -> #114 P8.1 -> #118 P8.2 owner acceptance -> #9 P9 -> #10 P10`
-
-P9 resumes only after **#118 closes** or the owner explicitly changes direction.
+P9 resumes only after **#118/#128 owner acceptance** or an explicit owner direction change.
