@@ -1,0 +1,88 @@
+/* P8.3 Batch 04: presentation-only medieval/pixel scene transition treatment.
+   Authority/save state remains owned by P8BrowserSession; this layer only reacts to
+   the existing transition kind/phase classes emitted by App. */
+
+.scene-stage {
+  isolation: isolate;
+}
+
+.scene-stage::after {
+  content: '';
+  position: absolute;
+  z-index: 40;
+  inset: -3px;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    repeating-linear-gradient(0deg, rgb(7 11 7 / 0%) 0 3px, rgb(7 11 7 / 44%) 3px 5px),
+    repeating-linear-gradient(90deg, rgb(20 28 18 / 0%) 0 5px, rgb(20 28 18 / 22%) 5px 7px),
+    rgb(10 14 9 / 44%);
+  image-rendering: pixelated;
+}
+
+.scene-stage.presentation-out::after {
+  animation: p83-pixel-veil-out 110ms steps(4, end) both;
+}
+
+.scene-stage.presentation-in::after {
+  animation: p83-pixel-veil-in 140ms steps(5, end) both;
+}
+
+.scene-stage.travel.presentation-out::after {
+  background:
+    repeating-linear-gradient(0deg, rgb(5 8 5 / 0%) 0 2px, rgb(5 8 5 / 64%) 2px 5px),
+    repeating-linear-gradient(90deg, rgb(29 37 24 / 0%) 0 7px, rgb(29 37 24 / 34%) 7px 10px),
+    linear-gradient(180deg, rgb(9 12 8 / 72%), rgb(4 7 4 / 92%));
+  animation-name: p83-travel-veil-out;
+  animation-duration: 180ms;
+  animation-timing-function: steps(6, end);
+}
+
+.scene-stage.travel.presentation-in::after {
+  background:
+    repeating-linear-gradient(0deg, rgb(5 8 5 / 0%) 0 2px, rgb(5 8 5 / 58%) 2px 5px),
+    repeating-linear-gradient(90deg, rgb(29 37 24 / 0%) 0 7px, rgb(29 37 24 / 28%) 7px 10px),
+    linear-gradient(180deg, rgb(4 7 4 / 86%), rgb(12 17 10 / 58%));
+  animation-name: p83-travel-veil-in;
+  animation-duration: 220ms;
+  animation-timing-function: steps(7, end);
+}
+
+@keyframes p83-pixel-veil-out {
+  0% { opacity: 0; }
+  40% { opacity: 0.28; }
+  75% { opacity: 0.64; }
+  100% { opacity: 0.9; }
+}
+
+@keyframes p83-pixel-veil-in {
+  0% { opacity: 0.82; }
+  35% { opacity: 0.55; }
+  70% { opacity: 0.22; }
+  100% { opacity: 0; }
+}
+
+@keyframes p83-travel-veil-out {
+  0% { opacity: 0; filter: contrast(1); }
+  30% { opacity: 0.36; filter: contrast(1.03); }
+  65% { opacity: 0.72; filter: contrast(1.08); }
+  100% { opacity: 1; filter: contrast(1.12); }
+}
+
+@keyframes p83-travel-veil-in {
+  0% { opacity: 1; filter: contrast(1.12); }
+  30% { opacity: 0.78; filter: contrast(1.08); }
+  65% { opacity: 0.38; filter: contrast(1.04); }
+  100% { opacity: 0; filter: contrast(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-stage::after,
+  .scene-stage.presentation-out::after,
+  .scene-stage.presentation-in::after,
+  .scene-stage.travel.presentation-out::after,
+  .scene-stage.travel.presentation-in::after {
+    display: none;
+    animation: none;
+  }
+}
