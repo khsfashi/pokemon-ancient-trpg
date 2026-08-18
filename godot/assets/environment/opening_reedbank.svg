@@ -1,46 +1,88 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" shape-rendering="crispEdges">
   <!-- Project-owned Pokemon-free opening environment. Runtime title/UI stays in Godot Controls. -->
-  <rect width="390" height="844" fill="#171b20"/>
-  <rect y="0" width="390" height="156" fill="#27313a"/>
-  <rect y="156" width="390" height="112" fill="#394049"/>
-  <rect y="268" width="390" height="112" fill="#55534a"/>
-  <rect x="0" y="220" width="390" height="18" fill="#242a2d"/>
-  <polygon points="0,302 56,238 110,294 158,222 224,298 284,232 346,294 390,254 390,390 0,390" fill="#252d2b"/>
-  <polygon points="0,336 72,294 142,338 204,284 268,342 330,296 390,330 390,414 0,414" fill="#313a31"/>
-  <rect x="0" y="382" width="390" height="462" fill="#32362d"/>
-  <rect x="0" y="430" width="390" height="414" fill="#3f4333"/>
-  <polygon points="148,844 238,844 220,650 209,550 198,470 186,470 174,552 162,650" fill="#77634a"/>
-  <polygon points="164,844 222,844 209,650 201,552 194,492 188,492 180,552 172,650" fill="#8a7354"/>
-  <!-- Reedbank settlement silhouettes -->
-  <rect x="26" y="412" width="58" height="62" fill="#252821"/>
-  <polygon points="18,414 55,382 92,414" fill="#1c201d"/>
-  <rect x="38" y="430" width="11" height="18" fill="#8c744e"/>
-  <rect x="58" y="430" width="11" height="18" fill="#8c744e"/>
-  <rect x="302" y="400" width="62" height="70" fill="#252821"/>
-  <polygon points="292,402 333,370 374,402" fill="#1c201d"/>
-  <rect x="316" y="422" width="12" height="19" fill="#9b794d"/>
-  <rect x="338" y="422" width="12" height="19" fill="#9b794d"/>
-  <rect x="92" y="432" width="45" height="46" fill="#2a2d25"/>
-  <polygon points="86,434 114,408 144,434" fill="#1d211d"/>
-  <!-- River and timber bridge -->
-  <rect x="0" y="488" width="136" height="98" fill="#354a50"/>
-  <rect x="0" y="504" width="136" height="8" fill="#4d6264"/>
-  <rect x="0" y="532" width="136" height="7" fill="#42585d"/>
-  <rect x="84" y="482" width="118" height="12" fill="#5d4a36"/>
-  <rect x="96" y="494" width="10" height="56" fill="#40372d"/>
-  <rect x="176" y="494" width="10" height="56" fill="#40372d"/>
-  <!-- Forest masses -->
-  <g fill="#202a25">
-    <rect x="0" y="550" width="58" height="294"/><rect x="332" y="530" width="58" height="314"/>
-    <rect x="18" y="520" width="32" height="64"/><rect x="342" y="498" width="30" height="70"/>
+  <rect width="390" height="844" fill="#15191c"/>
+  <rect width="390" height="108" fill="#202a32"/>
+  <rect y="108" width="390" height="92" fill="#2b3438"/>
+  <rect y="200" width="390" height="118" fill="#4b4c43"/>
+  <rect y="318" width="390" height="526" fill="#30372f"/>
+  <!-- cold dawn bands -->
+  <rect y="92" width="390" height="4" fill="#6d6b5b"/>
+  <rect y="122" width="390" height="3" fill="#55584f"/>
+  <rect y="168" width="390" height="3" fill="#6f6a55"/>
+  <g fill="#242d2d">
+    <polygon points="0,258 42,214 79,248 119,196 155,250 203,204 246,252 302,196 350,246 390,216 390,326 0,326"/>
   </g>
-  <g fill="#2c382d">
-    <rect x="0" y="590" width="82" height="254"/><rect x="314" y="584" width="76" height="260"/>
-    <rect x="14" y="560" width="44" height="50"/><rect x="330" y="548" width="42" height="52"/>
+  <g fill="#303832">
+    <polygon points="0,292 58,256 104,288 158,246 209,294 264,254 318,288 390,248 390,350 0,350"/>
   </g>
-  <!-- Sparse torch lights, environment-only -->
-  <rect x="112" y="456" width="6" height="20" fill="#5b4630"/>
-  <rect x="111" y="450" width="8" height="8" fill="#d49a52"/>
-  <rect x="273" y="452" width="6" height="22" fill="#5b4630"/>
-  <rect x="272" y="446" width="8" height="8" fill="#d49a52"/>
+  <!-- river -->
+  <rect x="0" y="418" width="390" height="108" fill="#31454b"/>
+  <rect y="436" width="390" height="5" fill="#53686a"/>
+  <rect y="468" width="390" height="4" fill="#435a60"/>
+  <rect y="504" width="390" height="4" fill="#253b42"/>
+  <!-- far settlement palisade -->
+  <g fill="#252620">
+    <rect x="10" y="350" width="124" height="52"/>
+    <rect x="251" y="342" width="129" height="60"/>
+  </g>
+  <g fill="#1b1e1d">
+    <polygon points="7,352 41,323 76,352"/>
+    <polygon points="54,352 91,317 128,352"/>
+    <polygon points="248,344 286,311 324,344"/>
+    <polygon points="304,344 341,314 378,344"/>
+  </g>
+  <g fill="#6c5738">
+    <rect x="22" y="365" width="9" height="21"/><rect x="94" y="363" width="10" height="23"/>
+    <rect x="271" y="358" width="9" height="22"/><rect x="345" y="357" width="10" height="23"/>
+  </g>
+  <g fill="#39362b">
+    <rect x="0" y="392" width="146" height="9"/><rect x="246" y="392" width="144" height="9"/>
+    <rect x="12" y="371" width="6" height="31"/><rect x="40" y="370" width="6" height="32"/>
+    <rect x="68" y="370" width="6" height="32"/><rect x="118" y="370" width="6" height="32"/>
+    <rect x="264" y="368" width="6" height="34"/><rect x="294" y="368" width="6" height="34"/>
+    <rect x="324" y="368" width="6" height="34"/><rect x="366" y="368" width="6" height="34"/>
+  </g>
+  <!-- timber bridge and landing -->
+  <rect x="98" y="404" width="196" height="14" fill="#574430"/>
+  <rect x="108" y="418" width="8" height="50" fill="#332c25"/>
+  <rect x="276" y="418" width="8" height="50" fill="#332c25"/>
+  <g fill="#765a39">
+    <rect x="104" y="406" width="26" height="6"/><rect x="136" y="406" width="26" height="6"/>
+    <rect x="168" y="406" width="26" height="6"/><rect x="200" y="406" width="26" height="6"/>
+    <rect x="232" y="406" width="26" height="6"/><rect x="264" y="406" width="24" height="6"/>
+  </g>
+  <!-- torch points -->
+  <g>
+    <rect x="87" y="367" width="5" height="35" fill="#4b3828"/><rect x="85" y="359" width="9" height="9" fill="#c8843e"/><rect x="87" y="356" width="5" height="6" fill="#edba63"/>
+    <rect x="297" y="365" width="5" height="37" fill="#4b3828"/><rect x="295" y="357" width="9" height="9" fill="#c8843e"/><rect x="297" y="354" width="5" height="6" fill="#edba63"/>
+  </g>
+  <!-- near bank -->
+  <rect y="526" width="390" height="318" fill="#31372d"/>
+  <rect y="566" width="390" height="278" fill="#3b402f"/>
+  <polygon points="128,844 261,844 244,728 226,644 211,584 181,584 165,646 146,728" fill="#62523c"/>
+  <polygon points="151,844 238,844 226,732 214,646 204,596 188,596 177,646 164,732" fill="#7a6647"/>
+  <!-- worn wheel tracks -->
+  <g fill="#4e4637">
+    <polygon points="154,844 166,844 181,694 185,610 179,610 172,694"/>
+    <polygon points="222,844 234,844 218,694 211,610 205,610 212,694"/>
+  </g>
+  <!-- stone path scatter -->
+  <g fill="#6d6654">
+    <rect x="174" y="694" width="13" height="5"/><rect x="205" y="718" width="18" height="6"/>
+    <rect x="164" y="752" width="17" height="6"/><rect x="216" y="782" width="19" height="7"/>
+    <rect x="184" y="812" width="22" height="7"/>
+  </g>
+  <!-- tree masses -->
+  <g fill="#1d2822">
+    <rect x="0" y="534" width="54" height="310"/><rect x="336" y="522" width="54" height="322"/>
+    <rect x="18" y="504" width="30" height="86"/><rect x="344" y="492" width="28" height="92"/>
+  </g>
+  <g fill="#29372a">
+    <rect x="0" y="592" width="82" height="252"/><rect x="308" y="576" width="82" height="268"/>
+    <rect x="8" y="548" width="48" height="72"/><rect x="330" y="532" width="48" height="76"/>
+  </g>
+  <g fill="#43503a">
+    <rect x="18" y="574" width="32" height="18"/><rect x="54" y="614" width="18" height="12"/>
+    <rect x="340" y="560" width="32" height="18"/><rect x="316" y="610" width="18" height="12"/>
+  </g>
 </svg>

@@ -1,38 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="390" height="610" viewBox="0 0 390 610" shape-rendering="crispEdges">
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" shape-rendering="crispEdges">
   <!-- Project-owned transparent midground: windbreak, route markers, working orchard props. -->
-  <g>
-    <g fill="#3b3328">
-      <rect x="20" y="188" width="18" height="252"/><rect x="78" y="176" width="18" height="264"/>
-      <rect x="136" y="194" width="18" height="246"/><rect x="194" y="182" width="18" height="258"/>
-    </g>
-    <g fill="#32402f">
-      <rect x="0" y="154" width="58" height="54"/><rect x="54" y="142" width="64" height="58"/>
-      <rect x="114" y="158" width="60" height="54"/><rect x="170" y="146" width="66" height="58"/>
-    </g>
-    <g fill="#43513a">
-      <rect x="8" y="136" width="42" height="36"/><rect x="64" y="124" width="48" height="38"/>
-      <rect x="122" y="140" width="44" height="36"/><rect x="180" y="128" width="48" height="38"/>
-    </g>
+  <!-- windbreak trunks and dense canopies -->
+  <g fill="#332d25">
+    <rect x="18" y="178" width="18" height="292"/><rect x="76" y="166" width="18" height="304"/>
+    <rect x="134" y="184" width="18" height="286"/><rect x="192" y="172" width="18" height="298"/>
   </g>
-  <!-- Warning stake and cloth -->
-  <rect x="224" y="302" width="7" height="130" fill="#4b3828"/>
-  <rect x="231" y="310" width="52" height="15" fill="#7e302c"/>
-  <rect x="231" y="325" width="34" height="10" fill="#5f2523"/>
-  <rect x="265" y="325" width="12" height="6" fill="#6c2926"/>
-  <!-- Fruit crate and loose work tools -->
-  <rect x="118" y="424" width="72" height="44" fill="#61492f"/>
-  <rect x="125" y="431" width="58" height="7" fill="#98724a"/>
-  <rect x="125" y="451" width="58" height="7" fill="#98724a"/>
-  <rect x="96" y="404" width="5" height="74" fill="#4a3829" transform="rotate(-13 96 404)"/>
-  <!-- Stone wall face -->
-  <g fill="#6b6655">
-    <rect x="250" y="344" width="140" height="20"/><rect x="236" y="366" width="154" height="20"/>
-    <rect x="250" y="388" width="140" height="20"/><rect x="238" y="410" width="152" height="20"/>
-    <rect x="252" y="432" width="138" height="20"/>
+  <g fill="#2d3b2d">
+    <rect x="0" y="138" width="58" height="76"/><rect x="52" y="124" width="66" height="82"/>
+    <rect x="112" y="142" width="64" height="74"/><rect x="168" y="128" width="68" height="82"/>
   </g>
-  <g fill="#4e4b40">
-    <rect x="282" y="344" width="5" height="20"/><rect x="334" y="344" width="5" height="20"/>
-    <rect x="264" y="366" width="5" height="20"/><rect x="318" y="366" width="5" height="20"/>
-    <rect x="300" y="388" width="5" height="20"/><rect x="350" y="388" width="5" height="20"/>
+  <g fill="#40513a">
+    <rect x="8" y="118" width="42" height="42"/><rect x="64" y="104" width="48" height="46"/>
+    <rect x="122" y="122" width="44" height="42"/><rect x="180" y="108" width="48" height="46"/>
+  </g>
+  <g fill="#576149">
+    <rect x="18" y="112" width="16" height="8"/><rect x="76" y="98" width="18" height="8"/>
+    <rect x="136" y="116" width="16" height="8"/><rect x="196" y="102" width="18" height="8"/>
+  </g>
+  <!-- warning stake and torn cloth -->
+  <rect x="224" y="296" width="7" height="154" fill="#493629"/>
+  <rect x="220" y="294" width="15" height="8" fill="#6a5138"/>
+  <rect x="231" y="306" width="58" height="14" fill="#7a302c"/>
+  <rect x="231" y="320" width="44" height="10" fill="#642723"/>
+  <rect x="275" y="320" width="10" height="6" fill="#56211e"/>
+  <!-- crate, basket, ladder and pruning tools -->
+  <rect x="108" y="456" width="78" height="50" fill="#5c452f"/>
+  <rect x="116" y="464" width="62" height="7" fill="#99724a"/>
+  <rect x="116" y="486" width="62" height="7" fill="#99724a"/>
+  <rect x="129" y="454" width="5" height="52" fill="#3d3027"/>
+  <rect x="162" y="454" width="5" height="52" fill="#3d3027"/>
+  <g fill="#715235">
+    <rect x="72" y="470" width="28" height="24"/><rect x="77" y="464" width="18" height="7"/>
+  </g>
+  <rect x="86" y="412" width="5" height="94" fill="#453426" transform="rotate(-10 86 412)"/>
+  <rect x="92" y="416" width="5" height="86" fill="#453426" transform="rotate(-10 92 416)"/>
+  <g fill="#7d623f">
+    <rect x="89" y="430" width="18" height="4" transform="rotate(-10 89 430)"/>
+    <rect x="88" y="446" width="18" height="4" transform="rotate(-10 88 446)"/>
+    <rect x="87" y="462" width="18" height="4" transform="rotate(-10 87 462)"/>
+  </g>
+  <!-- nearer stone wall -->
+  <g fill="#676254">
+    <rect x="246" y="378" width="144" height="22"/><rect x="232" y="402" width="158" height="22"/>
+    <rect x="246" y="426" width="144" height="22"/><rect x="234" y="450" width="156" height="22"/>
+    <rect x="250" y="474" width="140" height="22"/>
+  </g>
+  <g fill="#44443c">
+    <rect x="280" y="378" width="5" height="22"/><rect x="332" y="378" width="5" height="22"/>
+    <rect x="258" y="402" width="5" height="22"/><rect x="312" y="402" width="5" height="22"/><rect x="362" y="402" width="5" height="22"/>
+    <rect x="294" y="426" width="5" height="22"/><rect x="348" y="426" width="5" height="22"/>
+    <rect x="270" y="450" width="5" height="22"/><rect x="326" y="450" width="5" height="22"/>
+  </g>
+  <g fill="#8d8468">
+    <rect x="252" y="380" width="22" height="4"/><rect x="304" y="380" width="22" height="4"/>
+    <rect x="238" y="404" width="18" height="4"/><rect x="286" y="404" width="20" height="4"/>
+  </g>
+  <!-- fence posts -->
+  <g fill="#4a3728">
+    <rect x="16" y="548" width="8" height="98"/><rect x="206" y="532" width="8" height="102"/>
+  </g>
+  <g fill="#684c31">
+    <rect x="20" y="568" width="190" height="7"/><rect x="20" y="606" width="190" height="7"/>
   </g>
 </svg>

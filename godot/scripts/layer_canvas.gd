@@ -14,6 +14,8 @@ const LAYER_PATHS := {
 	LayerKind.FOREGROUND: "res://assets/foreground/orchard_foliage.svg",
 }
 
+const RETAINED_SIZE := Vector2(390, 844)
+
 @export var layer_kind: LayerKind = LayerKind.BACKGROUND
 
 func _ready() -> void:
@@ -39,19 +41,16 @@ func _build_retained_layer() -> void:
 	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	rect.stretch_mode = TextureRect.STRETCH_SCALE
 	rect.position = Vector2.ZERO
-	rect.size = Vector2(390, 844) if _is_opening_layer() else Vector2(390, 610)
+	rect.size = RETAINED_SIZE
 	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(rect)
-
-func _is_opening_layer() -> bool:
-	return layer_kind in [LayerKind.OPENING_BACKGROUND, LayerKind.OPENING_HUMAN, LayerKind.OPENING_FOREGROUND]
 
 func _add_missing_asset_marker(path: String) -> void:
 	# This is deliberately not replacement art: project-owned retained layers are required.
 	var marker := ColorRect.new()
 	marker.color = Color("#3f2430")
 	marker.position = Vector2.ZERO
-	marker.size = Vector2(390, 844) if _is_opening_layer() else Vector2(390, 610)
+	marker.size = RETAINED_SIZE
 	marker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(marker)
 

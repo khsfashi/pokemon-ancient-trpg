@@ -30,6 +30,7 @@ func _init() -> void:
 		_require_layer_separation(path)
 
 	var main_source := FileAccess.get_file_as_string("res://scripts/main.gd")
+	var layer_source := FileAccess.get_file_as_string("res://scripts/layer_canvas.gd")
 	var encounter_source := FileAccess.get_file_as_string("res://scripts/pokemon_encounter_sprite.gd")
 	_assert_true(not main_source.contains("P8.3 GODOT ARCHITECTURE SPIKE"), "developer spike label leaked into player-facing UI")
 	_assert_true(main_source.contains("LOCAL_BEEDRILL_ATLAS_PATH"), "P6 local Pokemon atlas slot must remain explicit")
@@ -37,6 +38,9 @@ func _init() -> void:
 	_assert_true(main_source.contains("PokemonEncounterSpriteScript"), "direct encounter must use the bounded P6 atlas adapter")
 	_assert_true(main_source.contains("PokemonLayer"), "Pokemon must remain an independent runtime layer")
 	_assert_true(main_source.contains("LayerKind.FOREGROUND, 40"), "foreground occlusion layer must remain above Pokemon z=30")
+	_assert_true(main_source.contains("EventStoryOverlay"), "event prose/choices must remain an overlay over the full-height world")
+	_assert_true(not main_source.contains("Rect2(12, 493, 366, 339)"), "rejected floating article/card panel geometry returned")
+	_assert_true(layer_source.contains("RETAINED_SIZE := Vector2(390, 844)"), "event world layers must retain the full 390x844 game screen")
 	_assert_true(encounter_source.contains("region_rect"), "P6 encounter atlas must select frame regions instead of drawing the full atlas")
 	_assert_true(encounter_source.contains("_atlas_texture"), "P6 encounter animation must reuse one decoded atlas texture")
 
