@@ -5,14 +5,18 @@ on:
     paths:
       - 'content/authoring/**'
       - 'tools/narrative_authoring.py'
+      - 'tools/test_narrative_authoring.py'
       - 'docs/P8_3_*'
+      - 'docs/DECISION_D037_*'
       - '.github/workflows/narrative-authoring-*.yml'
   push:
     branches: [main]
     paths:
       - 'content/authoring/**'
       - 'tools/narrative_authoring.py'
+      - 'tools/test_narrative_authoring.py'
       - 'docs/P8_3_*'
+      - 'docs/DECISION_D037_*'
       - '.github/workflows/narrative-authoring-*.yml'
   workflow_dispatch:
 
@@ -28,16 +32,9 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
-      - name: Compile orchestrator
-        run: python -m py_compile tools/narrative_authoring.py
+      - name: Compile orchestrator and tests
+        run: python -m py_compile tools/narrative_authoring.py tools/test_narrative_authoring.py
+      - name: Run orchestrator unit tests
+        run: python -m unittest tools/test_narrative_authoring.py -v
       - name: Validate persisted authoring artifacts
         run: python tools/narrative_authoring.py validate
-      - name: Validate JSON schemas are parseable
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          for path in Path('content/authoring/schemas').glob('*.json'):
-              json.loads(path.read_text(encoding='utf-8'))
-              print('validated', path)
-          PY
