@@ -152,7 +152,9 @@ def main() -> int:
         f"frames={verified['frame_count']} atlas={verified['texture_dimensions']}"
     )
     print(f"Local ignored target: {TARGET_DIR.relative_to(ROOT)}")
-    print("Do not git-add godot/local_assets; run the Godot owner-evidence capture next.")
+    print("Do not git-add godot/local_assets.")
+    print("Next: godot --headless --path godot --import")
+    print("Then run the Godot parity/visual smokes and owner-evidence capture.")
     return 0
 
 
