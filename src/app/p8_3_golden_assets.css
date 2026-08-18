@@ -51,12 +51,20 @@
 }
 
 .golden-hud-identity .portrait-art.compact {
+  display: block;
   width: 42px;
   height: 52px;
   border: 1px solid #735330;
   border-radius: 0;
   background: #201b15;
   box-shadow: none;
+}
+
+/* The earlier CSS-only HUD prototype hid the compact SVG children to replace
+ * them with background images. The explicit golden HUD owns a real portrait
+ * again, so undo that prototype rule only inside this surface. */
+.shell:has(.scene-illustration[data-resource-id='p8.illustration.orchard.windbreak-boundary']) .golden-hud-identity .portrait-art.compact > * {
+  display: initial;
 }
 
 .golden-hud-identity > div {
