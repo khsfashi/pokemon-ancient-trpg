@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { createInitialP8AuthorityState, type P8AuthorityState, type P8CharacterState } from '../src/domain/p8Authority';
+import { deriveP8EquipmentProjection } from '../src/domain/p8Equipment';
 import {
   commitP8PreparationAction,
   deriveP8PreparationProjection,
   type P8PreparationActionId,
 } from '../src/domain/p8Preparation';
+import { deriveP8SurvivalPressure } from '../src/domain/p8Survival';
 
 function character(): P8CharacterState {
   return {
@@ -26,12 +28,13 @@ function character(): P8CharacterState {
 
 function returnedState(
   provisions = 2,
+  remedies = 1,
   includeRattataEvidence = true,
 ): P8AuthorityState {
   const initial = createInitialP8AuthorityState(
     character(),
     'reedbank-settlement',
-    { provisions, remedies: 1, materials: 0 },
+    { provisions, remedies, materials: 0 },
   );
   return {
     ...initial,
@@ -61,93 +64,125 @@ function apply(state: P8AuthorityState, actionId: P8PreparationActionId): P8Auth
   return commitP8PreparationAction(state, actionId);
 }
 
-describe('P8.2 bounded medieval-fantasy preparation loop', () => {
-  it('turns one return into gather -> repair -> forage -> non-lethal hunt -> barter without inflating total carried resources', () => {
+function prepareRoute(state: P8AuthorityState): P8AuthorityState {
+  return apply(apply(state, 'gather.repair-stock'), 'forage.bank-edge');
+}
+
+describe('P8.2 coherent survival preparation loop', () => {
+  it('runs preparation -> risky Rattata pursuit -> gear improvement -> camp recovery -> return barter without a repeatable faucet', () => {
     const returned = returnedState();
     const initialResourceUnits = resourceUnits(returned);
-    const initialEquipment = returned.survival.equipment;
     const initialCompanions = returned.pokemon.companionSlots;
 
     let state = apply(returned, 'gather.repair-stock');
     expect(state.survival.resourcePools).toEqual({ provisions: 2, remedies: 1, materials: 1 });
     expect(state.events.narrativeFlags['slice.prep.mundane_materials_only']).toBe(true);
 
-    state = apply(state, 'repair.wet-route-gear');
-    expect(state.survival.resourcePools.materials).toBe(0);
-    expect(state.events.narrativeFlags['slice.prep.gear_serviced']).toBe(true);
-
     state = apply(state, 'forage.bank-edge');
     expect(state.survival.resourcePools.provisions).toBe(3);
 
     state = apply(state, 'hunt.rattata-storetrail');
-    expect(state.survival.resourcePools.provisions).toBe(2);
+    expect(state.survival.resourcePools).toEqual({ provisions: 2, remedies: 1, materials: 2 });
     expect(state.events.narrativeFlags['slice.prep.rattata_route_marked']).toBe(true);
     expect(state.events.narrativeFlags['slice.prep.hunt_nonlethal']).toBe(true);
     expect(state.events.narrativeFlags['slice.prep.no_pokemon_harvest']).toBe(true);
+    expect(state.events.narrativeFlags['slice.prep.rattata_linked_salvage']).toBe(true);
+
+    const hurt = deriveP8SurvivalPressure(state);
+    expect(hurt).toMatchObject({ vitalityCurrent: 4, vitalityMax: 5, fatigueStage: 2, injuries: 1 });
+    const injuredLoad = deriveP8EquipmentProjection(state.character, state.survival, hurt.injuries);
+    expect(injuredLoad.comfortableLoad).toBe(4);
+
+    state = apply(state, 'repair.wet-route-gear');
+    expect(state.survival.resourcePools.materials).toBe(1);
+    expect(state.survival.equipment.equippedItemIds.guard).toBe('hide.buckler');
+    expect(state.events.narrativeFlags['slice.prep.gear_serviced']).toBe(true);
+    expect(deriveP8EquipmentProjection(state.character, state.survival, 1).defenseReadiness).toBeGreaterThan(
+      deriveP8EquipmentProjection(returned.character, returned.survival, 0).defenseReadiness,
+    );
+
+    state = apply(state, 'camp.rest-and-treat');
+    expect(state.survival.resourcePools).toEqual({ provisions: 1, remedies: 0, materials: 1 });
+    expect(deriveP8SurvivalPressure(state)).toMatchObject({ vitalityCurrent: 5, fatigueStage: 0, injuries: 0 });
+    expect(state.events.narrativeFlags['slice.prep.camp_recovered']).toBe(true);
 
     state = apply(state, 'trade.provision-for-remedy');
-    expect(state.survival.resourcePools).toEqual({ provisions: 1, remedies: 2, materials: 0 });
+    expect(state.survival.resourcePools).toEqual({ provisions: 0, remedies: 1, materials: 1 });
     expect(state.events.narrativeFlags['slice.prep.local_barter_only']).toBe(true);
-    expect(resourceUnits(state)).toBe(initialResourceUnits);
-    expect(state.survival.equipment).toBe(initialEquipment);
+    expect(resourceUnits(state)).toBeLessThanOrEqual(initialResourceUnits + 2);
     expect(state.pokemon.companionSlots).toBe(initialCompanions);
 
     const projection = deriveP8PreparationProjection(state);
     expect(projection.complete).toBe(true);
-    expect(projection.completedActions).toBe(5);
+    expect(projection.completedActions).toBe(6);
+    expect(projection.totalActions).toBe(6);
     expect(projection.gearServiced).toBe(true);
     expect(projection.rattataRouteMarked).toBe(true);
+    expect(projection.campRecovered).toBe(true);
     expect(projection.departureReady).toBe(true);
     expect(state.events.narrativeFlags['slice.prep.complete']).toBe(true);
   });
 
-  it('makes every harvest/preparation opportunity one-shot for the return so resources cannot be farmed infinitely', () => {
-    const gathered = apply(returnedState(), 'gather.repair-stock');
-    expect(() => apply(gathered, 'gather.repair-stock')).toThrow(/already-complete/);
+  it('makes hunt and retreat mutually exclusive and gives retreat the safer no-reward consequence', () => {
+    let state = prepareRoute(returnedState());
+    const before = deriveP8SurvivalPressure(state);
 
-    const foraged = apply(gathered, 'forage.bank-edge');
-    expect(() => apply(foraged, 'forage.bank-edge')).toThrow(/already-complete/);
-
-    expect(deriveP8PreparationProjection(foraged).actions.find((action) => action.actionId === 'gather.repair-stock')).toMatchObject({
-      completed: true,
+    state = apply(state, 'flee.rattata-storetrail');
+    expect(deriveP8SurvivalPressure(state)).toMatchObject({
+      vitalityCurrent: before.vitalityCurrent,
+      fatigueStage: 1,
+      injuries: 0,
+    });
+    expect(state.survival.resourcePools.materials).toBe(1);
+    expect(state.events.narrativeFlags['slice.prep.rattata_hazard_avoided']).toBe(true);
+    expect(() => apply(state, 'hunt.rattata-storetrail')).toThrow(/already-complete/);
+    expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'hunt.rattata-storetrail')).toMatchObject({
+      completed: false,
       available: false,
       blockedReason: 'already-complete',
     });
   });
 
-  it('requires the authored Rattata interaction and spends bait instead of manufacturing generic Pokémon loot', () => {
-    const withoutEvidence = returnedState(2, false);
-    const hunt = deriveP8PreparationProjection(withoutEvidence).actions.find((action) => action.actionId === 'hunt.rattata-storetrail');
-    expect(hunt).toMatchObject({ available: false, blockedReason: 'rattata-sign-missing' });
-    expect(() => apply(withoutEvidence, 'hunt.rattata-storetrail')).toThrow(/rattata-sign-missing/);
+  it('requires field preparation before the Rattata decision and authored Rattata evidence before either route', () => {
+    const returned = returnedState();
+    expect(deriveP8PreparationProjection(returned).actions.find((action) => action.actionId === 'hunt.rattata-storetrail')).toMatchObject({
+      available: false,
+      blockedReason: 'route-preparation-required',
+    });
 
-    const withEvidence = returnedState(2, true);
-    const hunted = apply(withEvidence, 'hunt.rattata-storetrail');
-    expect(hunted.survival.resourcePools.provisions).toBe(1);
-    expect(hunted.survival.resourcePools.materials).toBe(0);
-    expect(hunted.events.narrativeFlags['slice.prep.no_pokemon_harvest']).toBe(true);
+    const withoutEvidence = prepareRoute(returnedState(2, 1, false));
+    expect(deriveP8PreparationProjection(withoutEvidence).actions.find((action) => action.actionId === 'hunt.rattata-storetrail')).toMatchObject({
+      available: false,
+      blockedReason: 'rattata-sign-missing',
+    });
+    expect(deriveP8PreparationProjection(withoutEvidence).actions.find((action) => action.actionId === 'flee.rattata-storetrail')).toMatchObject({
+      available: false,
+      blockedReason: 'rattata-sign-missing',
+    });
   });
 
-  it('never allows barter or repair to drive a resource pool below zero', () => {
+  it('requires a remedy to clear a hunt Injury at camp and never drives resource pools below zero', () => {
+    let state = prepareRoute(returnedState(2, 0));
+    state = apply(state, 'hunt.rattata-storetrail');
+    state = apply(state, 'repair.wet-route-gear');
+    expect(deriveP8PreparationProjection(state).actions.find((action) => action.actionId === 'camp.rest-and-treat')).toMatchObject({
+      available: false,
+      blockedReason: 'remedies-required',
+    });
+    expect(() => apply(state, 'camp.rest-and-treat')).toThrow(/remedies-required/);
+
     const noFood = returnedState(0);
     expect(deriveP8PreparationProjection(noFood).actions.find((action) => action.actionId === 'trade.provision-for-remedy')).toMatchObject({
       available: false,
-      blockedReason: 'provisions-required',
+      blockedReason: 'camp-recovery-required',
     });
-    expect(() => apply(noFood, 'trade.provision-for-remedy')).toThrow(/provisions-required/);
-
-    expect(deriveP8PreparationProjection(noFood).actions.find((action) => action.actionId === 'repair.wet-route-gear')).toMatchObject({
-      available: false,
-      blockedReason: 'materials-required',
-    });
-    expect(() => apply(noFood, 'repair.wet-route-gear')).toThrow(/materials-required/);
   });
 
-  it('stays locked before the return and is independent of companion count', () => {
-    const beforeReturn = createInitialP8AuthorityState(character(), 'reedbank-settlement', { provisions: 2, remedies: 1, materials: 0 });
-    const locked = deriveP8PreparationProjection(beforeReturn);
-    expect(locked.unlocked).toBe(false);
-    expect(locked.actions.every((action) => action.blockedReason === 'return-required')).toBe(true);
+  it('makes every preparation opportunity one-shot and keeps the loop independent of companion count', () => {
+    const gathered = apply(returnedState(), 'gather.repair-stock');
+    expect(() => apply(gathered, 'gather.repair-stock')).toThrow(/already-complete/);
+    const foraged = apply(gathered, 'forage.bank-edge');
+    expect(() => apply(foraged, 'forage.bank-edge')).toThrow(/already-complete/);
 
     const zeroCompanion = returnedState();
     const threeCompanion: P8AuthorityState = {
@@ -166,11 +201,15 @@ describe('P8.2 bounded medieval-fantasy preparation loop', () => {
     expect(threeActions).toEqual(zeroActions);
   });
 
-  it('caches the read-only projection by authority identity and invalidates it after a committed action', () => {
+  it('stays locked before the return and caches projections only while authority identity is unchanged', () => {
+    const beforeReturn = createInitialP8AuthorityState(character(), 'reedbank-settlement', { provisions: 2, remedies: 1, materials: 0 });
+    const locked = deriveP8PreparationProjection(beforeReturn);
+    expect(locked.unlocked).toBe(false);
+    expect(locked.actions.every((action) => action.blockedReason === 'return-required')).toBe(true);
+
     const returned = returnedState();
     const first = deriveP8PreparationProjection(returned);
     expect(deriveP8PreparationProjection(returned)).toBe(first);
-
     const gathered = apply(returned, 'gather.repair-stock');
     const changed = deriveP8PreparationProjection(gathered);
     expect(changed).not.toBe(first);
