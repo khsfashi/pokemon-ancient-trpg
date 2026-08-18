@@ -71,7 +71,9 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
   // product gate uses reduced motion so both engines can prove the entire combined
   // first-play state without spending runtime on presentation delays.
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.addInitScript(({ key }) => window.localStorage.setItem(key, 'ko-KR'), { key: LOCALE_KEY });
+  await page.addInitScript(({ key }) => {
+    if (window.localStorage.getItem(key) === null) window.localStorage.setItem(key, 'ko-KR');
+  }, { key: LOCALE_KEY });
   await page.goto('/');
 
   await expect(page.getByRole('heading', { name: '고대 포켓몬 TRPG' })).toBeVisible();
@@ -122,7 +124,7 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
   await panel.locator('[data-preparation-action="forage.bank-edge"]').click();
   await panel.locator('[data-preparation-action="hunt.rattata-storetrail"]').click();
   await expect(panel).toHaveAttribute('data-preparation-locality', 'old-levee');
-  await expect(stat(panel, 'Vitality')).toHaveText('4/5');
+  await expect(stat(panel, 'Vitality')).toHaveText('5/6');
   await expect(stat(panel, 'Fatigue')).toHaveText('2/2');
   await expect(stat(panel, 'Injuries')).toHaveText('1');
 
@@ -145,7 +147,7 @@ test('Batch 10 integrated first-play survives one Korean-to-English run, prepara
     locality: 'reedbank-settlement',
     pools: { provisions: 0, remedies: 1, materials: 1 },
     guard: 'hide.buckler',
-    pressure: { vitalityCurrent: 5, vitalityMax: 5, fatigueStage: 1, fatigueLimit: 2, injuries: 0 },
+    pressure: { vitalityCurrent: 6, vitalityMax: 6, fatigueStage: 1, fatigueLimit: 2, injuries: 0 },
     companions: [null, null, null],
     prepComplete: true,
     zeroCompanionComplete: true,
