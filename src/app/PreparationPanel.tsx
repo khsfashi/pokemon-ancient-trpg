@@ -24,13 +24,13 @@ interface PreparationStageDefinition {
   readonly completion: 'all' | 'any';
 }
 
-const STAGES: readonly PreparationStageDefinition[] = Object.freeze([
-  Object.freeze({ stageId: 'prepare', actionIds: Object.freeze(['gather.repair-stock', 'forage.bank-edge']), completion: 'all' }),
-  Object.freeze({ stageId: 'risk', actionIds: Object.freeze(['hunt.rattata-storetrail', 'flee.rattata-storetrail']), completion: 'any' }),
-  Object.freeze({ stageId: 'recover', actionIds: Object.freeze(['camp.rest-and-treat']), completion: 'all' }),
-  Object.freeze({ stageId: 'improve', actionIds: Object.freeze(['repair.wet-route-gear']), completion: 'all' }),
-  Object.freeze({ stageId: 'resupply', actionIds: Object.freeze(['trade.provision-for-remedy']), completion: 'all' }),
-]);
+const STAGES = [
+  { stageId: 'prepare', actionIds: ['gather.repair-stock', 'forage.bank-edge'], completion: 'all' },
+  { stageId: 'risk', actionIds: ['hunt.rattata-storetrail', 'flee.rattata-storetrail'], completion: 'any' },
+  { stageId: 'recover', actionIds: ['camp.rest-and-treat'], completion: 'all' },
+  { stageId: 'improve', actionIds: ['repair.wet-route-gear'], completion: 'all' },
+  { stageId: 'resupply', actionIds: ['trade.provision-for-remedy'], completion: 'all' },
+] as const satisfies readonly PreparationStageDefinition[];
 
 const COPY = {
   'en-US': {
