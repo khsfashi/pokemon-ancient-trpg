@@ -8,7 +8,8 @@
     "npm": ">=11"
   },
   "scripts": {
-    "dev": "vite",
+    "prepare:p8-3-fonts": "node tools/prepare-p8-3-fonts.mjs",
+    "dev": "npm run prepare:p8-3-fonts && vite",
     "typecheck": "tsc --noEmit",
     "test": "vitest run tests",
     "test:browser:resources": "playwright test e2e/resource-cache.spec.ts",
@@ -21,7 +22,7 @@
     "test:browser:p8-2-illustrations": "playwright test e2e/p8-2-illustrations.spec.ts",
     "test:browser:pwa": "playwright test --config=playwright.pwa.config.ts",
     "test:e2e": "npm run test:browser:resources && npm run test:browser:saves && npm run test:browser:pwa",
-    "build": "npm run typecheck && vite build && node tools/build-service-worker.mjs && node tools/validate-dist.mjs && node tools/validate-static-deployment.mjs",
+    "build": "npm run typecheck && npm run prepare:p8-3-fonts && vite build && node tools/build-service-worker.mjs && node tools/validate-dist.mjs && node tools/validate-static-deployment.mjs",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {

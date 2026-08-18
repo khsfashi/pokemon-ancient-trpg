@@ -97,6 +97,9 @@ export class P8BrowserSession {
   public async startNewRun(input: P8CharacterCreationInput, runSeedHex?: string): Promise<P8BrowserSessionSnapshot> {
     const seed = runSeedHex ?? randomRunSeed(this.#randomBytes);
     if (!RUN_SEED_HEX.test(seed)) throw new RangeError('runSeedHex must be 32 lowercase hex characters');
+    // P8.3 keeps the complete expedition pack needed by the authored preparation loop.
+    // Comfortable Load is tuned in the equipment projection so this normal kit starts
+    // ready rather than falsely presenting the player as already burdened.
     this.#authority = createInitialP8AuthorityState(
       createP8SliceCharacter(input),
       'reedbank-settlement',

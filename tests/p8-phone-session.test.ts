@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { runP8SliceReplay } from '../src/content/p8SliceReplay';
 import { P8_SLICE_REPLAYS } from '../src/content/p8SliceContent';
 import { P8_SLICE_SCENE_SEQUENCE } from '../src/content/p8SlicePresentation';
+import { deriveP8ExpeditionProfile } from '../src/app/ProfileHud';
 import { p8AuthorityStateFromJson } from '../src/domain/p8AuthorityJson';
 import { p8AuthorityStateToJson } from '../src/domain/p8Authority';
 import { P8BrowserSession } from '../src/platform/p8BrowserSession';
@@ -39,6 +40,21 @@ describe('P8 Batch 04 authority save restore', () => {
 });
 
 describe('P8 Batch 04 browser session integration', () => {
+  it('starts the owner-facing slice with the complete preparation pack inside comfortable Load', async () => {
+    const definition = P8_SLICE_REPLAYS.zeroCompanion;
+    const store = new MemorySaveStore();
+    const active = new P8BrowserSession({ saveStore: store, hashProvider: hash, now: fixedNow });
+
+    const snapshot = await active.startNewRun(definition.character, definition.runSeedHex);
+    const authority = snapshot.authority!;
+    const profile = deriveP8ExpeditionProfile(authority);
+
+    expect(authority.survival.resourcePools).toEqual({ provisions: 3, remedies: 1, materials: 0 });
+    expect(profile.currentLoad).toBe(7);
+    expect(profile.currentLoad).toBeLessThanOrEqual(profile.comfortableLoad);
+    expect(profile.burdened).toBe(false);
+  });
+
   it('resumes every pending event exactly and every committed checkpoint without Preact authority', async () => {
     const definition = P8_SLICE_REPLAYS.zeroCompanion;
     const store = new MemorySaveStore();

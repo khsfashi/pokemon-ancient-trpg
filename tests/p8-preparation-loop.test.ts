@@ -94,7 +94,7 @@ describe('P8.2 coherent survival preparation loop', () => {
     const hurt = deriveP8SurvivalPressure(state);
     expect(hurt).toMatchObject({ vitalityCurrent: 4, vitalityMax: 5, fatigueStage: 2, fatigueLimit: 2, injuries: 1 });
     const injuredLoad = deriveP8EquipmentProjection(state.character, state.survival, hurt.injuries);
-    expect(injuredLoad.comfortableLoad).toBe(4);
+    expect(injuredLoad.comfortableLoad).toBe(6);
 
     state = apply(state, 'camp.rest-and-treat');
     expect(state.world.currentLocality).toBe('reedbank-settlement');

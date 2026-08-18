@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'P83 NeoDunggeunmo';
+  src: url('../generated/fonts/neodgm.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'P83 NeoDunggeunmo Pro';
+  src: url('../generated/fonts/neodgm_pro.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --p83-pixel-display: 'P83 NeoDunggeunmo', ui-monospace, monospace;
+  --p83-pixel-body: 'P83 NeoDunggeunmo Pro', 'P83 NeoDunggeunmo', ui-sans-serif, system-ui, sans-serif;
+}
+
+.language-switcher {
+  min-height: 44px;
+}
+
+.language-switcher::before {
+  content: '◆  고대 기행';
+}
+
+.language-switcher button {
+  min-height: 44px;
+}
+
+/* Keep only the prose viewport bounded. The whole play panel must remain able to
+   grow so illustration/choice controls never sit inside a clipped hit-test area. */
+.expedition-hud + .scene-stage .panel {
+  max-height: none;
+  overflow: visible;
+}
+
+/* Keep compact affordances monochrome/pixel-like until authored HUD sprites replace them. */
+.readiness-strip > div:nth-child(1)::before { content: '◆'; }
+.readiness-strip > div:nth-child(2)::before { content: '■'; }
+.readiness-strip > div:nth-child(3)::before { content: '⌁'; }
+.resource-grid > div:nth-child(1)::before { content: '▧'; }
+.resource-grid > div:nth-child(2)::before { content: '+'; }
+.resource-grid > div:nth-child(3)::before { content: '▦'; }

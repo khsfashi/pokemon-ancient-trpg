@@ -133,6 +133,7 @@ export interface P8EquipmentProjection {
 const FIELD_COMPETENCE_IDS = new Set(['tracking', 'inventory', 'repair', 'first_aid', 'climbing', 'foraging']);
 const projectionCache = new WeakMap<object, WeakMap<object, Map<number, P8EquipmentProjection>>>();
 const MIN_COMFORTABLE_LOAD = 2;
+const BASE_COMFORTABLE_LOAD = 6;
 
 function fieldCompetenceBonus(competences: Readonly<Record<string, 1>>): 0 | 1 {
   for (const id of Object.keys(competences)) if (FIELD_COMPETENCE_IDS.has(id)) return 1;
@@ -179,7 +180,7 @@ export function deriveP8EquipmentProjection(
   const currentLoad = equipmentLoad + pooledResourceLoad;
   const comfortableLoad = Math.max(
     MIN_COMFORTABLE_LOAD,
-    4 + character.attributes.strength - normalizedInjuryCount,
+    BASE_COMFORTABLE_LOAD + character.attributes.strength - normalizedInjuryCount,
   );
   const projection = Object.freeze({
     attackReadiness: character.attributes.strength + attackEquipment,
