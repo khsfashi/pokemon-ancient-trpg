@@ -49,6 +49,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   await expect(hud.locator('.readiness-strip')).toBeHidden();
   await expect(hud.locator('.resource-grid > div').nth(1)).toBeHidden();
   await expect(hud.locator('.resource-grid > div').nth(2)).toBeHidden();
+  await expect(hud.locator('.profile-details')).toBeHidden();
 
   const raster = illustration.locator('img.scene-illustration-image');
   await expect(raster).toBeVisible();
@@ -76,6 +77,8 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
       lastChoiceBottom: lastChoice.bottom,
       rasterWidth: raster.naturalWidth,
       rasterHeight: raster.naturalHeight,
+      rasterOpacity: Number.parseFloat(getComputedStyle(raster).opacity),
+      rasterVisibility: getComputedStyle(raster).visibility,
       rasterRendering: getComputedStyle(raster).imageRendering,
       narrativeFont: getComputedStyle(narrative).fontFamily,
       iconBackgrounds: authoredIconHosts.map((node) => getComputedStyle(node).backgroundImage),
@@ -93,6 +96,8 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   expect(geometry.lastChoiceBottom).toBeLessThanOrEqual(geometry.innerHeight);
   expect(geometry.rasterWidth).toBe(384);
   expect(geometry.rasterHeight).toBe(276);
+  expect(geometry.rasterOpacity).toBe(1);
+  expect(geometry.rasterVisibility).toBe('visible');
   expect(geometry.rasterRendering).toBe('pixelated');
   expect(geometry.narrativeFont).not.toContain('NeoDunggeunmo');
   expect(geometry.iconBackgrounds.every((value) => value !== 'none')).toBe(true);
