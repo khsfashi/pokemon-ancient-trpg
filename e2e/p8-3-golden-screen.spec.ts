@@ -47,6 +47,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   await expect(hud).toBeVisible();
   await expect(goldenHud).toBeVisible();
   await expect(goldenHud.locator('img.golden-hud-icon')).toHaveCount(4);
+  await expect(goldenHud.locator('.golden-hud-identity .portrait-art.compact')).toBeVisible();
   await expect(illustration).toHaveAttribute('data-media-state', 'loaded');
   await expect(choices).toHaveCount(2);
 
@@ -69,6 +70,8 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   const geometry = await page.evaluate(() => {
     const hud = document.querySelector<HTMLElement>('.expedition-hud')!;
     const goldenHud = document.querySelector<HTMLElement>('.golden-hud-surface')!;
+    const portrait = goldenHud.querySelector<SVGSVGElement>('.golden-hud-identity .portrait-art.compact')!;
+    const portraitParts = [...portrait.children] as SVGElement[];
     const illustration = document.querySelector<HTMLElement>('.scene-illustration[data-resource-id="p8.illustration.orchard.windbreak-boundary"]')!;
     const narrative = document.querySelector<HTMLElement>('.narrative-copy')!;
     const choiceButtons = [...document.querySelectorAll<HTMLElement>('.choice-stack button.choice:not([disabled])')];
@@ -83,6 +86,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
       illustrationHeight: illustration.getBoundingClientRect().height,
       narrativeHeight: narrative.getBoundingClientRect().height,
       lastChoiceBottom: lastChoice.bottom,
+      portraitVisibleParts: portraitParts.filter((part) => getComputedStyle(part).display !== 'none' && getComputedStyle(part).visibility !== 'hidden').length,
       rasterWidth: raster.naturalWidth,
       rasterHeight: raster.naturalHeight,
       rasterOpacity: Number.parseFloat(getComputedStyle(raster).opacity),
@@ -106,6 +110,7 @@ test('windbreak golden screen is scene-first, raster-authored and phone-containe
   expect(geometry.narrativeHeight).toBeGreaterThanOrEqual(180);
   expect(geometry.narrativeHeight).toBeLessThanOrEqual(220);
   expect(geometry.lastChoiceBottom).toBeLessThanOrEqual(geometry.innerHeight);
+  expect(geometry.portraitVisibleParts).toBeGreaterThan(2);
   expect(geometry.rasterWidth).toBe(384);
   expect(geometry.rasterHeight).toBe(276);
   expect(geometry.rasterOpacity).toBe(1);
