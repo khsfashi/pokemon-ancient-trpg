@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["prose", "summary", "continuity", "unresolved_hooks", "qa_notes"],
+  "properties": {
+    "prose": {"type": "string", "minLength": 1},
+    "summary": {"type": "string", "minLength": 1, "maxLength": 4000},
+    "continuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["introduced", "changed", "resolved"],
+      "properties": {
+        "introduced": {"type": "array", "items": {"type": "string"}, "maxItems": 32},
+        "changed": {"type": "array", "items": {"type": "string"}, "maxItems": 32},
+        "resolved": {"type": "array", "items": {"type": "string"}, "maxItems": 32}
+      }
+    },
+    "unresolved_hooks": {"type": "array", "items": {"type": "string"}, "maxItems": 32},
+    "qa_notes": {"type": "array", "items": {"type": "string"}, "maxItems": 32}
+  }
+}
