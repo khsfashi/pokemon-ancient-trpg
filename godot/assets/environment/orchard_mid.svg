@@ -1,65 +1,129 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" shape-rendering="crispEdges">
   <!-- Project-owned transparent midground: windbreak, route markers, working orchard props. -->
-  <!-- windbreak trunks and dense canopies -->
+  <!-- windbreak trunks with bark breakup and branches -->
+  <g fill="#312b24">
+    <rect x="18" y="176" width="19" height="296"/><rect x="76" y="162" width="19" height="310"/>
+    <rect x="134" y="180" width="19" height="292"/><rect x="192" y="168" width="19" height="304"/>
+  </g>
+  <g fill="#493a2d">
+    <rect x="22" y="198" width="5" height="70"/><rect x="30" y="286" width="4" height="108"/>
+    <rect x="80" y="184" width="5" height="92"/><rect x="88" y="304" width="4" height="116"/>
+    <rect x="138" y="210" width="5" height="88"/><rect x="146" y="326" width="4" height="102"/>
+    <rect x="196" y="194" width="5" height="86"/><rect x="204" y="300" width="4" height="120"/>
+  </g>
+  <g fill="#5e4a34" opacity="0.8">
+    <rect x="24" y="234" width="8" height="4"/><rect x="82" y="218" width="8" height="4"/>
+    <rect x="140" y="250" width="8" height="4"/><rect x="198" y="224" width="8" height="4"/>
+    <rect x="25" y="350" width="7" height="4"/><rect x="84" y="372" width="7" height="4"/>
+    <rect x="142" y="384" width="7" height="4"/><rect x="200" y="356" width="7" height="4"/>
+  </g>
   <g fill="#332d25">
-    <rect x="18" y="178" width="18" height="292"/><rect x="76" y="166" width="18" height="304"/>
-    <rect x="134" y="184" width="18" height="286"/><rect x="192" y="172" width="18" height="298"/>
+    <rect x="26" y="188" width="48" height="7"/><rect x="84" y="174" width="48" height="7"/>
+    <rect x="142" y="192" width="48" height="7"/><rect x="200" y="180" width="44" height="7"/>
   </g>
-  <g fill="#2d3b2d">
-    <rect x="0" y="138" width="58" height="76"/><rect x="52" y="124" width="66" height="82"/>
-    <rect x="112" y="142" width="64" height="74"/><rect x="168" y="128" width="68" height="82"/>
+
+  <!-- dense stepped canopy with three depth tones -->
+  <g fill="#253329">
+    <rect x="0" y="142" width="60" height="80"/><rect x="50" y="126" width="72" height="92"/>
+    <rect x="108" y="144" width="72" height="82"/><rect x="166" y="130" width="76" height="92"/>
+    <rect x="8" y="118" width="44" height="38"/><rect x="66" y="102" width="48" height="42"/>
+    <rect x="122" y="120" width="48" height="42"/><rect x="180" y="106" width="52" height="44"/>
   </g>
-  <g fill="#40513a">
-    <rect x="8" y="118" width="42" height="42"/><rect x="64" y="104" width="48" height="46"/>
-    <rect x="122" y="122" width="44" height="42"/><rect x="180" y="108" width="48" height="46"/>
+  <g fill="#354637">
+    <rect x="0" y="126" width="36" height="38"/><rect x="24" y="112" width="34" height="32"/>
+    <rect x="54" y="110" width="34" height="38"/><rect x="86" y="96" width="30" height="36"/>
+    <rect x="112" y="128" width="34" height="36"/><rect x="142" y="110" width="34" height="36"/>
+    <rect x="170" y="112" width="34" height="38"/><rect x="202" y="96" width="34" height="40"/>
   </g>
-  <g fill="#576149">
-    <rect x="18" y="112" width="16" height="8"/><rect x="76" y="98" width="18" height="8"/>
-    <rect x="136" y="116" width="16" height="8"/><rect x="196" y="102" width="18" height="8"/>
+  <g fill="#4b5c43">
+    <rect x="14" y="112" width="16" height="7"/><rect x="40" y="102" width="18" height="7"/>
+    <rect x="74" y="96" width="18" height="7"/><rect x="96" y="88" width="14" height="7"/>
+    <rect x="128" y="112" width="17" height="7"/><rect x="154" y="102" width="16" height="7"/>
+    <rect x="188" y="98" width="18" height="7"/><rect x="212" y="88" width="16" height="7"/>
   </g>
+  <g fill="#71805b" opacity="0.45">
+    <rect x="28" y="136" width="8" height="4"/><rect x="84" y="124" width="9" height="4"/>
+    <rect x="144" y="138" width="8" height="4"/><rect x="204" y="122" width="9" height="4"/>
+  </g>
+
   <!-- warning stake and torn cloth -->
-  <rect x="224" y="296" width="7" height="154" fill="#493629"/>
-  <rect x="220" y="294" width="15" height="8" fill="#6a5138"/>
-  <rect x="231" y="306" width="58" height="14" fill="#7a302c"/>
-  <rect x="231" y="320" width="44" height="10" fill="#642723"/>
-  <rect x="275" y="320" width="10" height="6" fill="#56211e"/>
-  <!-- crate, basket, ladder and pruning tools -->
-  <rect x="108" y="456" width="78" height="50" fill="#5c452f"/>
-  <rect x="116" y="464" width="62" height="7" fill="#99724a"/>
-  <rect x="116" y="486" width="62" height="7" fill="#99724a"/>
-  <rect x="129" y="454" width="5" height="52" fill="#3d3027"/>
-  <rect x="162" y="454" width="5" height="52" fill="#3d3027"/>
-  <g fill="#715235">
-    <rect x="72" y="470" width="28" height="24"/><rect x="77" y="464" width="18" height="7"/>
+  <rect x="224" y="294" width="8" height="158" fill="#463328"/>
+  <rect x="228" y="302" width="3" height="142" fill="#6b5036"/>
+  <rect x="220" y="291" width="17" height="8" fill="#75593b"/>
+  <rect x="232" y="304" width="58" height="14" fill="#82352f"/>
+  <rect x="232" y="318" width="46" height="11" fill="#692925"/>
+  <rect x="278" y="318" width="10" height="7" fill="#56211e"/>
+  <rect x="254" y="329" width="17" height="5" fill="#5d2622"/>
+  <g fill="#a25945" opacity="0.42">
+    <rect x="238" y="307" width="18" height="3"/><rect x="263" y="307" width="13" height="3"/>
   </g>
-  <rect x="86" y="412" width="5" height="94" fill="#453426" transform="rotate(-10 86 412)"/>
-  <rect x="92" y="416" width="5" height="86" fill="#453426" transform="rotate(-10 92 416)"/>
-  <g fill="#7d623f">
-    <rect x="89" y="430" width="18" height="4" transform="rotate(-10 89 430)"/>
-    <rect x="88" y="446" width="18" height="4" transform="rotate(-10 88 446)"/>
-    <rect x="87" y="462" width="18" height="4" transform="rotate(-10 87 462)"/>
+
+  <!-- crate with slat highlights -->
+  <rect x="108" y="454" width="80" height="52" fill="#493729"/>
+  <rect x="114" y="459" width="68" height="42" fill="#64492f"/>
+  <g fill="#a47749">
+    <rect x="116" y="463" width="64" height="6"/><rect x="116" y="484" width="64" height="6"/>
   </g>
-  <!-- nearer stone wall -->
-  <g fill="#676254">
-    <rect x="246" y="378" width="144" height="22"/><rect x="232" y="402" width="158" height="22"/>
-    <rect x="246" y="426" width="144" height="22"/><rect x="234" y="450" width="156" height="22"/>
-    <rect x="250" y="474" width="140" height="22"/>
+  <g fill="#3c3027">
+    <rect x="128" y="457" width="5" height="47"/><rect x="163" y="457" width="5" height="47"/>
   </g>
-  <g fill="#44443c">
-    <rect x="280" y="378" width="5" height="22"/><rect x="332" y="378" width="5" height="22"/>
-    <rect x="258" y="402" width="5" height="22"/><rect x="312" y="402" width="5" height="22"/><rect x="362" y="402" width="5" height="22"/>
-    <rect x="294" y="426" width="5" height="22"/><rect x="348" y="426" width="5" height="22"/>
-    <rect x="270" y="450" width="5" height="22"/><rect x="326" y="450" width="5" height="22"/>
+  <g fill="#c4965d" opacity="0.44">
+    <rect x="118" y="464" width="22" height="2"/><rect x="145" y="485" width="25" height="2"/>
   </g>
-  <g fill="#8d8468">
-    <rect x="252" y="380" width="22" height="4"/><rect x="304" y="380" width="22" height="4"/>
-    <rect x="238" y="404" width="18" height="4"/><rect x="286" y="404" width="20" height="4"/>
+
+  <!-- basket and pruning ladder -->
+  <g fill="#6d5035">
+    <rect x="72" y="470" width="30" height="25"/><rect x="77" y="463" width="20" height="8"/>
   </g>
-  <!-- fence posts -->
-  <g fill="#4a3728">
-    <rect x="16" y="548" width="8" height="98"/><rect x="206" y="532" width="8" height="102"/>
+  <g fill="#8b6640">
+    <rect x="76" y="475" width="22" height="4"/><rect x="76" y="484" width="22" height="4"/>
   </g>
-  <g fill="#684c31">
-    <rect x="20" y="568" width="190" height="7"/><rect x="20" y="606" width="190" height="7"/>
+  <rect x="85" y="410" width="5" height="98" fill="#453426" transform="rotate(-10 85 410)"/>
+  <rect x="93" y="414" width="5" height="92" fill="#453426" transform="rotate(-10 93 414)"/>
+  <g fill="#85633d">
+    <rect x="88" y="430" width="19" height="4" transform="rotate(-10 88 430)"/>
+    <rect x="87" y="447" width="19" height="4" transform="rotate(-10 87 447)"/>
+    <rect x="86" y="464" width="19" height="4" transform="rotate(-10 86 464)"/>
+    <rect x="85" y="481" width="19" height="4" transform="rotate(-10 85 481)"/>
+  </g>
+
+  <!-- nearer stone wall, uneven blocks and moss -->
+  <g fill="#625e52">
+    <rect x="246" y="376" width="144" height="23"/><rect x="232" y="400" width="158" height="23"/>
+    <rect x="246" y="424" width="144" height="23"/><rect x="234" y="448" width="156" height="23"/>
+    <rect x="250" y="472" width="140" height="23"/>
+  </g>
+  <g fill="#78715f">
+    <rect x="250" y="378" width="27" height="5"/><rect x="298" y="378" width="25" height="5"/><rect x="344" y="378" width="27" height="5"/>
+    <rect x="236" y="402" width="22" height="5"/><rect x="282" y="402" width="26" height="5"/><rect x="332" y="402" width="24" height="5"/>
+    <rect x="252" y="426" width="24" height="5"/><rect x="306" y="426" width="24" height="5"/><rect x="356" y="426" width="22" height="5"/>
+  </g>
+  <g fill="#40413a">
+    <rect x="280" y="376" width="5" height="23"/><rect x="332" y="376" width="5" height="23"/>
+    <rect x="258" y="400" width="5" height="23"/><rect x="312" y="400" width="5" height="23"/><rect x="362" y="400" width="5" height="23"/>
+    <rect x="294" y="424" width="5" height="23"/><rect x="348" y="424" width="5" height="23"/>
+    <rect x="270" y="448" width="5" height="23"/><rect x="326" y="448" width="5" height="23"/>
+    <rect x="302" y="472" width="5" height="23"/><rect x="358" y="472" width="5" height="23"/>
+  </g>
+  <g fill="#4a573f" opacity="0.75">
+    <rect x="242" y="395" width="31" height="5"/><rect x="322" y="419" width="24" height="5"/>
+    <rect x="260" y="467" width="28" height="5"/><rect x="344" y="491" width="30" height="4"/>
+  </g>
+
+  <!-- fence rails and nicks -->
+  <g fill="#493629">
+    <rect x="16" y="546" width="9" height="102"/><rect x="206" y="530" width="9" height="106"/>
+  </g>
+  <g fill="#684b31">
+    <rect x="20" y="566" width="190" height="8"/><rect x="20" y="604" width="190" height="8"/>
+  </g>
+  <g fill="#8c6942" opacity="0.6">
+    <rect x="30" y="568" width="42" height="3"/><rect x="108" y="568" width="28" height="3"/><rect x="164" y="606" width="34" height="3"/>
+  </g>
+
+  <!-- generic work debris -->
+  <g fill="#5c4934">
+    <rect x="48" y="518" width="15" height="5"/><rect x="57" y="514" width="5" height="12"/>
+    <rect x="188" y="498" width="18" height="5"/><rect x="196" y="493" width="5" height="13"/>
   </g>
 </svg>
