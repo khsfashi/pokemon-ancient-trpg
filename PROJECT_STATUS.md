@@ -12,11 +12,9 @@ The owner intentionally advances work with short requests such as:
 @GitHub pokemon-ancient-trpg 다음 작업 진행해줘
 ```
 
-For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, this file, issue **#139**, draft PR **#140**, issue **#128**, issue **#118**, D-037 and the P8.3 contracts, then inspect live PR/CI state and continue the first incomplete architecture-gate item.
+For that request, **do not ask the owner to repeat context**. Read `AGENTS.md`, this file, issue **#139**, draft PR **#140**, issue **#128**, issue **#118**, and `docs/P8_3_PRODUCT_ACCEPTANCE_AND_FIRST_PLAY.md`, then inspect live PR/CI state.
 
-Do **not** resume P9 merely because the former P8.2 automated gate was green. The final owner replay explicitly rejected the deployed product experience.
-
-Do **not** merge or propagate the current DOM/PWA V2 shell from draft PR **#138** into Slice B/C/D while #139 is unresolved. The active player-facing architecture checkpoint is the bounded Godot spike in #139/#140.
+Do **not** resume P9 merely because automated gates are green. The former P8.2 automated gate passed and the owner still rejected the product experience.
 
 ## Binding product direction
 
@@ -25,10 +23,27 @@ Do **not** merge or propagate the current DOM/PWA V2 shell from draft PR **#138*
 - Exactly three visible companion slots; `0/3` remains a valid and fully playable complete run.
 - Human-only adventurer play must be satisfying through preparation, equipment, survival, exploration, gathering, repair, barter, risk management and return-to-settlement progression.
 - Pokémon remain the setting's defining world force, not generic fantasy monsters or names pasted onto a generic medieval RPG.
-- Narrative prose is now treated as a **primary gameplay production system**. Large content jobs must use bounded, reviewable authoring sessions rather than giant one-shot generation.
-- Visual direction is now a coherent **high-resolution pixel-art language that still reads strongly medieval/pre-modern**, including illustrations, portraits, Pokémon presentation, items/equipment, HUD icons and ornament.
-- Typography should visually belong to that pixel-game language while preserving multi-minute Korean reading comfort.
-- Player-facing composition must be a **game screen first**, not `hero image -> article/card -> button-card` document flow. During #139 the candidate implementation is Godot scene/Control composition; existing TypeScript/web remains the migration oracle and comparison evidence until the owner chooses the architecture.
+- Narrative prose is a primary gameplay production system, but Narrative Factory infrastructure is only a means to ship good content.
+- Visual direction is a coherent high-resolution pixel-art language that reads immediately as medieval/pre-modern game presentation.
+- Typography must preserve multi-minute Korean reading comfort.
+
+## Acceptance model — binding owner rule
+
+The project has two separate gates.
+
+### Engineering gate
+
+Examples: crash/parse safety, deterministic state parity, save correctness, viewport/input regression, resource/provenance validity and CI/build green.
+
+### Product gate
+
+Owner-visible questions: does it look like a game, is Korean natural/readable, is HUD state glanceable, is scene composition coherent, do choices create pressure/consequence, does Pokémon ecology feel physical/dangerous, does growth motivate another run, and does the player want to continue.
+
+> **Engineering PASS + Product FAIL = FAIL.**
+
+Automated validation may protect implementation safety. It cannot approve product feel.
+
+See `docs/P8_3_PRODUCT_ACCEPTANCE_AND_FIRST_PLAY.md`.
 
 ## Phase status
 
@@ -40,221 +55,184 @@ P3 Core TRPG rules/character model    COMPLETE
 P4 Pokémon adaptation + Gen-I 151     COMPLETE
 P5 Narrative world-event engine       COMPLETE
 P6 Resource/asset/provenance/budget   COMPLETE
-P7 Technical architecture / web-PWA   COMPLETE AS EXISTING ORACLE
+P7 Technical architecture / web-PWA   COMPLETE AS MIGRATION ORACLE
 P8 First playable vertical slice      TECHNICAL COMPLETE
 P8.1 first owner remediation          COMPLETE / #114 CLOSED
 P8.2 second owner remediation         AUTOMATED GATE COMPLETE / OWNER REPLAY REJECTED / #118 OPEN
-P8.3 product-feel + authoring reset   ACTIVE / #128 + #139 / PR #140 / BLOCKING P9
+P8.3 product-feel reset               ACTIVE / #128 / #139 / #140 / BLOCKING P9
 P9 Content expansion                  BLOCKED
 P10 Mobile/release                    QUEUED
 ```
 
-## Active architecture gate — #139 / draft PR #140
+## Why P8.3 remains active
 
-The owner raised a material concern that repeated product-feel rejection may be caused by the DOM/Preact presentation model itself rather than by insufficient CSS polish. #139 is therefore a **bounded architecture spike**, not an automatic rewrite.
+The owner replay after P8.2 rejected the product despite green browser tests. Binding problems included:
 
-Current implementation branch/PR:
+1. first screen reading like a PowerPoint/web presentation rather than a game,
+2. tangled/non-native Korean prose and unattractive typography/line breaking,
+3. scroll-heavy text-only HUD rather than glanceable game hierarchy,
+4. opening `Load 7/5 overloaded` rules/usability defect,
+5. overly clean/modern transitions and readability conflicts,
+6. presentation-like imagery instead of coherent pixel-medieval scene composition,
+7. weak prepare/risk/return/grow motivation and insufficient gates/route pressure,
+8. Pokémon ecology/threat not concrete enough in posture/motion/sound/distance/environment reaction,
+9. first several minutes not compelling enough to continue.
 
-```text
-agent/p8-3-godot-spike-foundation
-PR #140 — P8.3: add bounded Godot architecture spike foundation
-```
+These are product failures, not closed merely by technical regression passes.
 
-Binding spike limits:
+## Current exact gate — #139 / PR #140 Godot architecture spike
 
-- preserve the existing TypeScript implementation as migration oracle;
-- create an isolated Godot 4.x path without deleting the web client;
-- exactly two owner-review surfaces: opening/title and `slice.mixed.orchard_boundary`;
-- reference viewport 390×844;
-- prefer minimal deterministic GDScript parity over JS/native bridges;
-- do not port the full campaign/inventory/progression runtime before owner review;
-- do not create a second set of event/choice IDs or alter rules for porting convenience;
-- do not start P9 or propagate #138 while the gate is unresolved.
+PR #140 intentionally implements only two 390×844 owner-review surfaces:
 
-Resource composition is also binding:
+- opening/title,
+- `slice.mixed.orchard_boundary` windbreak/Beedrill.
 
-```text
-Environment/background
-  -> Human/adventurer
-  -> P6/D-036 Pokemon sprite/animation
-  -> Foreground occlusion / weather / atmosphere
-  -> Godot Control UI
-       -> compact HUD
-       -> event prose/title
-       -> choices/detail entry
-  -> Transition overlay
-```
+It preserves TypeScript authority as the migration oracle and proves representative parity/save behavior. The real P6 Beedrill resource remains a separately composed runtime layer; project-owned environment/human/foreground/UI resources remain recomposable.
 
-Never generate Pokémon into background/human art and never generate a complete flattened screen with Pokémon + UI + localized text baked together. Environment/human/UI project art must stay reusable and layered. Pokémon continues to use the pinned P6/D-036 provenance/resource path and the public repository remains metadata-only for rights-bound source media.
+### Current single-screen visual prerequisite
 
-PR #140 now contains the remote-safe foundation **and the first retained player-facing layer pass**:
+The owner rejected the retained SVG/block-art preview as a visual product candidate. PR #140 now carries one Godot-rendered windbreak golden candidate built from independent FAR / MID / keeper / reserved Pokemon / foreground / HUD-event-choice layers. The rejected preview remains negative evidence. No Pokemon image was generated; missing-P6 mode shows only the reserved placement/occlusion guide.
 
-- isolated `godot/` project with `viewport` + integer scaling;
-- exactly opening and windbreak event surfaces;
-- separated environment/human/Pokémon/foreground/UI/transition ownership;
-- P6 Beedrill local materialization slot with no generated fallback Pokémon;
-- parity fixture copied from the current P8 slice pack;
-- minimal GDScript direct-choice resolver and SaveEnvelope V1-shaped JSON round trip;
-- retained project-owned opening environment/traveler/foreground resources;
-- retained project-owned orchard far/mid/keeper/foreground resources;
-- reusable square pixel Control skin + compact vitality/fatigue/provisions HUD icons;
-- developer-only spike/result-ID text removed from the player-facing surfaces;
-- deterministic parity/save smoke plus layered visual-contract smoke;
-- exact local Godot/Codex owner-capture handoff in `docs/P8_3_GODOT_ARCHITECTURE_SPIKE.md`.
+The next incomplete gate is **owner visual review of this one 390×844 windbreak golden screen**. Do not materialize real P6 #015, expand to another screen or resume the wider architecture decision first. If the golden screen is approved, then materialize #015 locally, confirm animation scale/final foreground occlusion, review input/transition feel and make the Godot Adopt/Reject/Hybrid decision.
 
-The owner has rejected that SVG/block-art preview as a visual product candidate. The same branch now carries a **single-screen windbreak golden candidate** built from independent generated/normalized pixel raster layers and runtime Godot UI. The rejected SVG preview is retained as negative evidence. No Pokemon image was generated; missing-P6 mode shows only the reserved placement/occlusion guide.
+Evidence: `docs/P8_3_GODOT_WINDBREAK_GOLDEN_SCREEN.md`.
 
-Validated Godot head before this handoff passed the pinned official Godot `4.6.3-stable` workflow with clean boot, deterministic parity/save smoke, and the new retained-layer visual-contract smoke all green. The current final head must remain green before owner capture.
+### Stop rule before architecture decision
 
-**Next incomplete gate is owner visual review of the one 390×844 windbreak golden screen.** Do not materialize real P6 #015, expand to another screen, or resume the wider architecture decision first. If the golden screen is approved, then materialize the approved P6 Beedrill asset locally, confirm animation scale and final foreground occlusion, review input/transition feel, and obtain the owner Godot-vs-web architecture decision. Do not port more gameplay screens first.
+Do not add another broad presentation shell, Narrative Factory subsystem, P9 content lane or full Godot campaign port before the owner reviews the golden-screen prerequisite and the later real-P6 architecture evidence.
 
-## What P8.2 already implemented — do not blindly repeat
+The remaining question is product/architecture fit, not more CI infrastructure.
 
-- PR #120 / Batch 04 — progressive narrative reveal, tap isolation, rapid-submit guard, scene/travel transitions, reduced motion.
-- PR #121 / Batch 05 — portrait selection and expedition/profile HUD.
-- PR #122 / Batch 06 — stable on-demand scene illustrations and fallbacks.
-- PR #123 / Batch 07 — fiction-first creation and second Korean copy pass.
-- PR #124 / Batch 08 — equipment slots, Load integration and bounded readiness projection.
-- PR #125 / Batch 09 — bounded preparation/risk/camp/return/improvement/barter loop.
-- PR #126 — P8 runtime CI consolidation.
-- PR #127 / Batch 10 — integrated product-gate regression; final automated gate passed.
+### Architecture decision
 
-The owner replay after #127 nevertheless rejected the product feel. Green browser tests are therefore **not sufficient evidence** for P8.3 exit.
+If Godot is materially better:
 
-## Owner replay rejection — binding problems
+- adopt Godot as the production game client,
+- keep TypeScript/web temporarily as deterministic migration oracle and retained negative/reference evidence,
+- port authority in bounded parity slices,
+- converge to **one gameplay authority** once the required runtime/save/content contracts are covered,
+- do not maintain TypeScript gameplay and Godot gameplay as two permanent independently evolving authorities.
 
-1. First screen feels like a PowerPoint opening slide rather than a game.
-2. Korean prose remains tangled/non-native/translation-like; typography and line breaking are unattractive.
-3. HUD is scroll-heavy, text-only and not glanceable. `모험가 이야기` hierarchy/reference was not materially reflected. Important state needs icon language and a controlled narrative scroll region.
-4. Opening `Load 7/5 overloaded` is a bug/rules-mismatch candidate that must be audited.
-5. Transitions are too clean/modern/fast; scene art/text shadow layering can reduce text readability.
-6. Current imagery is too clean/modern/presentation-like.
-7. The prepare/risk/return/grow loop does not yet create compelling advancement motivation; choices lack sufficient requirements/gates and route/destination pressure.
-8. Pokémon ecology/threat is not vivid enough in prose. Physical posture, motion, sound, distance, environment reaction and danger must be concretely described.
-9. The first several minutes are not compelling enough to continue.
+If Godot is rejected, preserve the spike as evidence and continue the web path with the learned presentation constraints.
 
-## Active issue — #128 P8.3
+A hybrid is allowed only when web is tooling/preview/convenience distribution, not a second gameplay authority.
 
-Issue #128 owns both the product-feel reset and the reusable narrative production system. #139 temporarily gates the **player-facing client/presentation architecture**; it does not revoke the accepted narrative-factory/canon work already retained under #128.
+## First-play product lane after the architecture decision
 
-Binding decision: `docs/DECISION_D037_NARRATIVE_FACTORY_AND_PIXEL_ART.md`.
-
-Key contracts:
-
-- `docs/P8_3_NARRATIVE_AUTHORING_FACTORY.md`
-- `docs/P8_3_AUTHORING_CANON_DIGEST.md`
-- `docs/P8_3_PIXEL_ART_AND_TYPOGRAPHY_DIRECTION.md`
-
-### Narrative factory
-
-GitHub is the durable remote queue. The owner must be able to trigger work without touching the local terminal.
-
-Target flow:
+The previous phase-count roadmap is no longer sufficient to judge P8.3. The next product milestones are owner-visible time slices:
 
 ```text
-remote GitHub authoring request
-  -> owner self-hosted runner
-  -> local orchestrator
-  -> fresh Codex CLI process for planning/session unit
-  -> schema + deterministic QA
-  -> commit/push that unit immediately
-  -> next fresh session
+#139 / PR #140 architecture owner gate
+ -> #144 First 3 Minutes
+ -> #145 First 10 Minutes
+ -> #146 First 30 Minutes
+ -> owner decision to unblock P9
 ```
 
-If Codex reaches a recognized usage/rate/credit limit:
+### #144 — First 3 Minutes
+
+Must deliver one coherent flow:
 
 ```text
-current stable session -> awaiting_chatgpt
-completed prior sessions stay committed
-ChatGPT @GitHub continuation -> completes the same session ID/context
-local Codex may resume later at the next session
+title/resume
+ -> character/world introduction
+ -> first movement/travel action
+ -> concrete Pokémon danger/ecology signal
+ -> first consequential choice
 ```
 
-Provider changes never create a new story identity.
+Owner acceptance asks whether it immediately reads as a game, Korean is natural, HUD/next action are glanceable, tension appears quickly and the player wants to continue.
 
-Default authoring envelopes:
+### #145 — First 10 Minutes
 
-- ordinary scene: ~2,500–4,500 Korean characters;
-- connected encounter arc slice: ~4,000–6,500;
-- worldbuilding slice: ~4,500–7,500;
-- hard default ceiling: 8,000 player-facing Korean characters per session.
-
-A ~200k-character topic should become many sessions. Context injection uses compact canon/style context + continuity ledger + dependency summaries; full prior prose is included only when dependency relevance requires it.
-
-A rejected individual session must be independently revisable while preserving its stable ID and auditing downstream continuity impact.
-
-### Pixel-art / typography direction
-
-The `모험가 이야기` reference means more than “pixel graphics”: **detailed/high-quality pixel graphics should still make the medieval-fantasy atmosphere immediately obvious**.
-
-Unify:
-
-- scene/key illustrations;
-- locality/travel art;
-- Pokémon presentation;
-- human portraits;
-- equipment/items/resources;
-- HUD icons/borders/ornament;
-- relevant effects.
-
-Avoid pixel Pokémon pasted over smooth painterly/vector/photographic scenes and avoid modern glass/card UI around medieval content.
-
-Initial font candidates for licensed evaluation:
-
-- NeoDunggeunmo / Neo둥근모 — HUD, buttons, headings, compact state;
-- NeoDunggeunmo Pro / Neo둥근모 Pro — longer Korean prose candidate.
-
-Both candidates require P6 provenance/version pinning and actual 390px phone readability tests before final adoption.
-
-## Exact P8.3 implementation sequence
-
-**Architecture override:** complete #139/#140 and obtain the owner Godot-vs-web decision before executing further player-facing UI propagation or P9. The sequence below remains the P8.3 backlog; items that depend on the client surface resume only after the gate.
-
-1. **Factory contract + schemas + local orchestrator skeleton + lightweight validation.**
-2. **Remote GitHub issue queue -> self-hosted runner -> local Codex worker**, with per-unit push and graceful failure state.
-3. **ChatGPT fallback/handoff implementation** for `awaiting_chatgpt` and plan/session completion using the same files.
-4. **Revision/dependency-impact commands** so one bad session can be regenerated without throwing away an entire topic.
-5. **Pilot topic** through multiple sessions; measure Korean quality, context size and handoff behavior.
-6. **UI/HUD/typography reset** toward game-like, icon-first, pixel-medieval presentation and controlled narrative scrolling. **GATED by #139.**
-7. **Load 7/5 audit/fix** and other owner-replay usability defects.
-8. **Transition + high-resolution pixel illustration pipeline remediation**, including image/text layer separation and generated-art normalization/provenance. **Presentation implementation GATED by #139.**
-9. **Progression/gating loop reinforcement**: prepare -> risk -> return -> improve -> unlock with clearer conditions, route pressure and growth motivation.
-10. **Rewrite/regenerate the opening vertical slice through the new authoring factory.**
-11. New owner replay. Only a positive owner decision may close #118/#128 and unblock P9.
-
-## ChatGPT continuation rule for authoring
-
-When a ChatGPT `@GitHub` request mentions an authoring topic or generic continuation:
-
-- first inspect #139 and active PR #140; if the architecture gate still needs remote-safe work, do that before unrelated presentation propagation;
-- then inspect active #128 implementation PRs;
-- then inspect active `authoring/<topic-id>` branches/issues;
-- if a topic contains `awaiting_chatgpt_plan` or a session contains `awaiting_chatgpt`, finish that exact pending unit before inventing a new one;
-- preserve IDs, dependency structure, size budget and context bundle;
-- write the same authoring artifacts and QA metadata expected from Codex;
-- do not regenerate already accepted sessions unless the owner asked for revision/cascade.
-
-## Core technical handoff
+Must deliver one complete expedition loop:
 
 ```text
-player-facing target   = architecture gate active: Godot candidate under #139/#140
-migration oracle       = existing framework-independent pure TypeScript runtime
-web/PWA presentation   = retained comparison/oracle path; owner-rejected as current product shell
-Godot spike            = Godot 4.x + GDScript under godot/
-backend                = none
-web build runtime      = Node 24.x LTS
-package manager        = npm + committed lockfile
-web build tool         = Vite 8.x
-web language           = strict TypeScript
-web presentation       = Preact 10.x only
-web save storage       = IndexedDB
-Godot spike save       = local JSON using SaveEnvelope V1 outer contract
-unit tests             = Vitest + bounded Godot headless parity/save + visual-contract smokes
-browser tests          = Playwright (existing web oracle only)
-local authoring        = Python stdlib orchestrator + Codex CLI
-remote authoring       = GitHub issues/actions + owner self-hosted runner
+prepare
+ -> depart / route pressure
+ -> windbreak / Beedrill encounter
+ -> meaningful risk/loss/reward
+ -> return
+ -> equipment/resource/growth change
+ -> clear reason for another expedition
 ```
 
-Architecture/performance guardrails from P7/P8 remain binding: no per-frame event scans, no animation-owned gameplay commits, explicit save migration, bounded caches, stable resource IDs and no all-151 media preload.
+The player should be able to explain what their decision changed and why a second expedition is desirable.
 
-P9 resumes only after **#118/#128 owner acceptance** and the **#139 architecture decision**, or an explicit owner direction change.
+### #146 — First 30 Minutes
+
+Extend only after #145 acceptance with a second meaningfully different expedition, new location/ecology, another Pokémon encounter pattern, visible payoff from prior growth, stronger settlement/world progression and credible future Pokémon relationship potential without turning collection routine.
+
+The goal is retention and world interest, not raw content count.
+
+## Narrative Factory — demand-driven freeze
+
+The existing authoring factory, bounded sessions, stable IDs, continuity ledger and provider handoff remain available. They are production tools, not the product goal.
+
+Do **not** add a new factory schema, dependency-analysis feature, provider handoff layer or orchestration abstraction because a future ~200k-character corpus might need it.
+
+A factory extension now requires a retained real production failure, for example:
+
+- revising a real accepted/rejected session actually breaks downstream continuity,
+- a real multi-session topic exceeds context budget under the current digest strategy,
+- an actual provider handoff loses stable session identity,
+- current QA repeatedly misses a concrete Korean-language defect class.
+
+Then fix only the smallest recurring problem and return to product/content work.
+
+## Product priority until #145 acceptance
+
+Priority order is:
+
+1. product feel and readability,
+2. actual gameplay/progression motivation,
+3. player-facing content quality,
+4. engineering defects blocking those goals,
+5. production tooling only when a retained real authoring failure justifies it.
+
+Architecture completeness, factory completeness and green automation are not substitutes for this order.
+
+## Visual/resource direction
+
+The `모험가 이야기` reference means more than pixel graphics: detailed/high-quality pixel graphics must still make the medieval/pre-modern atmosphere immediately obvious.
+
+Unify scene art, locality/travel art, Pokémon presentation, human portraits, items/equipment, HUD icons/borders/ornament and relevant effects. Avoid pixel Pokémon pasted over smooth painterly/vector/photographic scenes and avoid modern glass/card UI around medieval content.
+
+Godot composition remains layered:
+
+```text
+environment/background
+ -> human/adventurer
+ -> P6 Pokémon sprite/animation
+ -> foreground occlusion/weather/atmosphere
+ -> game UI / narrative / choices
+ -> transition overlay
+```
+
+Do not bake Pokémon + background + UI + localized text into a single generated production screen.
+
+## Core technical handoff during architecture decision
+
+```text
+production client     = PENDING #139 OWNER DECISION
+Godot spike           = Godot 4.x / GDScript / 390x844 mobile composition
+migration oracle      = existing pure TypeScript runtime + save/content fixtures
+legacy web client     = retained until Godot adoption/parity decision
+legacy build runtime  = Node 24.x LTS / Vite 8 / strict TypeScript / Preact 10
+legacy save           = IndexedDB
+engineering tests     = Vitest + Playwright + Godot parity/visual-contract smoke
+narrative authoring   = Python stdlib orchestrator + Codex/ChatGPT handoff
+```
+
+Performance/architecture guardrails remain binding: no per-frame event scans, no animation-owned gameplay commits, explicit save migration, bounded caches, stable resource IDs and no all-151 media preload.
+
+## Continuation rule
+
+On the next `@GitHub pokemon-ancient-trpg 다음 작업 진행해줘`:
+
+1. inspect PR #140 and #139 first;
+2. do not invent a new presentation/factory lane while the owner gate is unresolved;
+3. obtain owner visual approval/rejection of the single windbreak golden screen before P6 materialization or another screen;
+4. after approval, finish only the real-P6 architecture evidence and make the architecture decision;
+5. after the decision, proceed through #144 -> #145 -> #146 with owner product acceptance at each boundary;
+6. P9 remains blocked until #146 acceptance or an explicit owner direction change.

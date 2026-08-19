@@ -1,0 +1,240 @@
+name: P8.3 Owner Evidence Queue
+
+on:
+  issues:
+    types: [opened, reopened, edited, labeled]
+
+concurrency:
+  group: p8-3-owner-evidence-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  capture:
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      startsWith(github.event.issue.title, '[owner-evidence]') &&
+      contains(github.event.issue.title, 'p8.3-godot')
+    runs-on: [self-hosted]
+    timeout-minutes: 30
+    steps:
+      - name: Resolve bounded architecture PR
+        id: target
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: 140,
+            });
+            if (pr.data.state !== 'open') {
+              core.setFailed(`PR #140 is not open (${pr.data.state})`);
+              return;
+            }
+            if (pr.data.head.repo.full_name !== `${context.repo.owner}/${context.repo.repo}`) {
+              core.setFailed('PR #140 head is not owned by this repository');
+              return;
+            }
+            if (pr.data.head.ref !== 'agent/p8-3-godot-spike-foundation') {
+              core.setFailed(`unexpected PR #140 head ref: ${pr.data.head.ref}`);
+              return;
+            }
+            core.setOutput('head_sha', pr.data.head.sha);
+            core.setOutput('head_ref', pr.data.head.ref);
+            core.setOutput('short_sha', pr.data.head.sha.slice(0, 12));
+
+      - name: Checkout exact PR head
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.target.outputs.head_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Resolve pinned Godot 4.6.3
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $requiredPrefix = '4.6.3'
+          $existing = Get-Command godot -ErrorAction SilentlyContinue
+          if ($null -ne $existing) {
+            $version = (& $existing.Source --version).Trim()
+            if ($version.StartsWith($requiredPrefix)) {
+              "GODOT_BIN=$($existing.Source)" >> $env:GITHUB_ENV
+              Write-Host "Using existing Godot $version"
+              exit 0
+            }
+            Write-Host "Ignoring non-pinned Godot $version at $($existing.Source)"
+          }
+
+          $releaseTag = '4.6.3-stable'
+          $archiveName = 'Godot_v4.6.3-stable_win64.exe.zip'
+          $baseUrl = "https://github.com/godotengine/godot-builds/releases/download/$releaseTag"
+          $metadataUrl = "https://api.github.com/repos/godotengine/godot-builds/releases/tags/$releaseTag"
+          $toolRoot = Join-Path $env:RUNNER_TEMP 'p8-3-owner-godot-4.6.3'
+          $archivePath = Join-Path $toolRoot $archiveName
+          New-Item -ItemType Directory -Force -Path $toolRoot | Out-Null
+
+          $release = Invoke-RestMethod -Uri $metadataUrl -Headers @{
+            Accept = 'application/vnd.github+json'
+            'X-GitHub-Api-Version' = '2022-11-28'
+          }
+          $asset = $release.assets | Where-Object { $_.name -eq $archiveName } | Select-Object -First 1
+          if ($null -eq $asset -or [string]::IsNullOrWhiteSpace([string]$asset.digest) -or -not $asset.digest.StartsWith('sha256:')) {
+            throw "Pinned official Godot asset/digest not found: $archiveName"
+          }
+
+          Invoke-WebRequest -Uri "$baseUrl/$archiveName" -OutFile $archivePath
+          $expected = $asset.digest.Substring('sha256:'.Length).ToLowerInvariant()
+          $actual = (Get-FileHash -Algorithm SHA256 -Path $archivePath).Hash.ToLowerInvariant()
+          if ($actual -ne $expected) {
+            throw "Godot archive digest mismatch expected=$expected actual=$actual"
+          }
+
+          Expand-Archive -Path $archivePath -DestinationPath $toolRoot -Force
+          $godotExe = Join-Path $toolRoot 'Godot_v4.6.3-stable_win64.exe'
+          if (-not (Test-Path $godotExe)) {
+            throw "Godot executable missing after extraction: $godotExe"
+          }
+          "GODOT_BIN=$godotExe" >> $env:GITHUB_ENV
+          & $godotExe --version
+
+      - name: Materialize pinned P6 Beedrill locally
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          python tools/materialize_p8_3_beedrill.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Import retained and local resources
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $log = Join-Path $env:RUNNER_TEMP 'p8-3-owner-resource-import.log'
+          & $env:GODOT_BIN --headless --path godot --import 2>&1 | Tee-Object -FilePath $log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (Select-String -Path $log -Pattern 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' -Quiet) {
+            throw 'Godot clean resource import emitted script/runtime errors'
+          }
+
+      - name: Run deterministic parity and visual contract smokes
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          foreach ($case in @(
+            @{ Script = 'res://tests/parity_smoke.gd'; Pass = 'P8.3 Godot parity smoke: PASS'; Name = 'parity' },
+            @{ Script = 'res://tests/visual_contract_smoke.gd'; Pass = 'P8.3 Godot visual contract smoke: PASS'; Name = 'visual-contract' }
+          )) {
+            $log = Join-Path $env:RUNNER_TEMP "p8-3-owner-$($case.Name).log"
+            & $env:GODOT_BIN --headless --path godot --script $case.Script 2>&1 | Tee-Object -FilePath $log
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            if (Select-String -Path $log -Pattern 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' -Quiet) {
+              throw "Godot $($case.Name) emitted script/runtime errors"
+            }
+            if (-not (Select-String -Path $log -SimpleMatch $case.Pass -Quiet)) {
+              throw "Missing PASS marker for $($case.Name)"
+            }
+          }
+
+      - name: Capture real-P6 owner evidence without uploading media
+        id: capture
+        shell: pwsh
+        env:
+          SHORT_SHA: ${{ steps.target.outputs.short_sha }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Remove-Item -Recurse -Force 'godot/captures/owner-evidence' -ErrorAction SilentlyContinue
+          $log = Join-Path $env:RUNNER_TEMP 'p8-3-owner-evidence-capture.log'
+          & $env:GODOT_BIN --path godot --rendering-method gl_compatibility --audio-driver Dummy --script res://tests/owner_evidence_capture.gd 2>&1 | Tee-Object -FilePath $log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (Select-String -Path $log -Pattern 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' -Quiet) {
+            throw 'Godot owner capture emitted script/runtime errors'
+          }
+          $pass = 'P8.3 owner evidence capture harness: PASS owner_candidate=true p6_rendered=true'
+          if (-not (Select-String -Path $log -SimpleMatch $pass -Quiet)) {
+            throw 'Owner capture did not prove a real multi-frame P6 render'
+          }
+
+          $source = Resolve-Path 'godot/captures/owner-evidence'
+          $manifestPath = Join-Path $source 'manifest.json'
+          $manifest = Get-Content -Raw -Path $manifestPath | ConvertFrom-Json
+          if (-not $manifest.owner_evidence_candidate -or -not $manifest.p6.rendered -or $manifest.p6.frame_count -le 1) {
+            throw 'Owner evidence manifest is not a real-P6 candidate'
+          }
+
+          $destination = Join-Path $HOME "pokemon-ancient-trpg-owner-evidence/p8-3/pr-140/$env:SHORT_SHA"
+          New-Item -ItemType Directory -Force -Path $destination | Out-Null
+          Copy-Item -Force (Join-Path $source 'opening.png') $destination
+          Copy-Item -Force (Join-Path $source 'windbreak-beedrill.png') $destination
+          Copy-Item -Force $manifestPath $destination
+          Copy-Item -Force $log $destination
+
+          $openingHash = (Get-FileHash -Algorithm SHA256 -Path (Join-Path $destination 'opening.png')).Hash.ToLowerInvariant()
+          $eventHash = (Get-FileHash -Algorithm SHA256 -Path (Join-Path $destination 'windbreak-beedrill.png')).Hash.ToLowerInvariant()
+          $manifestHash = (Get-FileHash -Algorithm SHA256 -Path (Join-Path $destination 'manifest.json')).Hash.ToLowerInvariant()
+          "opening_sha256=$openingHash" >> $env:GITHUB_OUTPUT
+          "event_sha256=$eventHash" >> $env:GITHUB_OUTPUT
+          "manifest_sha256=$manifestHash" >> $env:GITHUB_OUTPUT
+          "frame_count=$($manifest.p6.frame_count)" >> $env:GITHUB_OUTPUT
+          "relative_path=pokemon-ancient-trpg-owner-evidence/p8-3/pr-140/$env:SHORT_SHA" >> $env:GITHUB_OUTPUT
+
+          Write-Host 'Owner PNGs intentionally remain only on the self-hosted runner; no artifact upload step exists.'
+          Write-Host "Local evidence directory under runner HOME is keyed by PR head $env:SHORT_SHA."
+
+      - name: Comment successful local-only capture
+        if: success()
+        uses: actions/github-script@v8
+        env:
+          HEAD_SHA: ${{ steps.target.outputs.head_sha }}
+          RELATIVE_PATH: ${{ steps.capture.outputs.relative_path }}
+          OPENING_SHA: ${{ steps.capture.outputs.opening_sha256 }}
+          EVENT_SHA: ${{ steps.capture.outputs.event_sha256 }}
+          MANIFEST_SHA: ${{ steps.capture.outputs.manifest_sha256 }}
+          FRAME_COUNT: ${{ steps.capture.outputs.frame_count }}
+        with:
+          script: |
+            const body = [
+              `P8.3 Godot owner-evidence capture completed for PR #140 head \`${process.env.HEAD_SHA}\`.`,
+              '',
+              `The real P6 Beedrill rendered with ${process.env.FRAME_COUNT} atlas frames and the deterministic + layered visual-contract smokes passed first.`,
+              '',
+              '**Rights boundary:** the PNGs were not uploaded to GitHub artifacts, commits, issue attachments, or Pages. They remain only on the self-hosted runner under:',
+              `\`$HOME/${process.env.RELATIVE_PATH}/\``,
+              '',
+              'Files to review locally:',
+              '- `opening.png`',
+              '- `windbreak-beedrill.png`',
+              '- `manifest.json`',
+              '',
+              `SHA-256 opening: \`${process.env.OPENING_SHA}\``,
+              `SHA-256 windbreak: \`${process.env.EVENT_SHA}\``,
+              `SHA-256 manifest: \`${process.env.MANIFEST_SHA}\``,
+              '',
+              'This is capture evidence only, not owner visual approval. Review Pokémon scale/placement, foreground occlusion, Korean readability, scene density, transition/input feel, then make the #139 Godot-vs-web decision.',
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
+      - name: Comment blocked capture
+        if: failure()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: 'P8.3 Godot owner-evidence capture is blocked. No owner screenshot was uploaded or claimed. Inspect this workflow run to identify the first failed setup/materialization/import/smoke/capture step before retrying.',
+            });
