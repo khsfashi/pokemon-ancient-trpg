@@ -14,7 +14,7 @@ The owner-review scene is composed in this order:
 6. Godot Control UI — HUD, prose, choice buttons, details entry.
 7. `TransitionOverlay` — fade/input ownership during surface changes.
 
-The former code-drawn rectangle scaffold has been replaced by retained project-owned SVG resources. They intentionally use crisp, grid-aligned vector primitives so Godot can import them deterministically while the spike is still remote-reviewable. They are separate resources, not a flattened screenshot.
+The former code-drawn rectangle scaffold and its SVG/block-art pass remain in the repository as rejected negative evidence. The active windbreak golden-screen path uses independent project-owned/generated PNG layers; it does not polish or overwrite those rejected SVGs and is not a flattened screenshot.
 
 Current retained layer set:
 
@@ -23,16 +23,22 @@ environment/opening_reedbank.svg
 human/opening_traveler.svg
 foreground/opening_brush.svg
 
-environment/orchard_far.svg
-environment/orchard_mid.svg
-human/orchard_keeper.svg
-foreground/orchard_foliage.svg
-
-ui/icon_vitality.svg
-ui/icon_fatigue.svg
-ui/icon_provisions.svg
+golden_screen/runtime/windbreak_far.png
+golden_screen/runtime/windbreak_mid.png
+golden_screen/runtime/keeper.png
+golden_screen/runtime/windbreak_foreground.png
+golden_screen/runtime/hud_frame.png
+golden_screen/runtime/event_frame.png
+golden_screen/runtime/choice_normal.png
+golden_screen/runtime/choice_focused.png
+golden_screen/runtime/choice_pressed.png
+golden_screen/runtime/icon_vitality.png
+golden_screen/runtime/icon_fatigue.png
+golden_screen/runtime/icon_provisions.png
 ui/runtime_korean_font.tres
 ```
+
+Generation prompts, normalization and hashes are recorded in `golden_screen/provenance.json`.
 
 `godot/scripts/pixel_skin.gd` is the shared project-owned Control skin for square pixel borders, button focus/press states, panel palette and typography colors. Localized text remains runtime `Label`/`Button` content.
 
@@ -56,11 +62,12 @@ godot/local_assets/pokemon/beedrill.png
 
 At runtime the scene checks `ResourceLoader.exists()` for this slot. If it is absent, the Pokemon layer displays a neutral materialization notice instead of fabricating a Pokemon silhouette.
 
-## Owner screenshot boundary
+## Golden-screen / owner screenshot boundary
 
-The committed SVG layers are now recomposable acceptance candidates, but the windbreak owner screenshot is **not complete** until Godot renders the scene with the real locally materialized P6 Beedrill resource. CI may validate clean-checkout import/boot and layer separation; it must not invent or commit a replacement Pokemon merely to make a screenshot self-contained.
+The current owner prerequisite is one recomposable 390×844 windbreak golden screen with a guide box only. Real P6 #015 materialization, animation-scale tuning and final foliage occlusion are deferred until that visual language is approved. CI and local work must not invent or commit a replacement Pokemon merely to make the screenshot self-contained.
 
 Final owner evidence remains two 390×844 Godot renders:
 
 - opening/title from retained opening environment + traveler + foreground + Control UI;
-- windbreak event from retained orchard far/mid + keeper + real P6 Beedrill + foreground + Control HUD/event/choices.
+- windbreak golden screen from retained orchard far/mid + keeper + reserved runtime P6 guide plane + foreground + Control HUD/event/choices;
+- after golden-screen approval only, the same composition with the real locally materialized P6 Beedrill.

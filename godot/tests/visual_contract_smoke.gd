@@ -4,16 +4,21 @@ const PROJECT_LAYERS := [
 	"res://assets/environment/opening_reedbank.svg",
 	"res://assets/human/opening_traveler.svg",
 	"res://assets/foreground/opening_brush.svg",
-	"res://assets/environment/orchard_far.svg",
-	"res://assets/environment/orchard_mid.svg",
-	"res://assets/human/orchard_keeper.svg",
-	"res://assets/foreground/orchard_foliage.svg",
+	"res://assets/golden_screen/runtime/windbreak_far.png",
+	"res://assets/golden_screen/runtime/windbreak_mid.png",
+	"res://assets/golden_screen/runtime/keeper.png",
+	"res://assets/golden_screen/runtime/windbreak_foreground.png",
 ]
 
 const UI_ASSETS := [
-	"res://assets/ui/icon_vitality.svg",
-	"res://assets/ui/icon_fatigue.svg",
-	"res://assets/ui/icon_provisions.svg",
+	"res://assets/golden_screen/runtime/hud_frame.png",
+	"res://assets/golden_screen/runtime/event_frame.png",
+	"res://assets/golden_screen/runtime/choice_normal.png",
+	"res://assets/golden_screen/runtime/choice_focused.png",
+	"res://assets/golden_screen/runtime/choice_pressed.png",
+	"res://assets/golden_screen/runtime/icon_vitality.png",
+	"res://assets/golden_screen/runtime/icon_fatigue.png",
+	"res://assets/golden_screen/runtime/icon_provisions.png",
 ]
 
 const KOREAN_FONT := "res://assets/ui/runtime_korean_font.tres"
@@ -42,10 +47,15 @@ func _init() -> void:
 	_assert_true(main_source.contains("LOCAL_BEEDRILL_METADATA_PATH"), "P6 local Pokemon metadata slot must remain explicit")
 	_assert_true(main_source.contains("PokemonEncounterSpriteScript"), "direct encounter must use the bounded P6 atlas adapter")
 	_assert_true(main_source.contains("PokemonLayer"), "Pokemon must remain an independent runtime layer")
+	_assert_true(main_source.contains("POKEMON_GUIDE_RECT"), "missing-P6 golden screen must retain an explicit Pokemon placement box")
 	_assert_true(main_source.contains("LayerKind.FOREGROUND, 40"), "foreground occlusion layer must remain above Pokemon z=30")
 	_assert_true(main_source.contains("EventStoryOverlay"), "event prose/choices must remain an overlay over the full-height world")
 	_assert_true(not main_source.contains("Rect2(12, 493, 366, 339)"), "rejected floating article/card panel geometry returned")
 	_assert_true(layer_source.contains("RETAINED_SIZE := Vector2(390, 844)"), "event world layers must retain the full 390x844 game screen")
+	_assert_true(layer_source.contains("golden_screen/runtime/windbreak_far.png"), "windbreak FAR raster layer is not active")
+	_assert_true(layer_source.contains("golden_screen/runtime/windbreak_mid.png"), "windbreak MID raster layer is not active")
+	_assert_true(layer_source.contains("golden_screen/runtime/keeper.png"), "windbreak keeper raster sprite is not active")
+	_assert_true(layer_source.contains("golden_screen/runtime/windbreak_foreground.png"), "windbreak foreground raster layer is not active")
 	_assert_true(encounter_source.contains("region_rect"), "P6 encounter atlas must select frame regions instead of drawing the full atlas")
 	_assert_true(encounter_source.contains("_atlas_texture"), "P6 encounter animation must reuse one decoded atlas texture")
 
@@ -83,6 +93,16 @@ func _require_korean_font(path: String) -> void:
 func _require_layer_separation(path: String) -> void:
 	if not FileAccess.file_exists(path):
 		_assert_true(false, "missing retained layer source: %s" % path)
+		return
+	if path.get_extension().to_lower() == "png":
+		var texture := load(path) as Texture2D
+		var image := texture.get_image() if texture != null else null
+		_assert_true(image != null and not image.is_empty(), "retained raster layer has no imported image: %s" % path)
+		if image != null and not image.is_empty():
+			var expected_size := Vector2i(96, 170) if path.ends_with("keeper.png") else Vector2i(390, 844)
+			_assert_true(image.get_size() == expected_size, "retained raster layer has wrong dimensions: %s" % path)
+			if not path.ends_with("windbreak_far.png"):
+				_assert_true(image.detect_alpha() != Image.ALPHA_NONE, "retained overlay lacks alpha: %s" % path)
 		return
 	var source := FileAccess.get_file_as_string(path).to_lower()
 	_assert_true(not source.contains("<text"), "localized/runtime text baked into art layer: %s" % path)

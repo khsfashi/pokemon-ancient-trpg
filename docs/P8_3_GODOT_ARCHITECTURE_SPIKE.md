@@ -19,6 +19,10 @@ Exactly two player-facing surfaces:
 
 Do not port the full campaign, inventory, progression or P5-P8 runtime until the owner chooses the Godot direction.
 
+### Current owner prerequisite — windbreak golden screen first
+
+The 2026-08-19 owner review rejected the retained SVG/block-art preview as a visual product candidate. Before real P6 #015 materialization or broader two-screen architecture review, produce and approve one 390×844 windbreak golden screen from independent FAR / MID / human / reserved Pokemon / foreground / UI layers. During this prerequisite the Pokemon layer shows only its placement/anchor guide; generated Pokemon replacement art is forbidden. Real #015 materialization, animation, final occlusion, transition/input feel and the Godot Adopt/Reject/Hybrid decision resume only after owner visual approval of this golden screen.
+
 ## Project layout
 
 ```text
@@ -190,6 +194,8 @@ Run the main scene at 390×844. The opening button must fade into the windbreak 
 
 ## Required owner evidence before decision
 
+- [x] One 390×844 windbreak golden-screen candidate rendered by Godot without Pokemon substitute art: `docs/evidence/p8-3-godot-windbreak-golden/windbreak-golden.png`.
+- [ ] Owner visual approval of that golden screen before real P6 materialization.
 - [ ] 390×844 opening screenshot rendered by Godot from the retained opening layers.
 - [ ] 390×844 windbreak/Beedrill screenshot rendered by Godot with the real locally materialized P6 animated encounter atlas.
 - [x] code-drawn environment/human scaffold removed from the player-facing path.
@@ -206,7 +212,7 @@ Run the main scene at 390×844. The opening button must fade into the windbreak 
 
 ## Exact local Codex handoff
 
-Use this after pulling the spike branch. Remote work now owns the reproducible P6 materialization/capture path; local work should execute it and review the actual result rather than redesigning the architecture again.
+The following P6 handoff is intentionally paused until the owner approves the preceding windbreak golden screen. Do not execute it merely because the materializer exists.
 
 ```text
 Repository: khsfashi/pokemon-ancient-trpg

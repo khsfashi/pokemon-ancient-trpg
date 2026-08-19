@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-08-19",
+  "purpose": "P8.3 windbreak golden-screen project-owned visual layers",
+  "generator": {
+    "mode": "OpenAI built-in image_gen",
+    "use_case": "stylized-concept",
+    "pokemon_species_art_generated": false
+  },
+  "prompt_set": [
+    {
+      "id": "far",
+      "request": "Opaque portrait high-resolution pixel-art orchard/windbreak FAR layer with distant mountains, mist, old orchards, rough fields and pre-modern frontier lighting.",
+      "constraints": "Environment only; no foreground, human, creature, insect, Pokemon, UI, text, logo or watermark.",
+      "generated_source_sha256": "08b196746bc7873c749fe934293a7709a5423cb3a4e6403c9ecfdca9744bd853"
+    },
+    {
+      "id": "mid",
+      "request": "Transparent-ready portrait pixel-art MID layer with windbreak trees, bark, dry-stone wall, narrow path, crates, basket, hoe and warning marker, preserving an upper-right encounter pocket.",
+      "constraints": "Flat magenta key; environment only; no human, creature, insect, Pokemon, UI or text.",
+      "generated_source_sha256": "ad112c0eb720ea013908b028f09ce2225fccab1364a1b130c295fba1d647a95b"
+    },
+    {
+      "id": "keeper",
+      "request": "Full-body pre-modern orchard keeper game sprite with a readable stop gesture, field staff, layered work clothes and worn equipment in the shared pixel palette.",
+      "constraints": "Flat magenta key; one human only; no scene, creature, insect, Pokemon, text or watermark.",
+      "generated_source_sha256": "daee0431e7edbb5fbd42433b90008b07b6ac2a218d94dead06103fcf6b5259bb"
+    },
+    {
+      "id": "foreground",
+      "request": "Transparent-ready near-camera orchard branch, leaves, apples, windblown leaves and lower brambles that visibly cross the reserved upper-right encounter plane.",
+      "constraints": "Flat magenta key; foliage only; no creature, insect, Pokemon, human, UI or text.",
+      "generated_source_sha256": "578fdbeeffe4f160783dde881e08a43bd43bad41c35ee12001f7a274b5921a73"
+    },
+    {
+      "id": "ui-kit",
+      "request": "Reusable pixel UI sprite sheet: compact HUD, event frame, normal/focused/pressed choice frames, vitality/fatigue/provisions icons and corner ornaments using wood, iron, leather and cord.",
+      "constraints": "Flat magenta key; no runtime text, letters, numbers, runes, creatures, insects, Pokemon, people, logo or watermark.",
+      "generated_source_sha256": "ce16dbeffefdd700631f347be596a667a33963bd11e3ccf636dc863bb453a611"
+    }
+  ],
+  "normalization": {
+    "transparent_assets": "Built-in imagegen magenta-key output processed with the installed imagegen remove_chroma_key.py helper; MID required explicit #ed0aed key after border auto-sampling failed validation.",
+    "resize": "Pillow nearest-neighbor normalization to Godot logical sizes; UI kit cropped into independent runtime textures.",
+    "source_outputs_committed": false
+  },
+  "runtime_assets": [
+    {"path": "runtime/windbreak_far.png", "sha256": "f57141f4704b08ea3d9a406eaff086596a4d16403a71ec59edf29a488bf1d8d8", "size": "390x844", "alpha": false},
+    {"path": "runtime/windbreak_mid.png", "sha256": "a22a7c2dc5358522f7879c14cba7d2bbea6a6bde585d6b7522187e7959180b8d", "size": "390x844", "alpha": true},
+    {"path": "runtime/keeper.png", "sha256": "1623f827113ead287fc130d3a915851d1ab4c7dfebc74a7ee5ae8ff1de8b31b3", "size": "96x170", "alpha": true},
+    {"path": "runtime/windbreak_foreground.png", "sha256": "5a51bf948a57c7a49c65b956ed46a33c45c834bf104ab374cb83c3d9d92881a8", "size": "390x844", "alpha": true},
+    {"path": "runtime/hud_frame.png", "sha256": "ea29375d4bf0ee386bd114a797f63a45c86b90b7ad45150cee61776822b69168", "size": "376x76", "alpha": true},
+    {"path": "runtime/event_frame.png", "sha256": "ac2bb918de3c20d1d86ade344725f3f4c84fac67cdd1677212fd829cd4e980dd", "size": "378x240", "alpha": true},
+    {"path": "runtime/choice_normal.png", "sha256": "763d22fc3b3ebf7223cf7b4ad405461672a409ce21b3bf43efd91e091b45e09a", "size": "354x48", "alpha": true},
+    {"path": "runtime/choice_focused.png", "sha256": "63d53b04fb3f0fad06ce12f18c079429326d93564de3316c3dd13f4062904419", "size": "354x48", "alpha": true},
+    {"path": "runtime/choice_pressed.png", "sha256": "d143be1cdf16a1cdf6963e44b9a90690a15ac5a0d1aaaf46a274469d96460aaf", "size": "354x48", "alpha": true},
+    {"path": "runtime/icon_vitality.png", "sha256": "a9045fba52729f7a0803b5b91eda992d36ccaaf96cae8c7647b3f742d14fac65", "size": "26x26", "alpha": true},
+    {"path": "runtime/icon_fatigue.png", "sha256": "400c6defdc15d772a7baf44aff6e19fc7a676ddf36fd3bac612c7f18d64561e3", "size": "26x26", "alpha": true},
+    {"path": "runtime/icon_provisions.png", "sha256": "6ca6f323175780ce50137dc3aee4e03d65418287ac940b19fe617a4c8bd02d98", "size": "26x26", "alpha": true},
+    {"path": "runtime/ui_corner_ornaments.png", "sha256": "54e9d6d9193d9b594c1d7896d7c67ca3c9a74349627a32e9d3cbe13d1e5376c9", "size": "352x60", "alpha": true}
+  ]
+}

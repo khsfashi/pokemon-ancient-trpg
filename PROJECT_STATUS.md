@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-19 00:41 KST**
+Last operational handoff update: **2026-08-19 13:36 KST**
 
 This file is the concise operational handoff. Durable authority remains in owner decisions/contracts and live GitHub state. If this file disagrees with live state, reconcile it before advancing.
 
@@ -102,9 +102,11 @@ PR #140 now contains the remote-safe foundation **and the first retained player-
 - deterministic parity/save smoke plus layered visual-contract smoke;
 - exact local Godot/Codex owner-capture handoff in `docs/P8_3_GODOT_ARCHITECTURE_SPIKE.md`.
 
+The owner has rejected that SVG/block-art preview as a visual product candidate. The same branch now carries a **single-screen windbreak golden candidate** built from independent generated/normalized pixel raster layers and runtime Godot UI. The rejected SVG preview is retained as negative evidence. No Pokemon image was generated; missing-P6 mode shows only the reserved placement/occlusion guide.
+
 Validated Godot head before this handoff passed the pinned official Godot `4.6.3-stable` workflow with clean boot, deterministic parity/save smoke, and the new retained-layer visual-contract smoke all green. The current final head must remain green before owner capture.
 
-**Next incomplete gate is no longer remote architecture scaffolding.** Materialize the approved P6 Beedrill asset locally, run the two Godot smokes, capture the 390×844 opening and real-Beedrill windbreak screenshots from the retained layers, confirm foreground occlusion/depth, and obtain the owner Godot-vs-web architecture decision. Do not port more gameplay screens first.
+**Next incomplete gate is owner visual review of the one 390×844 windbreak golden screen.** Do not materialize real P6 #015, expand to another screen, or resume the wider architecture decision first. If the golden screen is approved, then materialize the approved P6 Beedrill asset locally, confirm animation scale and final foreground occlusion, review input/transition feel, and obtain the owner Godot-vs-web architecture decision. Do not port more gameplay screens first.
 
 ## What P8.2 already implemented — do not blindly repeat
 

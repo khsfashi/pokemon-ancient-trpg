@@ -7,10 +7,13 @@ const SpikeRuntimeScript = preload("res://scripts/spike_runtime.gd")
 const LOCAL_BEEDRILL_ATLAS_PATH := "res://local_assets/pokemon/beedrill/15.png"
 const LOCAL_BEEDRILL_METADATA_PATH := "res://local_assets/pokemon/beedrill/15.json"
 
-const ICON_VITALITY := "res://assets/ui/icon_vitality.svg"
-const ICON_FATIGUE := "res://assets/ui/icon_fatigue.svg"
-const ICON_PROVISIONS := "res://assets/ui/icon_provisions.svg"
+const ICON_VITALITY := "res://assets/golden_screen/runtime/icon_vitality.png"
+const ICON_FATIGUE := "res://assets/golden_screen/runtime/icon_fatigue.png"
+const ICON_PROVISIONS := "res://assets/golden_screen/runtime/icon_provisions.png"
+const HUD_FRAME := "res://assets/golden_screen/runtime/hud_frame.png"
+const EVENT_FRAME := "res://assets/golden_screen/runtime/event_frame.png"
 const VIEWPORT_SIZE := Vector2(390, 844)
+const POKEMON_GUIDE_RECT := Rect2(214, 138, 148, 172)
 
 # Avoid editor-generated global class cache as a runtime prerequisite. The spike must
 # parse and boot from a clean checkout using only explicit preloads.
@@ -165,51 +168,90 @@ func _add_pokemon_layer() -> void:
 		encounter.name = "BeedrillP6Sprite"
 		encounter.atlas_path = LOCAL_BEEDRILL_ATLAS_PATH
 		encounter.metadata_path = LOCAL_BEEDRILL_METADATA_PATH
-		encounter.position = Vector2(188, 186)
-		encounter.size = Vector2(176, 176)
+		encounter.position = POKEMON_GUIDE_RECT.position
+		encounter.size = POKEMON_GUIDE_RECT.size
 		pokemon_layer.add_child(encounter)
 		if encounter.is_resource_ready():
 			return
 		push_warning("P6 Beedrill atlas failed to load: %s" % encounter.failure_reason())
 		encounter.queue_free()
 
-	# Public repository intentionally keeps Pokemon media metadata-only.
-	var missing := _make_panel(Rect2(200, 210, 160, 82), Color(0.08, 0.08, 0.06, 0.74), Color("#7a6845"), 2)
-	pokemon_layer.add_child(missing)
-	var label := Label.new()
-	label.text = "P6 전투 스프라이트\n로컬 불러오기 필요"
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.position = Vector2(8, 8)
-	label.size = Vector2(144, 66)
-	label.add_theme_font_size_override("font_size", 10)
-	label.add_theme_color_override("font_color", Color("#d8cca8"))
-	missing.add_child(label)
+	# Golden-screen mode keeps only a placement/occlusion guide. It is not substitute art.
+	_add_pokemon_guide(pokemon_layer)
+
+func _add_pokemon_guide(parent: Control) -> void:
+	var guide := Panel.new()
+	guide.name = "PokemonGuideBox"
+	guide.position = POKEMON_GUIDE_RECT.position
+	guide.size = POKEMON_GUIDE_RECT.size
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.18, 0.14, 0.08, 0.05)
+	style.border_color = Color(0.84, 0.68, 0.34, 0.46)
+	style.border_width_left = 1
+	style.border_width_top = 1
+	style.border_width_right = 1
+	style.border_width_bottom = 1
+	guide.add_theme_stylebox_override("panel", style)
+	parent.add_child(guide)
+
+	var bracket_color := Color(0.94, 0.78, 0.36, 0.86)
+	var bracket_segments: Array[Rect2] = [
+		Rect2(0, 0, 18, 2), Rect2(0, 0, 2, 18),
+		Rect2(POKEMON_GUIDE_RECT.size.x - 18, 0, 18, 2), Rect2(POKEMON_GUIDE_RECT.size.x - 2, 0, 2, 18),
+		Rect2(0, POKEMON_GUIDE_RECT.size.y - 2, 18, 2), Rect2(0, POKEMON_GUIDE_RECT.size.y - 18, 2, 18),
+		Rect2(POKEMON_GUIDE_RECT.size.x - 18, POKEMON_GUIDE_RECT.size.y - 2, 18, 2),
+		Rect2(POKEMON_GUIDE_RECT.size.x - 2, POKEMON_GUIDE_RECT.size.y - 18, 2, 18),
+	]
+	for segment in bracket_segments:
+		var bracket := ColorRect.new()
+		bracket.color = bracket_color
+		bracket.position = segment.position
+		bracket.size = segment.size
+		guide.add_child(bracket)
+
+	var horizontal := ColorRect.new()
+	horizontal.color = Color(0.90, 0.76, 0.43, 0.56)
+	horizontal.position = Vector2(POKEMON_GUIDE_RECT.size.x * 0.5 - 4, POKEMON_GUIDE_RECT.size.y * 0.5)
+	horizontal.size = Vector2(8, 1)
+	guide.add_child(horizontal)
+
+	var vertical := ColorRect.new()
+	vertical.color = horizontal.color
+	vertical.position = Vector2(POKEMON_GUIDE_RECT.size.x * 0.5, POKEMON_GUIDE_RECT.size.y * 0.5 - 4)
+	vertical.size = Vector2(1, 8)
+	guide.add_child(vertical)
 
 func _add_event_hud() -> void:
-	var hud := _make_panel(Rect2(8, 10, 374, 58), Color(0.08, 0.09, 0.07, 0.86), PixelSkinScript.BORDER_DARK, 2)
+	var hud := Control.new()
+	hud.name = "EventHUD"
+	hud.position = Vector2(7, 7)
+	hud.size = Vector2(376, 76)
 	hud.z_index = 60
 	surface_root.add_child(hud)
+	hud.add_child(_make_texture_rect(HUD_FRAME, Rect2(Vector2.ZERO, hud.size)))
 
 	var identity := Label.new()
-	identity.text = "여행자   ·   방풍림 경계"
-	identity.position = Vector2(12, 6)
-	identity.size = Vector2(250, 18)
+	identity.text = "여행자"
+	identity.position = Vector2(20, 12)
+	identity.size = Vector2(120, 18)
 	identity.add_theme_font_size_override("font_size", 12)
 	identity.add_theme_color_override("font_color", PixelSkinScript.TEXT)
 	hud.add_child(identity)
 
+	var locality := Label.new()
+	locality.text = "방풍림 경계"
+	locality.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	locality.position = Vector2(204, 12)
+	locality.size = Vector2(150, 18)
+	locality.add_theme_font_size_override("font_size", 11)
+	locality.add_theme_color_override("font_color", Color("#c5ad75"))
+	hud.add_child(locality)
+
 	# Values are not invented during the bounded architecture spike. These slots prove
 	# icon-first density and will bind to authoritative state only after Godot adoption.
-	_add_hud_metric(hud, ICON_VITALITY, "체력 —", 12)
-	_add_hud_metric(hud, ICON_FATIGUE, "피로 —", 96)
-	_add_hud_metric(hud, ICON_PROVISIONS, "식량 —", 180)
-
-	var detail := _make_pixel_button("상세")
-	detail.position = Vector2(302, 10)
-	detail.size = Vector2(60, 38)
-	detail.disabled = true
-	hud.add_child(detail)
+	_add_hud_metric(hud, ICON_VITALITY, "체력 —", 20)
+	_add_hud_metric(hud, ICON_FATIGUE, "피로 —", 132)
+	_add_hud_metric(hud, ICON_PROVISIONS, "식량 —", 244)
 
 func _add_hud_metric(parent: Control, icon_path: String, text_value: String, x: float) -> void:
 	if ResourceLoader.exists(icon_path):
@@ -220,15 +262,15 @@ func _add_hud_metric(parent: Control, icon_path: String, text_value: String, x: 
 			icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			icon.position = Vector2(x, 31)
-			icon.size = Vector2(14, 14)
+			icon.position = Vector2(x, 37)
+			icon.size = Vector2(26, 26)
 			parent.add_child(icon)
 
 	var label := Label.new()
 	label.text = text_value
-	label.position = Vector2(x + 18, 28)
-	label.size = Vector2(62, 18)
-	label.add_theme_font_size_override("font_size", 10)
+	label.position = Vector2(x + 31, 41)
+	label.size = Vector2(72, 18)
+	label.add_theme_font_size_override("font_size", 11)
 	label.add_theme_color_override("font_color", PixelSkinScript.TEXT_MUTED)
 	parent.add_child(label)
 
@@ -242,78 +284,59 @@ func _add_event_panel() -> void:
 	story.z_index = 70
 	surface_root.add_child(story)
 
-	_add_story_scrim(story, 508, 20, 0.16)
-	_add_story_scrim(story, 528, 20, 0.32)
-	_add_story_scrim(story, 548, 296, 0.90)
-
-	var top_rule := ColorRect.new()
-	top_rule.color = PixelSkinScript.BORDER
-	top_rule.position = Vector2(12, 548)
-	top_rule.size = Vector2(366, 2)
-	story.add_child(top_rule)
-
-	var rule_left := ColorRect.new()
-	rule_left.color = PixelSkinScript.BORDER_DARK
-	rule_left.position = Vector2(12, 554)
-	rule_left.size = Vector2(94, 2)
-	story.add_child(rule_left)
+	story.add_child(_make_nine_patch(EVENT_FRAME, Rect2(6, 516, 378, 328), 18, 54, 18, 20))
 
 	var kicker := Label.new()
 	kicker.text = "방풍림 · 경계 사건"
-	kicker.position = Vector2(18, 560)
-	kicker.size = Vector2(330, 18)
+	kicker.position = Vector2(24, 563)
+	kicker.size = Vector2(342, 18)
 	kicker.add_theme_font_size_override("font_size", 10)
 	kicker.add_theme_color_override("font_color", Color("#b49c66"))
 	story.add_child(kicker)
 
 	var title := Label.new()
 	title.text = "방풍림의 경계"
-	title.position = Vector2(18, 581)
-	title.size = Vector2(330, 30)
-	title.add_theme_font_size_override("font_size", 22)
+	title.position = Vector2(24, 584)
+	title.size = Vector2(342, 29)
+	title.add_theme_font_size_override("font_size", 21)
 	title.add_theme_color_override("font_color", PixelSkinScript.TEXT)
 	story.add_child(title)
 
 	var prose := Label.new()
 	prose.text = "과수원지기는 날갯소리가 멀어진 방향부터 확인한다.\n바깥길은 늦지만 안전하고, 안쪽 지름길은 경고선을 스친다."
 	prose.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	prose.position = Vector2(18, 616)
-	prose.size = Vector2(354, 62)
+	prose.position = Vector2(24, 618)
+	prose.size = Vector2(342, 58)
 	prose.add_theme_font_size_override("font_size", 13)
 	prose.add_theme_color_override("font_color", Color("#ddd2b4"))
 	prose.add_theme_constant_override("line_spacing", 4)
 	story.add_child(prose)
 
 	var protect := _make_pixel_button("방풍림 바깥 우회로를 지킨다")
-	protect.position = Vector2(18, 690)
+	PixelSkinScript.apply_choice_button(protect)
+	protect.position = Vector2(18, 688)
 	protect.size = Vector2(354, 46)
 	protect.pressed.connect(_on_choice_pressed.bind("protect_windbreak"))
 	story.add_child(protect)
 	choice_buttons.append(protect)
 
 	var shortcut := _make_pixel_button("안쪽 지름길로 들어간다")
-	shortcut.position = Vector2(18, 744)
+	PixelSkinScript.apply_choice_button(shortcut)
+	shortcut.position = Vector2(18, 741)
 	shortcut.size = Vector2(354, 46)
 	shortcut.pressed.connect(_on_choice_pressed.bind("take_shortcut"))
 	story.add_child(shortcut)
 	choice_buttons.append(shortcut)
+	protect.grab_focus()
 
 	result_label = Label.new()
 	result_label.text = "경고선을 넘기 전, 어느 길을 택할지 결정해야 한다."
 	result_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	result_label.position = Vector2(18, 802)
+	result_label.position = Vector2(24, 798)
 	result_label.size = Vector2(354, 34)
 	result_label.add_theme_font_size_override("font_size", 10)
 	result_label.add_theme_color_override("font_color", Color("#aa9f84"))
 	story.add_child(result_label)
-
-func _add_story_scrim(parent: Control, y: float, height: float, alpha: float) -> void:
-	var scrim := ColorRect.new()
-	scrim.color = Color(0.07, 0.07, 0.055, alpha)
-	scrim.position = Vector2(0, y)
-	scrim.size = Vector2(390, height)
-	scrim.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	parent.add_child(scrim)
 
 func _on_start_pressed() -> void:
 	_fade_to(Callable(self, "_show_event_surface"))
@@ -355,6 +378,30 @@ func _make_pixel_button(text_value: String) -> Button:
 	button.text = text_value
 	PixelSkinScript.apply_button(button)
 	return button
+
+func _make_texture_rect(path: String, rect: Rect2) -> TextureRect:
+	var texture_rect := TextureRect.new()
+	texture_rect.texture = load(path) as Texture2D
+	texture_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	texture_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	texture_rect.position = rect.position
+	texture_rect.size = rect.size
+	texture_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return texture_rect
+
+func _make_nine_patch(path: String, rect: Rect2, left: int, top: int, right: int, bottom: int) -> NinePatchRect:
+	var patch := NinePatchRect.new()
+	patch.texture = load(path) as Texture2D
+	patch.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	patch.position = rect.position
+	patch.size = rect.size
+	patch.patch_margin_left = left
+	patch.patch_margin_top = top
+	patch.patch_margin_right = right
+	patch.patch_margin_bottom = bottom
+	patch.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return patch
 
 func _make_panel(rect: Rect2, fill: Color, border: Color, width: int) -> Panel:
 	var panel := Panel.new()

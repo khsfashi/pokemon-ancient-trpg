@@ -8,10 +8,10 @@ const LAYER_PATHS := {
 	LayerKind.OPENING_BACKGROUND: "res://assets/environment/opening_reedbank.svg",
 	LayerKind.OPENING_HUMAN: "res://assets/human/opening_traveler.svg",
 	LayerKind.OPENING_FOREGROUND: "res://assets/foreground/opening_brush.svg",
-	LayerKind.BACKGROUND: "res://assets/environment/orchard_far.svg",
-	LayerKind.MIDGROUND: "res://assets/environment/orchard_mid.svg",
-	LayerKind.HUMAN: "res://assets/human/orchard_keeper.svg",
-	LayerKind.FOREGROUND: "res://assets/foreground/orchard_foliage.svg",
+	LayerKind.BACKGROUND: "res://assets/golden_screen/runtime/windbreak_far.png",
+	LayerKind.MIDGROUND: "res://assets/golden_screen/runtime/windbreak_mid.png",
+	LayerKind.HUMAN: "res://assets/golden_screen/runtime/keeper.png",
+	LayerKind.FOREGROUND: "res://assets/golden_screen/runtime/windbreak_foreground.png",
 }
 
 const RETAINED_SIZE := Vector2(390, 844)
@@ -40,8 +40,12 @@ func _build_retained_layer() -> void:
 	rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	rect.stretch_mode = TextureRect.STRETCH_SCALE
-	rect.position = Vector2.ZERO
-	rect.size = RETAINED_SIZE
+	if layer_kind == LayerKind.HUMAN:
+		rect.position = Vector2(68, 342)
+		rect.size = Vector2(96, 170)
+	else:
+		rect.position = Vector2.ZERO
+		rect.size = RETAINED_SIZE
 	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(rect)
 
