@@ -1,6 +1,6 @@
 # Project Status
 
-Last operational handoff update: **2026-08-19 10:55 KST**
+Last operational handoff update: **2026-08-19 13:36 KST**
 
 This file is the concise operational handoff. Durable authority remains in owner decisions/contracts and live GitHub state. If this file disagrees with live state, reconcile it before advancing.
 
@@ -89,9 +89,17 @@ PR #140 intentionally implements only two 390×844 owner-review surfaces:
 
 It preserves TypeScript authority as the migration oracle and proves representative parity/save behavior. The real P6 Beedrill resource remains a separately composed runtime layer; project-owned environment/human/foreground/UI resources remain recomposable.
 
+### Current single-screen visual prerequisite
+
+The owner rejected the retained SVG/block-art preview as a visual product candidate. PR #140 now carries one Godot-rendered windbreak golden candidate built from independent FAR / MID / keeper / reserved Pokemon / foreground / HUD-event-choice layers. The rejected preview remains negative evidence. No Pokemon image was generated; missing-P6 mode shows only the reserved placement/occlusion guide.
+
+The next incomplete gate is **owner visual review of this one 390×844 windbreak golden screen**. Do not materialize real P6 #015, expand to another screen or resume the wider architecture decision first. If the golden screen is approved, then materialize #015 locally, confirm animation scale/final foreground occlusion, review input/transition feel and make the Godot Adopt/Reject/Hybrid decision.
+
+Evidence: `docs/P8_3_GODOT_WINDBREAK_GOLDEN_SCREEN.md`.
+
 ### Stop rule before architecture decision
 
-Do not add another broad presentation shell, Narrative Factory subsystem, P9 content lane or full Godot campaign port before the owner reviews these two real Godot surfaces.
+Do not add another broad presentation shell, Narrative Factory subsystem, P9 content lane or full Godot campaign port before the owner reviews the golden-screen prerequisite and the later real-P6 architecture evidence.
 
 The remaining question is product/architecture fit, not more CI infrastructure.
 
@@ -223,7 +231,8 @@ Performance/architecture guardrails remain binding: no per-frame event scans, no
 On the next `@GitHub pokemon-ancient-trpg 다음 작업 진행해줘`:
 
 1. inspect PR #140 and #139 first;
-2. do not invent a new presentation/factory lane while the two-screen owner gate is unresolved;
-3. finish only work required to produce/review the real-P6 Godot owner evidence and make the architecture decision;
-4. after the decision, proceed through #144 -> #145 -> #146 with owner product acceptance at each boundary;
-5. P9 remains blocked until #146 acceptance or an explicit owner direction change.
+2. do not invent a new presentation/factory lane while the owner gate is unresolved;
+3. obtain owner visual approval/rejection of the single windbreak golden screen before P6 materialization or another screen;
+4. after approval, finish only the real-P6 architecture evidence and make the architecture decision;
+5. after the decision, proceed through #144 -> #145 -> #146 with owner product acceptance at each boundary;
+6. P9 remains blocked until #146 acceptance or an explicit owner direction change.

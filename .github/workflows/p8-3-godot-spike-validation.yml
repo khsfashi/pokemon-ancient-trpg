@@ -1,0 +1,185 @@
+name: P8.3 Godot Spike Validation
+
+on:
+  pull_request:
+    paths:
+      - 'godot/**'
+      - 'tools/materialize_p8_3_beedrill.py'
+      - 'docs/P8_3_GODOT_ARCHITECTURE_SPIKE.md'
+      - 'PROJECT_STATUS.md'
+      - '.github/workflows/p8-3-godot-spike-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p8-3-godot-spike-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: '4.6.3'
+  GODOT_ARCHIVE: 'Godot_v4.6.3-stable_linux.x86_64.zip'
+  GODOT_ARCHIVE_SHA256: 'd0bc2113065e481c9c2c2b2c37daa4e8be3fe9e27f0ab9ab0b6096e9a37907f3'
+
+jobs:
+  godot-spike:
+    name: Godot 4.6.3 parity + visual contract + rendered capture harness
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare retained runtime logs
+        shell: bash
+        run: mkdir -p test-results/godot-spike
+
+      - name: Provision Korean review font
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            sudo sed -i '/azure\.archive\.ubuntu\.com/d' /etc/apt/apt-mirrors.txt
+          fi
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          {
+            printf 'fonts-noto-cjk package: '
+            dpkg-query -W -f='${Version}\n' fonts-noto-cjk
+            printf 'Noto Sans CJK KR match: '
+            fc-match 'Noto Sans CJK KR' family file
+          } 2>&1 | tee test-results/godot-spike/korean-font-environment.log
+
+      - name: Install and verify pinned official Godot build
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            release_tag="${GODOT_VERSION}-stable"
+            base_url="https://github.com/godotengine/godot-builds/releases/download/${release_tag}"
+            mkdir -p "$RUNNER_TEMP/godot"
+            cd "$RUNNER_TEMP/godot"
+
+            curl --fail --location --retry 3 --output "$GODOT_ARCHIVE" "$base_url/$GODOT_ARCHIVE"
+
+            expected_sha="$GODOT_ARCHIVE_SHA256"
+            actual_sha="$(sha256sum "$GODOT_ARCHIVE" | awk '{print $1}')"
+            printf 'Godot archive sha256 expected=%s actual=%s\n' "$expected_sha" "$actual_sha"
+            test "$actual_sha" = "$expected_sha"
+
+            unzip -q "$GODOT_ARCHIVE"
+            chmod +x "${GODOT_ARCHIVE%.zip}"
+            ln -s "$RUNNER_TEMP/godot/${GODOT_ARCHIVE%.zip}" "$RUNNER_TEMP/godot/godot"
+            echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
+            "$RUNNER_TEMP/godot/godot" --version
+          } 2>&1 | tee "$GITHUB_WORKSPACE/test-results/godot-spike/install.log"
+
+      - name: Import retained resources from clean checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          log=test-results/godot-spike/resource-import.log
+          godot --headless --path godot --import 2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot clean resource import emitted script/runtime errors' >&2
+            exit 1
+          fi
+
+      - name: Boot bounded owner-review scene
+        shell: bash
+        run: |
+          set -euo pipefail
+          log=test-results/godot-spike/main-scene-boot.log
+          godot --headless --path godot --quit-after 2 2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot boot emitted script/runtime errors' >&2
+            exit 1
+          fi
+
+      - name: Run deterministic parity and save smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          log=test-results/godot-spike/parity-smoke.log
+          godot --headless --path godot --script res://tests/parity_smoke.gd 2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot parity smoke emitted script/runtime errors' >&2
+            exit 1
+          fi
+          grep -F 'P8.3 Godot parity smoke: PASS' "$log"
+
+      - name: Run layered visual contract smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          log=test-results/godot-spike/visual-contract-smoke.log
+          godot --headless --path godot --script res://tests/visual_contract_smoke.gd 2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot visual contract smoke emitted script/runtime errors' >&2
+            exit 1
+          fi
+          grep -F 'P8.3 Godot visual contract smoke: PASS' "$log"
+
+      - name: Validate local P6 materializer contract without network
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/materialize_p8_3_beedrill.py --self-test 2>&1 | tee test-results/godot-spike/p6-local-materializer-self-test.log
+          grep -F 'P8.3 Beedrill local materializer self-test: PASS' test-results/godot-spike/p6-local-materializer-self-test.log
+
+      - name: Validate rendered owner-capture harness without rights-bound Pokemon media
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v xvfb-run
+          rm -rf godot/captures/owner-evidence
+          log=test-results/godot-spike/owner-evidence-capture-harness.log
+          xvfb-run -a godot --audio-driver Dummy --path godot --script res://tests/owner_evidence_capture.gd -- --allow-missing-p6 \
+            2>&1 | tee "$log"
+          if grep -E 'SCRIPT ERROR:|Parse Error:|Compile Error:|Failed to load script|^ERROR:' "$log"; then
+            echo 'Godot rendered capture harness emitted script/runtime errors' >&2
+            exit 1
+          fi
+          grep -F 'P8.3 owner evidence capture harness: PASS owner_candidate=false p6_rendered=false frames=0' "$log"
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          import struct
+
+          root = Path("godot/captures/owner-evidence")
+          expected = [("opening.png", (390, 844)), ("windbreak-missing-p6-ci.png", (390, 844))]
+          for name, dimensions in expected:
+              raw = (root / name).read_bytes()
+              if raw[:8] != b"\x89PNG\r\n\x1a\n" or raw[12:16] != b"IHDR":
+                  raise SystemExit(f"{name}: invalid PNG")
+              actual = struct.unpack(">II", raw[16:24])
+              if actual != dimensions:
+                  raise SystemExit(f"{name}: expected {dimensions}, got {actual}")
+
+          manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+          if manifest["p6"]["files_present"] or manifest["p6"]["rendered"] or manifest["owner_evidence_candidate"]:
+              raise SystemExit("CI harness must not claim rights-bound P6 owner evidence")
+          PY
+          cp godot/captures/owner-evidence/manifest.json test-results/godot-spike/owner-evidence-harness.json
+
+      - name: Upload safe no-P6 390x844 CI preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-3-godot-ci-preview-no-p6
+          path: |
+            godot/captures/owner-evidence/opening.png
+            godot/captures/owner-evidence/windbreak-missing-p6-ci.png
+            godot/captures/owner-evidence/manifest.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload Godot spike logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-3-godot-spike-runtime-logs
+          path: test-results/godot-spike
+          if-no-files-found: error
+          retention-days: 14

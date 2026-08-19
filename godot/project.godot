@@ -1,0 +1,22 @@
+; P8.3 bounded architecture spike. Keep this project isolated until owner review.
+config_version=5
+
+[application]
+config/name="Pokemon Ancient TRPG — P8.3 Godot Spike"
+run/main_scene="res://scenes/main.tscn"
+
+[display]
+window/size/viewport_width=390
+window/size/viewport_height=844
+window/size/window_width_override=390
+window/size/window_height_override=844
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/scale_mode="integer"
+
+[gui]
+theme/custom_font="res://assets/ui/runtime_korean_font.tres"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
