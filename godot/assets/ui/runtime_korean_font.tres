@@ -1,0 +1,5 @@
+[gd_resource type="SystemFont" format=3]
+
+[resource]
+font_names = PackedStringArray("Noto Sans CJK KR", "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo")
+allow_system_fallback = true
