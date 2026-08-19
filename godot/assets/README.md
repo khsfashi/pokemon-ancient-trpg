@@ -31,11 +31,18 @@ foreground/orchard_foliage.svg
 ui/icon_vitality.svg
 ui/icon_fatigue.svg
 ui/icon_provisions.svg
+ui/runtime_korean_font.tres
 ```
 
 `godot/scripts/pixel_skin.gd` is the shared project-owned Control skin for square pixel borders, button focus/press states, panel palette and typography colors. Localized text remains runtime `Label`/`Button` content.
 
-`godot/tests/visual_contract_smoke.gd` rejects missing/unloadable retained resources, `<text>` or embedded `<image>` elements in world/human layers, known Pokemon species tokens baked into those layers, removal of the separate P6 Pokemon slot, and the old developer spike label leaking into the player-facing opening.
+### Korean review-font boundary
+
+`ui/runtime_korean_font.tres` is a **temporary architecture-spike readability fallback**, not the final P8.3 typography asset. It uses Godot `SystemFont` with Korean-capable desktop families (`Noto Sans CJK KR`, `Noto Sans KR`, `Malgun Gothic`, `Apple SD Gothic Neo`) and system fallback enabled so the two owner-review surfaces cannot silently render Korean as missing-glyph boxes.
+
+The GitHub validation runner explicitly provisions `fonts-noto-cjk` and `visual_contract_smoke.gd` requires representative Hangul glyph coverage before a preview can pass. Desktop owner review may use an installed matching system family. This does not replace the existing P6 provenance/licensing requirement for the final bundled pixel/long-form Korean font, and it must not be treated as Android/release typography acceptance.
+
+`godot/tests/visual_contract_smoke.gd` rejects missing/unloadable retained resources, missing representative Korean glyphs, `<text>` or embedded `<image>` elements in world/human layers, known Pokemon species tokens baked into those layers, removal of the separate P6 Pokemon slot, and the old developer spike label leaking into the player-facing opening.
 
 ## Local Pokemon media slot
 
