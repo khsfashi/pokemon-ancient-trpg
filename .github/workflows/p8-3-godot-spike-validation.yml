@@ -172,6 +172,17 @@ jobs:
           PY
           cp godot/captures/owner-evidence/manifest.json test-results/godot-spike/owner-evidence-harness.json
 
+      - name: Upload safe no-P6 390x844 CI preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: p8-3-godot-ci-preview-no-p6
+          path: |
+            godot/captures/owner-evidence/opening.png
+            godot/captures/owner-evidence/windbreak-missing-p6-ci.png
+            godot/captures/owner-evidence/manifest.json
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Upload Godot spike logs
         if: always()
         uses: actions/upload-artifact@v4
