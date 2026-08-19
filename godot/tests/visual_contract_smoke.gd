@@ -16,6 +16,9 @@ const UI_ASSETS := [
 	"res://assets/ui/icon_provisions.svg",
 ]
 
+const KOREAN_FONT := "res://assets/ui/runtime_korean_font.tres"
+const KOREAN_GLYPH_SAMPLES := "한글여행자경계"
+
 const FORBIDDEN_SPECIES_TOKENS := [
 	"beedrill", "독침붕", "weedle", "뿔충이", "rattata", "꼬렛", "pikachu", "피카츄"
 ]
@@ -25,6 +28,8 @@ var _failed := false
 func _init() -> void:
 	for path in PROJECT_LAYERS + UI_ASSETS:
 		_require_resource(path)
+
+	_require_korean_font(KOREAN_FONT)
 
 	for path in PROJECT_LAYERS:
 		_require_layer_separation(path)
@@ -59,6 +64,21 @@ func _require_resource(path: String) -> void:
 		return
 	var texture := load(path) as Texture2D
 	_assert_true(texture != null, "retained resource is not loadable as Texture2D: %s" % path)
+
+func _require_korean_font(path: String) -> void:
+	_assert_true(FileAccess.file_exists(path), "missing Korean review font resource: %s" % path)
+	if not FileAccess.file_exists(path):
+		return
+	_assert_true(ResourceLoader.exists(path), "Godot cannot load Korean review font resource: %s" % path)
+	if not ResourceLoader.exists(path):
+		return
+	var font := load(path) as Font
+	_assert_true(font != null, "Korean review font resource is not a Font: %s" % path)
+	if font == null:
+		return
+	for index in range(KOREAN_GLYPH_SAMPLES.length()):
+		var codepoint := KOREAN_GLYPH_SAMPLES.unicode_at(index)
+		_assert_true(font.has_char(codepoint), "Korean review font lacks glyph U+%04X" % codepoint)
 
 func _require_layer_separation(path: String) -> void:
 	if not FileAccess.file_exists(path):
