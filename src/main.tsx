@@ -6,6 +6,7 @@ import './app/illustration.css';
 import './app/p8_3_theme.css';
 import './app/p8_3_polish.css';
 import './app/p8_3_transition.css';
+import './app/v2/opening-v2.css';
 import { registerAppServiceWorker } from './platform/serviceWorker';
 
 const root = document.getElementById('app');

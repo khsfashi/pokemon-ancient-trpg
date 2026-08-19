@@ -43,6 +43,7 @@ import {
   saveP8PortraitId,
   type P8PortraitId,
 } from './ProfileHud';
+import { OpeningV2 } from './v2/OpeningV2';
 
 const session = new P8BrowserSession();
 
@@ -310,22 +311,23 @@ export function App() {
     await continueFromCheckpoint();
   }
 
-  let body;
-  if (mode === 'landing' || (presentedSnapshot.authority === null && mode === 'play')) {
-    body = (
-      <section class="panel hero-panel">
-        <p class="eyebrow">{p8Text(locale, 'sliceEyebrow')}</p>
-        <h1>{p8Text(locale, 'title')}</h1>
-        <p class="lead">{p8Text(locale, 'landingLead')}</p>
-        <div class="action-stack">
-          {presentedSnapshot.canResume && <button class="primary" disabled={busy} onClick={() => void resumeRun()}>{p8Text(locale, 'resume')}</button>}
-          <button class={presentedSnapshot.canResume ? 'secondary' : 'primary'} disabled={busy} onClick={beginCreation}>{p8Text(locale, 'start')}</button>
-        </div>
-        {presentedSnapshot.canResume && <p class="muted">{p8Text(locale, 'replaceSave')}</p>}
-        <div class="contract-note">{p8Text(locale, 'zeroCompanionContract')}</div>
-      </section>
+  const showOpeningV2 = mode === 'landing' || (presentedSnapshot.authority === null && mode === 'play');
+  if (showOpeningV2) {
+    return (
+      <OpeningV2
+        locale={locale}
+        canResume={presentedSnapshot.canResume}
+        busy={busy}
+        error={error}
+        onLocaleChange={setLocale}
+        onStart={beginCreation}
+        onResume={() => { void resumeRun(); }}
+      />
     );
-  } else if (mode === 'prompts') {
+  }
+
+  let body;
+  if (mode === 'prompts') {
     const prompt = localizeP8Prompt(P8_SLICE_PRESENTATION_PROMPTS[promptIndex]!, locale);
     body = (
       <section class="panel">
