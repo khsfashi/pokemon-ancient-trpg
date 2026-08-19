@@ -2,6 +2,16 @@
 
 This file is the entry point for any coding, planning, content-authoring or remediation agent working in this repository.
 
+## Chat development continuity / Luna
+
+When repository development is requested from a chat surface with a disposable or sandboxed code-execution environment, read `.agents/skills/luna-chat-coder/SKILL.md` before substantive repository work.
+
+Luna is an execution, exact-state recovery, transport and fallback policy only. It does **not** replace this repository's engineering/gameplay/content/resource rules. Explicit owner decisions, this `AGENTS.md`, `PROJECT_STATUS.md`, active issue/PR contracts and repository tests remain authoritative over Luna whenever project behavior or product direction is involved.
+
+Use Luna's sandbox-first path when available: resolve the current PR/branch to an immutable commit SHA, materialize exact source before editing, inventory available capabilities before acquiring new ones, and use a bounded Actions mission only for a demonstrated capability/transport/execution gap. Do not make access to the owner's host computer a dependency of ordinary repository work.
+
+The vendored Luna source and version are recorded in `.agents/skills/luna-chat-coder/UPSTREAM.md`.
+
 The repository owner intentionally wants routine progress to work from short instructions such as:
 
 ```text
